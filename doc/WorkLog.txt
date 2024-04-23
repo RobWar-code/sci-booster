@@ -9,7 +9,14 @@ Contents
     * Set-up the dev environment for experimentation with
     reactflow
 
-	Set-up the dev environment for working with pixiJS, vanilla
-	javascript, php and mysql
+    * Draft the content of the introductory page
+
+	Set-up the dev environment for working with *pixiJS, *vanilla
+	javascript, php, mysql and *bootstrap.
+
+    Do the initial preparations of the flow diagram page
+        * Do the initial bootstrap navbar
+
+        Set-up the initial pixi stage
 
 <h1>Work Done

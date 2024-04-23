@@ -1,0 +1,20 @@
+<svg width="67.8" height="20" viewBox="0 0 678 200" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" aria-label="discord">
+  <title>discord</title>
+  <linearGradient id="YGgDH" x2="0" y2="100%">
+    <stop offset="0" stop-opacity=".1" stop-color="#EEE"/>
+    <stop offset="1" stop-opacity=".1"/>
+  </linearGradient>
+  <mask id="UJFay"><rect width="678" height="200" rx="30" fill="#FFF"/></mask>
+  <g mask="url(#UJFay)">
+    <rect width="182" height="200" fill="#555"/>
+    <rect width="496" height="200" fill="#08C" x="182"/>
+    <rect width="678" height="200" fill="url(#YGgDH)"/>
+  </g>
+  <g aria-hidden="true" fill="#fff" text-anchor="start" font-family="Verdana,DejaVu Sans,sans-serif" font-size="110">
+    <text x="142" y="148" textLength="0" fill="#000" opacity="0.25"></text>
+    <text x="132" y="138" textLength="0"></text>
+    <text x="237" y="148" textLength="396" fill="#000" opacity="0.25">discord</text>
+    <text x="227" y="138" textLength="396">discord</text>
+  </g>
+  <image x="40" y="35" width="100" height="130" xlink:href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzEiIGhlaWdodD0iNTUiIHZpZXdCb3g9IjAgMCA3MSA1NSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBjbGlwLXBhdGg9InVybCgjYSkiPjxwYXRoIGQ9Ik02MC4xMDQ1IDQuODk3OGMtNC41MjUzLTIuMDc2NC05LjM3OC0zLjYwNjItMTQuNDUxOC00LjQ4MjM4LS4wOTI0LS4wMTY5MS0uMTg0Ny4wMjUzNDktLjIzMjMuMTA5ODY5QzQ0Ljc5NjMgMS42MzUzIDQ0LjEwNSAzLjA4MzQgNDMuNjIwOSA0LjIyMTZjLTUuNDU3Mi0uODE3LTEwLjg4NjQtLjgxNy0xNi4yMzE3IDAtLjQ4NDItMS4xNjM1LTEuMjAwNi0yLjU4NjMtMS44Mjc1LTMuNjk2MzExLS4wNDc2LS4wODE3LS4xMzk5LS4xMjM5NTktLjIzMjMtLjEwOTg2OS01LjA3MS44NzMzOC05LjkyMzcgMi40MDMxOC0xNC40NTE4IDQuNDgyMzgtLjAzOTIuMDE2OS0uMDcyOC4wNDUxLS4wOTUxLjA4MTdDMS41Nzc5NSAxOC43MzA5LS45NDM1NjEgMzIuMTQ0My4yOTM0MDggNDUuMzkxNGMuMDA1NTk3LjA2NDguMDQxOTc4LjEyNjguMDkyMzUzLjE2NjJDNi40NTg2NiA1MC4wMTc0IDEyLjM0MTMgNTIuNzI0OSAxOC4xMTQ3IDU0LjUxOTVjLjA5MjQuMDI4Mi4xOTAzLS4wMDU2LjI0OTEtLjA4MTcgMS4zNjU3LTEuODY1IDIuNTgzMS0zLjgzMTUgMy42MjY5LTUuODk5NS4wNjE2LS4xMjExLjAwMjgtLjI2NDgtLjEyMzEtLjMxMjctMS45MzEtLjczMjUtMy43Njk3LTEuNjI1Ni01LjUzODQtMi42Mzk4LS4xMzk5LS4wODE3LS4xNTExLS4yODE4LS4wMjI0LS4zNzc2LjM3MjItLjI3ODkuNzQ0NS0uNTY5MSAxLjA5OTktLjg2MjEuMDY0My0uMDUzNS4xNTM5LS4wNjQ4LjIyOTUtLjAzMSAxMS42MTk2IDUuMzA1MSAyNC4xOTkyIDUuMzA1MSAzNS42ODE3IDAgLjA3NTYtLjAzNjYuMTY1Mi0uMDI1My4yMzIzLjAyODIuMzU1NS4yOTMuNzI3Ny41ODYgMS4xMDI3Ljg2NDkuMTI4Ny4wOTU4LjEyMDMuMjk1OS0uMDE5Ni4zNzc2LTEuNzY4NyAxLjAzMzktMy42MDc0IDEuOTA3My01LjU0MTIgMi42MzctLjEyNTkuMDQ3OS0uMTgxOS4xOTQ0LS4xMjAzLjMxNTUgMS4wNjYyIDIuMDY1MSAyLjI4MzYgNC4wMzE2IDMuNjI0MSA1Ljg5NjcuMDU2LjA3ODkuMTU2Ny4xMTI3LjI0OTEuMDg0NSA1LjgwMTQtMS43OTQ2IDExLjY4NC00LjUwMjEgMTcuNzU2OS04Ljk2MTkuMDUzMi0uMDM5NC4wODY4LS4wOTg2LjA5MjQtLjE2MzQgMS40ODA0LTE1LjMxNTEtMi40Nzk2LTI4LjYxODUtMTAuNDk3NS00MC40MTE5LS4wMTk2LS4wMzk0LS4wNTMxLS4wNjc2LS4wOTIzLS4wODQ1Wk0yMy43MjU5IDM3LjMyNTNjLTMuNDk4MyAwLTYuMzgwOC0zLjIxMTctNi4zODA4LTcuMTU2IDAtMy45NDQzIDIuODI2Ni03LjE1NiA2LjM4MDgtNy4xNTYgMy41ODIxIDAgNi40MzY3IDMuMjM5OSA2LjM4MDcgNy4xNTYgMCAzLjk0NDMtMi44MjY2IDcuMTU2LTYuMzgwNyA3LjE1NlptMjMuNTkxOSAwYy0zLjQ5ODIgMC02LjM4MDctMy4yMTE3LTYuMzgwNy03LjE1NiAwLTMuOTQ0MyAyLjgyNjUtNy4xNTYgNi4zODA3LTcuMTU2IDMuNTgyMiAwIDYuNDM2NyAzLjIzOTkgNi4zODA4IDcuMTU2IDAgMy45NDQzLTIuNzk4NiA3LjE1Ni02LjM4MDggNy4xNTZaIiBmaWxsPSIjZmZmIi8+PC9nPjxkZWZzPjxjbGlwUGF0aCBpZD0iYSI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTAgMGg3MXY1NUgweiIvPjwvY2xpcFBhdGg+PC9kZWZzPjwvc3ZnPgo="/>
+</svg>
