@@ -1,0 +1,15 @@
+Work Log
+
+Contents
+    Work Due
+    Work Done
+
+<h1>Work Due
+
+    * Set-up the dev environment for experimentation with
+    reactflow
+
+	Set-up the dev environment for working with pixiJS, vanilla
+	javascript, php and mysql
+
+<h1>Work Done

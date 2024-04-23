@@ -1,0 +1,222 @@
+analysis.txt
+Detailed Analysis for the sci-booster Project
+
+Contents
+	File Structure/Modularisation
+	Display Menu
+	Introductory Page
+	Flow Diagram Page
+		Page Information
+		Page Options Buttons
+		Flow Diagram
+			Nodes
+			Flows
+			Layout Considerations
+
+<h1>File Modularisation/Structure
+
+	The sci-booster application will be available in the sci-booster
+	folder of the main narayana-art.co.uk folder on the Fasthosts website.
+	so sci-booster is the primary directory on GitHub. On the client development
+	system the project is at home/robs/projects/narayana02/sci-booster.
+
+	Within this directory the folders are to be as follows:
+
+	sci-booster
+		doc
+		lib
+			pixiJS
+		src
+			html-pages
+			js-modules
+			php-modules
+			images
+		sci-booster.html (introductory page)
+		
+<h1>Display Menu
+	The main menu appears on both pages of the sci-booster website.
+	It is a basic bootstrap navbar with the following components:
+	Icon Image
+	Sci-Booster Title
+	Menu
+		Intro
+		Flows
+		Login/Register
+		Narayana-Art
+
+<h1>Introductory Page
+	The Introductory page is an HTML text presentation that introduces
+	and summarises the flow model approach to learning and describing
+	systems.
+
+<h1>Flow Diagram Page
+	see also: doc/FlowPage.svg
+
+	Title:
+	The page is headed by "Hierarchical Flow Diagrams".
+
+	Search:
+	The next item is the search input. This is search by keyword, flow 
+	model title, page title, node label and flow label. This search is
+	performed dynamically and produces a scrollable dropdown list. It
+	is activated by the search button or by pressing the <return> key.
+
+	If	nothing is found, this is reported by the user. 
+
+<h2>Page Information
+
+	The page information appears toward the top of the page on the left.
+	It includes the parent node name or "Top Level" if not applicable.
+
+	Beneath the parent title is the title of the flow model page.
+
+	Flow Page Details:
+	Beneath this is the Details button which provides the facility to view
+	or edit the further details of this page. Clicking it brings up the
+	modal Flow Page Details form. If the user is the author or the user is
+	an editor, the Edit button appears in this.
+
+	The details consist of the following:
+		Title
+		Authors
+		Keywords
+		Description
+		References
+		Number Of Pages
+		Submit Button
+		Leave Button
+
+	The References section produces its own modal form Reference Details
+	which contains a list of entries and the following input fields:
+		Source
+		Title
+		Author
+		Submit Button
+		Leave Button
+
+<h2>Page Options Buttons
+	The page options buttons are Add, Update, Delete, Save
+
+	Add:
+	The Add option only applies for a new Flow Model, otherwise the
+	facility to add a page for further definition is available at the
+	node.
+	
+	When the Add button is pressed, the Flow Model Details appear as a 
+	modal to be entered.
+
+	Update:
+	The update button only appears when the Flow Diagram Page already
+	contains content. It enables the editing of the drawing. Only the
+	author and the editors can use this feature.
+
+	Delete:
+	This enables the deletion of the Flow Model or Flow Page with all
+	its children. It is accompanied by a warning on a modal screen.
+	This feature is only available to the editors/authors.
+
+	Save:
+	This saves the page/model and performs all necessary database
+	updates.
+
+<h2>Flow Diagram
+
+	The flow diagram consists of nodes (as boxes) and flows as arrowed
+	lines.
+
+<h3>Nodes
+
+	When the stage is clicked the Node Details modal panel appears. This
+	includes the following:
+		Label:
+		Node Number: (auto)
+		Type: - selection ("Mechanism"/"Effect")
+		Definition: (optional)
+		Keywords: (optional)
+		Hyperlink: (optional)
+		Has Child Page: (auto)
+		Submit Button
+		Leave Button
+
+	When the submit button has been pressed, the node box appears at
+	the position set when the stage was clicked.
+
+	Each node is displayed with the following:
+	Node Number
+	Title
+	Option Buttons
+		Details
+		Hierarchical Definition Page
+		Add Flow Link
+		Hyperlink	
+
+	The Details Button brings up the Node Details Modal panel, note that
+	this is only editable if the user is an author or an editor, so the
+	Submit button only appears in this case.
+
+	The Hierarchical Definition Page brings up the flow diagram that defines
+	the node flow in more detail.
+
+	The Add Flow Link button brings-up the modal Flow Details panel. This 
+	contains the following details:
+		Label
+		Source Node Number
+		Destination Node Number
+		Keywords
+		Definition
+		Conversion Formulas
+		Hyperlink
+		Submit button
+		Leave button
+
+	The Destination Node Number can be set to "open" to indicate no 
+	particular output destination
+
+	The Conversion Formulas Option has its own modal form Flow Conversion 
+	Formulas for entering and editing formulae and their definitions.
+	The form consists of:
+		Scrollable List of Formulas/Definitions
+		Input Fields
+			Formula
+			Definition
+			Submit button
+			Leave button
+
+	Once the Flow Details form is submitted, the modal disappears and the 
+	flow is	shown as a line connecting the source and destination nodes.
+
+<h3>Flows
+	
+	Flows can connect a source node to a destination node or a source node to open space.
+	They are drawn as a line with arrow marks pointing from the source toward the destination.
+	They include a Flow Details button which causes the Flow Details form about the flow to be
+	displayed as described previously.
+
+<h3>Layout Considerations
+
+	To allow for mobiles, the minimum stage width should be set to 380px. If we have a maximum
+	of 2 columns of nodes and a minimum flow length of 60px then allowing for three flow lengths
+	(180px), we have 200px remaining for the width of the nodes, ie: 100px wide.
+
+	There are 4 buttons across the width of the node, so these should each be 20px x 20px.
+
+	In the case of both flows and nodes we should allow for 2 or 3 lines of text within the width.
+	assuming we use 12px font, this is about 45px. adding this to the height of the buttons, we have
+	65px (say 70px) for the height of each node. So allowing for flows (including those above the top
+	and below the bottom node, we have:
+		(70 + 60) * maxNodesVertical + 60 = stage height (say 550px)
+	so maxNodesVertical = (550 - 60) / 130 =apx 4.
+	so we adjust the stage height to 4 * 130 + 60 = 580.
+
+	This gives us a maximum of 8 nodes on a page.
+
+	As we scale the stage for greater widths, we adjust the node and flow widths accordingly, 
+	up to a maximum of 2 times. So the max width of the stage should be 760px.
+
+	Summary:
+		Stage Min: 380 x 580px
+		Stage Max: 760 x 580px
+		Node Min: 100 x 70px
+		Node Max: 200 x 70px
+		Flow Min Length: 60px
+		Buttons: 20px x 20px

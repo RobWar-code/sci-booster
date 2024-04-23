@@ -1,0 +1,191 @@
+<t>Sci-Booster Understanding Real Systems
+
+	Contents
+
+		The Store and Forward Model
+		Some Examples of the Model
+			Example with Waterflow
+		Studying The Model
+			Zoom-in
+			Zoom-out
+			Extension
+
+<h1>The Store and Forward Model
+
+	The purpose of this study is to provide the reader with a useful approach to learning just
+	about any real system present in the shared reality and thereby to gain an overview of
+	reality which can easily and objectively be shared with others, in so doing you may be able to
+	outsmart the AI's which we are currently making.
+
+	Consider a system with a source and a receiver joined by a single channel, with an 
+	intervening accumulator. Forwarded items may be processed before being forwarded.
+
+		Source ------>---- Storage/Accumulator ---->--- Receiver
+		or
+		Source ------>---- Storage/Accumulator ---->--- Processor --->--- Receiver
+		           
+	This study examines this model as it applies to a large variety of systems in various
+	forms. We can call this model Store and Forward Flow. As we do this, and if we
+	require the detail, we can examine the mathematical formulae used to describe the flow 
+	at various points etc.
+
+<h1>Some Examples of the Model
+
+	These are the top level example views, which give us an overview/description of the system.
+
+	Transport:
+
+		Petrol -->--- Car --->--- Motion
+
+	Electronics:
+
+		Positive Potential ---->------ Capacitor ----->-- Meter ---> Ground -->
+
+		Positive Potential ---->------- Battery ---->---- Device --> Ground -->
+
+	Computing:
+
+		Data --->--- Memory --->--- Display
+
+		Input --->--- Memory --->--- Process --->--- Output
+
+	Neuroscience:
+
+		Sensory Input --->--- Memory --->--- Recall
+
+	Biology:
+
+		Sun Light --->--- Leaf --->--- Tree and Branches --->--- Termites
+
+		Sun Light --->--- Grass --->--- Antelope --->--- Lion --->
+
+		Sun Light --->--- Grain --->--- Chicken --->--- Human --->
+
+	Earth System:
+
+		Solar Energy ---->---- Atmosphere ---->---- Reradiation
+
+	Economics:
+
+		Income ----->---- Savings ----->----- Spending ---->
+
+	Maths:
+
+		Measurements --->--- Symbolic Representation --->--- Symbolic Manipulations ---->--- Calculated Results 
+
+	Psychology:
+
+		Stimuli --->--- Mind --->---- Behaviour
+
+	Note that the life flows have complex intervening pathways, which are then
+	amenable to study in more detail, if we require. Also that the flows may
+	consist of more than one element - ie: water and sugars.
+
+	Also note that the life flows are materially transformational, the accumulators
+	undergo transformation as they are replenished.
+
+	As we zoom-in on these models we can see more and more of the intervening links.
+
+<h2>Example with Water Flow
+						F	  A 	 F2
+		Head of Water --->-- Tank  -->-- Receptacle
+
+	If the tank has an outflow above the level of the base of the tank then there will no
+	flow to the receptacle until the threshold is reached.
+
+	Let us define the flow from the head has F (vol/second). Then the flow into the tank
+	is F * t. The volume of the tank to the outflow pipe is A. So the time taken to reach
+	the outflow is:
+
+		A / F
+
+	We can further refine our model by defining the pressure potential at the head f, 
+	the resistance of the pipe r to define the flow.
+
+		F = f/r
+
+	Further examination of the resistance might relate the diameter d of the pipe to its
+	resistance
+
+		r = k / pi * (d/2)^2
+
+	As you can see we can begin with simple Store and Forward Flow Model and then build in
+	the required details, detail level by detail level.
+
+	We can call the top level zooming-out and the detail zooming-in.
+
+<h1>Studying The Model
+
+	It should be noted that we do not have to make use of mathematics to gain a detailed
+	understanding of these systems. We simply use mathematics when want learn about
+	quantities and flows in the system, or any aspect that we wish to measure or 
+	calculate.
+
+	Let's use the following example, to study or analyse a system in more detail
+
+		Petrol --->--- Car --->--- Motion
+
+<h2>Zoom-in
+
+							CAR
+		1) Petrol -->-- Tank -->-- Engine -->-- Motion
+
+												    CAR
+		2) Petrol -->-- Tank -->-- Cylinder -->-- Piston -->-- CrankShaft -->-- Axle -->-- Wheel -->--- Motion
+
+	Now we can start to branch the system to show separate flows (outputs / by-products)
+
+													Motion
+		2) Petrol -->-- Tank -->-- Cylinder -->-- Piston -->-- CrankShaft -->-- Axle -->-- Wheel -->--- Motion
+									|
+									V Exhaust
+									|
+									Exhaust Pipe -->-- Atmosphere	
+
+<h2>Zoom-out
+
+	Sometimes we have bits and pieces of information about a system not arranged in any particular fashion,
+	for example, we are looking at the savannah and see some zebra, lions and hyenas wandering about. We hardly
+	even know that they form a system. We know that lions eat zebras and we know that hyenas eat carcasses. We
+	also know that lions have stomachs to digest meat.
+	ie:
+	Savannah
+	Savannah has Grass
+	Zebra
+	Zebra eat Grass
+	Lion
+	Lion eat Zebra
+	Lions have Stomachs
+	Hyena
+	Hyena eat Carcasses
+
+	We can pick-out the top-level details as follows:
+												  
+	Savannah --->--- Grass --->--- Zebra --->--- Lion 
+												  |
+												  V
+												  |
+												Carcass -->-- Hyena
+													
+
+<h2>Extension
+
+	We can add-in branches and extend the scope of the system to incorporate other
+	impinging parts and incorporate feedback.
+
+					Sunlight
+						|
+						V
+						|
+	Savannah --->--- Grass --->--- Zebra --->--- Lion 
+	 | 											  |
+	 |											  V
+	 |											  |
+	 ^											Carcass -->-- Hyena
+	 |															|
+     |                                                          V
+	 |															|
+	 ---------------------------<-------------------------- Excrement
+
+
+
