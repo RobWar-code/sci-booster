@@ -3,6 +3,7 @@ Detailed Analysis for the sci-booster Project
 
 Contents
 	File Structure/Modularisation
+	Javascript Coding Structure
 	Display Menu
 	Introductory Page
 	Flow Diagram Page
@@ -28,10 +29,17 @@ Contents
 			pixiJS
 		src
 			html-pages
-			js-modules
-			php-modules
+			js-scripts
+			php-scripts
 			images
 		sci-booster.html (introductory page)
+
+<h1>Javascript Coding Structure
+	The code for the flow model diagrams stage is separated from
+	the other event code for the page. Where functions and data
+	are likely to be re-used they are encapsulated in global
+	objects in individual files.This approach does mean that multiple 
+	script source references must be made in the HTML.
 		
 <h1>Display Menu
 	The main menu appears on both pages of the sci-booster website.
