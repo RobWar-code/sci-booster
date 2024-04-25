@@ -1,5 +1,10 @@
 /* Flow Models */
 /* Drawing Area */
-canvas {
+#flowModelStageCol {
+    display: flex;
+    justify-content: center;
+}
+
+#flowModelStageDiv {
     border: 2px solid black;
 }
