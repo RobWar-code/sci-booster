@@ -302,16 +302,20 @@ In this phase it is decided to do the data model for the flow diagrams
 first. Also to define the user-interface more precisely and then see
 which coding approach might best be used.
 
+Having experimented with PIXI in vanilla javascript mode, it was decided
+to use the Konva canvas graphics library instead. The online documentation 
+for this is particularly high-quality.
+
 ## Setup
 
 Existing FastHosts database, within the narayana-art website.
 PHP (latest version)
 MySQL
 Bootstrap in main HTML file
-Download PixiJS
+Konva Link in main HTML file
 
 
-### Trail Set-up (abandonned)
+### Trail Set-up (abandoned)
 - npx create-react-app sci-booster
 - npm install react-bootstrap
 - For react-bootstrap you should also include the element "Link rel=" in the 

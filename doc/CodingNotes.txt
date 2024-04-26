@@ -1,0 +1,21 @@
+Coding Notes
+
+Contents
+    Konva
+        Konva, Points to Note
+        Layers
+
+<h1>Konva
+
+    The Konva canvas tool library provides a well-documented
+    set of tools for use with vanilla Javascript.
+
+<h2>Konva, Points to Note
+
+    The containing <div> should be used to style the canvas (ie: borders etc.).
+    This itself should be put in a containing div, to achieve centering of the
+    the stage, for example.
+
+<h2>Layers
+    Graphic Layers enable graphic objects to be over-layed in a predictable
+    fashion.

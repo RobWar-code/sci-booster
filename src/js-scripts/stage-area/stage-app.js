@@ -2,52 +2,31 @@
 const startStageApp = () => {
     console.log ("Got to startApp");
 
-	containerElem = document.getElementById("flowModelStageDiv");
-	containerElem.style.width = (stageWidth + 4) + "px";
+    let containerElem = document.getElementById("flowModelStageDiv");
+    containerElem.style.width = (dfm.stageWidth + 4) + "px";
 
-	// first we need to create a stage
-	stageApp = new Konva.Stage({
-	  container: 'flowModelStageDiv',   // id of container <div>
-	  width: stageWidth,
-	  height: stageHeight
-	});
+    // First, create a stage
+    dfm.stageApp = new Konva.Stage({
+        container: 'flowModelStageDiv',   // id of container <div>
+        width: dfm.stageWidth,
+        height: dfm.stageHeight
+    });
 
-	// then create layer
-	var layer = new Konva.Layer();
+	// Set-up the hover text
+	setupHoverText();
 
-	// create our shape
-	var circle = new Konva.Circle({
-	  x: stageApp.width() / 2,
-	  y: stageApp.height() / 2,
-	  radius: 40,
-	  fill: 'red',
-	  stroke: 'black',
-	  strokeWidth: 4
-	});
+    // Add the node image file
+    buildNodeGraphic();
 
-	// add the shape to the layer
-	layer.add(circle);
+    // Add the node group to a layer
+    nodeLayer = new Konva.Layer();
+    nodeLayer.add(dfm.nodeGroup);
 
-	// add the layer to the stage
-	stageApp.add(layer);
+    // Add the node layer to the stage
+    dfm.stageApp.add(nodeLayer);
+	dfm.hoverLayer.setZIndex(1);
 
-	// Add an image file
-	var imageObj = new Image();
-	imageObj.onload = function () {
-	  var node = new Konva.Image({
-		x: 50,
-		y: 50,
-		image: imageObj,
-		width: 100,
-		height: 75
-	  });
-
-	  // add the shape to the layer
-	  layer.add(node);
-	};
-	imageObj.src = '/sci-booster/src/images/node.png';
-
-	// draw the image
-	layer.draw();
+    // Draw the graphics
+    nodeLayer.draw();
 
 }

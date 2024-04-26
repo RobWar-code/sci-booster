@@ -25,8 +25,6 @@ Contents
 
 	sci-booster
 		doc
-		lib
-			pixiJS
 		src
 			html-pages
 			js-scripts
