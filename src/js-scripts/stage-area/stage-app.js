@@ -24,7 +24,6 @@ const startStageApp = () => {
 
     // Add the node layer to the stage
     dfm.stageApp.add(nodeLayer);
-	dfm.hoverLayer.setZIndex(1);
 
     // Draw the graphics
     nodeLayer.draw();

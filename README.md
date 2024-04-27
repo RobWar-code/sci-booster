@@ -90,6 +90,7 @@ The page data is as follows:
 - id - Auto Unique Long Int
 - HierarchicalId - Char 64, ie: 020406 for a level four page. Note that the numbers are NodeNums
 - Title - Char 64
+- Description - VarChar
 - Keywords - Char 256
 
 Links
@@ -118,6 +119,7 @@ Links
 
 #### Flows
 - id - Auto Unique Long Int
+- flowNum - Char 2 Auto ie: "01"
 - SourceX - ShortInt
 - SourceY - ShortInt
 - DestinationX - Short Int

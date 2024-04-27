@@ -30,13 +30,26 @@ function setupHoverText() {
 	dfm.hoverGroup.add(dfm.hoverBox);
 	dfm.hoverGroup.add(dfm.hoverText);
 	dfm.hoverText.setZIndex(1);
-	dfm.stageApp.add(dfm.hoverLayer);
 	dfm.hoverLayer.add(dfm.hoverGroup);
-
 }
 
 function displayHoverText(message, x, y) {
     dfm.hoverGroup.absolutePosition({x: x, y: y});
     dfm.hoverText.setAttr('text', message);
+	activateHover();
+	setTimeout(() => {
+		if (dfm.stageApp && dfm.hoverLayer) {
+			dfm.hoverLayer.remove();
+			dfm.stageApp.draw();
+		}
+		else {
+			console.log("hover variables missing");
+		}
+	}, 3000);
+}
+
+function activateHover() {
+	dfm.stageApp.add(dfm.hoverLayer);
+	dfm.hoverLayer.setZIndex(1);
     dfm.hoverLayer.draw();
 }

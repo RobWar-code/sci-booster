@@ -38,6 +38,70 @@ Contents
 	are likely to be re-used they are encapsulated in global
 	objects in individual files.This approach does mean that multiple 
 	script source references must be made in the HTML.
+
+<h2>Flow Diagram Data Structures
+	For the database model, see the relevant section in README.md.
+
+	The primary decision for the structure of the flow model rests
+	on the fact that one hierarchical page of a model is visible at a time.
+	We must consider whether this is sufficient data to hold on the client
+	and whether we should then use the server database to obtain additional
+	information. This would also tie-in with the application of the Save
+	button on the user interface.
+
+	Current Page Data - This is as follows:
+
+		dfm.CurrentPageData = {
+			flowModel: {
+				id: , // If known
+				title: ,
+				description: ,
+				keywords: ,
+				lastUpdated: ,
+				authors: [],
+				references: [{source:, author:, title: }]
+			}
+			pageData: {
+				id: , // If known
+				hierarchicalPageId: ,
+				title: ,
+				description: ,
+				authors: [],
+				references: [{source:, author:, title: }],
+				keywords: ,
+				nodes: [
+					{
+						id: , // If known
+						nodeNum:, // Auto
+						xCoord: ,
+						yCoord: ,
+						label: ,
+						type: , (Mechanism/Effect)
+						definition: ,
+						keywords: ,
+						hyperlink: ,
+						hasChildPage: 
+					}
+				],
+				flows: [
+					{
+						id: , // If known
+						flowNum: ,
+						sourceX: ,
+						sourceY: ,
+						destinationX: ,
+						destinationY: ,
+						sourceNodeNum: ,
+						destinationNodeNum: ,
+						label: ,
+						definition: ,
+						keywords: ,
+						hyperlink: ,
+						conversionFormulas: [{formula: , definition: }]
+					}
+				]
+			}
+		}
 		
 <h1>Display Menu
 	The main menu appears on both pages of the sci-booster website.
