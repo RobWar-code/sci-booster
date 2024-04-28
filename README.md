@@ -52,20 +52,27 @@ The flow lines between nodes are draughted automatically.
 ### Data Model
 
 #### Tables
-**Update this
 - FlowModels
-- Pages
-- Nodes
-- Flows
-- Users
+- Authors
+- ExternalAuthors
+- AuthorsFlowModelLink
+- ExternalAuthorsFlowModelLink
 - References
-- Users
-- UserLink
-- ReferencesLink
+- ReferencesFlowModelLink
+- Pages
+- ExternalAuthorsPageLink
+- AuthorsPageLink
+- ReferencesPageLink
+- Author
+- Nodes
+- NodeFlowLink
+- Flows
 - Formulas
 - FormulaFlowLink
-- ExternalAuthors
-- ExternalAuthorsLink
+- Users
+- Users
+- UserLink
+
 
 #### FlowModels
 The highest level of abstraction is the flow diagram (FlowModel) and its association
@@ -96,9 +103,9 @@ The page data is as follows:
 Links
 	NodeLink - Nodes
 	FlowLink - Flows
-	ReferencesFlowModelLink - References
-	AuthorsLink - Users
-	ExternalAuthorsLink - External Authors
+	ReferencesPageLink - References
+	AuthorsPageLink - Users
+	ExternalAuthorsPageLink - External Authors
 
 #### Nodes
 A node is associated with the following:
@@ -189,9 +196,9 @@ Links
 - Formula - VarChar
 - Description - VarChar
 
-#### ConversionFormulasFlowLink
+#### FormulasFlowLink
 - id
-- ConversionFormulaId
+- FormulaId
 - FlowId
 
 

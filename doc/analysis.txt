@@ -3,7 +3,6 @@ Detailed Analysis for the sci-booster Project
 
 Contents
 	File Structure/Modularisation
-	Javascript Coding Structure
 	Display Menu
 	Introductory Page
 	Flow Diagram Page
@@ -13,6 +12,9 @@ Contents
 			Nodes
 			Flows
 			Layout Considerations
+	Javascript Coding Structure
+		Flow Diagram Data Structures
+		Flow Drawing Logic
 
 <h1>File Modularisation/Structure
 
@@ -32,77 +34,7 @@ Contents
 			images
 		sci-booster.html (introductory page)
 
-<h1>Javascript Coding Structure
-	The code for the flow model diagrams stage is separated from
-	the other event code for the page. Where functions and data
-	are likely to be re-used they are encapsulated in global
-	objects in individual files.This approach does mean that multiple 
-	script source references must be made in the HTML.
 
-<h2>Flow Diagram Data Structures
-	For the database model, see the relevant section in README.md.
-
-	The primary decision for the structure of the flow model rests
-	on the fact that one hierarchical page of a model is visible at a time.
-	We must consider whether this is sufficient data to hold on the client
-	and whether we should then use the server database to obtain additional
-	information. This would also tie-in with the application of the Save
-	button on the user interface.
-
-	Current Page Data - This is as follows:
-
-		dfm.CurrentPageData = {
-			flowModel: {
-				id: , // If known
-				title: ,
-				description: ,
-				keywords: ,
-				lastUpdated: ,
-				authors: [],
-				references: [{source:, author:, title: }]
-			}
-			pageData: {
-				id: , // If known
-				hierarchicalPageId: ,
-				title: ,
-				description: ,
-				authors: [],
-				references: [{source:, author:, title: }],
-				keywords: ,
-				nodes: [
-					{
-						id: , // If known
-						nodeNum:, // Auto
-						xCoord: ,
-						yCoord: ,
-						label: ,
-						type: , (Mechanism/Effect)
-						definition: ,
-						keywords: ,
-						hyperlink: ,
-						hasChildPage: 
-					}
-				],
-				flows: [
-					{
-						id: , // If known
-						flowNum: ,
-						sourceX: ,
-						sourceY: ,
-						destinationX: ,
-						destinationY: ,
-						sourceNodeNum: ,
-						destinationNodeNum: ,
-						label: ,
-						definition: ,
-						keywords: ,
-						hyperlink: ,
-						conversionFormulas: [{formula: , definition: }]
-					}
-				]
-			}
-		}
-		
 <h1>Display Menu
 	The main menu appears on both pages of the sci-booster website.
 	It is a basic bootstrap navbar with the following components:
@@ -239,6 +171,8 @@ Contents
 		Submit button
 		Leave button
 
+	This panel also includes Draw Flow and Edit Flow Drawing buttons.
+
 	The Destination Node Number can be set to "open" to indicate no 
 	particular output destination
 
@@ -290,3 +224,134 @@ Contents
 		Node Max: 200 x 70px
 		Flow Min Length: 60px
 		Buttons: 20px x 20px
+
+<h1>Javascript Coding Structure
+	The code for the flow model diagrams stage is separated from
+	the other event code for the page. Where functions and data
+	are likely to be re-used they are encapsulated in global
+	objects in individual files.This approach does mean that multiple 
+	script source references must be made in the HTML.
+
+<h2>Flow Diagram Data Structures
+	For the database model, see the relevant section in README.md.
+
+	The primary decision for the structure of the flow model rests
+	on the fact that one hierarchical page of a model is visible at a time.
+	We must consider whether this is sufficient data to hold on the client
+	and whether we should then use the server database to obtain additional
+	information. This would also tie-in with the application of the Save
+	button on the user interface.
+
+	The decision is to use object-oriented code where possible, so the
+	current page data and its methods are defined in a class to be
+	instantiated in the main module.
+
+	Current Page Data - This is as follows:
+
+		dfm.currentPageData = {
+			flowModel: {
+				id: , // If known
+				title: ,
+				description: ,
+				keywords: ,
+				lastUpdated: ,
+				authors: [],
+				references: [{source:, author:, title: }]
+			}
+			pageData: {
+				id: , // If known
+				hierarchicalPageId: ,
+				title: ,
+				description: ,
+				authors: [],
+				references: [{source:, author:, title: }],
+				keywords: ,
+				nodes: [
+					{
+						id: , // If known
+						nodeNum:, // Auto
+						xCoord: ,
+						yCoord: ,
+						label: ,
+						type: , (Mechanism/Effect)
+						definition: ,
+						keywords: ,
+						hyperlink: ,
+						hasChildPage: 
+					}
+				],
+				flows: [
+					{
+						id: , // If known
+						flowNum: ,
+						sourceX: ,
+						sourceY: ,
+						destinationX: ,
+						destinationY: ,
+						sourceNodeNum: ,
+						destinationNodeNum: ,
+						label: ,
+						definition: ,
+						keywords: ,
+						hyperlink: ,
+						conversionFormulas: [{formula: , definition: }]
+					}
+				]
+			}
+		}
+		
+	The flow visual data can be calculated from the currentPageData and the
+	stage dimensions and scale. The node and flow visual groups are contained
+	in the following structure:
+
+		dfm.flowVisuals = {
+			active: ,
+			flowDrawMode: ,
+			nodeLayer: ,
+			nodes: [
+				{
+					active: ,
+					nodeNum: ,
+					nodeGroup:
+				}
+			]
+			flows: [
+				{
+					active: ,
+					flowNum: ,
+					flowGroup: ,
+					points: [{x:, y:}]
+				}
+			]
+		}
+
+<h2>Flow Drawing Logic
+
+	Add Mode:
+
+	Once the user has submitted the flow details in the Flow Details Modal,
+	the modal is cleared and a panel appears above the stage to indicate that
+	flow draw mode is active. The user then clicks points on the stage to
+	mark the path of the flow. The line click points can be edited with drag/drop.
+	(note that node events should be suppressed during this process). 
+	The user can double tap in order to insert the details button.
+	The flow label appears immediately next to/above the first line segment, this
+	can be moved by the user with drag/drop. 
+	
+	Once the user is satisfied, he can click the flow drawing panel done button. 
+	The flow drawing is then saved in the model and the editing points disappear.
+	The node events are then reactivated.
+
+	Edit Drawing Mode:
+
+	When the user clicks the flow details button, the option to edit the drawing
+	is presented in the flow details modal. If the user clicks this then the
+	modal is cleared and the flow drawing panel appears above the stage, the flow
+	is shown with its click point nodes visible and active, these can be moved
+	by drag/drop, or activated by click for deletion. A click on the stage adds
+	a click point and the connecting line at that point.
+
+	As with Add Mode, the component nodes are de-activated during this mode.
+
+	Once the user has finished editing the flow, he can click the Done button
+	in the flow editing panel.
