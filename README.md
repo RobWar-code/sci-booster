@@ -53,41 +53,44 @@ The flow lines between nodes are draughted automatically.
 
 #### Tables
 - FlowModels
+- PageFlowModelLink
+- Pages
 - Authors
 - ExternalAuthors
-- AuthorsFlowModelLink
-- ExternalAuthorsFlowModelLink
-- References
-- ReferencesFlowModelLink
-- Pages
 - ExternalAuthorsPageLink
 - AuthorsPageLink
 - ReferencesPageLink
-- Author
+- AuthorsReferencesLink
 - Nodes
 - NodeFlowLink
 - Flows
 - Formulas
 - FormulaFlowLink
 - Users
-- Users
-- UserLink
+- UserPageLink
 
 
 #### FlowModels
-The highest level of abstraction is the flow diagram (FlowModel) and its association
-with an author. The details are as follows
+The highest level of abstraction is the flow diagram (FlowModel). 
+Note that the flow model is defined by the first page entry of the model,
+which has a hierarchicalId of "01"
+
+The details are as follows:
+
 - id - Auto Unique Long Int
-- Title - Char 64
-- Description - VarChar
-- Keywords - Char 256
-- Last Updated - Date
 
 Links
-	AuthorsFlowModelLink - Authors
-	ExternalAuthorsFlowModelLink - Authors
+	PageFlowModelLink
+
+#### PageFlowModelLink
+- id
+- FlowModelId
+- PageId
 
 #### Pages
+The page data includes a HierarchicalId, the first page has the HierarchicalId
+of "01", which represents the top level of the model hierarchy.
+
 The flow diagrams consist of nodes connected by links that represent flows.
 These are linked hierarchically so that zooming through a particular node
 reveals further flows for that node. In this way each flow diagram is referred
@@ -152,25 +155,20 @@ Links
 - Password - Password
 - Status - Char 16 - "Editor"/"User"
 
-#### Authors
+#### AuthorsPageLink
 - id - Auto Unique Long Int
 - UserId - Long Int
-- FlowModelId - Long Int
+- PageId - Long Int
 
 #### ExternalAuthors
 - id - Auto Unique Long Int
 - FirstName/Initial - Char 32
 - LastName - Char 64
 
-#### ExternalAuthorsFlowModelLink
-- id - Auto Unique Long Int
-- ExternalAuthorsId - Long Int
-- FlowModelId - Long Int
-
 #### ExternalAuthorsPageLink
 - id - Auto Unique Long Int
 - ExternalAuthorsId - Long Int
-- FlowModelId - Long Int
+- PageId - Long Int
 
 #### References
 - id - Auto Unique Long Int
@@ -181,15 +179,15 @@ Links
 Links
 	AuthorsReferencesLink - Authors
 
+#### AuthorsReferencesLink
+- id - Auto Unique Long Int
+- ReferenceId
+- AuthorId
+
 #### ReferencesPageLink
 - id - Auto Unique Long Int
 - ReferenceId - Long Int
 - PageId - Long Int
-
-#### ReferencesFlowModelLink
-- id - Auto Unique Long Int
-- ReferenceId - Long Int
-- FlowModelId - Long Int
 
 #### ConversionFormulas
 - id - Auto Unique Long Int
@@ -209,17 +207,19 @@ sources, notably ChatGPT, in which the data may be easily edited for
 import.
 
 The following definition is known as the "JSON Hierarchical Flow Page 
-Definition Version 1.1"
+Definition Version 1.2"
 
 Clarifications:
 
-- The top level (Page) of a flow model has two, three or four Nodes and all subsequent
-pages are further definitions of the component that they describe.
+- The top level (Page) of a flow model has two, three or four nodes and all subsequent
+pages are further definitions of the component nodes that they describe.
+- The HierarchicalId of the top-level page is "01" and its details apply to the whole model
+as well as the page that they describe
 - All definitions (nodes / pages) should confine themselves to the constraint of the parent.
 - Pages inherit the flows from their parent node (whether source or destination), ideally they should
 be re-presented in the page
 - It is permitted to branch a flow and a component from a component (as in motion from petrol flow, for example)
-- A page should not consist of more than 8 components/nodes
+- A page should not consist of more than 8 component nodes
 - A node number (NodeNum) is unique to a page only and consists of two digits, ie: "01".
 - A HierarchicalID is built from its parent node numbers in order of descent, ie: "010204".
 - When using Keywords, beware of terms such as "flow" which are likely to be to common to be useful
@@ -227,27 +227,14 @@ be re-presented in the page
 ```js
 FlowModels: [
 	{
-		"Title": "",
-		"Description": "",
-		"Keywords": "",
-		"Authors": ["UserName1/Author Name", ..], // If the author is not a user, see ExternalAuthors"
-		"References:": [
-			{
-				"Source": "", // ie: "Web Page" or Publisher
-				"Title": "",
-				"Author: ""
-			},
-			..
-		]
-		"LastUpdated": "",
-		"NumPages": "", // Total Number of pages in the flow model
-
+		"id": , // Auto Long Int
 		"Pages" : [
 			{
-		 		"HierarchicalId": "", // ie: 020406 for a level four page. Note that the numbers (apart from the first)
-					// are NodeNums
+		 		"HierarchicalId": "", // ie: 01020406 for a level four page. Note that the numbers (apart from the first)
+					// are NodeNums, the first/top level is always "01"
 				"Title": "",
 				"Keywords": "",
+				"Authors": [""], // Username or Author
 				"References": [
 					{
 						"Source": "", // ie: "Web Page" or Publisher

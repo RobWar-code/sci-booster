@@ -6,17 +6,43 @@ Contents
 
 <h1>Work Due
 
+    Phase II Testing
+
+    * Transfer project to vanilla javascript in place of react
+
+    * Set-up the flow-diagram testing using the Konva graphics
+    library in place of PIXI.
+
+    * Further the program structure analysis
+
+    Set-up the html for the dataflow page
+
+        Page Title
+        Search Input Display
+        Flow Model Title
+        Flow Page Title
+        Details Button
+        Page Action Buttons
+
+    Rework/replace the Konva flow-diagram code with the structured
+    model.
+
+
+<h1>Work Done
+    22/04/2024
+
+    Phase I Testing
+
     * Set-up the dev environment for experimentation with
     reactflow
 
     * Draft the content of the introductory page
 
-	Set-up the dev environment for working with *pixiJS, *vanilla
+	* Set-up the dev environment for working with *pixiJS, *vanilla
 	javascript, php, mysql and *bootstrap.
 
-    Do the initial preparations of the flow diagram page
+    * Do the initial preparations of the flow diagram page
         * Do the initial bootstrap navbar
 
-        Set-up the initial pixi stage
+        * Set-up the initial pixi stage
 
-<h1>Work Done

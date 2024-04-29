@@ -1,27 +1,10 @@
-// GLOBAL RESIDENT DATA
-const GLOBALS = {
-    minStageWidth: 380,
-    maxStageWidth: 760,
-    stageHeight: 580,
-    minNodeWidth: 100,
-    maxNodeWidth: 200,
-    nodeHeight: 70,
-    nodeButtonTop: 48,
-    minFlowLength: 60,
-    nodeOptionWidth: 20,
-    nodeOptionHeight: 20
-}
-
-// Application Globals
-var dfm = {}
-
 // The Flow Model that is current in this session
 // See README.md for the JSON definition
 dfm.currentFlowModel = {};
 
 // The drawing stage
-dfm.stageWidth = 400;
-dfm.stageHeight = 400;
+dfm.stageWidth = GLOBALS.minStageWidth;
+dfm.stageHeight = GLOBALS.stageHeight;
 dfm.nodeData = {};
 dfm.stageApp = {};
 
@@ -40,7 +23,6 @@ document.addEventListener("graphicsLoaded", (e) => {
 
 function main() {
     console.log("Hello World");
-    startStageApp();
 };
 
 function loadDrawingImages() {

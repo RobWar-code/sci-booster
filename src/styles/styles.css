@@ -1,3 +1,40 @@
+/* Generic */
+.detailSection {
+    border: 1px solid black;
+}
+
+.detailSection p {
+    margin-bottom: 3px;
+}
+
+.iconButton {
+    padding: 3px;
+    background-color: #00a000;
+}
+
+.optionButtons {
+    text-align: right;
+}
+
+.textButton {
+    margin-top: 3px;
+    padding: 3px;
+    background-color: #00a000;
+}
+
+/* Flow Model Page */
+.pageHead {
+    font-size: 20px;
+}
+
+.searchRow {
+    margin-bottom: 3px;
+}
+
+#searchInput {
+    width: 70%;
+}
+
 /* Flow Models */
 /* Drawing Area */
 #flowModelStageCol {

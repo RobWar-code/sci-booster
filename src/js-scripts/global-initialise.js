@@ -1,0 +1,21 @@
+// Initialisation of the global workspace for the flow model diagrams
+
+// APP CONSTANTS
+const GLOBALS = {
+    minStageWidth: 380,
+    maxStageWidth: 760,
+    stageHeight: 580,
+    minNodeWidth: 100,
+    maxNodeWidth: 200,
+    maxNodesPerPage: 8,
+    maxHierarchyLevel: 32,
+    nodeHeight: 70,
+    nodeButtonTop: 48,
+    minFlowLength: 60,
+    nodeOptionWidth: 20,
+    nodeOptionHeight: 20,
+    nodePadding: 4
+}
+
+// The global application object
+var dfm = {};

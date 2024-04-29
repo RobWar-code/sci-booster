@@ -232,6 +232,12 @@ Contents
 	objects in individual files.This approach does mean that multiple 
 	script source references must be made in the HTML.
 
+	All the global classes and instances are encapsulated in the 
+	dfm {} application object
+
+	Where useful, the class definitions are separated into individual
+	source code files, with the declarations in the global namespace.
+
 <h2>Flow Diagram Data Structures
 	For the database model, see the relevant section in README.md.
 
@@ -246,57 +252,59 @@ Contents
 	current page data and its methods are defined in a class to be
 	instantiated in the main module.
 
-	Current Page Data - This is as follows:
+	Flow Page Data - This is as follows:
 
-		dfm.currentPageData = {
-			flowModel: {
-				id: , // If known
-				title: ,
-				description: ,
-				keywords: ,
-				lastUpdated: ,
-				authors: [],
-				references: [{source:, author:, title: }]
+		dfm.Node = class {
+			constructor () {
+				this.id = ""; // If known
+				this.nodeNum = ""; // Auto
+				this.x = 0;
+				this.y = 0;
+				this.label = "";
+				this.type = ""; // (Mechanism/Effect)
+				this.definition = "";
+				this.keywords = "";
+				this.hyperlink = "";
+				this.hasChildPage = false;
 			}
-			pageData: {
-				id: , // If known
-				hierarchicalPageId: ,
-				title: ,
-				description: ,
-				authors: [],
-				references: [{source:, author:, title: }],
-				keywords: ,
-				nodes: [
-					{
-						id: , // If known
-						nodeNum:, // Auto
-						xCoord: ,
-						yCoord: ,
-						label: ,
-						type: , (Mechanism/Effect)
-						definition: ,
-						keywords: ,
-						hyperlink: ,
-						hasChildPage: 
-					}
-				],
-				flows: [
-					{
-						id: , // If known
-						flowNum: ,
-						sourceX: ,
-						sourceY: ,
-						destinationX: ,
-						destinationY: ,
-						sourceNodeNum: ,
-						destinationNodeNum: ,
-						label: ,
-						definition: ,
-						keywords: ,
-						hyperlink: ,
-						conversionFormulas: [{formula: , definition: }]
-					}
-				]
+		}
+
+		dfm.Flow = class {
+			constructor() {
+				this.id = null; // If known
+				this.flowNum = "";
+				this.sourceX = 0;
+				this.sourceY = 0;
+				this.destinationX = 0;
+				this.destinationY = 0;
+				this.sourceNodeNum = 0;
+				this.destinationNodeNum: = 0;
+				this.label = "";
+				this.definition = "";
+				this.keywords = "";
+				this.hyperlink = "";
+				this.conversionFormulas = []; // [{formula: , definition: }]
+			}
+		}
+
+		dfm.FlowPage = class {
+			constructor() {
+				this.id = ""; // If known
+				this.hierarchicalPageId = "";
+				this.title = "";
+				this.description = "";
+				this.authors = [];
+				this.references = []; // [{source:, author:, title: }],
+				this.keywords = "";
+				this.nodes = []; // [Node objects]
+				this.flows = []; // [Flow objects]
+			}
+		}
+
+		dfm.FlowPageData = class {
+			constructor() {
+				this.id = null; // If known
+				this.page = new FlowPage();
 			}
 		}
 		
@@ -304,25 +312,27 @@ Contents
 	stage dimensions and scale. The node and flow visual groups are contained
 	in the following structure:
 
-		dfm.flowVisuals = {
-			active: ,
-			flowDrawMode: ,
-			nodeLayer: ,
-			nodes: [
-				{
-					active: ,
-					nodeNum: ,
-					nodeGroup:
-				}
-			]
-			flows: [
-				{
-					active: ,
-					flowNum: ,
-					flowGroup: ,
-					points: [{x:, y:}]
-				}
-			]
+		dfm.FlowVisuals = class {
+			constructor() {
+				this.active = false;
+				this.flowDrawMode = false;
+				this.nodeLayer = null;
+				this.nodes = [
+					{
+						active: ,
+						nodeNum: ,
+						nodeGroup:
+					}
+				]
+				this.flows= [
+					{
+						active: ,
+						flowNum: ,
+						flowGroup: ,
+						points: [{x:, y:}]
+					}
+				]
+			}
 		}
 
 <h2>Flow Drawing Logic

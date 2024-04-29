@@ -31,23 +31,79 @@
     <div class="container">
         <div class="row">
             <div class="col text-center">
-                <h1>Flow Diagrams</h1>
+                <h1 class="pageHead">Flow Model Diagrams</h1>
             </div>
         </div>
+        <!-- Search -->
+        <div class="row searchRow">
+          <div class="col text-center">
+            <span>Search: </span>
+            <input type="text" id="searchInput"/>
+            <button class="iconButton" onClick="doFlowModelSearch()">
+              <img src="../images/search.png" alt="search" title="Do Search" width="25" height="25"/>
+            </button>
+          </div>
+        </div>
+        <!-- Model Title/Details-->
         <div class="row">
-              <!-- Drawing Stage Area -->
-              <div class="col text-center" id="flowModelStageCol">
-                <div id="flowModelStageDiv">
-                </div>
-              </div>
+          <div class="col-md-7 detailSection">
+            <p>Model Title: <span id="flowModelTitle">My Flow Title</span></p>
+            <p>Page Title: <span id="pageTitle">My Page Title</span></p>
+            <p><button class="textButton" onclick="loadPageDetails()">Page Details</button></p>
+          </div>
+          <!-- Model Options-->
+          <div class="col-md-5 optionButtons">
+            <button class="textButton" onclick="newModel()">New</button> 
+            <button class="textButton" onclick="editModel()">Edit</button> 
+            <button class="textButton" onclick="deleteModel()">Delete</button> 
+            <button class="textButton" onclick="saveModel()">Save</button>
+          </div>
+        </div>
+        <div class="row">
+          <!-- Drawing Stage Area -->
+          <div class="col text-center" id="flowModelStageCol">
+            <div id="flowModelStageDiv">
+            </div>
+          </div>
         </div>
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/konva@9/konva.min.js"></script>
+    <!-- Note that the load order of these scripts IS significant -->
+    <script src="../js-scripts/global-initialise.js"></script>
+    <script src="../js-scripts/stage-area/node.js"></script>
+    <script src="../js-scripts/stage-area/flow.js"></script>
+    <script src="../js-scripts/stage-area/flow-model.js"></script>
     <script src="../js-scripts/stage-area/hover-text.js"></script>
     <script src="../js-scripts/stage-area/stage-app.js"></script>
     <script src="../js-scripts/stage-area/node-drawing.js"></script>
     <script src="../js-scripts/main.js"></script>
+    <script>
+      function doModelSearch() {
+
+      }
+
+      function loadPageDetails() {
+
+      }
+
+      function newModel() {
+
+      }
+
+      function editModel() {
+
+      }
+
+      function deleteModel() {
+
+      }
+
+      function saveModel() {
+
+      }
+
+    </script>
   </body>
 </html>
