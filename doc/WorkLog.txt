@@ -15,7 +15,7 @@ Contents
 
     * Further the program structure analysis
 
-    Set-up the html for the dataflow page
+    * Set-up the html for the dataflow page
 
         Page Title
         Search Input Display
@@ -23,6 +23,10 @@ Contents
         Flow Page Title
         Details Button
         Page Action Buttons
+
+    Fix the stage size at start up
+
+    Do the new flow model modal
 
     Rework/replace the Konva flow-diagram code with the structured
     model.

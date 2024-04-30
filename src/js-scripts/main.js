@@ -5,6 +5,8 @@ dfm.currentFlowModel = {};
 // The drawing stage
 dfm.stageWidth = GLOBALS.minStageWidth;
 dfm.stageHeight = GLOBALS.stageHeight;
+dfm.scaleX = 1;
+dfm.flowVisuals = null;
 dfm.nodeData = {};
 dfm.stageApp = {};
 
@@ -15,6 +17,10 @@ dfm.loadedEvent = new CustomEvent('graphicsLoaded', {detail: {graphicsLoaded: tr
 
 loadDrawingImages();
 
+window.addEventListener("resize", () => {
+    adjustStage();
+});
+
 document.addEventListener("graphicsLoaded", (e) => {
     if (e.detail.graphicsLoaded) {
         main();
@@ -23,6 +29,7 @@ document.addEventListener("graphicsLoaded", (e) => {
 
 function main() {
     console.log("Hello World");
+    startStageApp();
 };
 
 function loadDrawingImages() {

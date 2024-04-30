@@ -1,3 +1,17 @@
+const adjustStage = () => {
+    console.log("Got to adjust stage:", window.innerWidth);
+    dfm.scaleX = window.innerWidth / 400;
+    console.log("scaleX:", dfm.scaleX);
+    if (dfm.scaleX < 1) {
+        dfm.scaleX = 1;
+    }
+    else if (dfm.scaleX > 2) {
+        dfm.scaleX = 2;
+    }
+
+    dfm.stageWidth = dfm.scaleX * GLOBALS.minStageWidth;
+    if (dfm.flowVisuals) redoStage();
+}
 
 const startStageApp = () => {
     console.log ("Got to startApp");
@@ -15,17 +29,33 @@ const startStageApp = () => {
 	// Set-up the hover text
 	setupHoverText();
 
-    // Add the node image file
-    buildNodeGraphic();
-
     // Add the node group to a layer
-    nodeLayer = new Konva.Layer();
-    nodeLayer.add(dfm.nodeGroup);
+    dfm.flowVisuals = new dfm.FlowVisuals();
+
+    dfm.flowVisuals.nodeLayer = new Konva.Layer();
 
     // Add the node layer to the stage
-    dfm.stageApp.add(nodeLayer);
+    dfm.stageApp.add(dfm.flowVisuals.nodeLayer);
 
-    // Draw the graphics
-    nodeLayer.draw();
+    // Test Shape
+    myShape = new Konva.Rect({
+        x: 10,
+        y: 10,
+        width: 100,
+        height: 100,
+        fill: 'green'
+    })
 
+    dfm.flowVisuals.nodeLayer.add(myShape);
+    dfm.flowVisuals.nodeLayer.draw();
+
+}
+
+const redoStage = () => {
+    console.log("stage width:", dfm.stageWidth);
+    e = document.getElementById("flowModelStageDiv");
+    e.style.width = dfm.stageWidth + "px";
+    dfm.stageApp.width(dfm.stageWidth);
+    dfm.stageApp.scale({x: dfm.scaleX, y: 1});
+    dfm.stageApp.batchDraw();
 }
