@@ -2,6 +2,7 @@
 
 // APP CONSTANTS
 const GLOBALS = {
+    minAssumedDisplayWidth: 400,
     minStageWidth: 380,
     maxStageWidth: 760,
     stageHeight: 580,

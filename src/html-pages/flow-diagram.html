@@ -29,28 +29,12 @@
     </nav>
 
     <!-- Flow Page Details Modal -->
-    <div class="modal fade" id="flowPageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title" id="myModalLabel">Modal Title</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <!-- Modal Content Goes Here -->
-            Hello, this is a modal!
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeFlowPageModal();">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
-        </div>
+    <div class="genModal" id="modelDetails">
+      <div class="genModalForm">
+        <button onclick="test();">Press Me</button>
       </div>
-    </div>
-        
-    <div class="container">
+    </div>  
+    <div class="container pageTexts">
         <!-- Page Heading -->
         <div class="row">
             <div class="col text-center">
@@ -82,7 +66,7 @@
             <button class="textButton" onclick="saveModel()">Save</button>
           </div>
         </div>
-        <div class="row">
+        <div class="row" id="flowModelStageRow">
           <!-- Drawing Stage Area -->
           <div class="col text-center" id="flowModelStageCol">
             <div id="flowModelStageDiv">
@@ -115,11 +99,13 @@
 
       function newModel() {
         console.log("At newModel");
-        $('#flowPageModal').modal('show');
+        e = document.getElementById("modelDetails");
+        e.style.display = "block";
       }
 
       function closeFlowPageModal() {
-        $('#flowPageModal').modal('hide');
+        e = document.getElementById("modelDetails");
+        e.style.display = "none";
       }
 
       function editModel() {
@@ -132,6 +118,11 @@
 
       function saveModel() {
 
+      }
+
+      function test() {
+        console.log("Test Passed");
+        closeFlowPageModal();
       }
 
     </script>

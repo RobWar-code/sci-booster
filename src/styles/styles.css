@@ -1,6 +1,6 @@
 /* Generic */
 body {
-    background-color: #e060e0;
+    background-color: #f0e0f0;
 }
 
 .detailSection {
@@ -13,11 +13,11 @@ body {
 
 .iconButton {
     padding: 3px;
-    background-color: #00a000;
+    background-color: #00c000;
 }
 
 .optionsSection {
-    background-color: #c0a0c0;
+    background-color: #b090b0;
 }
 
 .optionButtons {
@@ -27,7 +27,7 @@ body {
 .textButton {
     margin-top: 3px;
     padding: 3px;
-    background-color: #00a000;
+    background-color: #00c000;
 }
 
 /* Flow Model Page */
@@ -43,8 +43,37 @@ body {
     width: 70%;
 }
 
+/* Modal Dialogs */
+.genModal {
+    display: none;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    min-height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 5;
+}
+
+.genModalForm {
+    position: relative;
+    width: 50%;
+    height: 200px;
+    background-color: white;
+    z-index: 10;
+}
+
+.pageTexts {
+    position: relative;
+}
+
 /* Flow Models */
 /* Drawing Area */
+#flowModelStageRow {
+    margin-top: 3px;
+    margin-bottom: 5px;
+}
+
 #flowModelStageCol {
     display: flex;
     justify-content: center;

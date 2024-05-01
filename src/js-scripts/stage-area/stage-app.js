@@ -1,7 +1,13 @@
+/***
+ * Adjust the stage following a resize event
+ */
 const adjustStage = () => {
-    console.log("Got to adjust stage:", window.innerWidth);
-    dfm.scaleX = window.innerWidth / 400;
-    console.log("scaleX:", dfm.scaleX);
+    getStageScaling();
+    if (dfm.flowVisuals) redoStage();
+}
+
+const getStageScaling = () => {
+    dfm.scaleX = window.innerWidth / GLOBALS.minAssumedDisplayWidth;
     if (dfm.scaleX < 1) {
         dfm.scaleX = 1;
     }
@@ -10,13 +16,11 @@ const adjustStage = () => {
     }
 
     dfm.stageWidth = dfm.scaleX * GLOBALS.minStageWidth;
-    if (dfm.flowVisuals) redoStage();
 }
 
 const startStageApp = () => {
-    console.log ("Got to startApp");
-
     let containerElem = document.getElementById("flowModelStageDiv");
+    getStageScaling();
     containerElem.style.width = (dfm.stageWidth + 4) + "px";
 
     // First, create a stage
@@ -25,6 +29,7 @@ const startStageApp = () => {
         width: dfm.stageWidth,
         height: dfm.stageHeight
     });
+    dfm.stageApp.scale({x: dfm.scaleX, y: 1});
 
 	// Set-up the hover text
 	setupHoverText();
@@ -44,11 +49,10 @@ const startStageApp = () => {
         width: 100,
         height: 100,
         fill: 'green'
-    })
+    });
 
     dfm.flowVisuals.nodeLayer.add(myShape);
     dfm.flowVisuals.nodeLayer.draw();
-
 }
 
 const redoStage = () => {
