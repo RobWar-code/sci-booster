@@ -57,7 +57,7 @@ body {
 
 .genModalForm {
     position: relative;
-    width: 220px;
+    width: 360px;
     background-color: white;
     z-index: 10;
     margin-top: 10px;
@@ -71,10 +71,35 @@ body {
     font-size: 18px;
 }
 
+.modalFormLabel {
+    width: 28%;
+}
+
 .modalFormItem {
-    width: 80%;
-    margin-left: auto;
-    margin-right: 3px;
+    width: 70%;
+    margin-bottom: 2px;
+}
+
+.modalFormTextAreaLabel {
+    width: 29%;
+}
+
+.modalFormTextArea {
+    display: flex;
+    margin: 0;
+    align-items: center;
+}
+
+.modalTextArea {
+    height: 80px;
+}
+
+#authorsDiv {
+    display: none;
+}
+
+#referencesDiv {
+    display: none;
 }
 
 .pageTexts {

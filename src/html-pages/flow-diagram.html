@@ -33,10 +33,33 @@
       <div class="genModalForm">
         <h1 class="modalFormTitle">Model Details</h1>
         <form id="modelDetailsForm" onsubmit="doModelDetails()">
-          <label for="modelTitle">Title: </label>
+          <label for="modelTitle" class="modalFormLabel">Title:</label>
           <input type="text" class="modalFormItem" name="modelTitle" id="modelTitle">
-          <label for="modelDecription">Description: </label>
+          <div class="modalFormTextArea">
+            <label for="modelDescription" class="modalFormTextAreaLabel">Description:</label>
+            <textarea class="modalFormItem modalTextArea" name="modelDescription" id="modelDescription"></textarea>
+          </div>
+          <label for="modelKeywords" class="modalFormLabel">Keywords:</label>
+          <input type="text" class="modalFormItem" name="modelKeywords" id="modelKeywords">
+          <button type="submit" class="textButton">Submit Details</button>
         </form>
+        <button class="textButton" onclick="displayAuthors()">Authors</button>
+        <div id="authorsDiv">
+            <ul id="authorsList">
+            </ul>
+            <form id="authorInputForm" onsubmit="submitAuthor()">
+              <label for="modelAuthor" class="modalFormLabel">Author:</label>
+              <input type="text" class="modalFormItem" name="modelAuthor" id="modelAuthor">
+              <button type="submit" class="textButton">Submit Author</button>
+            </form>
+        </div>
+        <button class="textButton" onclick="displayReferences()">References</button>
+        <div id="referencesDiv">
+          <ul id="referencesList">
+          </ul>
+          <form id="referenceInputForm" onsubmit="submitReference()">
+          </form>
+        </div>
       </div>
     </div>  
 
@@ -113,6 +136,11 @@
       function closeFlowPageModal() {
         e = document.getElementById("modelDetails");
         e.style.display = "none";
+      }
+
+      function displayAuthors() {
+        e = document.getElementById("authorsDiv");
+        e.style.display = "block";
       }
 
       function editModel() {
