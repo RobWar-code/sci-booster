@@ -80,15 +80,17 @@ Contents
 
 	The details consist of the following:
 		Title
-		Authors
 		Keywords
 		Description
+		Submit Button
+		Authors
 		References
 		Number Of Pages
-		Submit Button
 		Leave Button
 
-	The References section produces its own modal form Reference Details
+	The Authors section produces its own list.
+
+	The References section produces its own form Reference Details
 	which contains a list of entries and the following input fields:
 		Source
 		Title

@@ -57,10 +57,24 @@ body {
 
 .genModalForm {
     position: relative;
-    width: 50%;
-    height: 200px;
+    width: 220px;
     background-color: white;
     z-index: 10;
+    margin-top: 10px;
+    margin-left: 20px;
+    padding-top: 3px;
+    padding-left: 3px;
+    padding-bottom: 3px;
+}
+
+.modalFormTitle {
+    font-size: 18px;
+}
+
+.modalFormItem {
+    width: 80%;
+    margin-left: auto;
+    margin-right: 3px;
 }
 
 .pageTexts {

@@ -31,9 +31,16 @@
     <!-- Flow Page Details Modal -->
     <div class="genModal" id="modelDetails">
       <div class="genModalForm">
-        <button onclick="test();">Press Me</button>
+        <h1 class="modalFormTitle">Model Details</h1>
+        <form id="modelDetailsForm" onsubmit="doModelDetails()">
+          <label for="modelTitle">Title: </label>
+          <input type="text" class="modalFormItem" name="modelTitle" id="modelTitle">
+          <label for="modelDecription">Description: </label>
+        </form>
       </div>
     </div>  
+
+
     <div class="container pageTexts">
         <!-- Page Heading -->
         <div class="row">
