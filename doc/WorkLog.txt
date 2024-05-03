@@ -24,9 +24,13 @@ Contents
         Details Button
         Page Action Buttons
 
-    Fix the stage size at start up
+    * Fix the stage size at start up
 
     Do the new flow model modal
+
+        Add an indicator to show that an item has been submitted
+
+    Allow for different classes of user in the various edit options
 
     Rework/replace the Konva flow-diagram code with the structured
     model.

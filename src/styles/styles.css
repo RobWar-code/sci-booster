@@ -58,13 +58,15 @@ body {
 .genModalForm {
     position: relative;
     width: 360px;
-    background-color: white;
+    background-color: #f0e0f0;
     z-index: 10;
     margin-top: 10px;
     margin-left: 20px;
     padding-top: 3px;
     padding-left: 3px;
-    padding-bottom: 3px;
+    padding-bottom: 5px;
+    border: 1px solid #604060;
+    border-radius: 8px;
 }
 
 .modalFormTitle {
@@ -73,6 +75,14 @@ body {
 
 .modalFormLabel {
     width: 28%;
+}
+
+.modalFormAdvisory {
+    font-size: 12px;
+    font-style: italic;
+    color: #400000;
+    margin-top: 2px;
+    margin-bottom: 2px;
 }
 
 .modalFormItem {
@@ -88,6 +98,10 @@ body {
     display: flex;
     margin: 0;
     align-items: center;
+}
+
+.modalFormCancelDiv {
+    text-align: right;
 }
 
 .modalTextArea {
