@@ -35,12 +35,15 @@
         <form id="modelDetailsForm" onsubmit="submitModelDetails(event)">
           <label for="modelTitle" class="modalFormLabel">Title:</label>
           <input type="text" class="modalFormItem" name="modelTitle" id="modelTitle">
+          <span class="modalFormCheckmark" id="modelTitleTick">&#x2713;</span>
           <div class="modalFormTextArea">
             <label for="modelDescription" class="modalFormTextAreaLabel">Description:</label>
             <textarea class="modalFormItem modalTextArea" name="modelDescription" id="modelDescription"></textarea>
+            <span class="modalFormCheckmark" id="modelDescriptionTick">&#x2713;</span>
           </div>
           <label for="modelKeywords" class="modalFormLabel">Keywords:</label>
           <input type="text" class="modalFormItem" name="modelKeywords" id="modelKeywords">
+          <span class="modalFormCheckmark" id="modelKeywordsTick">&#x2713;</span>
           <button type="submit" class="textButton">Submit Details</button>
         </form>
         <button class="textButton" onclick="displayAuthors()">Authors</button>
@@ -54,6 +57,7 @@
               <label for="modelAuthor" class="modalFormLabel">Author:</label>
               <input type="text" class="modalFormItem" name="modelAuthor" id="modelAuthor">
               <button type="submit" class="textButton">Submit Author</button>
+              <span class="modalFormCheckmark" id="modelAuthorTick">&#x2713;</span>
             </form>
         </div>
         <p><button class="textButton" onclick="displayReferences()">References</button></p>
@@ -70,6 +74,7 @@
             <label for="modelReferenceTitle" class="modalFormLabel">Title:</label>
             <input type="text" class="modalFormItem" name="modelReferenceTitle" id="modelReferenceTitle">
             <button type="submit" class="textButton">Submit Reference</button>
+            <span class="modalFormCheckmark" id="modelReferenceTick">&#x2713;</span>;
           </form>
         </div>
         <div class="modalFormCancelDiv">
@@ -165,8 +170,26 @@
             dfm.currentPage = new dfm.FlowPageData();
           }
           dfm.currentPage.page.title = title;
+          if (title != "") {
+            document.getElementById("modelTitleTick").style.display = "inline";
+          }
+          else {
+            document.getElementById("modelTitleTick").style.display = "none";
+          }
           dfm.currentPage.page.description = description;
+          if (description != "") {
+            document.getElementById("modelDescriptionTick").style.display = "inline";
+          }
+          else {
+            document.getElementById("modelDescriptionTick").style.display = "none";
+          }
           dfm.currentPage.page.keywords = keywords;
+          if (keywords != "") {
+            document.getElementById("modelKeywordsTick").style.display = "inline";
+          }
+          else {
+            document.getElementById("modelKeywordsTick").style.display = "none";
+          }
           dfm.currentPageSet = true;
         }
       }
@@ -181,9 +204,18 @@
         console.log("Got to submit author");
         if (dfm.currentPageSet) {
           let author = Misc.stripHTML(document.getElementById("modelAuthor").value);
-          dfm.currentPage.page.authors.push(author);
-          displayAuthorsList();
-          document.getElementById("modelAuthor").value="";
+          if (author != "") {
+            dfm.currentPage.page.authors.push(author);
+            console.log("Author:", author);
+            displayAuthorsList();
+            document.getElementById("modelAuthor").value="";
+            if (author != "") {
+              document.getElementById("modelAuthorTick").style.display = "inline";
+            }
+          }
+          else {
+              document.getElementById("modelAuthorTick").style.display = "none";
+          }
         }
       }
 

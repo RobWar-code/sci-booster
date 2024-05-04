@@ -57,7 +57,7 @@ body {
 
 .genModalForm {
     position: relative;
-    width: 360px;
+    width: 370px;
     background-color: #f0e0f0;
     z-index: 10;
     margin-top: 10px;
@@ -85,8 +85,12 @@ body {
     margin-bottom: 2px;
 }
 
+.modalFormCheckmark {
+    display: none;
+}
+
 .modalFormItem {
-    width: 70%;
+    width: 65%;
     margin-bottom: 2px;
 }
 

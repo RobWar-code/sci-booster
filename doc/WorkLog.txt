@@ -28,7 +28,9 @@ Contents
 
     Do the new flow model modal
 
-        Add an indicator to show that an item has been submitted
+        * Add an indicator to show that an item has been submitted
+
+        Do the references section of the modal form
 
     Allow for different classes of user in the various edit options
 
