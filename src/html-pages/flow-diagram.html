@@ -61,9 +61,9 @@
             </form>
         </div>
         <p><button class="textButton" onclick="displayReferences()">References</button></p>
-        <div id="referencesDiv">
-          <div id="referencesListDiv">
-            <ul id="referencesList">
+        <div id="modelReferencesDiv">
+          <div id="modelReferencesListDiv">
+            <ul id="modelReferencesList">
             </ul>
           </div>
           <form id="referenceInputForm" onsubmit="submitReference(event)">
@@ -74,9 +74,10 @@
             <label for="modelReferenceTitle" class="modalFormLabel">Title:</label>
             <input type="text" class="modalFormItem" name="modelReferenceTitle" id="modelReferenceTitle">
             <button type="submit" class="textButton">Submit Reference</button>
-            <span class="modalFormCheckmark" id="modelReferenceTick">&#x2713;</span>;
+            <span class="modalFormCheckmark" id="modelReferenceTick">&#x2713;</span>
           </form>
         </div>
+        <p class="modalFormAdvisory">Click an entry to delete it</p>
         <div class="modalFormCancelDiv">
           <button class="textButton" onclick="dismissModelDetailsForm()">Dismiss</button>
         </div>
@@ -197,6 +198,9 @@
       function displayAuthors() {
         e = document.getElementById("authorsDiv");
         e.style.display = "block";
+        if (dfm.currentPageSet) {
+          displayAuthorsList();
+        }
       }
 
       function submitAuthor(event) {
@@ -250,8 +254,60 @@
       }
 
       function displayReferences() {
-        e = document.getElementById("referencesDiv");
+        e = document.getElementById("modelReferencesDiv");
         e.style.display = "block";
+        if (dfm.currentPageSet) {
+          displayReferencesList();
+        }
+      }
+
+      function submitReference(event) {
+        event.preventDefault();
+        console.log("Got to submit references");
+        if (dfm.currentPageSet) {
+          let refObj = {};
+          refObj.source = Misc.stripHTML(document.getElementById("modelReferenceSource").value);
+          refObj.author = Misc.stripHTML(document.getElementById("modelReferenceAuthor").value);
+          refObj.title = Misc.stripHTML(document.getElementById("modelReferenceTitle").value);
+          if (!(refObj.source === "" && refObj.author === "" && refObj.title === "")) {
+            document.getElementById("modelReferenceSource").value = "";
+            document.getElementById("modelReferenceAuthor").value = "";
+            document.getElementById("modelReferenceTitle").value = "";
+            dfm.currentPage.page.references.push(refObj);
+            displayReferencesList();
+          }
+        }
+      }
+      
+      function displayReferencesList() {
+        console.log("Got to displayReferencesList");
+        document.getElementById("modelReferencesList").remove();
+        let referencesListElem = document.getElementById("modelReferencesListDiv");
+        let listHtml = '<ul class="modalFormList" id="modelReferencesList">';
+        let count = 0;
+        for (reference of dfm.currentPage.page.references) {
+          listHtml += '<li>';
+          listHtml += `<div data-item="${count}" onclick="deleteReference(event)">`;
+          listHtml += `<p class="modalFormListItem">Source: ${reference.source}</p>`;
+          listHtml += `<p class="modalFormListItem">Author: ${reference.author}</p>`;
+          listHtml += `<p class="modalFormListItem">Title: ${reference.title}</p>`;
+          listHtml += '<hr class="modalListHR" />';
+          listHtml += '</div>';
+          listHtml += '</li>';
+        }
+        listHtml += '</ul>';
+        referencesListElem.innerHTML = listHtml;
+      }
+
+      function deleteReference(event) {
+        let itemNum = parseInt(event.target.dataset.item);
+        if (dfm.currentPage.page.references.length === 1) {
+          dfm.currentPage.page.references = [];
+        }
+        else {
+          dfm.currentPage.page.references = dfm.currentPage.page.references.splice(itemNum, 1);
+        }
+        displayReferencesList();
       }
 
       function editModel() {

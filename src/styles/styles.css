@@ -104,6 +104,20 @@ body {
     align-items: center;
 }
 
+.modalFormList {
+    list-style: none;
+}
+
+.modalFormListItem {
+    padding-bottom: 2px;
+    margin-bottom: 2px;
+}
+
+.modalListHR {
+    width: 85%;
+    margin: auto 0;
+}
+
 .modalFormCancelDiv {
     text-align: right;
 }
@@ -116,7 +130,7 @@ body {
     display: none;
 }
 
-#referencesDiv {
+#modelReferencesDiv {
     display: none;
 }
 
