@@ -1,6 +1,11 @@
 // The Flow Model that is current in this session
 // See README.md for the JSON definition
-dfm.currentFlowModel = {};
+dfm.currentPage = {};
+
+// Model Definition Vars
+dfm.currentPageSet = false;
+dfm.modelAuthorsVisible = false;
+dfm.modelReferencesVisible = false;
 
 // The drawing stage
 dfm.stageWidth = GLOBALS.minStageWidth;

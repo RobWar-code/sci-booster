@@ -46,7 +46,7 @@
           <span class="modalFormCheckmark" id="modelKeywordsTick">&#x2713;</span>
           <button type="submit" class="textButton">Submit Details</button>
         </form>
-        <button class="textButton" onclick="displayAuthors()">Authors</button>
+        <button class="textButton" onclick="toggleAuthors()">Authors</button>
         <div id="authorsDiv">
             <div id="authorsListDiv">
               <ul id="authorsList">
@@ -60,12 +60,13 @@
               <span class="modalFormCheckmark" id="modelAuthorTick">&#x2713;</span>
             </form>
         </div>
-        <p><button class="textButton" onclick="displayReferences()">References</button></p>
+        <p><button class="textButton" onclick="toggleReferences()">References</button></p>
         <div id="modelReferencesDiv">
           <div id="modelReferencesListDiv">
             <ul id="modelReferencesList">
             </ul>
           </div>
+          <p class="modalFormAdvisory">Click an entry to delete it</p>
           <form id="referenceInputForm" onsubmit="submitReference(event)">
             <label for="modelReferenceSource" class="modalFormLabel">Source:</label>
             <input type="text" class="modalFormItem" name="modelReferenceSource" id="modelReferenceSource">
@@ -77,7 +78,6 @@
             <span class="modalFormCheckmark" id="modelReferenceTick">&#x2713;</span>
           </form>
         </div>
-        <p class="modalFormAdvisory">Click an entry to delete it</p>
         <div class="modalFormCancelDiv">
           <button class="textButton" onclick="dismissModelDetailsForm()">Dismiss</button>
         </div>
@@ -195,11 +195,18 @@
         }
       }
 
-      function displayAuthors() {
+      function toggleAuthors() {
         e = document.getElementById("authorsDiv");
-        e.style.display = "block";
-        if (dfm.currentPageSet) {
-          displayAuthorsList();
+        if (!dfm.modelAuthorsVisible) {
+          e.style.display = "block";
+          if (dfm.currentPageSet) {
+            displayAuthorsList();
+          }
+          dfm.modelAuthorsVisible = true;
+        }
+        else {
+          e.style.display = "none";
+          dfm.modelAuthorsVisible = false;
         }
       }
 
@@ -253,11 +260,18 @@
         displayAuthorsList();
       }
 
-      function displayReferences() {
+      function toggleReferences() {
         e = document.getElementById("modelReferencesDiv");
-        e.style.display = "block";
-        if (dfm.currentPageSet) {
-          displayReferencesList();
+        if (!dfm.modelReferencesVisible) {
+          e.style.display = "block";
+          if (dfm.currentPageSet) {
+            displayReferencesList();
+          }
+          dfm.modelReferencesVisible = true;
+        }
+        else {
+          e.style.display = "none";
+          dfm.modelReferencesVisible = false;
         }
       }
 
