@@ -30,15 +30,38 @@ Contents
 
         * Add an indicator to show that an item has been submitted
 
-        Do the references section of the modal form
+        * Do the references section of the modal form
 
         Do the reset display status for modal form reload
 
         Allow for different classes of user in the various edit options
 
+    Do the user login/register modal
+
+        Do the analysis
+
+        Document the user table
+
+        Do the user table PHP/MySql code
+
+            Create User table
+
+            register.php
+
+            get-login.php
+
+
+        Do the modal form on the Flow Model Page
+
+        Write the corresponding javascript
+
+        Test/Debug
+
+
     Rework/replace the Konva flow-diagram code with the structured
     model.
 
+    Update the README with user features changes
 
 <h1>Work Done
     22/04/2024

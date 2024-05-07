@@ -79,7 +79,7 @@
           </form>
         </div>
         <div class="modalFormCancelDiv">
-          <button class="textButton" onclick="dismissModelDetailsForm()">Dismiss</button>
+          <button class="textButton" id="modalDismissButton" onclick="dismissModelDetailsForm()">Dismiss</button>
         </div>
       </div>
     </div>  
@@ -155,6 +155,11 @@
         dfm.currentPageSet = false;
       }
 
+      function setModelFormDefaults() {
+        dfm.modelAuthorsVisible = false;
+        dfm.modelReferencesVisible = false;
+      }
+
       function dismissModelDetailsForm() {
         e = document.getElementById("modelDetails");
         e.style.display = "none";
@@ -192,6 +197,7 @@
             document.getElementById("modelKeywordsTick").style.display = "none";
           }
           dfm.currentPageSet = true;
+          document.getElementById("modalDismissButton").innerHTML = "Leave";
         }
       }
 

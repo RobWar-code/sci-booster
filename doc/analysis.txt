@@ -5,6 +5,8 @@ Contents
 	File Structure/Modularisation
 	Display Menu
 	Introductory Page
+	Login/Register Modal
+		User Type Privileges
 	Flow Diagram Page
 		Page Information
 		Page Options Buttons
@@ -45,6 +47,58 @@ Contents
 		Flows
 		Login/Register
 		Narayana-Art
+
+<h1>Login/Register Modal
+	The login/register modal is loaded from the navigation bar from 
+	each of the site pages.
+
+	There are four types of user, "owner", "editor", "user", "unregistered".
+	The default at login is "unregistered". The editor must be an
+	invited user who is given an editor pass key to establish his 
+	status.
+
+	When the modal is first loaded, the possibilities are:
+		User is "unregistered"
+			The following options are presented:
+				Login
+				Signup As User
+				Signup As Editor
+				Signup As Owner - this option appears only once other
+					than through the Admin page.
+
+		User is already logged in and is a "user"
+			The following options are presented:
+				Logout
+				Sign-up as Editor 
+
+		User is already logged in and is an "editor"
+			The following applies:
+				Logout
+
+		User is already logged in and is the owner
+			The following applies:
+				Logout
+
+<h2>User Type Privileges
+
+	The following privileges apply to user types:
+		Unregistered:
+			Search and lookup Flow Models 
+
+		User:
+			Search and lookup Flow Models 
+			Edit own Flow Models
+
+		Editor:
+			Search and lookup Flow Models
+			Edit any Flow Model
+			Delete any Flow Model
+
+		Owner:
+			Search and lookup Flow Models
+			Edit any Flow Model
+			Delete any Flow Model
+			Access Admin Page
 
 <h1>Introductory Page
 	The Introductory page is an HTML text presentation that introduces

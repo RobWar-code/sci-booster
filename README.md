@@ -153,7 +153,7 @@ Links
 - id - Auto Unique Long Int
 - UserName - Char 64
 - Password - Password
-- Status - Char 16 - "Editor"/"User"
+- Status - Char 16 - "owner"/"editor"/"user"
 
 #### AuthorsPageLink
 - id - Auto Unique Long Int
