@@ -42,6 +42,8 @@ Contents
 
         Document the user table
 
+        Write the create database script
+
         Do the user table PHP/MySql code
 
             Create User table
