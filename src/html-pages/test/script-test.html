@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Javascript/PHP Tests</h1>
+    <div id="responseDiv">
+
+    </div>
+<script>
+    // ownerSet();
+    addUser();
+
+    function ownerSet() {
+        let requestObj = {request: "ownerSet"};
+        fetch('../../php-scripts/users/owner-set.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestObj)
+        })
+        .then(response => response.json()) // Parse the JSON response
+        .then(responseData => {
+            // Log the received JSON object
+            console.log('Received JSON from PHP:', responseData);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+
+    }
+
+    function addUser() {
+        let requestObj = {
+            username: "warner1",
+            password: "welcome123",
+            status: "user"
+        }
+        fetch('../../php-scripts/users/add-user.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestObj)
+        })
+        .then(response => response.json()) // Parse the JSON response
+        .then(responseData => {
+            // Log the received JSON object
+            console.log('Received JSON from PHP:', responseData);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    }
+</script>
+</body>
+</html>

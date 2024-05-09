@@ -52,25 +52,25 @@ The flow lines between nodes are draughted automatically.
 ### Data Model
 
 #### Tables
-- FlowModels
-- PageFlowModelLink
-- Pages
-- Authors
-- ExternalAuthors
-- ExternalAuthorsPageLink
-- AuthorsPageLink
-- ReferencesPageLink
-- AuthorsReferencesLink
-- Nodes
-- NodeFlowLink
-- Flows
-- Formulas
-- FormulaFlowLink
-- Users
-- UserPageLink
+- flow_models
+- page_flow_model_link
+- pages
+- authors
+- external_authors
+- external_authors_page_link
+- authors_page_link
+- references_page_link
+- authors_references_link
+- nodes
+- node_flow_link
+- flows
+- formulas
+- formula_flow_link
+- users
+- user_page_link
 
 
-#### FlowModels
+#### flow_models
 The highest level of abstraction is the flow diagram (FlowModel). 
 Note that the flow model is defined by the first page entry of the model,
 which has a hierarchicalId of "01"
@@ -80,15 +80,15 @@ The details are as follows:
 - id - Auto Unique Long Int
 
 Links
-	PageFlowModelLink
+	page_flow_model_link
 
-#### PageFlowModelLink
+#### page_flow_model_link
 - id
-- FlowModelId
-- PageId
+- flow_model_id
+- page_id
 
-#### Pages
-The page data includes a HierarchicalId, the first page has the HierarchicalId
+#### pages
+The page data includes a hierarchical_id, the first page has the HierarchicalId
 of "01", which represents the top level of the model hierarchy.
 
 The flow diagrams consist of nodes connected by links that represent flows.
@@ -98,107 +98,107 @@ to as a page. Pages should not contain more than nine nodes.
 The page data is as follows:
 
 - id - Auto Unique Long Int
-- HierarchicalId - Char 64, ie: 020406 for a level four page. Note that the numbers are NodeNums
-- Title - Char 64
-- Description - VarChar
-- Keywords - Char 256
+- hierarchical_id - Char 64, ie: 020406 for a level four page. Note that the numbers are NodeNums
+- title - Char 64
+- description - VarChar
+- keywords - Char 256
 
 Links
-	NodeLink - Nodes
-	FlowLink - Flows
-	ReferencesPageLink - References
-	AuthorsPageLink - Users
-	ExternalAuthorsPageLink - External Authors
+	node_link - Nodes
+	flow_link - Flows
+	references_page_link - References
+	authors_page_link - Users
+	external_authors_page_link - External Authors
 
-#### Nodes
+#### nodes
 A node is associated with the following:
 - id - Auto Unique Long Int
-- PageId - Char 64
-- NodeNum - Char 2 ie: "01"
-- XCoord - Short Int
-- YCoord - Short Int
-- Label - Char 32
-- Type (Mechanism/Effect) - Char 16
-- Definition - VarChar - optional
-- Keywords - Char 256 - optional
-- Hyperlink - Char 256 - optional a hypertext link to further information
-- HasChildPage - Boolean
+- page_id - Char 64
+- node_num - Char 2 ie: "01"
+- x_coord - Short Int
+- y_coord - Short Int
+- label - Char 32
+- type - Char 16 - "mechanism"/"effect"
+- definition - VarChar - optional
+- keywords - Char 256 - optional
+- hyperlink - Char 256 - optional a hypertext link to further information
+- has_child_page - Boolean
 
 Links
-	NodeFlowLink - Flows
+	node_flow_link - Flows
 
-#### Flows
+#### flows
 - id - Auto Unique Long Int
 - flowNum - Char 2 Auto ie: "01"
-- SourceX - ShortInt
-- SourceY - ShortInt
-- DestinationX - Short Int
-- DestinationY - Short Int
-- SourceNodeId - Int
-- DestinationNodeId - Int (optional if not specified, consider motion of car)
-- Label - Char 32
-- Keywords - Char 256
-- Definition - VarChar (optional)
-- Hyperlink - Char 256(optional)
+- source_x - ShortInt
+- source_y - ShortInt
+- destination_x - Short Int
+- destination_y - Short Int
+- source_node_id - Int
+- destination_void - Boolean
+- destination_node_id - Int (optional if not specified, consider motion of car)
+- label - Char 32
+- keywords - Char 256
+- definition - VarChar (optional)
+- hyperlink - Char 256(optional)
 
 Links
-	ConversionFormulasFlowLink - Conversion Formulas
+	conversion_formulas_flow_link - Conversion Formulas
 
-#### NodeFlowLink
+#### node_flow_link
 - id - Auto Unique Long Int
-- FlowId - Long Int
-- NodeId - Long Int
+- flow_id - Long Int
+- node_Id - Long Int
 
-#### Users
+#### users
 - id - Auto Unique Long Int
-- UserName - Char 64
-- Password - Password
-- Status - Char 16 - "owner"/"editor"/"user"
+- username - Char 64
+- password - Password
+- status - Char 16 - "owner"/"editor"/"user"
 
-#### AuthorsPageLink
+#### authors_page_link
 - id - Auto Unique Long Int
-- UserId - Long Int
-- PageId - Long Int
+- user_id - Long Int
+- page_id - Long Int
 
-#### ExternalAuthors
+#### external_authors
 - id - Auto Unique Long Int
-- FirstName/Initial - Char 32
-- LastName - Char 64
+- first_name - Char 32 - firtname or initial
+- last_name - Char 64
 
-#### ExternalAuthorsPageLink
+#### external_authors_page_link
 - id - Auto Unique Long Int
-- ExternalAuthorsId - Long Int
-- PageId - Long Int
+- external_author_Id - Long Int
+- page_id - Long Int
 
-#### References
+#### references
 - id - Auto Unique Long Int
-- Source - Char 256
-- Title - Char 256
-- Hyperlink - Char 256
+- source - Char 256
+- title - Char 256
+- hyperlink - Char 256
 
 Links
-	AuthorsReferencesLink - Authors
+	authors_references_link - Authors
 
-#### AuthorsReferencesLink
+#### authors_references_link
 - id - Auto Unique Long Int
-- ReferenceId
-- AuthorId
+- reference_id
+- author_id
 
-#### ReferencesPageLink
+#### references_page_link
 - id - Auto Unique Long Int
-- ReferenceId - Long Int
-- PageId - Long Int
+- reference_id - Long Int
+- page_id - Long Int
 
-#### ConversionFormulas
+#### conversion_formulas
 - id - Auto Unique Long Int
-- Formula - VarChar
-- Description - VarChar
+- formula - VarChar
+- description - VarChar
 
-#### FormulasFlowLink
+#### formulas_flow_link
 - id
-- FormulaId
-- FlowId
-
+- formula_id
+- flow_id
 
 ### JSON Inputs / Outputs
 

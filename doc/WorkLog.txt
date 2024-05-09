@@ -40,13 +40,13 @@ Contents
 
         Do the analysis
 
-        Document the user table
+        * Document the user table
 
-        Write the create database script
+        * Write the create database script
 
-        Do the user table PHP/MySql code
+        * Do the user table PHP/MySql code
 
-            Create User table
+            * Create User table
 
             register.php
 
