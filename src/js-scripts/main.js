@@ -1,3 +1,6 @@
+// User Details
+dfm.userStatus = "unregistered"; // Other options are "user", "editor", "owner"
+
 // The Flow Model that is current in this session
 // See README.md for the JSON definition
 dfm.currentPage = {};

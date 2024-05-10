@@ -36,9 +36,11 @@
 
     function addUser() {
         let requestObj = {
-            username: "warner1",
-            password: "welcome123",
-            status: "user"
+            request: "add user",
+            username: "warner2",
+            password: "welcome223",
+            status: "editor",
+            editor_key: "PurplePants"
         }
         fetch('../../php-scripts/users/add-user.php', {
             method: 'POST',

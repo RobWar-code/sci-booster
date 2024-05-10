@@ -6,6 +6,10 @@ Contents
 	Display Menu
 	Introductory Page
 	Login/Register Modal
+		Signup as User
+		Signup as Editor
+		Signup as Owner
+		Login
 		User Type Privileges
 	Flow Diagram Page
 		Page Information
@@ -52,7 +56,7 @@ Contents
 	The login/register modal is loaded from the navigation bar from 
 	each of the site pages.
 
-	There are four types of user, "owner", "editor", "user", "unregistered".
+	There are four types of user (status), "owner", "editor", "user", "unregistered".
 	The default at login is "unregistered". The editor must be an
 	invited user who is given an editor pass key to establish his 
 	status.
@@ -69,7 +73,7 @@ Contents
 		User is already logged in and is a "user"
 			The following options are presented:
 				Logout
-				Sign-up as Editor 
+				Signup as Editor 
 
 		User is already logged in and is an "editor"
 			The following applies:
@@ -78,6 +82,83 @@ Contents
 		User is already logged in and is the owner
 			The following applies:
 				Logout
+
+	The relevant options cause the following items to be displayed
+	on the form:
+		username
+		editor passkey (when applicable)
+		password
+
+<h2>Signup as User
+
+	When the sign-up as user button is clicked, the options
+	are cleared and a form is displayed with the following
+	fields:
+		username
+		password
+
+	When submitted both are checked for null by the javascript.
+	A message is displayed if the details are invalid.
+	If they pass, the values are submitted using JSON to the
+	add-user.php script.
+
+	The add-user script expects the following JSON:
+		request - "add user"
+		username
+		status
+		password
+		editor_key (null in this case)
+
+	If these are transmitted successfully the scripts
+	reports back "result: true"
+	Else reports back "result: false, error: message"
+
+	If there is an error, the javascript reports it on
+	the form display.
+
+	If there is no error, the dfm.userStatus is set to "user"
+	and the modal is cleared.
+
+<h2>Signup as Editor
+
+	When the signup as editor option is chosen, the options
+	are cleared and the following form is presented
+		username
+		password
+		editor key
+
+	The editor key is sent to potential editors by manual email
+	and this is entered into the relevant field by the user.
+
+	The encrypted value is stored in the editor_key table on 
+	the server as a single row, with the single field "key"
+
+	When submitted, the values are checked by javascript and errors
+	reported back to the user.
+
+	The add-user.php script receives the data as for the user,
+	with errors being reported back to the form if necessary.
+
+	If successful the dfm.userStatus is set to "editor" and the
+	modal is cleared.
+
+<h2>Signup as Owner
+	This option is only displayed if the owner type
+	is not already set. Otherwise, it is the same as for
+	a user. The only difference in the data sent to the
+	add-user script is that the status is set to "owner".
+
+<h2>Login
+	This option presents the following fields:
+	username
+	password
+
+	These are validated by javascript, with errors reported
+	back to the form.
+
+	If the data is validated, it is transmitted to the login.php
+	script which requires the username and password and which
+	sends back the status (user type).
 
 <h2>User Type Privileges
 

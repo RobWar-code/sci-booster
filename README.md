@@ -67,6 +67,7 @@ The flow lines between nodes are draughted automatically.
 - formulas
 - formula_flow_link
 - users
+- editor_key
 - user_page_link
 
 
@@ -155,6 +156,9 @@ Links
 - username - Char 64
 - password - Password
 - status - Char 16 - "owner"/"editor"/"user"
+
+#### editor_key
+- key - VarChar(255)
 
 #### authors_page_link
 - id - Auto Unique Long Int

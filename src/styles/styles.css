@@ -134,6 +134,29 @@ body {
     display: none;
 }
 
+/* Login Modal */
+#loginOpt {
+    display: none;
+}
+
+#logoutOpt {
+    display: none;
+}
+
+#signupOpt {
+    display: none;
+}
+
+#editorSignupOpt {
+    display: none;
+}
+
+#ownerSignupOpt {
+    display: none;
+}
+
+
+
 .pageTexts {
     position: relative;
 }
