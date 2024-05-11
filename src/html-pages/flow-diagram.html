@@ -108,11 +108,24 @@
             <button class="textButton" onclick="doLoginOpt('owner')">Owner Signup</button>
           </p>
         </div>
-        <div>
-          <div class="modalFormCancelDiv">
-            <button class="textButton" id="modalDismissButton" onclick="dismissLoginDetailsForm()">Dismiss</button>
-          </div>  
+        <div id="signupDiv">
+          <form id="signupForm" onsubmit="submitSignup(event)">
+            <label for="username" class="modalFormLabel">Username:</label>
+            <input type="text" class="modalFormItem" name="username" id="username">
+            <label for="password" class="modalFormLabel">Password:</label>
+            <input type="password" class="modalFormItem" name="password" id="password">
+            <div id="editorKeyDiv">
+              <label for="editorKey" class="modalFormLabel">Editor Key:</label>
+              <input type="password" class="modalFormItem" name="editorKey" id="editorKey">
+            </div>
+            <p class="modalFormAdvisory" id="loginErrorsPara"></p>
+            <button class="textButton" type="submit">Submit</button>
+          </form>
+          <p class="modalFormAdvisory" id="loginDonePara">LOGIN COMPLETED</p>
         </div>
+        <div class="modalFormCancelDiv">
+          <button class="textButton" id="modalDismissButton" onclick="dismissLoginDetailsForm()">Dismiss</button>
+        </div>  
       </div>
     </div>
 
@@ -171,9 +184,11 @@
     <script src="../js-scripts/stage-area/hover-text.js"></script>
     <script src="../js-scripts/stage-area/stage-app.js"></script>
     <script src="../js-scripts/stage-area/node-drawing.js"></script>
+    <script src="../js-scripts/login/login.js"></script>
     <script src="../js-scripts/model-details/model-details.js"></script>
     <script src="../js-scripts/main.js"></script>
     <script>
+
       function doModelSearch() {
 
       }

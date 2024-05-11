@@ -155,7 +155,18 @@ body {
     display: none;
 }
 
+#signupDiv {
+    display: none;
+}
 
+#loginErrorsPara {
+    display: none;
+}
+
+#loginDonePara {
+    display: none;
+    color: #000050;
+}
 
 .pageTexts {
     position: relative;

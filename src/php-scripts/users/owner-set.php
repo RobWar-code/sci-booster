@@ -22,7 +22,7 @@
         echo json_encode($response);
     }
     else {
-        $response = ['error' => 'owner-set.php unrecognised request'];
+        $response = ['result' => FALSE, 'error' => 'owner-set.php unrecognised request'];
         echo json_encode($response);
     }
 

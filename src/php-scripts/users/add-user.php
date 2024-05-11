@@ -2,7 +2,7 @@
     /*
         Add the user transmitted to the user table
 
-        input json: {request: add-user, username, password, status, editor_key}
+        input json: {request: addUser, username, password, status, editor_key}
         output json: {result: true/false, error: message}
     */
     include_once __DIR__ . '/../db-connect.php';

@@ -48,16 +48,20 @@ Contents
 
             * Create User table
 
-            register.php
+            * add-user.php
 
-            get-login.php
+            login.php
 
 
         Do the modal form on the Flow Model Page
 
         Write the corresponding javascript
 
+            Do the login function
+
         Test/Debug
+
+            Test the user login/sign-up options
 
 
     Rework/replace the Konva flow-diagram code with the structured
