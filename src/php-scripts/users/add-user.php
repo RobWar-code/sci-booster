@@ -6,6 +6,7 @@
         output json: {result: true/false, error: message}
     */
     include_once __DIR__ . '/../db-connect.php';
+    include_once __DIR__ . '/find-user.php';
 
     // Collect the json data
     header('Content-Type: application/json');
@@ -38,6 +39,14 @@
         exit();
     }
 
+    // Check whether the username already exists in the table
+    $response = findUser($inputData['username']);
+    if ($response['result'] === TRUE) {
+        $responseObj = ['result' => FALSE, 'error' => "add-user.php username already exists"];
+        echo json_encode($responseObj);
+        exit();
+    }
+    
     // Check whether the user is an editor
     if ($inputData['status'] === "editor") {
         // Check the editor key

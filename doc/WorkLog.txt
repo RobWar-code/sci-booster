@@ -46,7 +46,7 @@ Contents
 
         * Do the user table PHP/MySql code
 
-            * Create User table
+            * Create User tables
 
             * add-user.php
 
@@ -62,6 +62,12 @@ Contents
         Test/Debug
 
             Test the user login/sign-up options
+
+                Editor
+
+                User
+
+                Owner
 
 
     Rework/replace the Konva flow-diagram code with the structured

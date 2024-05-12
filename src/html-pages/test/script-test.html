@@ -12,7 +12,8 @@
     </div>
 <script>
     // ownerSet();
-    addUser();
+    // addUser();
+    testFindUser();
 
     function ownerSet() {
         let requestObj = {request: "ownerSet"};
@@ -58,6 +59,25 @@
             console.error('Error:', error);
         });
     }
+
+    async function testFindUser() {
+        console.log("Got to testFindUser");
+        try {
+            let responseObj = await fetch('/sci-booster/src/php-scripts/test/test.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({request: 'testFindUser', data: {username: 'warner4'}})
+            });
+            responseObj = await responseObj.json();
+            console.log("testFindUser - result:", responseObj);
+        }
+        catch {(error) => {
+            console.log("testFindUser - error:", error);
+        }}
+    }
+
 </script>
 </body>
 </html>

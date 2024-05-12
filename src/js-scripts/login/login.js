@@ -1,5 +1,8 @@
 async function loadLoginModal() {
+    console.log("userStatus:", dfm.userStatus);
     document.getElementById("loginDetails").style.display = "block";
+    document.getElementById("loginOptionsDiv").style.display = "block";
+    
     if (dfm.userStatus === "unregistered") {
         document.getElementById("loginOpt").style.display = "block";
         document.getElementById("logoutOpt").style.display = "none";
@@ -29,12 +32,16 @@ async function loadLoginModal() {
         document.getElementById("ownerSignupOpt").style.display = "none";
     }
     else {
+        console.log("Got Here");
         document.getElementById("loginOpt").style.display = "none";
         document.getElementById("logoutOpt").style.display = "block";
         document.getElementById("signupOpt").style.display = "none";
         document.getElementById("editorSignupOpt").style.display = "none";
         document.getElementById("ownerSignupOpt").style.display = "none";
     }
+
+    // Hide the login options
+    document.getElementById("signupDiv").style.display = "none";
 }
 
 function doLoginOpt(loginOpt) {
@@ -53,6 +60,12 @@ function doLoginOpt(loginOpt) {
     // Display the signup/login form
     document.getElementById("signupDiv").style.display = "block";
     document.getElementById("loginErrorsPara").style.display = "none";
+    document.getElementById("loginDonePara").style.display = "none";
+
+    // Clear any residual text
+    document.getElementById("username").value = "";
+    document.getElementById("password").value = "";
+    document.getElementById("editorKey").value = "";
 
     if (loginOpt === "editor") {
         document.getElementById("editorKeyDiv").style.display = "block";
@@ -132,10 +145,32 @@ async function submitSignup(event) {
             }, 3000);
             dfm.userStatus = dfm.loginOption;
             dfm.username = username;
+            dfm.loginOption = "";
         }
     }
     else {
         // Login Request
+        loginObj = {
+            request: "login",
+            username: username,
+            password: password
+        }
+        resultObj = await doLoginRequest(loginObj);
+        if (!resultObj.result) {
+            errElem.innerText = resultObj.error;
+            errElem.style.display = "block";
+        }
+        else {
+            let messageElem = document.getElementById("loginDonePara");
+            messageElem.style.display = "block";
+            setTimeout(() => {
+                messageElem.style.display = "none";
+                document.getElementById("loginDetails").style.display = "none";
+            }, 3000);
+            dfm.userStatus = resultObj.user.status;
+            dfm.username = username;
+            dfm.loginOption = "";            
+        }
     }
 }
 
@@ -191,4 +226,25 @@ async function isOwnerSet() {
         return false;
     }};
 
+}
+
+async function doLoginRequest(loginObj) {
+    try {
+        let response = await fetch(dfm.phpPath + 'users/login.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(loginObj)
+        })
+
+        let responseData = await response.json();
+
+        console.log("responseData:", responseData);
+        return responseData;
+    }
+    catch {(error) => {
+        console.error("Problem with login script call", error);
+        return {result: false, error: "login Systems Error"};
+    }};
 }
