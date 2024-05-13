@@ -41,7 +41,7 @@
           <span class="modalFormCheckmark" id="modelTitleTick">&#x2713;</span>
           <div class="modalFormTextArea">
             <label for="modelDescription" class="modalFormTextAreaLabel">Description:</label>
-            <textarea class="modalFormItem modalTextArea" name="modelDescription" id="modelDescription"></textarea>
+            <textarea class="modalFormItem modalTextArea" name="modelDescription" id="modelDescription" cols="40"></textarea>
             <span class="modalFormCheckmark" id="modelDescriptionTick">&#x2713;</span>
           </div>
           <label for="modelKeywords" class="modalFormLabel">Keywords:</label>
@@ -124,7 +124,36 @@
           <p class="modalFormAdvisory" id="loginDonePara">LOGIN COMPLETED</p>
         </div>
         <div class="modalFormCancelDiv">
-          <button class="textButton" id="modalDismissButton" onclick="dismissLoginDetailsForm()">Dismiss</button>
+          <button class="textButton" id="modalDismissButton" onclick="dismissLoginDetails()">Dismiss</button>
+        </div>  
+      </div>
+    </div>
+
+    <!-- Node Details Modal -->
+    <div class="genModal" id="nodeDetails">
+      <div class="genModalForm">
+        <h1 class="modalFormTitle">Node Details</h1>
+        <p id="nodeNumberField">Node Number:</p>
+        <form id="nodeDetailsForm" onsubmit="submitNodeDetails()">
+          <label for="nodeLabel" class="modalFormLabel">Label:</label>
+          <input type="text" class="modalFormItem" name="nodeLabel" id="nodeLabel">
+          <label for="nodeType" class="modalFormLabel">Type:</label>
+          <select name="nodeType" id="nodeType" class="modalFormItem">
+            <option value="mechanism">Mechanism</option>
+            <option value="effect">Effect</option>
+          </select>
+          <label for="nodeKeywords" class="modalFormLabel">Keywords:</label>
+          <input type="text" class="modalFormItem" name="nodeKeywords" id="nodeKeywords">
+          <div class="modalFormTextArea">
+            <label for="nodeDefinition" class="modalFormTextAreaLabel">Definition:</label>
+            <textarea class="modalFormItem modalFormTextArea" id="nodeDefinition" name="nodeDefinition" cols="40"></textarea>
+          </div>
+          <label for="nodeHyperlink" class="modalFormLabel">Hyperlink:</label>
+          <input type="text" class="modalFormItem" name="nodeHyperlink" id="nodeHyperlink">
+          <button type="submit" class="textButton">Submit</button>
+        </form>
+        <div class="modalFormCancelDiv">
+          <button class="textButton" id="modalDismissButton" onclick="dismissNodeDetails()">Dismiss</button>
         </div>  
       </div>
     </div>
@@ -156,10 +185,15 @@
           </div>
           <!-- Model Options-->
           <div class="col-md-5 optionButtons optionsSection">
-            <button class="textButton" onclick="newModel()">New</button> 
-            <button class="textButton" onclick="editModel()">Edit</button> 
-            <button class="textButton" onclick="deleteModel()">Delete</button> 
-            <button class="textButton" onclick="saveModel()">Save</button>
+            <div id="modelEditOptionsDiv">
+              <button class="textButton" id="newModelButton" onclick="newModel()" title="Create New Model">New</button> 
+              <button class="textButton" id="editModelButton" onclick="editModel()">Edit</button> 
+              <button class="textButton" id="deleteModelButton" onclick="deleteModel()">Delete</button> 
+              <button class="textButton" id="saveModelButton" onclick="saveModel()">Save</button>
+            </div>
+            <p id="modelEditInfo">
+              To be able to create or modify your own flow models see menu: login/register and signup
+            </p>
           </div>
         </div>
         <div class="row" id="flowModelStageRow">
@@ -185,9 +219,12 @@
     <script src="../js-scripts/stage-area/stage-app.js"></script>
     <script src="../js-scripts/stage-area/node-drawing.js"></script>
     <script src="../js-scripts/login/login.js"></script>
+    <script src="../js-scripts/flow-model-page/flow-model-page.js"></script>
     <script src="../js-scripts/model-details/model-details.js"></script>
+    <script src="../js-scripts/stage-area/node-details.js"></script>
     <script src="../js-scripts/main.js"></script>
     <script>
+      displayModelEditOptions();
 
       function doModelSearch() {
 

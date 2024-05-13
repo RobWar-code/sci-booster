@@ -29,7 +29,7 @@
     function ownerSet() {
         global $dbConn;
 
-        $sql = "SELECT COUNT(*) as count from users WHERE status = 'owner'";
+        $sql = "SELECT COUNT(*) as count from user WHERE status = 'owner'";
         $result = $dbConn->query($sql);
 
         // Fetch and display the count

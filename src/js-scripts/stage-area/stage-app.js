@@ -29,7 +29,10 @@ const startStageApp = () => {
         width: dfm.stageWidth,
         height: dfm.stageHeight
     });
+    
     dfm.stageApp.scale({x: dfm.scaleX, y: 1});
+
+    dfm.stageApp.on('click', doNodeDetails());
 
 	// Set-up the hover text
 	setupHoverText();

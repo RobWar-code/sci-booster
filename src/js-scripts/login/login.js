@@ -146,6 +146,7 @@ async function submitSignup(event) {
             dfm.userStatus = dfm.loginOption;
             dfm.username = username;
             dfm.loginOption = "";
+            displayModelEditOptions();            
         }
     }
     else {
@@ -169,9 +170,14 @@ async function submitSignup(event) {
             }, 3000);
             dfm.userStatus = resultObj.user.status;
             dfm.username = username;
-            dfm.loginOption = "";            
+            dfm.loginOption = "";
+            displayModelEditOptions();            
         }
     }
+}
+
+function dismissLoginDetails() {
+    document.getElementById("loginDetails").style.display = "none";
 }
 
 // PHP Interfaces

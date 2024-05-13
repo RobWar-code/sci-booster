@@ -12,6 +12,7 @@ dfm.currentPage = {};
 
 // Model Definition Vars
 dfm.currentPageSet = false;
+dfm.modelEditMode = false;
 dfm.modelAuthorsVisible = false;
 dfm.modelReferencesVisible = false;
 

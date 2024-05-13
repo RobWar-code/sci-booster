@@ -6,8 +6,33 @@ Contents
 
 <h1>Work Due
 
-    Phase II Testing
+    Set-up the model Details button events
 
+    Do the new flow model modal
+
+        * Add an indicator to show that an item has been submitted
+
+        * Do the references section of the modal form
+
+        Do the reset display status for modal form reload
+
+        Allow for different classes of user in the various edit options of the modal form
+
+    Do the diagram editing operations
+
+        Add node operation
+
+            Node Details Modal HTML
+
+
+    Rework/replace the Konva flow-diagram code with the structured
+    model.
+
+    Update the README with user features changes
+
+<h1>Work Done
+    13/05/2024
+    
     * Transfer project to vanilla javascript in place of react
 
     * Set-up the flow-diagram testing using the Konva graphics
@@ -26,19 +51,9 @@ Contents
 
     * Fix the stage size at start up
 
-    Do the new flow model modal
+    * Do the user login/register modal
 
-        * Add an indicator to show that an item has been submitted
-
-        * Do the references section of the modal form
-
-        Do the reset display status for modal form reload
-
-        Allow for different classes of user in the various edit options
-
-    Do the user login/register modal
-
-        Do the analysis
+        * Do the analysis
 
         * Document the user table
 
@@ -50,32 +65,25 @@ Contents
 
             * add-user.php
 
-            login.php
+            * login.php
 
 
-        Do the modal form on the Flow Model Page
+        * Do the modal form on the Flow Model Page
 
-        Write the corresponding javascript
+        * Write the corresponding javascript
 
-            Do the login function
+           * Do the login function
 
-        Test/Debug
+        * Test/Debug
 
-            Test the user login/sign-up options
+           * Test the user login/sign-up options
 
-                Editor
+                & Editor
 
-                User
+                * User
 
-                Owner
+                * Owner
 
-
-    Rework/replace the Konva flow-diagram code with the structured
-    model.
-
-    Update the README with user features changes
-
-<h1>Work Done
     22/04/2024
 
     Phase I Testing

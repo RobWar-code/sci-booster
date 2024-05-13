@@ -120,12 +120,14 @@ body {
 
 .modalFormCancelDiv {
     text-align: right;
+    padding-right: 3px;
 }
 
 .modalTextArea {
     height: 80px;
 }
 
+/* Model Details */
 #authorsDiv {
     display: none;
 }

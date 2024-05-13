@@ -12,8 +12,10 @@ Contents
 		Login
 		User Type Privileges
 	Flow Diagram Page
+		Model Edit Options
 		Page Information
 		Page Options Buttons
+			New Model / New Page Operations
 		Flow Diagram
 			Nodes
 			Flows
@@ -200,6 +202,38 @@ Contents
 
 	If	nothing is found, this is reported by the user. 
 
+<h2>Model Edit Options
+
+	The model edit option buttons appear in their own panel toward
+	the top of the screen. Which options are available depends on the
+	user status and whether there is a model loaded.
+
+	The conditions are as follows:
+		If the user is unregistered:
+			Display the message to indicate that the user should signup
+			or login
+
+		If the user status is "user":
+			If no model is loaded:
+				The New option is presented
+			Else, if the user is NOT an author of the current model:
+				The New option is presented
+			Otherwise (ie: the user is an author):
+				The New option is presented
+				If not already in model edit mode, the Edit option is presented
+				The Delete option is presented
+				The Save option is presented
+
+		If the user status is "owner" or "editor"
+			If no model is loaded:
+				The New option is presented
+			Otherwise:
+				The New option is presented
+				If not already in model edit mode, the Edit option is presented
+				The Delete option is presented
+				The Save option is presented
+
+
 <h2>Page Information
 
 	The page information appears toward the top of the page on the left.
@@ -234,9 +268,10 @@ Contents
 		Leave Button
 
 <h2>Page Options Buttons
-	The page options buttons are Add, Update, Delete, Save
+	The page options buttons are New, Edit, Delete, Save
+	for the logic See Above: Model Edit Options
 
-	Add:
+	New:
 	The Add option only applies for a new Flow Model, otherwise the
 	facility to add a page for further definition is available at the
 	node.
@@ -244,7 +279,7 @@ Contents
 	When the Add button is pressed, the Flow Model Details appear as a 
 	modal to be entered.
 
-	Update:
+	Edit:
 	The update button only appears when the Flow Diagram Page already
 	contains content. It enables the editing of the drawing. Only the
 	author and the editors can use this feature.
@@ -257,6 +292,8 @@ Contents
 	Save:
 	This saves the page/model and performs all necessary database
 	updates.
+
+<h3>New Model / New Page Operations
 
 <h2>Flow Diagram
 
@@ -282,7 +319,7 @@ Contents
 
 	Each node is displayed with the following:
 	Node Number
-	Title
+	Label 
 	Option Buttons
 		Details
 		Hierarchical Definition Page
