@@ -14,15 +14,21 @@ Contents
 
         * Do the references section of the modal form
 
+        Update the model title when the New option is submitted
+        
+        Update the page details on the main page when form submitted
+
         Do the reset display status for modal form reload
 
         Allow for different classes of user in the various edit options of the modal form
 
     Do the diagram editing operations
 
-        Add node operation
+        * Add node operation
 
-            Node Details Modal HTML
+            * Node Details Modal HTML
+
+            * Node details add and draw
 
 
     Rework/replace the Konva flow-diagram code with the structured

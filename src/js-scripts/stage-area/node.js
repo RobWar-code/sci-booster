@@ -3,7 +3,7 @@
 dfm.Node = class {
     constructor () {
         this.id = ""; // If known
-        this.nodeNum = ""; // Auto
+        this.node_num = ""; // Auto
         this.x = 0;
         this.y = 0;
         this.label = "";
@@ -11,6 +11,6 @@ dfm.Node = class {
         this.definition = "";
         this.keywords = "";
         this.hyperlink = "";
-        this.hasChildPage = false;
+        this.has_child_page = false;
     }
 }

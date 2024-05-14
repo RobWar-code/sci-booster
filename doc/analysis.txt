@@ -295,6 +295,39 @@ Contents
 
 <h3>New Model / New Page Operations
 
+	When the New model button is clicked:
+		If there is a current model:
+			If the current model is in edit mode:
+				Ask the user if they wish to save the current model
+			
+			Clear down the current model
+			Reset the currentModelSet flag 
+	
+	Load the model details form, which contains the following fields,
+	note that this is the same for a page as for the model. 
+
+		HierarchicalId - set automatically
+		Title
+		Keywords
+		Description
+
+		Authors
+
+		References
+			Source
+			Title
+			Author
+
+	The form is submitted section by section to the dfm.currentPageData object
+
+	Also created is the dfm.FlowVisuals object for the page
+
+	Once the user clicks the Leave button, dfm.modelEditMode is set
+
+	Note that the same form is presented for details display, but with fields edit 
+	disabled and the submit buttons concealed.
+
+
 <h2>Flow Diagram
 
 	The flow diagram consists of nodes (as boxes) and flows as arrowed

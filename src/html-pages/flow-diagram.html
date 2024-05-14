@@ -133,8 +133,8 @@
     <div class="genModal" id="nodeDetails">
       <div class="genModalForm">
         <h1 class="modalFormTitle">Node Details</h1>
-        <p id="nodeNumberField">Node Number:</p>
-        <form id="nodeDetailsForm" onsubmit="submitNodeDetails()">
+        <p id="nodeNumberField">Node Number: <span id="nodeNum"></span></p>
+        <form id="nodeDetailsForm" onsubmit="submitNodeDetails(event)">
           <label for="nodeLabel" class="modalFormLabel">Label:</label>
           <input type="text" class="modalFormItem" name="nodeLabel" id="nodeLabel">
           <label for="nodeType" class="modalFormLabel">Type:</label>
@@ -150,6 +150,7 @@
           </div>
           <label for="nodeHyperlink" class="modalFormLabel">Hyperlink:</label>
           <input type="text" class="modalFormItem" name="nodeHyperlink" id="nodeHyperlink">
+          <p class="modalFormAdvisory" id="nodeErrors"></p>
           <button type="submit" class="textButton">Submit</button>
         </form>
         <div class="modalFormCancelDiv">

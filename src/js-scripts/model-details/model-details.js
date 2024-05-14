@@ -24,6 +24,7 @@
     if (!(title === "" && description === "" && keywords === "")) {
       if (!dfm.currentPageSet) {
         dfm.currentPage = new dfm.FlowPageData();
+        dfm.currentVisual = new dfm.FlowVisuals();
       }
       dfm.currentPage.page.title = title;
       if (title != "") {
@@ -47,6 +48,7 @@
         document.getElementById("modelKeywordsTick").style.display = "none";
       }
       dfm.currentPageSet = true;
+      dfm.modelEditMode = true;
       document.getElementById("modalDismissButton").innerHTML = "Leave";
     }
   }

@@ -9,6 +9,7 @@ dfm.loginOption = "";
 // The Flow Model that is current in this session
 // See README.md for the JSON definition
 dfm.currentPage = {};
+dfm.currentVisual = {};
 
 // Model Definition Vars
 dfm.currentPageSet = false;
@@ -20,7 +21,21 @@ dfm.modelReferencesVisible = false;
 dfm.stageWidth = GLOBALS.minStageWidth;
 dfm.stageHeight = GLOBALS.stageHeight;
 dfm.scaleX = 1;
-dfm.flowVisuals = null;
+dfm.nodeTemplate = {
+    width: 140,
+    height: 75,
+    textTop: 3,
+    textLeft: 3,
+    textLineHeight: 18,
+    fontSize: 13, 
+    fontFamily: "Calibri",
+    optionTop: 48,
+    optionLeft: 3,
+    optionHeight: 25,
+    optionWidth: 25
+}
+dfm.newNodeX = 0;
+dfm.newNodeY = 0;
 dfm.nodeData = {};
 dfm.stageApp = {};
 
@@ -64,9 +79,9 @@ function loadDrawingImages() {
     dfm.nodeGraphics.flowLink = new Image();
     dfm.nodeGraphics.flowLink.onload = loadRegister;
     dfm.nodeGraphics.flowLink.src = '/sci-booster/src/images/flow-link.png';
-    dfm.nodeGraphics.webLink = new Image();
-    dfm.nodeGraphics.webLink.onload = loadRegister;
-    dfm.nodeGraphics.webLink.src ='/sci-booster/src/images/web-link.png';
+    dfm.nodeGraphics.hyperlink = new Image();
+    dfm.nodeGraphics.hyperlink.onload = loadRegister;
+    dfm.nodeGraphics.hyperlink.src ='/sci-booster/src/images/web-link.png';
     dfm.nodeGraphics.zoomDetails = new Image();
     dfm.nodeGraphics.zoomDetails.onload = loadRegister;
     dfm.nodeGraphics.zoomDetails.src = '/sci-booster/src/images/zoom-details.png';

@@ -32,30 +32,10 @@ const startStageApp = () => {
     
     dfm.stageApp.scale({x: dfm.scaleX, y: 1});
 
-    dfm.stageApp.on('click', doNodeDetails());
+    dfm.stageApp.on('click', (e) => doNodeDetails(e));
 
 	// Set-up the hover text
 	setupHoverText();
-
-    // Add the node group to a layer
-    dfm.flowVisuals = new dfm.FlowVisuals();
-
-    dfm.flowVisuals.nodeLayer = new Konva.Layer();
-
-    // Add the node layer to the stage
-    dfm.stageApp.add(dfm.flowVisuals.nodeLayer);
-
-    // Test Shape
-    myShape = new Konva.Rect({
-        x: 10,
-        y: 10,
-        width: 100,
-        height: 100,
-        fill: 'green'
-    });
-
-    dfm.flowVisuals.nodeLayer.add(myShape);
-    dfm.flowVisuals.nodeLayer.draw();
 }
 
 const redoStage = () => {
