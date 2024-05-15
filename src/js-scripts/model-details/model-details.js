@@ -1,21 +1,25 @@
-  function newModel() {
+const modelDetails = {
+
+  newModel: function() {
     console.log("At newModel");
     e = document.getElementById("modelDetails");
     e.style.display = "block";
+    document.getElementById("additionalModelDetailsDiv").style.display = "none";
     dfm.currentPageSet = false;
-  }
+    dfm.topPage = true;
+  },
 
-  function setModelFormDefaults() {
+  setModelFormDefaults: function () {
     dfm.modelAuthorsVisible = false;
     dfm.modelReferencesVisible = false;
-  }
+  },
 
-  function dismissModelDetailsForm() {
+  dismissModelDetailsForm: function () {
     e = document.getElementById("modelDetails");
     e.style.display = "none";
-  }
+  },
 
-  function submitModelDetails(event) {
+  submitModelDetails: function (event) {
     event.preventDefault();
     let title = Misc.stripHTML(document.getElementById("modelTitle").value);
     let description = Misc.stripHTML(document.getElementById("modelDescription").value);
@@ -49,16 +53,23 @@
       }
       dfm.currentPageSet = true;
       dfm.modelEditMode = true;
+      document.getElementById("additionalModelDetailsDiv").style.display = "block";
+      flowModelPage.displayModelEditOptions();
       document.getElementById("modalDismissButton").innerHTML = "Leave";
+      // If the top page of the hierarchy
+      if (dfm.topPage) {
+        document.getElementById("flowModelTitle").innerText = title;
+      }
+      document.getElementById("pageTitle").innerText = title;
     }
-  }
+  },
 
-  function toggleAuthors() {
+  toggleAuthors: function () {
     e = document.getElementById("authorsDiv");
     if (!dfm.modelAuthorsVisible) {
       e.style.display = "block";
       if (dfm.currentPageSet) {
-        displayAuthorsList();
+        this.displayAuthorsList();
       }
       dfm.modelAuthorsVisible = true;
     }
@@ -66,9 +77,9 @@
       e.style.display = "none";
       dfm.modelAuthorsVisible = false;
     }
-  }
+  },
 
-  function submitAuthor(event) {
+  submitAuthor: function (event) {
     event.preventDefault();
     console.log("Got to submit author");
     if (dfm.currentPageSet) {
@@ -76,7 +87,7 @@
       if (author != "") {
         dfm.currentPage.page.authors.push(author);
         console.log("Author:", author);
-        displayAuthorsList();
+        this.displayAuthorsList();
         document.getElementById("modelAuthor").value="";
         if (author != "") {
           document.getElementById("modelAuthorTick").style.display = "inline";
@@ -86,9 +97,10 @@
           document.getElementById("modelAuthorTick").style.display = "none";
       }
     }
-  }
+  },
 
-  function displayAuthorsList() {
+  displayAuthorsList: function () {
+    console.log("Got to displayAuthorsList")
     // Remove the old list
     document.getElementById("authorsList").remove();
     // Build the replacement html
@@ -96,14 +108,15 @@
     let listHtml = "<ul id=\"authorsList\">";
     let count = 0;
     for (author of dfm.currentPage.page.authors) {
-      listHtml += `<li data-item="${count}" onclick="deleteAuthor(event)">${author}</li>`;
+      listHtml += `<li data-item="${count}" onclick="modelDetails.deleteAuthor(event)">${author}</li>`;
       ++count;
     }
     listHtml += "</ul>";
     listDiv.innerHTML = listHtml;
-  }
+    listDiv.style.display = "block";
+  },
 
-  function deleteAuthor(event) {
+  deleteAuthor: function (event) {
     console.log("Got to deleteAuthor");
     let listItem = event.target;
     let itemNum = parseInt(listItem.dataset.item);
@@ -115,10 +128,10 @@
       dfm.currentPage.page.authors = dfm.currentPage.page.authors.splice(itemNum, 1);
     }
     console.log("list:", dfm.currentPage.page.authors);
-    displayAuthorsList();
-  }
+    this.displayAuthorsList();
+  },
 
-  function toggleReferences() {
+  toggleReferences: function () {
     e = document.getElementById("modelReferencesDiv");
     if (!dfm.modelReferencesVisible) {
       e.style.display = "block";
@@ -131,9 +144,9 @@
       e.style.display = "none";
       dfm.modelReferencesVisible = false;
     }
-  }
+  },
 
-  function submitReference(event) {
+  submitReference: function (event) {
     event.preventDefault();
     console.log("Got to submit references");
     if (dfm.currentPageSet) {
@@ -146,12 +159,12 @@
         document.getElementById("modelReferenceAuthor").value = "";
         document.getElementById("modelReferenceTitle").value = "";
         dfm.currentPage.page.references.push(refObj);
-        displayReferencesList();
+        this.displayReferencesList();
       }
     }
-  }
+  },
   
-  function displayReferencesList() {
+  displayReferencesList: function () {
     console.log("Got to displayReferencesList");
     document.getElementById("modelReferencesList").remove();
     let referencesListElem = document.getElementById("modelReferencesListDiv");
@@ -159,7 +172,7 @@
     let count = 0;
     for (reference of dfm.currentPage.page.references) {
       listHtml += '<li>';
-      listHtml += `<div data-item="${count}" onclick="deleteReference(event)">`;
+      listHtml += `<div data-item="${count}" onclick="modelDetails.deleteReference(event)">`;
       listHtml += `<p class="modalFormListItem">Source: ${reference.source}</p>`;
       listHtml += `<p class="modalFormListItem">Author: ${reference.author}</p>`;
       listHtml += `<p class="modalFormListItem">Title: ${reference.title}</p>`;
@@ -169,9 +182,9 @@
     }
     listHtml += '</ul>';
     referencesListElem.innerHTML = listHtml;
-  }
+  },
 
-  function deleteReference(event) {
+  deleteReference: function (event) {
     let itemNum = parseInt(event.target.dataset.item);
     if (dfm.currentPage.page.references.length === 1) {
       dfm.currentPage.page.references = [];
@@ -179,5 +192,7 @@
     else {
       dfm.currentPage.page.references = dfm.currentPage.page.references.splice(itemNum, 1);
     }
-    displayReferencesList();
+    this.displayReferencesList();
   }
+
+}

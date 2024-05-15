@@ -33,7 +33,7 @@ dfm.FlowVisuals = class {
         node.nodeNum = nodeNum;
         node.label = label;
         node.nodeGroup = new Konva.Group({
-            x: x,
+            x: x / dfm.scaleX,
             y: y
         });
         node.rect = new Konva.Rect({

@@ -14,6 +14,7 @@ dfm.currentVisual = {};
 // Model Definition Vars
 dfm.currentPageSet = false;
 dfm.modelEditMode = false;
+dfm.topPage = false;
 dfm.modelAuthorsVisible = false;
 dfm.modelReferencesVisible = false;
 
@@ -47,18 +48,18 @@ dfm.loadedEvent = new CustomEvent('graphicsLoaded', {detail: {graphicsLoaded: tr
 loadDrawingImages();
 
 window.addEventListener("resize", () => {
-    adjustStage();
+    stageApp.adjustStage();
 });
 
 document.addEventListener("graphicsLoaded", (e) => {
     if (e.detail.graphicsLoaded) {
-        main();
+        flowMain();
     }  
 });
 
-function main() {
+function flowMain() {
     console.log("Hello World");
-    startStageApp();
+    stageApp.startStageApp();
 };
 
 function loadDrawingImages() {

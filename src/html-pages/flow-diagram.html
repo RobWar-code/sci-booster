@@ -24,7 +24,7 @@
                 <a class="nav-link active" aria-current="page" href="./flow-diagram.html">Flow Models</a>
               </li>
               <li class="nav-item">
-                <button class="nav-link" onclick="loadLoginModal()">Login/Register</button>
+                <button class="nav-link" onclick="login.loadLoginModal()">Login/Register</button>
               </li>
             </ul>
           </div>
@@ -35,7 +35,7 @@
     <div class="genModal" id="modelDetails">
       <div class="genModalForm">
         <h1 class="modalFormTitle">Model Details</h1>
-        <form id="modelDetailsForm" onsubmit="submitModelDetails(event)">
+        <form id="modelDetailsForm" onsubmit="modelDetails.submitModelDetails(event)">
           <label for="modelTitle" class="modalFormLabel">Title:</label>
           <input type="text" class="modalFormItem" name="modelTitle" id="modelTitle">
           <span class="modalFormCheckmark" id="modelTitleTick">&#x2713;</span>
@@ -49,40 +49,42 @@
           <span class="modalFormCheckmark" id="modelKeywordsTick">&#x2713;</span>
           <button type="submit" class="textButton">Submit Details</button>
         </form>
-        <button class="textButton" onclick="toggleAuthors()">Authors</button>
-        <div id="authorsDiv">
-            <div id="authorsListDiv">
-              <ul id="authorsList">
+        <div id="additionalModelDetailsDiv">
+          <button class="textButton" onclick="modelDetails.toggleAuthors()">Authors</button>
+          <div id="authorsDiv">
+              <div id="authorsListDiv">
+                <ul id="authorsList">
+                </ul>
+              </div>
+              <p class="modalFormAdvisory">Click on an author to remove it</p>
+              <form id="authorInputForm" onsubmit="modelDetails.submitAuthor(event)">
+                <label for="modelAuthor" class="modalFormLabel">Author:</label>
+                <input type="text" class="modalFormItem" name="modelAuthor" id="modelAuthor">
+                <button type="submit" class="textButton">Submit Author</button>
+                <span class="modalFormCheckmark" id="modelAuthorTick">&#x2713;</span>
+              </form>
+          </div>
+          <p><button class="textButton" onclick="modelDetails.toggleReferences()">References</button></p>
+          <div id="modelReferencesDiv">
+            <div id="modelReferencesListDiv">
+              <ul id="modelReferencesList">
               </ul>
             </div>
-            <p class="modalFormAdvisory">Click on an author to remove it</p>
-            <form id="authorInputForm" onsubmit="submitAuthor(event)">
-              <label for="modelAuthor" class="modalFormLabel">Author:</label>
-              <input type="text" class="modalFormItem" name="modelAuthor" id="modelAuthor">
-              <button type="submit" class="textButton">Submit Author</button>
-              <span class="modalFormCheckmark" id="modelAuthorTick">&#x2713;</span>
+            <p class="modalFormAdvisory">Click an entry to delete it</p>
+            <form id="referenceInputForm" onsubmit="modelDetails.submitReference(event)">
+              <label for="modelReferenceSource" class="modalFormLabel">Source:</label>
+              <input type="text" class="modalFormItem" name="modelReferenceSource" id="modelReferenceSource">
+              <label for="modelReferenceAuthor" class="modalFormLabel">Author:</label>
+              <input type="text" class="modalFormItem" name="modelReferenceAuthor" id="modelReferenceAuthor">
+              <label for="modelReferenceTitle" class="modalFormLabel">Title:</label>
+              <input type="text" class="modalFormItem" name="modelReferenceTitle" id="modelReferenceTitle">
+              <button type="submit" class="textButton">Submit Reference</button>
+              <span class="modalFormCheckmark" id="modelReferenceTick">&#x2713;</span>
             </form>
-        </div>
-        <p><button class="textButton" onclick="toggleReferences()">References</button></p>
-        <div id="modelReferencesDiv">
-          <div id="modelReferencesListDiv">
-            <ul id="modelReferencesList">
-            </ul>
           </div>
-          <p class="modalFormAdvisory">Click an entry to delete it</p>
-          <form id="referenceInputForm" onsubmit="submitReference(event)">
-            <label for="modelReferenceSource" class="modalFormLabel">Source:</label>
-            <input type="text" class="modalFormItem" name="modelReferenceSource" id="modelReferenceSource">
-            <label for="modelReferenceAuthor" class="modalFormLabel">Author:</label>
-            <input type="text" class="modalFormItem" name="modelReferenceAuthor" id="modelReferenceAuthor">
-            <label for="modelReferenceTitle" class="modalFormLabel">Title:</label>
-            <input type="text" class="modalFormItem" name="modelReferenceTitle" id="modelReferenceTitle">
-            <button type="submit" class="textButton">Submit Reference</button>
-            <span class="modalFormCheckmark" id="modelReferenceTick">&#x2713;</span>
-          </form>
         </div>
         <div class="modalFormCancelDiv">
-          <button class="textButton" id="modalDismissButton" onclick="dismissModelDetailsForm()">Dismiss</button>
+          <button class="textButton" id="modalDismissButton" onclick="modelDetails.dismissModelDetailsForm()">Dismiss</button>
         </div>
       </div>
     </div>  
@@ -93,23 +95,23 @@
         <h1 class="modalFormTitle">Login Details</h1>
         <div id="loginOptionsDiv">
           <p id="loginOpt">
-            <button class="textButton" onclick="doLoginOpt('login')">Login</button>
+            <button class="textButton" onclick="login.doLoginOpt('login')">Login</button>
           </p>
           <p id="logoutOpt">
-            <button class="textButton" onclick="doLoginOpt('logout')">Logout</button>
+            <button class="textButton" onclick="login.doLoginOpt('logout')">Logout</button>
           </p>
           <p id="signupOpt">
-            <button class="textButton" onclick="doLoginOpt('user')">Signup</button>
+            <button class="textButton" onclick="login.doLoginOpt('user')">Signup</button>
           </p>
           <p id="editorSignupOpt">
-            <button class="textButton" onclick="doLoginOpt('editor')">Editor Signup</button>
+            <button class="textButton" onclick="login.doLoginOpt('editor')">Editor Signup</button>
           </p>
           <p id="ownerSignupOpt">
-            <button class="textButton" onclick="doLoginOpt('owner')">Owner Signup</button>
+            <button class="textButton" onclick="login.doLoginOpt('owner')">Owner Signup</button>
           </p>
         </div>
         <div id="signupDiv">
-          <form id="signupForm" onsubmit="submitSignup(event)">
+          <form id="signupForm" onsubmit="login.submitSignup(event)">
             <label for="username" class="modalFormLabel">Username:</label>
             <input type="text" class="modalFormItem" name="username" id="username">
             <label for="password" class="modalFormLabel">Password:</label>
@@ -124,7 +126,7 @@
           <p class="modalFormAdvisory" id="loginDonePara">LOGIN COMPLETED</p>
         </div>
         <div class="modalFormCancelDiv">
-          <button class="textButton" id="modalDismissButton" onclick="dismissLoginDetails()">Dismiss</button>
+          <button class="textButton" id="modalDismissButton" onclick="login.dismissLoginDetails()">Dismiss</button>
         </div>  
       </div>
     </div>
@@ -134,7 +136,7 @@
       <div class="genModalForm">
         <h1 class="modalFormTitle">Node Details</h1>
         <p id="nodeNumberField">Node Number: <span id="nodeNum"></span></p>
-        <form id="nodeDetailsForm" onsubmit="submitNodeDetails(event)">
+        <form id="nodeDetailsForm" onsubmit="nodeDetails.submitNodeDetails(event)">
           <label for="nodeLabel" class="modalFormLabel">Label:</label>
           <input type="text" class="modalFormItem" name="nodeLabel" id="nodeLabel">
           <label for="nodeType" class="modalFormLabel">Type:</label>
@@ -154,7 +156,7 @@
           <button type="submit" class="textButton">Submit</button>
         </form>
         <div class="modalFormCancelDiv">
-          <button class="textButton" id="modalDismissButton" onclick="dismissNodeDetails()">Dismiss</button>
+          <button class="textButton" id="modalDismissButton" onclick="nodeDetails.dismissNodeDetails()">Dismiss</button>
         </div>  
       </div>
     </div>
@@ -182,15 +184,16 @@
           <div class="col-md-7 detailSection">
             <p>Model Title: <span id="flowModelTitle">My Flow Title</span></p>
             <p>Page Title: <span id="pageTitle">My Page Title</span></p>
-            <p><button class="textButton" onclick="loadPageDetails()">Page Details</button></p>
+            <p><button class="textButton" onclick="modelDetails.loadPageDetails()">Page Details</button></p>
           </div>
           <!-- Model Options-->
           <div class="col-md-5 optionButtons optionsSection">
             <div id="modelEditOptionsDiv">
-              <button class="textButton" id="newModelButton" onclick="newModel()" title="Create New Model">New</button> 
-              <button class="textButton" id="editModelButton" onclick="editModel()">Edit</button> 
-              <button class="textButton" id="deleteModelButton" onclick="deleteModel()">Delete</button> 
-              <button class="textButton" id="saveModelButton" onclick="saveModel()">Save</button>
+              <button class="textButton" id="newModelButton" onclick="modelDetails.newModel()" title="Create New Model">New</button> 
+              <button class="textButton" id="editModelButton" onclick="modelDetails.editModel()">Edit</button> 
+              <button class="textButton" id="deleteModelButton" onclick="modelDetails.deleteModel()">Delete</button> 
+              <button class="textButton" id="saveModelButton" onclick="modelDetails.saveModel()">Save</button>
+              <button class="textButton" id="cancelModelButton" title="Cancel this session" onclick="flowModelPage.cancelModel()">Cancel</button>
             </div>
             <p id="modelEditInfo">
               To be able to create or modify your own flow models see menu: login/register and signup
@@ -223,9 +226,9 @@
     <script src="../js-scripts/flow-model-page/flow-model-page.js"></script>
     <script src="../js-scripts/model-details/model-details.js"></script>
     <script src="../js-scripts/stage-area/node-details.js"></script>
-    <script src="../js-scripts/main.js"></script>
+    <script src="../js-scripts/flow-main.js"></script>
     <script>
-      displayModelEditOptions();
+      flowModelPage.displayModelEditOptions();
 
       function doModelSearch() {
 

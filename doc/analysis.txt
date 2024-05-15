@@ -293,6 +293,11 @@ Contents
 	This saves the page/model and performs all necessary database
 	updates.
 
+	Cancel:
+	This option is visible whilst page edit mode is in effect. It causes
+	edit mode to be cancelled and the current drawing to be cleared
+	from the stage.
+
 <h3>New Model / New Page Operations
 
 	When the New model button is clicked:
@@ -310,6 +315,9 @@ Contents
 		Title
 		Keywords
 		Description
+
+		The following fields only become visible when the details above
+		are submitted. The title at least must be set by the user.
 
 		Authors
 

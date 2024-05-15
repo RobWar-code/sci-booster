@@ -6,21 +6,16 @@ Contents
 
 <h1>Work Due
 
+    * For the sake of readability add all functions to objects of similar 
+        name to module file
+
+        * Retest code so far 
+
     Set-up the model Details button events
 
-    Do the new flow model modal
+    Allow for different classes of user in the various edit options of the modal model form
 
-        * Add an indicator to show that an item has been submitted
-
-        * Do the references section of the modal form
-
-        Update the model title when the New option is submitted
-        
-        Update the page details on the main page when form submitted
-
-        Do the reset display status for modal form reload
-
-        Allow for different classes of user in the various edit options of the modal form
+    When edit mode is on, include a message line to click the stage to add a node.
 
     Do the diagram editing operations
 
@@ -30,13 +25,37 @@ Contents
 
             * Node details add and draw
 
+            * Node Details dismiss operation
 
-    Rework/replace the Konva flow-diagram code with the structured
+            * Adjust the node click position to take account of the scale.
+
+        Do the event operations analysis for the node buttons
+
+    * Rework/replace the Konva flow-diagram code with the structured
     model.
 
     Update the README with user features changes
 
 <h1>Work Done
+    15/05/2024 
+    
+    * Do the new flow model modal
+
+        * Add an indicator to show that an item has been submitted
+
+        * Do the references section of the modal form
+
+        * Do the dismiss model form modal operation
+
+        * Update the model title when the New model option is submitted
+        
+        * Update the page details on the main page when form submitted
+
+        * Do the reset display status for modal form reload
+
+
+    * Include an edit mode cancel option when edit mode is on - analyse
+
     13/05/2024
     
     * Transfer project to vanilla javascript in place of react
