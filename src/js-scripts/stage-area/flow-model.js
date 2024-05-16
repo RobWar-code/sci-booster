@@ -27,6 +27,24 @@ dfm.FlowPage = class {
         this.nodes.push(node);
     }
 
+    getNode (nodeNum) {
+        let found = false;
+        let index = 0;
+        for (let node of this.nodes) {
+            if (node.node_num === nodeNum) {
+                let found = true;
+                break;
+            }
+            ++index;
+        }
+        if (found) {
+            return {node: node, index: index};
+        }
+        else {
+            return null;
+        }
+    }
+
     getNextNodeNum() {
         if (this.nodes.length === 0) {
             return "01";
@@ -65,6 +83,20 @@ dfm.FlowPage = class {
         }
         return nextNum;
     }
+
+    deleteNode(nodeNum) {
+        if (this.nodes.length === 0) return;
+        let nodeObj = this.getNode(nodeNum);
+        if (nodeObj) {
+            let index = nodeObj.index;
+            if (index === 0) {
+                this.nodes = this.nodes.splice(1);
+            }
+            else {
+                this.nodes = this.nodes.splice(index, 1);
+            }
+        }
+    }
 }
 
 dfm.FlowPageData = class {
@@ -81,7 +113,20 @@ dfm.FlowPageData = class {
         this.page.addNode(node);
     }
 
+    getNode (nodeNum) {
+        let nodeObj = this.page.getNode(nodeNum);
+        let node = null;
+        if (nodeObj) {
+            node = nodeObj.node;
+        }
+        return node;
+    }
+
     getNextNodeNum() {
         return this.page.getNextNodeNum();
+    }
+
+    deleteNode(nodeNum) {
+        this.page.deleteNode(nodeNum);
     }
 }

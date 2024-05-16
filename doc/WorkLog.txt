@@ -11,7 +11,7 @@ Contents
 
         * Retest code so far 
 
-    Set-up the model Details button events
+    * Set-up the model Details button events
 
     Allow for different classes of user in the various edit options of the modal model form
 
@@ -29,10 +29,18 @@ Contents
 
             * Adjust the node click position to take account of the scale.
 
-        Do the event operations analysis for the node buttons
+        * Do the event operations analysis for the node buttons
+
+        Do the node details option button code
+
+            Fix the wrong node num loaded for the button click
+
+            Allow for the update of the selected node
 
     * Rework/replace the Konva flow-diagram code with the structured
     model.
+
+    Add Zoom Back button to page options
 
     Update the README with user features changes
 

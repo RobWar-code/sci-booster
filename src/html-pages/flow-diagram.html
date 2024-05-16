@@ -153,9 +153,10 @@
           <label for="nodeHyperlink" class="modalFormLabel">Hyperlink:</label>
           <input type="text" class="modalFormItem" name="nodeHyperlink" id="nodeHyperlink">
           <p class="modalFormAdvisory" id="nodeErrors"></p>
-          <button type="submit" class="textButton">Submit</button>
+          <button type="submit" class="textButton" id="nodeDetailsSubmit">Submit</button>
         </form>
         <div class="modalFormCancelDiv">
+          <button class="textButton" id="nodeDeleteButton" onclick="nodeDetails.deleteNode()">Delete</button>
           <button class="textButton" id="modalDismissButton" onclick="nodeDetails.dismissNodeDetails()">Dismiss</button>
         </div>  
       </div>

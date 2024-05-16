@@ -9,6 +9,47 @@ const nodeDetails = {
         this.displayNodeDetailsModal(editMode);
     },
 
+    viewNodeDetails: function (event) {
+        if (dfm.modelEditMode) {
+            this.setInputDisabledStatus(false);
+        }
+        else {
+            this.setInputDisabledStatus(true);
+        }
+        let nodeNum = event.target.getAttr("nodeNum");
+        this.setNodeForm(nodeNum);
+        this.displayNodeDetailsModal("view");
+    },
+
+    setNodeForm(nodeNum) {
+        let node = dfm.currentPage.getNode(nodeNum);
+        if (node) {
+            document.getElementById("nodeNum").innerText = nodeNum;
+            document.getElementById("nodeLabel").value = node.label;
+            document.getElementById("nodeType").value = node.type;
+            document.getElementById("nodeKeywords").value = node.keywords;
+            document.getElementById("nodeDefinition").value = node.definition;
+            document.getElementById("nodeHyperlink").value = node.hyperlink;
+        }
+    },
+
+    setInputDisabledStatus: function (setting) {
+        document.getElementById("nodeLabel").disabled = setting;
+        document.getElementById("nodeType").disabled = setting;
+        document.getElementById("nodeKeywords").disabled = setting;
+        document.getElementById("nodeDefinition").disabled = setting;
+        document.getElementById("nodeHyperlink").disabled = setting;
+        if (!setting) {
+            document.getElementById("nodeDeleteButton").style.display = "inline";
+            document.getElementById("nodeDetailsSubmit").style.display = "inline";
+        }
+        else {
+            document.getElementById("nodeDeleteButton").style.display = "none";
+            document.getElementById("nodeDetailsSubmit").style.display = "none";
+        }
+        document.getElementById("nodeErrors").style.display = "none";
+    },
+
     displayNodeDetailsModal: function (editMode) {
 
         if (editMode === "new") {
@@ -66,5 +107,21 @@ const nodeDetails = {
         console.log("nodeNum, newNodeX, newNodeY", node.node_num, dfm.newNodeX, dfm.newNodeY);
         dfm.currentVisual.addNode(label, node.node_num, dfm.newNodeX, dfm.newNodeY);
         console.log("nodeData:", dfm.currentVisual);
+    },
+
+    deleteNodeDetails: function () {
+        // Get the node number from the form
+        let nodeNum = document.getElementById("nodeNum").innerText;
+        dfm.currentPage.deleteNode(nodeNum);
+        dfm.currentVisuals.deleteNode(nodeNum);
+        document.getElementById("nodeDetails").style.display = "none";
+    },
+
+    doHoverText: function (event) {
+        let graphic = event.target;
+        let text = graphic.getAttr("hoverText");
+        let x = graphic.getAttr("x") + 25;
+        let y = graphic.getAttr("y") - 10;
+        displayHoverText(text, x, y);
     }
 }

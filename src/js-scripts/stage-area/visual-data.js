@@ -57,29 +57,49 @@ dfm.FlowVisuals = class {
             y: dfm.nodeTemplate.optionTop,
             image: dfm.nodeGraphics.details,
             width: dfm.nodeTemplate.optionWidth,
-            height: dfm.nodeTemplate.optionHeight
+            height: dfm.nodeTemplate.optionHeight,
+            nodeNum: nodeNum,
+            hoverText: "Node Details"
         });
         node.zoomDetailsOpt = new Konva.Image({
             x: dfm.nodeTemplate.width/2 - dfm.nodeTemplate.optionWidth - dfm.nodeTemplate.optionLeft/2,
             y: dfm.nodeTemplate.optionTop,
             image: dfm.nodeGraphics.zoomDetails,
             width: dfm.nodeTemplate.optionWidth,
-            height: dfm.nodeTemplate.optionHeight
+            height: dfm.nodeTemplate.optionHeight,
+            nodeNum: nodeNum,
+            hoverText: "Zoom Page"
         });
         node.flowLinkOpt = new Konva.Image({
             x: dfm.nodeTemplate.width/2 + dfm.nodeTemplate.optionLeft/2,
             y: dfm.nodeTemplate.optionTop,
             image: dfm.nodeGraphics.flowLink,
             width: dfm.nodeTemplate.optionWidth,
-            height: dfm.nodeTemplate.optionHeight
+            height: dfm.nodeTemplate.optionHeight,
+            nodeNum: nodeNum,
+            hoverText: "Flow Link"
         });
         node.hyperlinkOpt = new Konva.Image({
             x: dfm.nodeTemplate.width - dfm.nodeTemplate.optionWidth - dfm.nodeTemplate.optionLeft,
             y: dfm.nodeTemplate.optionTop,
             image: dfm.nodeGraphics.hyperlink,
             width: dfm.nodeTemplate.optionWidth,
-            height: dfm.nodeTemplate.optionHeight
+            height: dfm.nodeTemplate.optionHeight,
+            nodeNum: nodeNum,
+            hoverText: "Hyperlink"
         });
+
+        // Events
+        node.detailsOpt.on("click", (event) => nodeDetails.viewNodeDetails(event));
+        node.detailsOpt.on("mouseover", (event) => nodeDetails.doHoverText(event));
+        node.zoomDetailsOpt.on("click", (event) => flowModelPage.zoomPage(event));
+        node.zoomDetailsOpt.on("mouseover", (event) => nodeDetails.doHoverText(event));
+        node.flowLinkOpt.on("click", (event) => flowDetails.addNewFlow(event));
+        node.flowLinkOpt.on("mouseover", (event) => nodeDetails.doHoverText(event));
+        node.hyperlinkOpt.on("click", (event) => nodeDetails.doHyperLink(event));
+        node.hyperlinkOpt.on("mouseover", (event) => nodeDetails.doHoverText(event));
+
+        // Assemble items
         node.nodeGroup.add(node.rect);
         node.nodeGroup.add(node.labelText);
         node.nodeGroup.add(node.detailsOpt);
@@ -90,4 +110,34 @@ dfm.FlowVisuals = class {
         this.nodeLayer.draw();
         this.nodes.push(node);
     }
+
+    getNode(nodeNum) {
+        let found = false;
+        let index = 0;
+        for (let node of this.nodes) {
+            if (node.nodeNum === nodeNum) {
+                found = true;
+                break;
+            }
+            ++index;
+        }
+        if (found) {
+            return {found: true, node: node, index: index};
+        }
+        else {
+            return {found: false};
+        }
+    }
+
+    deleteNode (nodeNum) {
+        if (this.nodes.length === 0) return;
+        nodeObj = this.getNode(nodeNum);
+        if (!nodeObj.found) return;
+        node = nodeObj.node;
+        index = nodeObj.index;
+        node.nodeObject.delete();
+        this.nodeLayer.draw();
+        this.nodes.splice(index, 1);
+    }
+
 }

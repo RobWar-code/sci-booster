@@ -18,6 +18,7 @@ Contents
 			New Model / New Page Operations
 		Flow Diagram
 			Nodes
+				Node Option Buttons
 			Flows
 			Layout Considerations
 	Javascript Coding Structure
@@ -234,6 +235,11 @@ Contents
 				The Save option is presented
 
 
+		If the page is in edit mode, the Cancel button is displayed
+
+		If there is a current page and the page is not at the top Level
+		then the Zoomback button is displayed.
+
 <h2>Page Information
 
 	The page information appears toward the top of the page on the left.
@@ -353,6 +359,7 @@ Contents
 		Hyperlink: (optional)
 		Has Child Page: (auto)
 		Submit Button
+		Delete Button - this only appears when edit mode is set
 		Leave Button
 
 	When the submit button has been pressed, the node box appears at
@@ -403,6 +410,29 @@ Contents
 
 	Once the Flow Details form is submitted, the modal disappears and the 
 	flow is	shown as a line connecting the source and destination nodes.
+
+<h4>Node Option Buttons
+
+	The node option buttons appear on the bottom of each node rectangle, they
+	each have associated hover text and click events that identify the node
+	to the event handlers.
+
+	The Node Details button raises the Node Details modal when clicked and
+	this is in edit mode, if edit mode is set, otherwise the Node Details are
+	view only and the inputs are disabled.
+
+	The Flow Link button causes the Flow Details modal to be displayed (with
+	the source node, set to the relevant node, but editable). This is defined
+	in more detail under Flows below.
+
+	The Zoom Page button allows for the creation of a new page detailing
+	a component node further, if the page does not already exist and edit
+	mode applies. If it does apply, then the current page is first saved to
+	the database. If edit mode is not in effect, then the zoomed page will
+	be loaded if it exists.
+
+	The Hyperlink button takes the user to the associated web page, if it has
+	been defined.
 
 <h3>Flows
 	
