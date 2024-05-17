@@ -7,12 +7,14 @@ dfm.Flow = class {
         this.sourceY = 0;
         this.destinationX = 0;
         this.destinationY = 0;
+        this.sourceNone = false;
         this.sourceNodeNum = 0;
+        this.destinationNone = false;
         this.destinationNodeNum = 0;
         this.label = "";
         this.definition = "";
         this.keywords = "";
         this.hyperlink = "";
-        this.conversionFormulas = []; // [{formula: , definition: }]
+        this.conversionFormulas = []; // [{formula: , description: }]
     }
 }

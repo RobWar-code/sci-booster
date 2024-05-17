@@ -20,6 +20,7 @@ Contents
 			Nodes
 				Node Option Buttons
 			Flows
+				Flow Details Form
 			Layout Considerations
 	Javascript Coding Structure
 		Flow Diagram Data Structures
@@ -345,7 +346,7 @@ Contents
 <h2>Flow Diagram
 
 	The flow diagram consists of nodes (as boxes) and flows as arrowed
-	lines.
+	lines connecting them.
 
 <h3>Nodes
 
@@ -381,17 +382,8 @@ Contents
 	The Hierarchical Definition Page brings up the flow diagram that defines
 	the node flow in more detail.
 
-	The Add Flow Link button brings-up the modal Flow Details panel. This 
-	contains the following details:
-		Label
-		Source Node Number
-		Destination Node Number
-		Keywords
-		Definition
-		Conversion Formulas
-		Hyperlink
-		Submit button
-		Leave button
+	The Add Flow Link button brings-up the modal Flow Details panel. This is 
+	described in the Flows section below
 
 	This panel also includes Draw Flow and Edit Flow Drawing buttons.
 
@@ -438,8 +430,36 @@ Contents
 	
 	Flows can connect a source node to a destination node or a source node to open space.
 	They are drawn as a line with arrow marks pointing from the source toward the destination.
-	They include a Flow Details button which causes the Flow Details form about the flow to be
-	displayed as described previously.
+	The label for the flow appears in a rectangle that the flow line is connected to on opposite
+	sides. Clicking the label causes the flow details modal to be displayed.
+
+<h4>Flow Details Form 
+
+	This contains the following fields
+		Label
+		Source None
+		Source Node Number
+		Destination None
+		Destination Node Number
+		Keywords
+		Definition
+		Hyperlink
+		Submit Details 
+		Conversion Formulas
+			Formula
+			Description
+			Submit Formula
+		Draw button
+		Dismiss button
+
+	The form is loaded as a modal. The conversions formulas can be toggled and are
+	presented as a list to be added to by submitting an entry. Clicking an entry
+	on the list deletes it.
+
+	The Draw button only appears once the details have been submitted. When this
+	is clicked, the modal is cleared and the flow drawing session begins.
+
+<h4>Drawing the Flow
 
 <h3>Layout Considerations
 

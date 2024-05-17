@@ -17,6 +17,8 @@ Contents
 
     When edit mode is on, include a message line to click the stage to add a node.
 
+    Make an object for the hover text code
+    
     Do the diagram editing operations
 
         * Add node operation
@@ -31,11 +33,19 @@ Contents
 
         * Do the event operations analysis for the node buttons
 
-        Do the node details option button code
+        * Do the node details option button code
 
-            Fix the wrong node num loaded for the button click
+            * Fix the wrong node num loaded for the button click
 
-            Allow for the update of the selected node
+            * Allow for the update of the selected node
+
+        Do node drag operation
+
+        Do the Add Flow operation from the Flow Link node button
+
+            Do the analysis for the creation of a flow Link
+
+            Do the flow details modal & associated code
 
     * Rework/replace the Konva flow-diagram code with the structured
     model.

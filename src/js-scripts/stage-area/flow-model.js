@@ -30,9 +30,10 @@ dfm.FlowPage = class {
     getNode (nodeNum) {
         let found = false;
         let index = 0;
-        for (let node of this.nodes) {
+        let node = {};
+        for (node of this.nodes) {
             if (node.node_num === nodeNum) {
-                let found = true;
+                found = true;
                 break;
             }
             ++index;
@@ -103,6 +104,7 @@ dfm.FlowPageData = class {
     constructor() {
         this.id = null; // If known
         this.page = new dfm.FlowPage();
+        this.nodeEditMode = "new"; // "new" or "update"
     }
 
     addPage(pageObj) {

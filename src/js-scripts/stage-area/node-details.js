@@ -6,23 +6,30 @@ const nodeDetails = {
         let stageCursorPos = dfm.stageApp.getPointerPosition();
         dfm.newNodeX = stageCursorPos.x;
         dfm.newNodeY = stageCursorPos.y;
+        dfm.currentPage.nodeEditMode = "new";
         this.displayNodeDetailsModal(editMode);
     },
 
     viewNodeDetails: function (event) {
+        console.log("Got to viewNodeDetails");
         if (dfm.modelEditMode) {
             this.setInputDisabledStatus(false);
+            dfm.currentPage.nodeEditMode = "update";
         }
         else {
             this.setInputDisabledStatus(true);
         }
         let nodeNum = event.target.getAttr("nodeNum");
+        console.log("viewNodeDetails, nodeNum:", nodeNum);
         this.setNodeForm(nodeNum);
         this.displayNodeDetailsModal("view");
+        // Prevent stage click
+        event.cancelBubble = true;
     },
 
     setNodeForm(nodeNum) {
         let node = dfm.currentPage.getNode(nodeNum);
+        console.log("setNodeForm, nodeNum, node:", nodeNum, node);
         if (node) {
             document.getElementById("nodeNum").innerText = nodeNum;
             document.getElementById("nodeLabel").value = node.label;
@@ -52,6 +59,8 @@ const nodeDetails = {
 
     displayNodeDetailsModal: function (editMode) {
 
+        console.log("Got to display node details, editMode:", editMode);
+
         if (editMode === "new") {
             // Clear the modal form fields
             document.getElementById("nodeLabel").value = "";
@@ -62,7 +71,6 @@ const nodeDetails = {
             let nodeNum = dfm.currentPage.getNextNodeNum();
             document.getElementById("nodeNum").innerText = nodeNum;
         }
-        console.log("Got to display node details");
 
         document.getElementById("nodeDetails").style.display = "block";
         document.getElementById("nodeErrors").style.display = "none";
@@ -76,7 +84,6 @@ const nodeDetails = {
     submitNodeDetails: function (event) {
         event.preventDefault();
 
-        let node = new dfm.Node();
 
         // Check the field contents
         let label = document.getElementById("nodeLabel").value;
@@ -93,7 +100,15 @@ const nodeDetails = {
         let hyperlink = document.getElementById("nodeHyperlink").value;
         hyperlink = Misc.stripHTML(hyperlink);
 
-        node.node_num = document.getElementById("nodeNum").innerText;
+        let nodeNum = document.getElementById("nodeNum").innerText;
+        let node = null; 
+        if (dfm.currentPage.nodeEditMode === "new") {
+            node = new dfm.Node();
+            node.node_num = nodeNum;
+        }
+        else {
+            node = dfm.currentPage.getNode(nodeNum);
+        }
         node.label = label;
         node.type = document.getElementById("nodeType").value;
         node.keywords = keywords;
@@ -102,10 +117,16 @@ const nodeDetails = {
 
         document.getElementById("nodeDetails").style.display = "none";
 
-        dfm.currentPage.addNode(node);
-        console.log("currentPage:", dfm.currentPage);
+        if (dfm.currentPage.nodeEditMode === "new") {
+            dfm.currentPage.addNode(node);
+            dfm.currentVisual.addNode(label, node.node_num, dfm.newNodeX, dfm.newNodeY);
+        }
+        else {
+            // node is updated
+            dfm.currentVisual.updateNode(label, nodeNum);
+        }
+        console.log("submitNodeDetails - currentPage:", dfm.currentPage);
         console.log("nodeNum, newNodeX, newNodeY", node.node_num, dfm.newNodeX, dfm.newNodeY);
-        dfm.currentVisual.addNode(label, node.node_num, dfm.newNodeX, dfm.newNodeY);
         console.log("nodeData:", dfm.currentVisual);
     },
 

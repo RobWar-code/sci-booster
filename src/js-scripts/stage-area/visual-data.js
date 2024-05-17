@@ -114,7 +114,8 @@ dfm.FlowVisuals = class {
     getNode(nodeNum) {
         let found = false;
         let index = 0;
-        for (let node of this.nodes) {
+        let node = {};
+        for (node of this.nodes) {
             if (node.nodeNum === nodeNum) {
                 found = true;
                 break;
@@ -126,6 +127,15 @@ dfm.FlowVisuals = class {
         }
         else {
             return {found: false};
+        }
+    }
+
+    updateNode(label, nodeNum) {
+        let nodeObj = this.getNode(nodeNum);
+        if (nodeObj.found) {
+            nodeObj.node.label = label;
+            nodeObj.node.labelText.setAttr("text", nodeNum + " " + label);
+            nodeObj.node.nodeGroup.draw();
         }
     }
 
