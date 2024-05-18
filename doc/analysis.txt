@@ -461,6 +461,17 @@ Contents
 
 <h4>Drawing the Flow
 
+	The flow is drawn by clicking the stage point by point, with a line drawn
+	between the points. The points are indicated by circles which can be clicked
+	to select them for dragging. To insert the label the user can double-click
+	the stage. Instructions for these operations appear above the stage.
+
+	A Flow Done button appears in the options section of the page. When this is
+	pressed the system returns to nodeEditMode and the flow is represented without
+	the corner point circles.
+
+	The data for the visual flow is stored in page data as well as the visual data.
+
 <h3>Layout Considerations
 
 	To allow for mobiles, the minimum stage width should be set to 380px. If we have a maximum

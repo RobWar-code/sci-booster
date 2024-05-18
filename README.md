@@ -64,6 +64,7 @@ The flow lines between nodes are draughted automatically.
 - nodes
 - node_flow_link
 - flows
+- flow_points
 - formulas
 - formula_flow_link
 - users
@@ -139,15 +140,24 @@ Links
 - destination_void - Boolean
 - destination_node_id - Int (optional if not specified, consider motion of car)
 - label - Char 32
+- label_x - Int
+- label_y - Int
 - keywords - Char 256
 - definition - VarChar (optional)
 - hyperlink - Char 256(optional)
 
 Links
 	conversion_formulas_flow_link - Conversion Formulas
+	flow_points
+
+#### flow_points
+- id  - Auto Unique Int
+- flow_id - Int
+- x - Int
+- y - Int
 
 #### node_flow_link
-- id - Auto Unique Long Int
+- id - Auto Unique Int
 - flow_id - Long Int
 - node_Id - Long Int
 
