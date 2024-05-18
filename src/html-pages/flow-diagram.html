@@ -162,6 +162,22 @@
       </div>
     </div>
 
+    <!-- Flow Details Modal-->
+    <div class="genModal" id="flowDetails">
+      <div class="genModalForm">
+        <p id="flowNum"></p>
+        <form id="flowDetailsForm" onsubmit="flowDetails.submitFlowDetails(event)">
+          <label for="flowLabel" class="modalFormLabel">Label</label>
+          <input type="text" class="modalFormLabel" name="flowLabel" id="flowLabel">
+          <label for="flowSourceNodeNum" class="modalFormLabel">Source Nodenum</label>
+          <input type="text" class="modalFormItem" id="flowSourceNodeNum" name="flowSourceNodeNum">
+          <label for="flowDestinationNodeNum" class="modalFormLabel">Dest. Nodenum</label>
+          <input type="text" class="modalFormItem" id="flowDestinationNodeNum" name="flowDestinationNodeNum">
+
+        </form>
+      </div>
+    </div>
+
     <!-- Main Page Content -->
     <div class="container pageTexts">
         <!-- Page Heading -->

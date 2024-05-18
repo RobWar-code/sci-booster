@@ -136,8 +136,9 @@ Links
 - source_y - ShortInt
 - destination_x - Short Int
 - destination_y - Short Int
+- source_void - boolean
 - source_node_id - Int
-- destination_void - Boolean
+- destination_void - boolean
 - destination_node_id - Int (optional if not specified, consider motion of car)
 - label - Char 32
 - label_x - Int
