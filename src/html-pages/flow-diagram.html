@@ -165,17 +165,44 @@
     <!-- Flow Details Modal-->
     <div class="genModal" id="flowDetails">
       <div class="genModalForm">
+        <h1 class="modalFormTitle">Flow Details</h1>
+        <p class="modalFormAdvisory">The source or destination can be left blank</p>
         <p id="flowNum"></p>
         <form id="flowDetailsForm" onsubmit="flowDetails.submitFlowDetails(event)">
-          <label for="flowLabel" class="modalFormLabel">Label</label>
+          <label for="flowLabel" class="modalFormLabel">Label: </label>
           <input type="text" class="modalFormLabel" name="flowLabel" id="flowLabel">
-          <label for="flowSourceNodeNum" class="modalFormLabel">Source Nodenum</label>
+          <label for="flowKeywords" class="modalFormLabel">Keywords: </label>
+          <input type="text" class="modalFormItem" name="flowKeywords" id="flowKeywords">
+          <label for="flowSourceNodeNum" class="modalFormLabel">Source Nodenum: </label>
           <input type="text" class="modalFormItem" id="flowSourceNodeNum" name="flowSourceNodeNum">
-          <label for="flowDestinationNodeNum" class="modalFormLabel">Dest. Nodenum</label>
+          <label for="flowDestinationNodeNum" class="modalFormLabel">Dest. Nodenum: </label>
           <input type="text" class="modalFormItem" id="flowDestinationNodeNum" name="flowDestinationNodeNum">
-
+          <div class="modalFormTextArea">
+            <label for="flowDefinition" class="modalFormTextAreaLabel">Definition: </label>
+            <textarea class="modalFormItem modalFormTextArea" id="flowDefinition" name="flowDefinition" cols="40"></textarea>
+          </div>
+          <label for="flowHypertext" class="modalFormLabel">Hypertext: </label>
+          <input type="text" class="modalFormItem" name="flowHypertext" id="flowHypertext">
+          <button type="submit" class="textButton">Submit Details</button>
         </form>
-      </div>
+        <button class="textButton" onclick="flowDetails.toggleFormulas">Conversion Formulas</button>
+        <div id="flowFormulasDiv">
+          <div id="flowFormulasListDiv">
+            <ul id="flowFormulasList">
+            </ul>
+          </div>
+          <p class="modalFormAdvisory">Click an entry to delete it</p>
+          <form id="flowFormulasInputForm" onsubmit="flowDetails.submitFlowFormula(event)">
+            <label for="flowFormula" class="modalFormLabel">Formula:</label>
+            <input type="text" class="modalFormItem" name="flowFormula" id="flowFormula">
+            <div class="modalFormTextArea">
+              <label for="flowFormulaDescription" class="modalFormTextAreaLabel">Author:</label>
+              <textarea class="modalFormItem" name="flowFormulaDescription" id="flowFormulaDescription" cols="40"></textarea>
+            </div>
+            <button type="submit" class="textButton" id="flowFormulaSubmit" onclick="flowDetails.submitFormula()">Submit Formula</button>
+          </form>
+        </div>
+    </div>
     </div>
 
     <!-- Main Page Content -->
@@ -215,6 +242,11 @@
             <p id="modelEditInfo">
               To be able to create or modify your own flow models see menu: login/register and signup
             </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <p class="modalFormAdvisory" id="instructionsText"></p>
           </div>
         </div>
         <div class="row" id="flowModelStageRow">

@@ -9,7 +9,9 @@ dfm.FlowPage = class {
         this.authors = [];
         this.references = []; // [{source:, author:, title: }],
         this.keywords = "";
+        this.maxNodes = 8;
         this.nodes = []; // [Node objects]
+        this.maxFlows = 99;
         this.flows = []; // [Flow objects]
     }
 
@@ -50,7 +52,7 @@ dfm.FlowPage = class {
         if (this.nodes.length === 0) {
             return "01";
         }
-        else if (this.nodes.length >= 8) {
+        else if (this.nodes.length >= this.maxNodes) {
             return "";
         }
         // Search for the first available node num
@@ -98,6 +100,46 @@ dfm.FlowPage = class {
             }
         }
     }
+
+    getNextFlowNum() {
+        if (this.flows.length === 0) {
+            return "01";
+        }
+        else if (this.flows.length >= this.maxFlows) {
+            return "";
+        }
+        // Search for the first available node num
+        let flowNums = [];
+        for (let flow of this.flows) {
+            flowNums.push(parseInt(flow.flow_num));
+        }
+        let sortedNums = flowNums.sort();
+        let lastFlowNum = 0;
+        let found = false;
+        let nextNum = 0;
+        for (let num of sortedNums) {
+            if (num - 1 > lastFlowNum) {
+                found = true;
+                nextNum = lastFlowNum + 1;
+                break;
+            }
+            else {
+                lastFlowNum = num;
+            }
+        }
+        if (!found) {
+            nextNum = lastFlowNum + 1;
+        }
+        // Convert to numeric string
+        if (nextNum < 10) {
+            nextNum = "0" + nextNum;
+        }
+        else {
+            nextNum = "" + nextNum;
+        }
+        return nextNum;
+    }
+
 }
 
 dfm.FlowPageData = class {
@@ -130,5 +172,9 @@ dfm.FlowPageData = class {
 
     deleteNode(nodeNum) {
         this.page.deleteNode(nodeNum);
+    }
+
+    getNextFlowNum() {
+        return this.page.getNextFlowNum();
     }
 }

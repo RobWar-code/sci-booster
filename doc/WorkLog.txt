@@ -19,6 +19,8 @@ Contents
 
     Make an object for the hover text code
     
+    Check-out the textareas
+    
     Do the diagram editing operations
 
         * Add node operation

@@ -11,7 +11,10 @@ const nodeDetails = {
     },
 
     viewNodeDetails: function (event) {
-        console.log("Got to viewNodeDetails");
+        if (dfm.currentVisual.flowDrawMode) {
+            event.cancelBubble = true;
+            return;
+        }
         if (dfm.modelEditMode) {
             this.setInputDisabledStatus(false);
             dfm.currentPage.nodeEditMode = "update";
@@ -20,7 +23,6 @@ const nodeDetails = {
             this.setInputDisabledStatus(true);
         }
         let nodeNum = event.target.getAttr("nodeNum");
-        console.log("viewNodeDetails, nodeNum:", nodeNum);
         this.setNodeForm(nodeNum);
         this.displayNodeDetailsModal("view");
         // Prevent stage click

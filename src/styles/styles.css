@@ -174,8 +174,18 @@ body {
     color: #000050;
 }
 
+/* Flow Details Modal */
+#flowFormulasDiv {
+    display: none;
+}
+
+/* Main Flow Page */
 .pageTexts {
     position: relative;
+}
+
+#instructionsText {
+    display: none;
 }
 
 /* Flow Models */
