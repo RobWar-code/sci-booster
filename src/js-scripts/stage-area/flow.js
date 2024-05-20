@@ -2,13 +2,13 @@
 dfm.Flow = class {
     constructor() {
         this.id = null; // If known
-        this.flowNum = "";
+        this.flow_num = "";
         this.sourceX = 0;
         this.sourceY = 0;
         this.destinationX = 0;
         this.destinationY = 0;
-        this.sourceNodeNum = "";
-        this.destinationNodeNum = "";
+        this.source_node_num = "";
+        this.destination_node_num = "";
         this.label = "";
         this.labelX = 0;
         this.labelY = 0;
@@ -16,6 +16,6 @@ dfm.Flow = class {
         this.definition = "";
         this.keywords = "";
         this.hyperlink = "";
-        this.conversionFormulas = []; // [{formula: , description: }]
+        this.conversion_formulas = []; // [{formula: , description: }]
     }
 }

@@ -87,6 +87,17 @@ dfm.FlowPage = class {
         return nextNum;
     }
 
+    nodeExists(nodeNum) {
+        let found = false;
+        for (let node of nodes) {
+            if (node.node_num === nodeNum) {
+                found = true;
+                break;
+            }
+        }
+        return found;
+    }
+
     deleteNode(nodeNum) {
         if (this.nodes.length === 0) return;
         let nodeObj = this.getNode(nodeNum);
@@ -99,6 +110,10 @@ dfm.FlowPage = class {
                 this.nodes = this.nodes.splice(index, 1);
             }
         }
+    }
+
+    addFlow(flow) {
+        this.page.flows.push(flow);
     }
 
     getNextFlowNum() {
@@ -170,11 +185,19 @@ dfm.FlowPageData = class {
         return this.page.getNextNodeNum();
     }
 
+    nodeExists(nodeNum) {
+        return this.page.nodeExists(nodeNum);
+    }
+
     deleteNode(nodeNum) {
         this.page.deleteNode(nodeNum);
     }
 
     getNextFlowNum() {
         return this.page.getNextFlowNum();
+    }
+
+    deleteFlowItem(itemNum) {
+        this.page.flows = this.page.flows.splice(itemNum, 1);
     }
 }

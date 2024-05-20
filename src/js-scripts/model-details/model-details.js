@@ -165,7 +165,6 @@ const modelDetails = {
   },
   
   displayReferencesList: function () {
-    console.log("Got to displayReferencesList");
     document.getElementById("modelReferencesList").remove();
     let referencesListElem = document.getElementById("modelReferencesListDiv");
     let listHtml = '<ul class="modalFormList" id="modelReferencesList">';

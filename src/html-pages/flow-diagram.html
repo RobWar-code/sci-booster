@@ -170,12 +170,12 @@
         <p id="flowNum"></p>
         <form id="flowDetailsForm" onsubmit="flowDetails.submitFlowDetails(event)">
           <label for="flowLabel" class="modalFormLabel">Label: </label>
-          <input type="text" class="modalFormLabel" name="flowLabel" id="flowLabel">
+          <input type="text" class="modalFormItem" name="flowLabel" id="flowLabel">
           <label for="flowKeywords" class="modalFormLabel">Keywords: </label>
           <input type="text" class="modalFormItem" name="flowKeywords" id="flowKeywords">
-          <label for="flowSourceNodeNum" class="modalFormLabel">Source Nodenum: </label>
+          <label for="flowSourceNodeNum" class="modalFormLabel">Source Node: </label>
           <input type="text" class="modalFormItem" id="flowSourceNodeNum" name="flowSourceNodeNum">
-          <label for="flowDestinationNodeNum" class="modalFormLabel">Dest. Nodenum: </label>
+          <label for="flowDestinationNodeNum" class="modalFormLabel">Dest. Node: </label>
           <input type="text" class="modalFormItem" id="flowDestinationNodeNum" name="flowDestinationNodeNum">
           <div class="modalFormTextArea">
             <label for="flowDefinition" class="modalFormTextAreaLabel">Definition: </label>
@@ -183,9 +183,11 @@
           </div>
           <label for="flowHypertext" class="modalFormLabel">Hypertext: </label>
           <input type="text" class="modalFormItem" name="flowHypertext" id="flowHypertext">
-          <button type="submit" class="textButton">Submit Details</button>
+          <p class="modalFormAdvisory" id="flowDetailsError"></p>
+          <button type="submit" class="textButton" id="flowDetailsSubmit">Submit Details</button>
         </form>
         <button class="textButton" onclick="flowDetails.toggleFormulas">Conversion Formulas</button>
+        <p class="modalFormAdvisory" id="formulaToggleWarning">Complete the flow details before entering formulas</p>
         <div id="flowFormulasDiv">
           <div id="flowFormulasListDiv">
             <ul id="flowFormulasList">
@@ -202,7 +204,7 @@
             <button type="submit" class="textButton" id="flowFormulaSubmit" onclick="flowDetails.submitFormula()">Submit Formula</button>
           </form>
         </div>
-    </div>
+      </div>
     </div>
 
     <!-- Main Page Content -->
@@ -275,6 +277,7 @@
     <script src="../js-scripts/flow-model-page/flow-model-page.js"></script>
     <script src="../js-scripts/model-details/model-details.js"></script>
     <script src="../js-scripts/stage-area/node-details.js"></script>
+    <script src="../js-scripts/stage-area/flow-details.js"></script>
     <script src="../js-scripts/flow-main.js"></script>
     <script>
       flowModelPage.displayModelEditOptions();
