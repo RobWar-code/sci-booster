@@ -186,7 +186,7 @@
           <p class="modalFormAdvisory" id="flowDetailsError"></p>
           <button type="submit" class="textButton" id="flowDetailsSubmit">Submit Details</button>
         </form>
-        <button class="textButton" onclick="flowDetails.toggleFormulas">Conversion Formulas</button>
+        <button class="textButton" onclick="flowDetails.toggleFormulas()">Conversion Formulas</button>
         <p class="modalFormAdvisory" id="formulaToggleWarning">Complete the flow details before entering formulas</p>
         <div id="flowFormulasDiv">
           <div id="flowFormulasListDiv">
@@ -198,12 +198,16 @@
             <label for="flowFormula" class="modalFormLabel">Formula:</label>
             <input type="text" class="modalFormItem" name="flowFormula" id="flowFormula">
             <div class="modalFormTextArea">
-              <label for="flowFormulaDescription" class="modalFormTextAreaLabel">Author:</label>
+              <label for="flowFormulaDescription" class="modalFormTextAreaLabel">Description:</label>
               <textarea class="modalFormItem" name="flowFormulaDescription" id="flowFormulaDescription" cols="40"></textarea>
             </div>
             <button type="submit" class="textButton" id="flowFormulaSubmit" onclick="flowDetails.submitFormula()">Submit Formula</button>
           </form>
         </div>
+        <div class="modalFormCancelDiv">
+          <button class="textButton" id="nodeDeleteButton" onclick="flowDetails.deleteFlow()">Delete</button>
+          <button class="textButton" id="modalDismissButton" onclick="nodeDetails.dismissFlowDetails()">Dismiss</button>
+        </div>  
       </div>
     </div>
 

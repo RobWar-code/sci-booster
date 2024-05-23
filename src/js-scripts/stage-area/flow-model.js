@@ -89,7 +89,7 @@ dfm.FlowPage = class {
 
     nodeExists(nodeNum) {
         let found = false;
-        for (let node of nodes) {
+        for (let node of this.nodes) {
             if (node.node_num === nodeNum) {
                 found = true;
                 break;
@@ -110,10 +110,6 @@ dfm.FlowPage = class {
                 this.nodes = this.nodes.splice(index, 1);
             }
         }
-    }
-
-    addFlow(flow) {
-        this.page.flows.push(flow);
     }
 
     getNextFlowNum() {
@@ -195,6 +191,10 @@ dfm.FlowPageData = class {
 
     getNextFlowNum() {
         return this.page.getNextFlowNum();
+    }
+
+    addFlow(flow) {
+        this.page.flows.push(flow);
     }
 
     deleteFlowItem(itemNum) {

@@ -6,6 +6,11 @@ Contents
 
 <h1>Work Due
 
+    Create the mysql tables
+        run/check the php code (create-tables.php)
+
+    Define the php procedures for saving a flow model page to the database
+
     * For the sake of readability add all functions to objects of similar 
         name to module file
 

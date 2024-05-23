@@ -25,6 +25,7 @@ Contents
 	Javascript Coding Structure
 		Flow Diagram Data Structures
 		Flow Drawing Logic
+	Flow Model Database Transactions
 
 <h1>File Modularisation/Structure
 
@@ -641,3 +642,84 @@ Contents
 
 	Once the user has finished editing the flow, he can click the Done button
 	in the flow editing panel.
+
+<h1>Flow Model Database Transactions
+
+	Flow models are loaded and saved as pages, with the data being passed from
+	the Javascript as a JSON object.
+
+	The json object is as follows:
+	{
+		"flow_model_id": , // Auto Long Int, can be null
+		"page" : 
+		{
+			"id": ,// May be null
+			"hierarchical_id": "", // ie: 01020406 for a level four page. Note that the numbers (apart from the first)
+				// are NodeNums, the first/top level is always "01"
+			"title": "",
+			"keywords": "",
+			"authors": [""], // Username or Author
+			"references": [
+				{
+					"source": "", // ie: "Web Page" or Publisher
+					"title": "",
+					"author": ""
+				},
+				..
+			], // The sources of the information, ie: book, paper titles
+
+			"nodes": [
+				{
+					"node_num" : "", // (ie: "01")
+					"label": "",
+					"type": "", // (Mechanism/Effect)
+					"definition": "", // optional
+					"keywords": "", // optional
+					"hyperlink":, "", // optional a hypertext link to further information
+					"has_child_page": // true/false
+				},
+				..
+			],
+
+			"flows" : [
+				{
+					"source_node_num": "", 
+					"destination_node_num": "", // (optional)
+					"label": "",
+					"keywords": "", // (optional)
+					"definition": "", // (optional)
+					"conversion_formulas": [
+						{
+							"formula": "",
+							"description": ""
+						},
+						..
+					]
+					"hyperlink": "" // (optional) a link to further information
+					"source_node": "",
+					"desination_node": "",
+					"label_x": 0,
+					"label_y": 0,
+					"points": [{x:, y:}]
+				},
+				..
+			]
+			
+		}
+	}
+
+
+<h2>Adding a New Page
+	The php routine receive-page.php first checks the flow_model_id, if this is null,
+	it invokes the 
+		addFlowModel function
+			This first the page title to ensure that it is unique.
+			This checks the hierarchical_id of the page, and if it is 01 it adds the page 
+			title to the flow_model table and returns the flow_model_id.
+	it then invokes the
+		addPage function - which performs the following:
+			Add the individual details to the page table, return the page_id
+			Add the flow_model_page_link entry to its table		
+			Process the authors and references lists into their appropriate tables
+			checking whether they are to be added or inserted.
+			Process the nodes and flows.

@@ -52,24 +52,22 @@ The flow lines between nodes are draughted automatically.
 ### Data Model
 
 #### Tables
-- flow_models
+- flow_model
 - page_flow_model_link
-- pages
-- authors
-- external_authors
-- external_authors_page_link
-- authors_page_link
-- references_page_link
-- authors_references_link
-- nodes
+- page
+- author
+- external_author
+- external_author_page_link
+- reference
+- external_author_reference_link
+- node
 - node_flow_link
-- flows
-- flow_points
-- formulas
-- formula_flow_link
-- users
-- editor_key
+- flow
+- flow_point
+- conversion_formula
+- user
 - user_page_link
+- editor_key
 
 
 #### flow_models
@@ -84,10 +82,6 @@ The details are as follows:
 Links
 	page_flow_model_link
 
-#### page_flow_model_link
-- id
-- flow_model_id
-- page_id
 
 #### pages
 The page data includes a hierarchical_id, the first page has the HierarchicalId
@@ -100,6 +94,7 @@ to as a page. Pages should not contain more than nine nodes.
 The page data is as follows:
 
 - id - Auto Unique Long Int
+- flow_model_id - Int
 - hierarchical_id - Char 64, ie: 020406 for a level four page. Note that the numbers are NodeNums
 - title - Char 64
 - description - VarChar
@@ -117,9 +112,9 @@ A node is associated with the following:
 - id - Auto Unique Long Int
 - page_id - Char 64
 - node_num - Char 2 ie: "01"
+- label - Char 32
 - x_coord - Short Int
 - y_coord - Short Int
-- label - Char 32
 - type - Char 16 - "mechanism"/"effect"
 - definition - VarChar - optional
 - keywords - Char 256 - optional
@@ -131,24 +126,21 @@ Links
 
 #### flows
 - id - Auto Unique Long Int
-- flowNum - Char 2 Auto ie: "01"
-- source_x - ShortInt
-- source_y - ShortInt
-- destination_x - Short Int
-- destination_y - Short Int
-- source_void - boolean
-- source_node_id - Int
-- destination_void - boolean
-- destination_node_id - Int (optional if not specified, consider motion of car)
+- page_id - Int
+- flow_num - Char 2 Auto ie: "01"
 - label - Char 32
 - label_x - Int
 - label_y - Int
 - keywords - Char 256
 - definition - VarChar (optional)
 - hyperlink - Char 256(optional)
+- source_void - boolean
+- source_node_id - Int
+- destination_void - boolean
+- destination_node_id - Int (optional if not specified, consider motion of car)
 
 Links
-	conversion_formulas_flow_link - Conversion Formulas
+	conversion_formula - Conversion Formulas
 	flow_points
 
 #### flow_points
@@ -157,12 +149,7 @@ Links
 - x - Int
 - y - Int
 
-#### node_flow_link
-- id - Auto Unique Int
-- flow_id - Long Int
-- node_Id - Long Int
-
-#### users
+#### user
 - id - Auto Unique Long Int
 - username - Char 64
 - password - Password
@@ -171,49 +158,44 @@ Links
 #### editor_key
 - key - VarChar(255)
 
-#### authors_page_link
+#### user_page_link
 - id - Auto Unique Long Int
 - user_id - Long Int
 - page_id - Long Int
 
-#### external_authors
+#### external_author
 - id - Auto Unique Long Int
-- first_name - Char 32 - firtname or initial
+- first_name - Char 32 - firstname or initial
 - last_name - Char 64
 
-#### external_authors_page_link
+#### external_author_page_link
 - id - Auto Unique Long Int
 - external_author_Id - Long Int
 - page_id - Long Int
 
-#### references
+#### reference
 - id - Auto Unique Long Int
 - source - Char 256
 - title - Char 256
-- hyperlink - Char 256
 
 Links
-	authors_references_link - Authors
+	external_author_reference_link - Authors
 
-#### authors_references_link
+#### author_references_link
 - id - Auto Unique Long Int
 - reference_id
-- author_id
+- external_author_id
 
-#### references_page_link
+#### reference_page_link
 - id - Auto Unique Long Int
 - reference_id - Long Int
 - page_id - Long Int
 
-#### conversion_formulas
+#### conversion_formula
 - id - Auto Unique Long Int
+- flow_id - Int
 - formula - VarChar
 - description - VarChar
-
-#### formulas_flow_link
-- id
-- formula_id
-- flow_id
 
 ### JSON Inputs / Outputs
 
@@ -222,71 +204,71 @@ sources, notably ChatGPT, in which the data may be easily edited for
 import.
 
 The following definition is known as the "JSON Hierarchical Flow Page 
-Definition Version 1.2"
+Definition Version 1.3"
 
 Clarifications:
 
-- The top level (Page) of a flow model has two, three or four nodes and all subsequent
+- The top level (page) of a flow model has two, three or four nodes and all subsequent
 pages are further definitions of the component nodes that they describe.
-- The HierarchicalId of the top-level page is "01" and its details apply to the whole model
+- The hierarchical_id of the top-level page is "01" and its details apply to the whole model
 as well as the page that they describe
 - All definitions (nodes / pages) should confine themselves to the constraint of the parent.
 - Pages inherit the flows from their parent node (whether source or destination), ideally they should
 be re-presented in the page
-- It is permitted to branch a flow and a component from a component (as in motion from petrol flow, for example)
+- it is permitted to branch a flow and a component from a component (as in motion from petrol flow, for example)
 - A page should not consist of more than 8 component nodes
 - A node number (NodeNum) is unique to a page only and consists of two digits, ie: "01".
-- A HierarchicalID is built from its parent node numbers in order of descent, ie: "010204".
-- When using Keywords, beware of terms such as "flow" which are likely to be to common to be useful
+- A hierarchical_id is built from its parent node numbers in order of descent, ie: "010204".
+- When using keywords, beware of terms such as "flow" which are likely to be too common to be useful
 
 ```js
-FlowModels: [
+flow_models: [
 	{
 		"id": , // Auto Long Int
-		"Pages" : [
+		"pages" : [
 			{
-		 		"HierarchicalId": "", // ie: 01020406 for a level four page. Note that the numbers (apart from the first)
+		 		"hierarchical_id": "", // ie: 01020406 for a level four page. Note that the numbers (apart from the first)
 					// are NodeNums, the first/top level is always "01"
-				"Title": "",
-				"Keywords": "",
-				"Authors": [""], // Username or Author
-				"References": [
+				"title": "",
+				"keywords": "",
+				"authors": [""], // Username or Author
+				"references": [
 					{
-						"Source": "", // ie: "Web Page" or Publisher
-						"Title:",
-						"Author:"
+						"source": "", // ie: "Web Page" or Publisher
+						"title:",
+						"author:"
 					},
 					..
 				], // The sources of the information, ie: book, paper titles
 
-				"Nodes": [
+				"nodes": [
 					{
-						"NodeNum" : "", // (ie: "01")
-						"Label": "",
-						"Type": "", // (Mechanism/Effect)
-						"Definition": "", // optional
-						"Keywords": "", // optional
-						"Hyperlink":, "", // optional a hypertext link to further information
-						"HasChildPage": // true/false
+						"node_num" : "", // (ie: "01")
+						"label": "",
+						"type": "", // (Mechanism/Effect)
+						"definition": "", // optional
+						"keywords": "", // optional
+						"hyperlink":, "", // optional a hypertext link to further information
+						"has_child_page": // true/false
 					},
 					..
 				],
 
-				"Flows" : [
+				"flows" : [
 					{
-						"SourceNodeNum": "", 
-						"DestinationNodeNum": "", // (optional)
-						"Label": "",
-						"Keywords": "", // (optional)
-						"Definition": "", // (optional)
-						"ConversionFormulas": [
+						"source_node_num": "", 
+						"destination_node_num": "", // (optional)
+						"label": "",
+						"keywords": "", // (optional)
+						"definition": "", // (optional)
+						"conversion_formulas": [
 							{
-								"Formula": "",
-								"Description": ""
+								"formula": "",
+								"description": ""
 							},
 							..
 						]
-						"Hyperlink": "" // (optional) a link to further information
+						"hyperlink": "" // (optional) a link to further information
 					},
 					..
 				]

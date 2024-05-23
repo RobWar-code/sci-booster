@@ -1,6 +1,8 @@
 flowDetails = {
     flowDetailsSet: false,
     flowFormulasOpen: false,
+    editMode: "",
+    currentFlow: null,
 
     addNewFlow: function (event) {
         if (dfm.currentVisual.flowDrawMode) {
@@ -10,6 +12,8 @@ flowDetails = {
         this.displayFlowModal("new");
         this.flowDetailsSet = false;
         this.flowFormulasOpen = false;
+        this.editMode = "new";
+        this.currentFlow = new dfm.Flow();
     },
 
     displayFlowModal: function(editMode) {
@@ -54,7 +58,6 @@ flowDetails = {
 
     submitFlowDetails: function (event) {
         event.preventDefault();
-        console.log("Got to submit flow details");
         let errElem = document.getElementById("flowDetailsError");
         errElem.style.display = "none";
         // Check values
@@ -64,40 +67,45 @@ flowDetails = {
             errElem.style.display = "block";
             return;
         }
-        let flow = new dfm.Flow();
-        flow.flow_num = document.getElementById("flowNum").innerText;
-        flow.label = label;
+        this.currentflow.flow_num = document.getElementById("flowNum").innerText;
+        this.currentflow.label = label;
         let sourceNodeNum = Misc.stripHTML(document.getElementById("flowSourceNodeNum").value);
         // Check whether the given node num exists
         if (sourceNodeNum != "") {
-            if (!dfm.currentPage.nodeExists(nodeNum)) {
+            if (!dfm.currentPage.nodeExists(sourceNodeNum)) {
                 errElem.innerText = "Source Node Num does not exist";
                 errElem.style.display = "block";
                 return;
             }
-            flow.source_node_num = sourceNodeNum; 
+            this.currentFlow.source_node_num = sourceNodeNum; 
         }
         let destinationNodeNum = Misc.stripHTML(document.getElementById("flowDestinationNodeNum").value);
         // Check whether the given node num exists
         if (destinationNodeNum != "") {
-            if (!dfm.currentPage.nodeExists(nodeNum)) {
+            if (!dfm.currentPage.nodeExists(destinationNodeNum)) {
                 errElem.innerText = "Destination Node Num does not exist";
                 errElem.style.display = "block";
                 return;
             }
-            flow.destination_node_num = destinationNodeNum;
+            this.currentFlow.destination_node_num = destinationNodeNum;
         }
         let keywords = Misc.stripHTML(document.getElementById("flowKeywords").value);
-        flow.keywords = keywords;
+        this.currentFlow.keywords = keywords;
         let definition = Misc.stripHTML(document.getElementById("flowDefinition").value);
-        flow.definition = definition;
+        this.currentFlow.definition = definition;
         let hypertext = Misc.stripHTML(document.getElementById("flowHypertext").value);
-        flow.hypertext = hypertext;
-        dfm.currentPage.addFlow(flow);
+        this.currentFlow.hypertext = hypertext;
+        if (this.editMode === "new") {
+            dfm.currentPage.addFlow(this.currentFlow);
+            this.editMode = "edit";
+        }
+        else {
+            dfm.currentPage.updateFlow(this.currentFlow);
+        }
         this.flowDetailsSet = true;       
     },
 
-    toggleConversionFormulas: function () {
+    toggleFormulas: function () {
         if (this.flowFormulasOpen) {
             document.getElementById("flowFormulasDiv").style.display = "none";
             return;
@@ -109,7 +117,15 @@ flowDetails = {
             }, 4000);
             return;
         }
+        document.getElementById("flowFormulasDiv").style.display = "block";
         this.displayFlowFormulas();
+        console.log("Got to toggleFormulas");
+        if (this.editMode) {
+            document.getElementById("flowFormulasInputForm").style.display = "block";
+        }
+        else {
+            document.getElementById("flowFormulasInputForm").style.display = "none";
+        }
     },
 
     displayFlowFormulas: function () {
@@ -117,14 +133,15 @@ flowDetails = {
         let formulasListElem = document.getElementById("flowFormulasListDiv");
         let listHtml = '<ul class="modalFormList" id="flowFormulasList">';
         let count = 0;
-        for (flow of dfm.currentPage.page.flows) {
+        for (let formula of this.currentFlow.conversion_formulas) {
           listHtml += '<li>';
           listHtml += `<div data-item="${count}" onclick="flowDetails.deleteFormula(event)">`;
-          listHtml += `<p class="modalFormListItem">Formula: ${flow.formula}</p>`;
-          listHtml += `<p class="modalFormListItem">Description: ${flow.description}</p>`;
+          listHtml += `<p class="modalFormListItem">Formula: ${formula.formula}</p>`;
+          listHtml += `<p class="modalFormListItem">Description: ${formula.description}</p>`;
           listHtml += '<hr class="modalListHR" />';
           listHtml += '</div>';
           listHtml += '</li>';
+          ++count;
         }
         listHtml += '</ul>';
         formulasListElem.innerHTML = listHtml;
