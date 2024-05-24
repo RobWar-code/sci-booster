@@ -151,6 +151,19 @@ dfm.FlowPage = class {
         return nextNum;
     }
 
+    findFlow(flowNum) {
+        let found = false;
+        let count = 0;
+        for (let flow of this.flows) {
+            if (flow.flow_num === flowNum) {
+                found = true;
+            }
+            ++count;
+        }
+        if (!found) return -1;
+        else return count;
+    }
+
 }
 
 dfm.FlowPageData = class {
@@ -193,8 +206,21 @@ dfm.FlowPageData = class {
         return this.page.getNextFlowNum();
     }
 
+    findFlow(flowNum) {
+        this.page.findFlow(flowNum);
+    }
+
     addFlow(flow) {
         this.page.flows.push(flow);
+    }
+
+    updateFlow(flow) {
+        let flowNum = flow.flow_num;
+        let itemNum = this.findFlow(flowNum);
+        if (itemNum != -1) {
+            this.deleteFlowItem(itemNum);
+        }
+        this.addFlow(flow);
     }
 
     deleteFlowItem(itemNum) {

@@ -50,9 +50,17 @@ Contents
 
         Do the Add Flow operation from the Flow Link node button
 
-            Do the analysis for the creation of a flow Link
+            * Do the analysis for the creation of a flow Link
 
-            Do the flow details modal & associated code
+            * Do the flow details modal & associated code
+
+            Check the analysis for flow drawing mode
+
+            Add a draw flow button to the flow modal
+
+            Implement the draw flow procedures
+
+                Modify the click event for the stage
 
     * Rework/replace the Konva flow-diagram code with the structured
     model.

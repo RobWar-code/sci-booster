@@ -67,8 +67,8 @@ flowDetails = {
             errElem.style.display = "block";
             return;
         }
-        this.currentflow.flow_num = document.getElementById("flowNum").innerText;
-        this.currentflow.label = label;
+        this.currentFlow.flow_num = document.getElementById("flowNum").innerText;
+        this.currentFlow.label = label;
         let sourceNodeNum = Misc.stripHTML(document.getElementById("flowSourceNodeNum").value);
         // Check whether the given node num exists
         if (sourceNodeNum != "") {
@@ -113,7 +113,7 @@ flowDetails = {
         if (!this.flowDetailsSet) {
             document.getElementById("formulaToggleWarning").style.display = "block";
             setTimeout(() => {
-                document.getElementById("fomulaToggleWarning").style.display = "none";
+                document.getElementById("formulaToggleWarning").style.display = "none";
             }, 4000);
             return;
         }
@@ -150,7 +150,20 @@ flowDetails = {
 
     deleteFormula: function(event) {
         let itemNum = parseInt(event.target.dataset.item);
-        dfm.currentPage.deleteFlowItem(itemNum);
+        this.currentFlow.conversion_formulas.splice(itemNum, 1);
+        dfm.currentPage.updateFlow(this.currentFlow);
         this.displayFlowFormulas();
+    },
+
+    submitFormula: function(event) {
+        event.preventDefault();
+        let formula = Misc.stripHTML(document.getElementById("flowFormula").value);
+        let description = Misc.stripHTML(document.getElementById("flowFormulaDescription").value);
+        if (formula != "") {
+            let conversion_formula = {formula: formula, description: description};
+            this.currentFlow.conversion_formulas.push(conversion_formula);
+            dfm.currentPage.updateFlow(this.currentFlow);
+            this.displayFlowFormulas();
+        }
     }
 }
