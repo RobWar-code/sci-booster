@@ -3,13 +3,11 @@ dfm.FlowVisuals = class {
     constructor() {
         this.active = false;
         this.flowDrawMode = false;
-        this.nodeLayer = null;
-        this.nodeTemplate =  {
-            active: false,
-            nodeNum: "00",
-            label: "",
-            nodeGroup: null
-        }
+        this.drawFlowNum = "";
+        this.drawFlowClickTime = 0;
+        this.flowLabelSet = false;
+        this.flowDrawStarted = false;
+        this.flowDrawTimeout = null;
         this.nodes = []
         this.flowTemplate = {
             active: false,
@@ -18,7 +16,7 @@ dfm.FlowVisuals = class {
             flowGroup: null,
             points: [] // [{x:, y:}]
         }
-        this.flows= []
+        this.flows = [];
         this.setStageDetails();
     }
 
@@ -148,6 +146,102 @@ dfm.FlowVisuals = class {
         node.nodeObject.delete();
         this.nodeLayer.draw();
         this.nodes.splice(index, 1);
+    }
+
+    // Flow Drawing Procedures
+    initialiseFlowDraw(flowDetails) {
+        this.currentFlow = flowDetails;
+        this.nodeCount = 0;
+        this.flowLabelSet = false;
+        this.currentFlowDrawing = this.flowTemplate;
+        this.currentFlowDrawing.flowNum = flowDetails.flow_num;
+        this.flowDrawStarted = false;
+    }
+
+    drawFlowClick() {
+        if (this.drawFlowClickTime != 0) {
+            if (Date.now() - this.drawFlowClickTime < 500 && !this.flowLabelSet) {
+                clearTimeout(this.drawFlowTimeout);
+                this.addFlowLabel();
+                this.drawFlowClickTime = 0;
+                return;
+            }
+        }
+        this.drawFlowClickTime = Date.now();
+        this.drawFlowTimeout = setTimeout(() => {this.drawFlow()}, 600);
+    }
+
+    drawFlow(e) {
+        let flowNodeNum = this.getNextFlowNodeNum();
+        let {x, y} = dfm.stageApp.getPointerPosition();
+        x = x / dfm.scaleX;
+        if (!this.flowDrawStarted) {
+            this.currentFlowDrawing.flowGroup = new Konva.Group({
+                x: x,
+                y: y
+            });
+            this.flowDrawStarted = true;
+        };
+        let flowNode = {};
+        flowNode.marker = new Konva.Circle({
+            x: x,
+            y: y,
+            radius: 4,
+            fill: 'none',
+            stroke: 'black',
+            strokeWidth: 1,
+            nodeNum: flowNodeNum
+        })
+        flowNode.marker.on("click", this.flowNodeClicked(e));
+        flowNode.marker.on("dragmove", this.flowNodeDragged(e));
+        if (this.flowNodeCount > 0) {
+            flowNode.line = new Konva.Line({
+                points: [this.lastX, this.lastY, x, y],
+                stroke: 'black',
+                strokeWidth: 1,
+                nodeNum: flowNodeNum
+            })
+        }
+        this.currentFlow.points.push(flowNode);
+        this.currentFlow.flowGroup.add(flowNode.marker);
+        this.currentFlow.flowGroup.add(flowNode.line);
+        this.currentFlow.flowGroup.draw();
+        ++this.flowNodeCount;
+        this.lastX = x;
+        this.lastY = y;
+    }
+
+    getNextFlowNodeNum() {
+        if (this.flowNodeCount === 0) {
+            return 0;
+        }
+        let flowNodeNum = -1;
+        let lastFlowNodeNum = 0;
+        let count = 0;
+        let numList = [];
+        for (let item of this.currentFlowDrawing.points) {
+            let nodeNum = item.getAttr('nodeNum');
+            numList.push(nodeNum);
+        }
+        numList = numList.sort();
+        for (let nodeNum of numList) { 
+            if (count === 0) {
+                if (nodeNum > 0) {
+                    flowNodeNum = 0;
+                    break;
+                }
+            }
+            else {
+                if (nodeNum > lastFlowNodeNum + 1) {
+                    flowNodeNum = lastFlowNodeNum + 1;
+                    break;
+                }
+                lastFlowNodeNum = nodeNum;
+                ++count;
+            }
+        }
+        if (flowNodeNum === -1) flowNodeNum = numList.length;
+        return flowNodeNum;
     }
 
 }

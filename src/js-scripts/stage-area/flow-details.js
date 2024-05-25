@@ -21,6 +21,7 @@ flowDetails = {
             this.clearValues();
             this.setDisableFlowDetailsEdit(false);
         }
+        document.getElementById("drawFlowButton").style.display = "none";
         document.getElementById("flowDetails").style.display = "block";
         document.getElementById("flowDetailsError").style.display = "none";
         document.getElementById("formulaToggleWarning").style.display = "none";
@@ -102,6 +103,7 @@ flowDetails = {
         else {
             dfm.currentPage.updateFlow(this.currentFlow);
         }
+        document.getElementById("drawFlowButton").style.display = "block";
         this.flowDetailsSet = true;       
     },
 
@@ -165,5 +167,27 @@ flowDetails = {
             dfm.currentPage.updateFlow(this.currentFlow);
             this.displayFlowFormulas();
         }
+    },
+
+    deleteFlow: function() {
+        if (this.currentFlow.flow_num === "") {
+            return;
+        }
+        let flowNum = this.currentFlow.flow_num;
+        dfm.currentPage.deleteFlow(flowNum);
+        dfm.currentVisual.deleteFlow(flowNum);
+        document.getElementById("flowDetails").style.display = "none";
+    },
+
+    drawFlow: function() {
+        dfm.flowDrawMode = true;
+        dfm.currentVisual.initialiseFlowDraw(this.currentFlow);
+        document.getElementById("flowDetails").style.display = "none";
+        let instructElem = document.getElementById("instructionText");
+        let s = "Click the stage to draw the flow corner node by corner node."; 
+        s += " Double-click to add the flow label.";
+        s += " To adjust a node drag and drop the marker circle. To delete it, double click the marker.";
+        instructElem.innerText = s;
+        instructElem.style.display = "block";
     }
 }

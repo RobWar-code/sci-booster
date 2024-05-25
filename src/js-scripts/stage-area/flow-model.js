@@ -207,7 +207,7 @@ dfm.FlowPageData = class {
     }
 
     findFlow(flowNum) {
-        this.page.findFlow(flowNum);
+        return this.page.findFlow(flowNum);
     }
 
     addFlow(flow) {
@@ -223,6 +223,13 @@ dfm.FlowPageData = class {
         this.addFlow(flow);
     }
 
+    deleteFlow(flowNum) {
+        let itemNum = this.findFlow(flowNum);
+        if (itemNum > -1) {
+            this.deleteFlowItem(itemNum);
+        }
+    }
+    
     deleteFlowItem(itemNum) {
         this.page.flows = this.page.flows.splice(itemNum, 1);
     }

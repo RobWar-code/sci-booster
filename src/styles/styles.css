@@ -184,6 +184,10 @@ body {
     position: relative;
 }
 
+#flowDoneButton {
+    display: none;
+}
+
 #instructionsText {
     display: none;
 }

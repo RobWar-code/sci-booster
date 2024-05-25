@@ -17,6 +17,7 @@ dfm.modelEditMode = false;
 dfm.topPage = false;
 dfm.modelAuthorsVisible = false;
 dfm.modelReferencesVisible = false;
+dfm.flowDrawMode = false;
 
 // The drawing stage
 dfm.stageWidth = GLOBALS.minStageWidth;

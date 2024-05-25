@@ -34,7 +34,14 @@ const stageApp = {
         
         dfm.stageApp.scale({x: dfm.scaleX, y: 1});
 
-        dfm.stageApp.on('click', (e) => nodeDetails.doNodeDetails(e));
+        dfm.stageApp.on('click', (e) => {
+            if (!dfm.flowDrawMode) {
+                nodeDetails.doNodeDetails(e);
+            }
+            else {
+                dfm.currentVisual.drawFlowClick(e);
+            }
+        });
 
         // Set-up the hover text
         setupHoverText();

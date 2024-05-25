@@ -205,7 +205,8 @@
           </form>
         </div>
         <div class="modalFormCancelDiv">
-          <button class="textButton" id="nodeDeleteButton" onclick="flowDetails.deleteFlow()">Delete</button>
+          <button class="textButton" id="drawFlowButton" onclick="flowDetails.drawFlow()">Draw Flow</button>
+          <button class="textButton" id="flowDeleteButton" onclick="flowDetails.deleteFlow()">Delete</button>
           <button class="textButton" id="modalDismissButton" onclick="nodeDetails.dismissFlowDetails()">Dismiss</button>
         </div>  
       </div>
@@ -239,6 +240,8 @@
           <!-- Model Options-->
           <div class="col-md-5 optionButtons optionsSection">
             <div id="modelEditOptionsDiv">
+              <button class="textButton" id="flowDoneButton" onclick="dfm.currentVisual.flowDone()" 
+                title="Click to finish flow drawing">Flow Done</button>
               <button class="textButton" id="newModelButton" onclick="modelDetails.newModel()" title="Create New Model">New</button> 
               <button class="textButton" id="editModelButton" onclick="modelDetails.editModel()">Edit</button> 
               <button class="textButton" id="deleteModelButton" onclick="modelDetails.deleteModel()">Delete</button> 
