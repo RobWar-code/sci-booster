@@ -183,7 +183,7 @@ flowDetails = {
         dfm.flowDrawMode = true;
         dfm.currentVisual.initialiseFlowDraw(this.currentFlow);
         document.getElementById("flowDetails").style.display = "none";
-        let instructElem = document.getElementById("instructionText");
+        let instructElem = document.getElementById("instructionsText");
         let s = "Click the stage to draw the flow corner node by corner node."; 
         s += " Double-click to add the flow label.";
         s += " To adjust a node drag and drop the marker circle. To delete it, double click the marker.";

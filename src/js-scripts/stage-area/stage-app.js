@@ -48,7 +48,6 @@ const stageApp = {
     },
 
     redoStage: function () {
-        console.log("stage width:", dfm.stageWidth);
         e = document.getElementById("flowModelStageDiv");
         e.style.width = dfm.stageWidth + "px";
         dfm.stageApp.width(dfm.stageWidth);

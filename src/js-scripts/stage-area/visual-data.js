@@ -4,10 +4,29 @@ dfm.FlowVisuals = class {
         this.active = false;
         this.flowDrawMode = false;
         this.drawFlowNum = "";
+        this.flowNodeCount = 0;
         this.drawFlowClickTime = 0;
         this.flowLabelSet = false;
         this.flowDrawStarted = false;
         this.flowDrawTimeout = null;
+        this.currentFlow = {};
+        this.currentFlowDrawing = {};
+        this.flowClickX = 0;
+        this.flowClickY = 0;
+        this.lastX = 0;
+        this.lastY = 0;
+        this.nodeTemplate = {
+            active: false,
+            nodeNum: "00",
+            label: "",
+            nodeGroup: null,
+            rect: {},
+            labelText: "",
+            detailsOpt: null,
+            zoomDetailsOpt: null,
+            flowLinkOpt: null,
+            hyperlinkOpt: null
+        }
         this.nodes = []
         this.flowTemplate = {
             active: false,
@@ -143,7 +162,7 @@ dfm.FlowVisuals = class {
         if (!nodeObj.found) return;
         node = nodeObj.node;
         index = nodeObj.index;
-        node.nodeObject.delete();
+        node.nodeGroup.delete();
         this.nodeLayer.draw();
         this.nodes.splice(index, 1);
     }
@@ -153,12 +172,14 @@ dfm.FlowVisuals = class {
         this.currentFlow = flowDetails;
         this.nodeCount = 0;
         this.flowLabelSet = false;
-        this.currentFlowDrawing = this.flowTemplate;
+        this.currentFlowDrawing = Misc.copyObject(this.flowTemplate);
         this.currentFlowDrawing.flowNum = flowDetails.flow_num;
         this.flowDrawStarted = false;
     }
 
     drawFlowClick() {
+        ({x: this.flowClickX, y: this.flowClickY} = dfm.stageApp.getPointerPosition());
+        console.log("got to drawFlowClick", this.flowClickX, this.flowClickY);
         if (this.drawFlowClickTime != 0) {
             if (Date.now() - this.drawFlowClickTime < 500 && !this.flowLabelSet) {
                 clearTimeout(this.drawFlowTimeout);
@@ -173,13 +194,14 @@ dfm.FlowVisuals = class {
 
     drawFlow(e) {
         let flowNodeNum = this.getNextFlowNodeNum();
-        let {x, y} = dfm.stageApp.getPointerPosition();
-        x = x / dfm.scaleX;
+        let x = this.flowClickX / dfm.scaleX;
+        let y = this.flowClickY;
         if (!this.flowDrawStarted) {
             this.currentFlowDrawing.flowGroup = new Konva.Group({
                 x: x,
                 y: y
             });
+            this.nodeLayer.add(this.currentFlowDrawing.flowGroup);
             this.flowDrawStarted = true;
         };
         let flowNode = {};
@@ -187,7 +209,7 @@ dfm.FlowVisuals = class {
             x: x,
             y: y,
             radius: 4,
-            fill: 'none',
+            fill: 'white',
             stroke: 'black',
             strokeWidth: 1,
             nodeNum: flowNodeNum
@@ -201,14 +223,22 @@ dfm.FlowVisuals = class {
                 strokeWidth: 1,
                 nodeNum: flowNodeNum
             })
+            this.currentFlowDrawing.flowGroup.add(flowNode.line);
         }
-        this.currentFlow.points.push(flowNode);
-        this.currentFlow.flowGroup.add(flowNode.marker);
-        this.currentFlow.flowGroup.add(flowNode.line);
-        this.currentFlow.flowGroup.draw();
+        this.currentFlowDrawing.points.push(flowNode);
+        this.currentFlowDrawing.flowGroup.add(flowNode.marker);
+        this.currentFlowDrawing.flowGroup.draw();
         ++this.flowNodeCount;
         this.lastX = x;
         this.lastY = y;
+    }
+
+    flowNodeClicked() {
+
+    }
+
+    flowNodeDragged() {
+
     }
 
     getNextFlowNodeNum() {
