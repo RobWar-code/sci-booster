@@ -167,7 +167,7 @@
       <div class="genModalForm">
         <h1 class="modalFormTitle">Flow Details</h1>
         <p class="modalFormAdvisory">The source or destination can be left blank</p>
-        <p id="flowNum"></p>
+        <p>Flow Num: <span id="flowNum"></span></p>
         <form id="flowDetailsForm" onsubmit="flowDetails.submitFlowDetails(event)">
           <label for="flowLabel" class="modalFormLabel">Label: </label>
           <input type="text" class="modalFormItem" name="flowLabel" id="flowLabel">
@@ -258,6 +258,14 @@
             <p class="modalFormAdvisory" id="instructionsText"></p>
           </div>
         </div>
+        <div class="row" id="warningRow">
+          <div class="col-sm-9">
+            <p class="modalFormAdvisory" id="warningText"></p>
+          </div>
+          <div class="col-sm-3 text-center">
+            <button class="textButton" onclick="dismissWarning()">Dismiss</button>
+          </div>
+        </div>
         <div class="row" id="flowModelStageRow">
           <!-- Drawing Stage Area -->
           <div class="col text-center" id="flowModelStageCol">
@@ -267,10 +275,11 @@
         </div>
     </div>
     
-    <script src="/sci-booster/src/bootstrap/bootstrap-5.1.3-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/sci-booster/src/lib/bootstrap/bootstrap-5.1.3-dist/js/bootstrap.bundle.min.js"></script>
     <script src="/sci-booster/src/lib/konva/konva.js"></script>
     <!-- Note that the load order of these scripts IS significant -->
     <script src="/Misc/Misc.js"></script>
+    <script src="/patternArt/Geo.js"></script>
     <script src="../js-scripts/global-initialise.js"></script>
     <script src="../js-scripts/stage-area/node.js"></script>
     <script src="../js-scripts/stage-area/flow.js"></script>
@@ -311,6 +320,10 @@
       function test() {
         console.log("Test Passed");
         closeFlowPageModal();
+      }
+
+      function dismissWarning() {
+        document.getElementById("warningRow").style.display = "none";
       }
 
     </script>

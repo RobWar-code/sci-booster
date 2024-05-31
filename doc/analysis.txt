@@ -550,24 +550,26 @@ Contents
 			constructor() {
 				this.id = null; // If known
 				this.flowNum = "";
-				this.sourceX = 0;
-				this.sourceY = 0;
-				this.destinationX = 0;
-				this.destinationY = 0;
-				this.sourceNodeNum = 0;
-				this.destinationNodeNum: = 0;
+				this.source_node_num = 0;
+				this.destination_node_num: = 0;
 				this.label = "";
+				this.label_x = 0;
+				this.label_y = 0;
+				this.drawing_group_x = 0;
+				this.drawing_group_y = 0;
+				this.arrow_points = [];
+				this.points = [];
 				this.definition = "";
 				this.keywords = "";
 				this.hyperlink = "";
-				this.conversionFormulas = []; // [{formula: , definition: }]
+				this.conversion_formulas = []; // [{formula: , definition: }]
 			}
 		}
 
 		dfm.FlowPage = class {
 			constructor() {
 				this.id = ""; // If known
-				this.hierarchicalPageId = "";
+				this.hierarchical_page_id = "";
 				this.title = "";
 				this.description = "";
 				this.authors = [];
@@ -587,18 +589,33 @@ Contents
 		
 	The flow visual data can be calculated from the currentPageData and the
 	stage dimensions and scale. The node and flow visual groups are contained
-	in the following structure:
+	in the following type of structure:
 
 		dfm.FlowVisuals = class {
 			constructor() {
 				this.active = false;
 				this.flowDrawMode = false;
+				this.currentFlow = {} ; // As per flow definition
+				this.currentFlowDrawing = {
+					flowGroup: {}, // The Konva group images
+					points: [
+						{
+							marker: {},// The Konva point marker circle
+							line: {},// The Konva line object to the previous flowNode
+						},
+					],
+					flowArrow: {}, // The Konva arrow line object
+					graphicLabel: {
+						rect: {}, // The Konva rectangle object
+						text: {}  // The Konva text object
+					}
+				}
 				this.nodeLayer = null;
 				this.nodes = [
 					{
-						active: ,
-						nodeNum: ,
-						nodeGroup:
+						active: false/true,
+						nodeNum: "",
+						nodeGroup: {}// The 
 					}
 				]
 				this.flows= [
@@ -621,26 +638,57 @@ Contents
 	flow draw mode is active. The user then clicks points on the stage to
 	mark the path of the flow. The line click points can be edited with drag/drop.
 	(note that node events should be suppressed during this process). 
-	The user can double tap in order to insert the details button.
-	The flow label appears immediately next to/above the first line segment, this
-	can be moved by the user with drag/drop. 
+	The user can double tap in order to insert the flow label. The flow label
+	position is set relative to the position of the double click. The flow label
+	is draggable.
+
+	If a flow line is double-clicked the flow arrow is added to it, in the direction
+	from source node to destination as follows:
+
+		The nearest ends of the flow lines to the source and destination are used
+		to determine whether the direction of the arrow is toward the 0 or final
+		end of the points array. The legs are drawn using 
+		/patternArt/Geo.js/perpendicularLine() to establish the arrow end points.
+
+	The flow arrow can be deleted by double clicking it.
 	
-	Once the user is satisfied, he can click the flow drawing panel done button. 
+	Once the user is satisfied, he can click the flow drawing panel Flow Done button. 
 	The flow drawing is then saved in the model and the editing points disappear.
+
+	When the Flow Done button is clicked, the flow drawing details are first checked to
+	ensure that the following have been set:
+		Flow arrow
+		At least least two flow points
+		Flow label
+	The user is informed if this is not the case.
+
+	The raw data from the current flow editing session is extracted and transferred to
+	the current flow details object, which is then inserted into the current page model
+	of the application.
+
+	Once this is done, the current flow drawing object graphics are destroyed and a flow
+	image object is created for addition to the flow visuals class. 
+
 	The node events are then reactivated.
 
 	Edit Drawing Mode:
 
-	When the user clicks the flow details button, the option to edit the drawing
-	is presented in the flow details modal. If the user clicks this then the
-	modal is cleared and the flow drawing panel appears above the stage, the flow
-	is shown with its click point nodes visible and active, these can be moved
-	by drag/drop, or activated by click for deletion. A click on the stage adds
-	a click point and the connecting line at that point.
+	When the user clicks the flow label, if the user has edit permissions,
+	the option to edit the drawing is presented in the flow details modal along
+	with the flow details.
+
+	The flow details for the editor are loaded from the corresponding entry in
+	the dfm.currentPage data and the modal form fields are editable.
+
+	If the user clicks draw flow button then the modal is cleared and the flow is
+	presented in it;s editable version with the point marker circles which are
+	visible and active, these can be moved by drag/drop, or activated by click for 
+	deletion. A click on the stage adds a click point and the connecting line at 
+	that point. The features are then same as for a new flow line drawing.
 
 	As with Add Mode, the component nodes are de-activated during this mode.
 
-	Once the user has finished editing the flow, he can click the Done button
+	Once the user has finished editing the flow, he can click the Flow Done button
 	in the flow editing panel.
 
 <h1>Flow Model Database Transactions
@@ -696,10 +744,11 @@ Contents
 						..
 					]
 					"hyperlink": "" // (optional) a link to further information
-					"source_node": "",
-					"desination_node": "",
+					"drawing_group_x": 0,
+					"drawing_group_y": 0,
 					"label_x": 0,
 					"label_y": 0,
+					"arrow_points": [{x:, y:}]
 					"points": [{x:, y:}]
 				},
 				..

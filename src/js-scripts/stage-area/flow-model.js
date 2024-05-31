@@ -3,7 +3,7 @@
 dfm.FlowPage = class {
     constructor() {
         this.id = null; // If known
-        this.hierarchicalPageId = "";
+        this.hierarchical_page_id = "";
         this.title = "";
         this.description = "";
         this.authors = [];
@@ -17,7 +17,7 @@ dfm.FlowPage = class {
 
     set(pageObj) {
         this.id = pageObj.id;
-        this.hierarchical_page_id = pageObj.hierarchicalPageId;
+        this.hierarchical_page_id = pageObj.hierarchical_page_id;
         this.title = pageObj.title;
         this.description = pageObj.description;
         this.authors = pageObj.authors;
@@ -151,12 +151,22 @@ dfm.FlowPage = class {
         return nextNum;
     }
 
+    getFlow(flowNum) {
+        let flow = null;
+        let index = this.findFlow(flowNum);
+        if (index === -1) {
+            console.error("getFlow - could not find flow in page:", flowNum);
+        }
+        return this.flows[index];
+    }
+
     findFlow(flowNum) {
         let found = false;
         let count = 0;
         for (let flow of this.flows) {
             if (flow.flow_num === flowNum) {
                 found = true;
+                break;
             }
             ++count;
         }
@@ -206,6 +216,10 @@ dfm.FlowPageData = class {
         return this.page.getNextFlowNum();
     }
 
+    getFlow(flowNum) {
+        return this.page.getFlow(flowNum);
+    }
+    
     findFlow(flowNum) {
         return this.page.findFlow(flowNum);
     }

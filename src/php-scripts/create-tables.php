@@ -127,8 +127,11 @@
         page_id INT NOT NULL,
         flow_num CHAR(2) NOT NULL,
         label VARCHAR(64) NOT NULL,
+        drawing_group_x SMALLINT NOT NULL,
+        drawing_group_y SMALLINT NOT NULL,
         label_x SMALLINT NOT NULL,
         label_y SMALLINT NOT NULL,
+        label_width SMALLINT NOT NULL,
         keywords VARCHAR(255),
         definition VARCHAR(4096),
         hyperlink VARCHAR(255),
@@ -158,10 +161,26 @@
     )";
 
     if ($dbConn->query($sql) === TRUE) {
-        echo "Added references table";
+        echo "Added flow_point table";
     }
     else {
-        echo "Problem adding references table: " . $dbConn->error;
+        echo "Problem adding flow_point table: " . $dbConn->error;
+    }
+
+    // flow_arrow_point Table
+    $sql = "CREATE TABLE flow_arrow_point (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        flow_id INT,
+        x SMALLINT,
+        y SMALLINT,
+        FOREIGN KEY (flow_id) REFERENCES flow(id)
+    )";
+
+    if ($dbConn->query($sql) === TRUE) {
+        echo "Added flow_arrow_point table";
+    }
+    else {
+        echo "Problem adding flow_arrow_point table: " . $dbConn->error;
     }
     
     // external_author Table

@@ -9,6 +9,7 @@ flowDetails = {
             event.cancelBubble = true;
             return;
         }
+        event.cancelBubble = true;
         this.displayFlowModal("new");
         this.flowDetailsSet = false;
         this.flowFormulasOpen = false;
@@ -16,12 +17,47 @@ flowDetails = {
         this.currentFlow = new dfm.Flow();
     },
 
+    viewFlowDetails: function (event) {
+        event.cancelBubble = true;
+        if (dfm.currentVisual.addingFlowLabel) {
+            dfm.currentVisual.addingFlowLabel = false;
+            return;
+        }
+        // Fetch the flow details
+        let flowNum = event.target.getAttr("flowNum");
+        console.log("flowNum:", flowNum);
+        this.currentFlow = dfm.currentPage.getFlow(flowNum);
+        console.log("currentFlow:", this.currentFlow);
+        this.loadDisplayFields(this.currentFlow);
+        let editMode = "";
+        if (dfm.modelEditMode) {
+            editMode = "edit";
+            document.getElementById("drawFlowButton").style.display = "block";
+            this.setDisableFlowDetailsEdit(false);
+        }
+        else {
+            document.getElementById("drawFlowButton").style.display = "none";
+            this.setDisableFlowDetailsEdit(true);
+        }
+        this.displayFlowModal(editMode);
+    },
+
+    loadDisplayFields: function(flow) {
+        document.getElementById("flowNum").innerText = flow.flow_num;
+        document.getElementById("flowLabel").value = flow.label;
+        document.getElementById("flowKeywords").value = flow.keywords;
+        document.getElementById("flowSourceNodeNum").value = flow.source_node_num;
+        document.getElementById("flowDestinationNodeNum").value = flow.destination_node_num;
+        document.getElementById("flowDefinition").value = flow.definition;
+        document.getElementById("flowHypertext").value = flow.hypertext;
+    },
+
     displayFlowModal: function(editMode) {
         if (editMode === "new") {
             this.clearValues();
             this.setDisableFlowDetailsEdit(false);
+            document.getElementById("drawFlowButton").style.display = "none";
         }
-        document.getElementById("drawFlowButton").style.display = "none";
         document.getElementById("flowDetails").style.display = "block";
         document.getElementById("flowDetailsError").style.display = "none";
         document.getElementById("formulaToggleWarning").style.display = "none";
@@ -183,10 +219,13 @@ flowDetails = {
         dfm.flowDrawMode = true;
         dfm.currentVisual.initialiseFlowDraw(this.currentFlow);
         document.getElementById("flowDetails").style.display = "none";
+        document.getElementById("flowDoneButton").style.display = "block";
         let instructElem = document.getElementById("instructionsText");
         let s = "Click the stage to draw the flow corner node by corner node."; 
-        s += " Double-click to add the flow label.";
+        s += " Double-click the stage to add the flow label.";
         s += " To adjust a node drag and drop the marker circle. To delete it, double click the marker.";
+        s += " Click a line to insert an extra node. Double click a line to add the flow arrow.";
+        s += " Double click the flow arrow to delete it."
         instructElem.innerText = s;
         instructElem.style.display = "block";
     }

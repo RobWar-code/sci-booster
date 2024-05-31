@@ -15,11 +15,9 @@ const modelDetails = {
   },
 
   dismissModelDetailsForm: function () {
-    e = document.getElementById("modelDetails");
+    let e = document.getElementById("modelDetails");
     e.style.display = "none";
-    e = document.getElementById("instructionsText");
-    e.innerText = "Click the drawing stage area to add a component node at that point.";
-    e.style.display = "block";
+    flowModelPage.displayFlowModelEditMessage();
   },
 
   submitModelDetails: function (event) {

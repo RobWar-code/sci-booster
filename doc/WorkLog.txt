@@ -5,6 +5,11 @@ Contents
     Work Done
 
 <h1>Work Due
+    Clear-out the console logging
+
+    Add the page hierarchical id to the page details
+
+    Provide the complete specifications in the analysis for the flow definition objects
 
     Create the mysql tables
         run/check the php code (create-tables.php)
@@ -38,6 +43,8 @@ Contents
 
             * Adjust the node click position to take account of the scale.
 
+            Check delete node
+
         * Do the event operations analysis for the node buttons
 
         * Do the node details option button code
@@ -56,13 +63,37 @@ Contents
 
             Check the analysis for flow drawing mode
 
-            Add a draw flow button to the flow modal
+            * Add a draw flow button to the flow modal
 
             Implement the draw flow procedures
 
-                Modify the click event for the stage
+                * Modify the click event for the stage
 
+                * Allow for flow node drag
+
+                * Allow for flow node delete
+
+                * Allow for flow node insert
+
+                * Allow for flow label drag
+
+                * Insert the flow direction arrows
+
+                * Double click to delete flow arrow
+
+                Check-out zIndex in the Konva manual
+
+            Do the Flow Done procedures
+            
+                Add the flow arrow position nodes to the flow details data and database
+
+                Adjust the position of the label within the group to the end of the group
+
+                Extract the point positions and save the data via flow-details.js
+                
             Do the visual delete flow function
+
+            Do the flow dismiss operation
 
             Do the edit flow details operations
             

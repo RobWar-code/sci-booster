@@ -192,6 +192,11 @@ body {
     display: none;
 }
 
+#warningRow {
+    display: none;
+    border: red solid 2px;
+}
+
 /* Flow Models */
 /* Drawing Area */
 #flowModelStageRow {
