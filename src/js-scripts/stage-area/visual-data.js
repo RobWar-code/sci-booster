@@ -193,6 +193,131 @@ dfm.FlowVisuals = class {
         this.flowArrowClickTime = 0;
     }
 
+    initialiseFlowEdit(flowDetails) {
+        this.currentFlow = flowDetails;
+        // Remove the non-editable version of the flow line
+        let flowNum = flowDetails.flow_num;
+        let flow = this.getFlow(flowNum);
+        if (flow === null) {
+            console.error("Visual flow details for flow not found:", flowNum);
+            console.log(this.flows)
+            return;
+        }
+        flow.flowGroup.remove();
+        // Create the editable flow group
+        this.makeEditFlowGraphic(this.currentFlow);
+        // Set the initial edit states
+        this.flowNodeCount = flowDetails.points.length;
+        this.flowLabelSet = true;
+        this.currentFlowDrawing.flowNum = flowDetails.flow_num;
+        this.flowDrawStarted = true;
+        this.flowNodeClickTime = 0;
+        this.lastFlowNodeClicked = -1;
+        this.drawFlowClickTime = 0;
+        this.flowLineClickedTime = 0;
+        this.flowLineClickTimer = null;
+        this.lastFlowLineClicked = -1;
+        this.flowArrowAdded = true;
+        this.flowArrowClickTime = 0;
+    }
+
+    makeEditFlowGraphic(flowDetails) {
+        this.currentFlowDrawing = {};
+        this.currentFlowDrawing.flowGroup = new Konva.Group({
+            x: flowDetails.drawing_group_x,
+            y: flowDetails.drawing_group_y
+        });
+        // Add the lines and markers
+        let last_x = flowDetails.drawing_group_x;
+        let last_y = flowDetails.drawing_group_y;
+        let count = 0;
+        for (let coords of flowDetails.points) {
+            let x = coords.x;
+            let y = coords.y;
+            let marker = new Konva.Circle({
+                x: x,
+                y: y,
+                radius: 4,
+                fill: 'white',
+                stroke: 'black',
+                strokeWidth: 1,
+                nodeNum: count
+            });
+            marker.setAttr("draggable", true);
+            marker.on("click", (e) => this.flowNodeClicked(e));
+            marker.on("dragstart", (e) => this.flowNodeDragStart(e));
+            marker.on("dragmove", (e) => this.flowNodeDragged(e));
+            marker.on("dragend", (e) => this.flowNodeDragEnd(e));
+            if (count > 0) {
+                let line = new Konva.Line({
+                    points: [lastX, lastY, x, y],
+                    stroke: 'black',
+                    strokeWidth: 2,
+                    nodeNum: count
+                })
+                line.on("click", (e) => this.flowLineClicked(e));
+                this.currentFlowDrawing.flowGroup.add(line);
+                line.setZIndex(0.1);
+            }
+            if (count === 0) {
+                this.currentFlowDrawing.points.push({marker: marker});
+            }
+            else {
+                this.currentFlowDrawing.points.push({marker: marker, line: line});
+            }
+            this.currentFlowDrawing.flowGroup.add(marker);
+            marker.setZIndex(0.2);
+            this.currentFlowDrawing.flowGroup.draw();
+        }
+        // Add the flow arrow
+        let points = [];
+        for (let coords of flowDetails.arrow_points) {
+            points.push(coords.x);
+            points.push(coords.y);
+        }
+        this.currentFlowDrawing.flowArrow = new Konva.Line({
+            points: points,
+            stroke: 'red',
+            strokeWidth: 2
+        })
+        line.on("click", (e) => this.flowArrowClicked(e));
+        this.currentFlowDrawing.flowArrow = line;
+        this.currentFlowDrawing.flowGroup.add(line);
+        // Add the flow label
+        let rect = new Konva.Rect({
+            x: flowDetails.label_x,
+            y: flowDetails.label_y,
+            width: flowDetails.label_width,
+            height: dfm.nodeTemplate.fontSize + 6,
+            stroke: 'black',
+            strokeWidth: 1,
+            fill: 'white',
+            flowNum: this.currentFlow.flow_num
+        });
+        let text = new Konva.Text({
+            x: flowDetails.label_x + 3,
+            y: flowDetails.label_y + 3,
+            text: flowDetails.label,
+            fontFamily: dfm.nodeTemplate.fontFamily,
+            fontSize: dfm.nodeTemplate.fontSize,
+            fill: 'black',
+            flowNum: flowDetails.flow_num
+        });
+        text.on('click', (e) => flowDetails.viewFlowDetails(e));
+        rect.on('click', (e) => flowDetails.viewFlowDetails(e));
+        rect.setAttr("draggable", true);
+        rect.on('dragstart', (e) => this.flowLabelDragStart(e));
+        rect.on('dragmove', (e) => this.flowLabelDragMove(e));
+        rect.on('dragend', (e) => this.flowLabelDragEnd(e));
+        this.currentFlowDrawing.graphicLabel = {};
+        this.currentFlowDrawing.graphicLabel.rect = rect;
+        this.currentFlowDrawing.graphicLabel.text = text;
+        this.currentFlowDrawing.flowGroup.add(rect);
+        this.currentFlowDrawing.flowGroup.add(text);
+        rect.setZIndex(0.5);
+        text.setZIndex(1);
+    }
+
     // Actions when the user has completed the flow drawing.
     flowDone() {
         // Check that the flow drawing is completed adequately.
@@ -253,7 +378,7 @@ dfm.FlowVisuals = class {
 
     makeVisualFlow(flowDetailsItem) {
         let visualFlowItem = Misc.copyObject(this.flowTemplate);
-        visualFlowItem.flowNum = this.currentFlow.flowNum;
+        visualFlowItem.flowNum = this.currentFlow.flow_num;
         visualFlowItem.active = false;
         // Create the group
         let x = flowDetailsItem.drawing_group_x;
@@ -760,6 +885,19 @@ dfm.FlowVisuals = class {
             ++count;
         }
         this.currentFlowDrawing.points = points;
+    }
+
+    getFlow(flowNum) {
+        let found = false;
+        let flow = null;
+        for (flow of this.flows) {
+            if (flow.flowNum === flowNum) {
+                found = true;
+                break;
+            }
+        }
+        if (!found) return null;
+        return flow;
     }
 
     getNextFlowNodeNum() {

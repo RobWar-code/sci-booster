@@ -32,6 +32,7 @@ flowDetails = {
         let editMode = "";
         if (dfm.modelEditMode) {
             editMode = "edit";
+            this.editMode = "edit";
             document.getElementById("drawFlowButton").style.display = "block";
             this.setDisableFlowDetailsEdit(false);
         }
@@ -126,6 +127,11 @@ flowDetails = {
             }
             this.currentFlow.destination_node_num = destinationNodeNum;
         }
+        if (destinationNodeNum === "" && sourceNodeNum === "") {
+            errElem.innerText = "At least either the source node or the destination node must be set";
+            errElem.style.display = "block";
+            return;
+        }
         let keywords = Misc.stripHTML(document.getElementById("flowKeywords").value);
         this.currentFlow.keywords = keywords;
         let definition = Misc.stripHTML(document.getElementById("flowDefinition").value);
@@ -134,7 +140,6 @@ flowDetails = {
         this.currentFlow.hypertext = hypertext;
         if (this.editMode === "new") {
             dfm.currentPage.addFlow(this.currentFlow);
-            this.editMode = "edit";
         }
         else {
             dfm.currentPage.updateFlow(this.currentFlow);
@@ -217,7 +222,14 @@ flowDetails = {
 
     drawFlow: function() {
         dfm.flowDrawMode = true;
-        dfm.currentVisual.initialiseFlowDraw(this.currentFlow);
+        if (this.editMode === "new") {
+            console.log("Got to draw flow - new");
+            dfm.currentVisual.initialiseFlowDraw(this.currentFlow);
+        }
+        else {
+            console.log("Got to draw flow - edit")
+            dfm.currentVisual.initialiseFlowEdit(this.currentFlow);
+        }
         document.getElementById("flowDetails").style.display = "none";
         document.getElementById("flowDoneButton").style.display = "block";
         let instructElem = document.getElementById("instructionsText");
