@@ -140,6 +140,7 @@ flowDetails = {
         this.currentFlow.hypertext = hypertext;
         if (this.editMode === "new") {
             dfm.currentPage.addFlow(this.currentFlow);
+            console.log("Added new flow:", dfm.currentPage.flows)
         }
         else {
             dfm.currentPage.updateFlow(this.currentFlow);
@@ -220,6 +221,17 @@ flowDetails = {
         document.getElementById("flowDetails").style.display = "none";
     },
 
+    dismissFlowDetails: function() {
+        let flowNum = this.currentFlow.flow_num;
+        let flow = dfm.currentPage.getFlow(flowNum);
+        if (flow != null) {
+            if (flow.points.length === 0) {
+                dfm.currentPage.deleteFlow(flowNum);
+            }
+        }
+        document.getElementById("flowDetails").style.display = "none";
+    },
+    
     drawFlow: function() {
         dfm.flowDrawMode = true;
         if (this.editMode === "new") {

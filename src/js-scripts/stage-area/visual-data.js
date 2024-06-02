@@ -237,7 +237,7 @@ dfm.FlowVisuals = class {
                 this.flows = [];
             }
             else {
-                this.flows = this.flows.splice(flowItemNum, 1);
+                this.flows.splice(flowItemNum, 1);
             }
         }
     }

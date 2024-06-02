@@ -155,7 +155,7 @@ dfm.FlowPage = class {
         let flow = null;
         let index = this.findFlow(flowNum);
         if (index === -1) {
-            console.error("getFlow - could not find flow in page:", flowNum);
+            return null;
         }
         return this.flows[index];
     }
@@ -249,7 +249,7 @@ dfm.FlowPageData = class {
             this.page.flows = [];
         }
         else {
-            this.page.flows = this.page.flows.splice(itemNum, 1);
+            this.page.flows.splice(itemNum, 1);
             console.log("Deleted flow:", this.page.flows);
         }
     }
