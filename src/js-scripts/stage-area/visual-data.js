@@ -41,6 +41,8 @@ dfm.FlowVisuals = class {
             flowNum: "00",
             label: "",
             flowGroup: null,
+            flowArrow: {},
+            graphicLabel: {},
             points: [] // [{x:, y:}]
         }
         this.flows = [];
@@ -190,6 +192,7 @@ dfm.FlowVisuals = class {
         this.flowLineClickTimer = null;
         this.lastFlowLineClicked = -1;
         this.flowArrowAdded = false;
+        this.addingFlowLabel = false;
         this.flowArrowClickTime = 0;
     }
 
@@ -218,18 +221,19 @@ dfm.FlowVisuals = class {
         this.flowLineClickTimer = null;
         this.lastFlowLineClicked = -1;
         this.flowArrowAdded = true;
+        this.addingFlowLabel = false;
         this.flowArrowClickTime = 0;
     }
 
     makeEditFlowGraphic(flowDetails) {
-        this.currentFlowDrawing = {};
+        this.currentFlowDrawing = Misc.copyObject(this.flowTemplate);
         this.currentFlowDrawing.flowGroup = new Konva.Group({
             x: flowDetails.drawing_group_x,
             y: flowDetails.drawing_group_y
         });
         // Add the lines and markers
-        let last_x = flowDetails.drawing_group_x;
-        let last_y = flowDetails.drawing_group_y;
+        let lastX = flowDetails.drawing_group_x;
+        let lastY = flowDetails.drawing_group_y;
         let count = 0;
         for (let coords of flowDetails.points) {
             let x = coords.x;
@@ -248,8 +252,9 @@ dfm.FlowVisuals = class {
             marker.on("dragstart", (e) => this.flowNodeDragStart(e));
             marker.on("dragmove", (e) => this.flowNodeDragged(e));
             marker.on("dragend", (e) => this.flowNodeDragEnd(e));
+            let line = {};
             if (count > 0) {
-                let line = new Konva.Line({
+                line = new Konva.Line({
                     points: [lastX, lastY, x, y],
                     stroke: 'black',
                     strokeWidth: 2,
@@ -267,7 +272,9 @@ dfm.FlowVisuals = class {
             }
             this.currentFlowDrawing.flowGroup.add(marker);
             marker.setZIndex(0.2);
-            this.currentFlowDrawing.flowGroup.draw();
+            lastX = x;
+            lastY = y;
+            ++count;
         }
         // Add the flow arrow
         let points = [];
@@ -280,9 +287,8 @@ dfm.FlowVisuals = class {
             stroke: 'red',
             strokeWidth: 2
         })
-        line.on("click", (e) => this.flowArrowClicked(e));
-        this.currentFlowDrawing.flowArrow = line;
-        this.currentFlowDrawing.flowGroup.add(line);
+        this.currentFlowDrawing.flowArrow.on("click", (e) => this.flowArrowClicked(e));
+        this.currentFlowDrawing.flowGroup.add(this.currentFlowDrawing.flowArrow);
         // Add the flow label
         let rect = new Konva.Rect({
             x: flowDetails.label_x,
@@ -316,6 +322,7 @@ dfm.FlowVisuals = class {
         this.currentFlowDrawing.flowGroup.add(text);
         rect.setZIndex(0.5);
         text.setZIndex(1);
+        this.nodeLayer.add(this.currentFlowDrawing.flowGroup);
     }
 
     // Actions when the user has completed the flow drawing.
@@ -643,6 +650,8 @@ dfm.FlowVisuals = class {
             if (itemNum === 1) {
                 this.currentFlowDrawing.points[itemNum].line.destroy();
                 this.currentFlowDrawing.points[itemNum].marker.destroy();
+                this.lastX = this.currentFlowDrawing.points[itemNum - 1].marker.getAttr("x");
+                this.lastY = this.currentFlowDrawing.points[itemNum - 1].marker.getAttr("y");
             }
             else {
                 this.currentFlowDrawing.points[itemNum].line.destroy();
@@ -654,6 +663,8 @@ dfm.FlowVisuals = class {
         else if (itemNum === this.currentFlowDrawing.points.length - 1) {
             this.currentFlowDrawing.points[itemNum].line.destroy();
             this.currentFlowDrawing.points[itemNum].marker.destroy();
+            this.lastX = this.currentFlowDrawing.points[itemNum - 1].marker.getAttr('x');
+            this.lastY = this.currentFlowDrawing.points[itemNum - 1].marker.getAttr('y');
         }
         else {
             let x = this.currentFlowDrawing.points[itemNum - 1].marker.getAttr("x");
@@ -695,6 +706,10 @@ dfm.FlowVisuals = class {
                 let x1 = this.currentFlowDrawing.points[itemNum - 1].marker.getAttr("x");
                 let y1 = this.currentFlowDrawing.points[itemNum - 1].marker.getAttr("y");
                 this.currentFlowDrawing.points[itemNum].line.setAttr("points", [x1, y1, x, y]);
+                if (itemNum === this.currentFlowDrawing.points.length - 1) {
+                    this.lastX = x;
+                    this.lastY = y;
+                }
             }
             if (itemNum < this.currentFlowDrawing.points.length - 1) {
                 let x1 = this.currentFlowDrawing.points[itemNum + 1].marker.getAttr("x");
