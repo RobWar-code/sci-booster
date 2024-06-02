@@ -198,6 +198,7 @@ dfm.FlowVisuals = class {
 
     initialiseFlowEdit(flowDetails) {
         this.currentFlow = flowDetails;
+        console.log("CurrentFlow in initialiseFlowEdit:", this.currentFlow);
         // Remove the non-editable version of the flow line
         let flowNum = flowDetails.flow_num;
         let flow = this.getFlow(flowNum);
@@ -223,6 +224,36 @@ dfm.FlowVisuals = class {
         this.flowArrowAdded = true;
         this.addingFlowLabel = false;
         this.flowArrowClickTime = 0;
+    }
+
+    deleteFlow(flowNum) {
+        // Delete the flow graphic
+        // Delete the visual flow entry
+        let flowItemNum = this.findFlow(flowNum);
+        if (flowItemNum > -1) {
+            let flow = this.flows[flowItemNum];
+            flow.flowGroup.destroy();
+            if (this.flows.length === 1) {
+                this.flows = [];
+            }
+            else {
+                this.flows = this.flows.splice(flowItemNum, 1);
+            }
+        }
+    }
+
+    findFlow(flowNum) {
+        let found = false;
+        let count = 0;
+        for (let flow of this.flows) {
+            if (flow.flowNum === flowNum) {
+                found = true;
+                break;
+            }
+            ++count;
+        }
+        if (!found) return -1;
+        return count;
     }
 
     makeEditFlowGraphic(flowDetails) {
@@ -348,7 +379,7 @@ dfm.FlowVisuals = class {
             let y = points[i + 1];
             flowArrowPoints.push({x: x, y: y});
         }
-        this.currentFlow.flow_arrow_points = flowArrowPoints;
+        this.currentFlow.arrow_points = flowArrowPoints;
 
         // label
         let x = this.currentFlowDrawing.graphicLabel.rect.getAttr('x');
@@ -409,9 +440,9 @@ dfm.FlowVisuals = class {
         });
         visualFlowItem.flowGroup.add(line);
         // Add the flow arrow
-        if (flowDetailsItem.flow_arrow_points) {
+        if (flowDetailsItem.arrow_points) {
             let points = [];
-            for (let coords of flowDetailsItem.flow_arrow_points) {
+            for (let coords of flowDetailsItem.arrow_points) {
                 let x = coords.x;
                 let y = coords.y;
                 points.push(x);

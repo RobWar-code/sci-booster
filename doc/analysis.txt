@@ -450,15 +450,33 @@ Contents
 			Formula
 			Description
 			Submit Formula
-		Draw button
+		Draw Flow button
 		Dismiss button
+		Delete button
 
 	The form is loaded as a modal. The conversions formulas can be toggled and are
 	presented as a list to be added to by submitting an entry. Clicking an entry
 	on the list deletes it.
 
-	The Draw button only appears once the details have been submitted. When this
-	is clicked, the modal is cleared and the flow drawing session begins.
+	The Draw Flow button only appears once the details have been submitted, or if
+	the flow details have been loaded for edit. When this is clicked, the modal is 
+	cleared and the flow drawing session begins.
+
+	Delete Flow
+
+		If the flow has been loaded for edit, then both the flow visual graphic 
+		and the current page entry for the flow are deleted.
+
+		If this is a new flow and the details have been submitted, then an entry
+		will be present in the current page and this is deleted.
+
+		The modal is cleared from the display.
+
+	Dismiss
+
+		This clears the flow details modal from the display. If flow details for 
+		the flow are present in the current page, but no points for the line 
+		have been entered then the flow is deleted from the current page.
 
 <h4>Drawing the Flow
 

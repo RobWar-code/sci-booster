@@ -83,17 +83,19 @@ Contents
 
                 Check-out zIndex in the Konva manual
 
-            Do the Flow Done procedures
+            * Do the Flow Done procedures
             
-                Add the flow arrow position nodes to the flow details data and database
+                * Add the flow arrow position nodes to the flow details data and database
 
-                Adjust the position of the label within the group to the end of the group
+                * Adjust the position of the label within the group to the end of the group
 
-                Extract the point positions and save the data via flow-details.js
+                * Extract the point positions and save the data via flow-details.js
                 
             Do the visual delete flow function
 
             Do the flow dismiss operation
+
+            Do Cancel Flow button
 
             Do the edit flow details operations
             

@@ -245,6 +245,12 @@ dfm.FlowPageData = class {
     }
     
     deleteFlowItem(itemNum) {
-        this.page.flows = this.page.flows.splice(itemNum, 1);
+        if (this.page.flows.length === 1) {
+            this.page.flows = [];
+        }
+        else {
+            this.page.flows = this.page.flows.splice(itemNum, 1);
+            console.log("Deleted flow:", this.page.flows);
+        }
     }
 }
