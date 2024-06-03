@@ -243,7 +243,8 @@ flowDetails = {
             dfm.currentVisual.initialiseFlowEdit(this.currentFlow);
         }
         document.getElementById("flowDetails").style.display = "none";
-        document.getElementById("flowDoneButton").style.display = "block";
+        document.getElementById("flowDoneButton").style.display = "inline";
+        document.getElementById("cancelFlowDrawButton").style.display = "inline";
         let instructElem = document.getElementById("instructionsText");
         let s = "Click the stage to draw the flow corner node by corner node."; 
         s += " Double-click the stage to add the flow label.";
@@ -253,4 +254,5 @@ flowDetails = {
         instructElem.innerText = s;
         instructElem.style.display = "block";
     }
+
 }

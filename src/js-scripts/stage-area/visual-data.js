@@ -242,6 +242,32 @@ dfm.FlowVisuals = class {
         }
     }
 
+    cancelFlowDraw() {
+        // Clear the current flow drawing
+        if (this.flowDrawStarted) {
+            this.currentFlowDrawing.flowGroup.destroy();
+            this.currentFlowDrawing = {};
+        }
+        let flowNum = this.currentFlow.flow_num;
+        // Check whether a flow line has already been defined
+        let flow = dfm.currentPage.getFlow(flowNum);
+        if (flow != null) {
+            if (flow.points.length != 0) {
+                // Reconstruct the original flow line drawing.
+                this.currentFlow = flow;
+                this.makeVisualFlow(this.currentFlow);
+            }
+            else {
+                dfm.currentPage.deleteFlow(flowNum);
+            }
+        }
+        this.editMode = "";
+        dfm.flowDrawMode = false;
+        document.getElementById("flowDoneButton").style.display = "none";
+        document.getElementById("cancelFlowDrawButton").style.display = "none";
+        flowModelPage.displayFlowModelEditMessage();
+    }
+
     findFlow(flowNum) {
         let found = false;
         let count = 0;
@@ -406,6 +432,7 @@ dfm.FlowVisuals = class {
         dfm.modelEditMode = true;
 
         document.getElementById("flowDoneButton").style.display = "none";
+        document.getElementById("flowDrawCancelButton").style.display = "none";
         flowModelPage.displayFlowModelEditMessage();
     }
 

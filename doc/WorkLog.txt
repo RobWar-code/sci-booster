@@ -9,12 +9,14 @@ Contents
 
     Add the page hierarchical id to the page details
 
-    Provide the complete specifications in the analysis for the flow definition objects
+    * Provide the complete specifications in the analysis for the flow definition objects
 
     Create the mysql tables
         run/check the php code (create-tables.php)
 
     Define the php procedures for saving a flow model page to the database
+
+    Page Save Operations
 
     * For the sake of readability add all functions to objects of similar 
         name to module file
@@ -25,7 +27,7 @@ Contents
 
     Allow for different classes of user in the various edit options of the modal model form
 
-    When edit mode is on, include a message line to click the stage to add a node.
+    * When edit mode is on, include a message line to click the stage to add a node.
 
     Make an object for the hover text code
     
@@ -55,17 +57,17 @@ Contents
 
         Do node drag operation
 
-        Do the Add Flow operation from the Flow Link node button
+        * Do the Add Flow operation from the Flow Link node button
 
             * Do the analysis for the creation of a flow Link
 
             * Do the flow details modal & associated code
 
-            Check the analysis for flow drawing mode
+            * Check the analysis for flow drawing mode
 
             * Add a draw flow button to the flow modal
 
-            Implement the draw flow procedures
+            * Implement the draw flow procedures
 
                 * Modify the click event for the stage
 
@@ -91,13 +93,13 @@ Contents
 
                 * Extract the point positions and save the data via flow-details.js
                 
-            Do the visual delete flow function
+            * Do the visual delete flow function
 
-            Do the flow dismiss operation
+            * Do the flow dismiss operation
 
             Do Cancel Flow button
 
-            Do the edit flow details operations
+            * Do the edit flow details operations
             
     * Rework/replace the Konva flow-diagram code with the structured
     model.
