@@ -31,6 +31,8 @@ const modelDetails = {
         dfm.currentPage = new dfm.FlowPageData();
         dfm.currentVisual = new dfm.FlowVisuals();
       }
+      dfm.currentPage.page.hierarchical_id = "01";
+      document.getElementById("pageHierarchicalId").innerText = dfm.currentPage.page.hierarchical_id;
       dfm.currentPage.page.title = title;
       if (title != "") {
         document.getElementById("modelTitleTick").style.display = "inline";

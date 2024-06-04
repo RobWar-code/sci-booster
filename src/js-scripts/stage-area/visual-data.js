@@ -61,8 +61,13 @@ dfm.FlowVisuals = class {
         node.label = label;
         node.nodeGroup = new Konva.Group({
             x: x / dfm.scaleX,
-            y: y
+            y: y,
+            nodeNum: nodeNum
         });
+        node.nodeGroup.setAttr("draggable", true);
+        node.nodeGroup.on("dragstart", (e) => this.nodeDragStart(e));
+        node.nodeGroup.on("dragmove", (e) => this.nodeDragMove(e));
+        node.nodeGroup.on("dragend", (e) => this.nodeDragEnd(e));
         node.rect = new Konva.Rect({
             x: 0,
             y: 0,
@@ -138,6 +143,26 @@ dfm.FlowVisuals = class {
         this.nodes.push(node);
     }
 
+    nodeDragStart(event) {
+        event.cancelBubble = true;
+    }
+
+    nodeDragMove(event) {
+        event.cancelBubble = true;
+    }
+
+    nodeDragEnd(event) {
+        let nodeNum = event.target.getAttr("nodeNum");
+        let x = event.target.getAttr("x");
+        let y = event.target.getAttr("y");
+        // Update the page data
+        let node = dfm.currentPage.getNode(nodeNum);
+        if (node != null) {
+            node.x = x;
+            node.y = y;
+        }
+    }
+
     getNode(nodeNum) {
         let found = false;
         let index = 0;
@@ -168,10 +193,10 @@ dfm.FlowVisuals = class {
 
     deleteNode (nodeNum) {
         if (this.nodes.length === 0) return;
-        nodeObj = this.getNode(nodeNum);
+        let nodeObj = this.getNode(nodeNum);
         if (!nodeObj.found) return;
-        node = nodeObj.node;
-        index = nodeObj.index;
+        let node = nodeObj.node;
+        let index = nodeObj.index;
         node.nodeGroup.destroy();
         this.nodeLayer.draw();
         this.nodes.splice(index, 1);

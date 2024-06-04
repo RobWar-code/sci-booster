@@ -45,7 +45,7 @@ Contents
 
             * Adjust the node click position to take account of the scale.
 
-            Check delete node
+            * Check delete node
 
         * Do the event operations analysis for the node buttons
 
@@ -55,7 +55,7 @@ Contents
 
             * Allow for the update of the selected node
 
-        Do node drag operation
+        * Do node drag operation
 
         * Do the Add Flow operation from the Flow Link node button
 

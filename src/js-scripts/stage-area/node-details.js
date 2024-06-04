@@ -127,17 +127,20 @@ const nodeDetails = {
             // node is updated
             dfm.currentVisual.updateNode(label, nodeNum);
         }
-        console.log("submitNodeDetails - currentPage:", dfm.currentPage);
-        console.log("nodeNum, newNodeX, newNodeY", node.node_num, dfm.newNodeX, dfm.newNodeY);
-        console.log("nodeData:", dfm.currentVisual);
+        if (dfm.currentPage.page.nodes.length === 1) {
+            document.getElementById("saveModelButton").style.display = "inline";
+        }
     },
 
-    deleteNodeDetails: function () {
+    deleteNode: function () {
         // Get the node number from the form
         let nodeNum = document.getElementById("nodeNum").innerText;
         dfm.currentPage.deleteNode(nodeNum);
-        dfm.currentVisuals.deleteNode(nodeNum);
+        dfm.currentVisual.deleteNode(nodeNum);
         document.getElementById("nodeDetails").style.display = "none";
+        if (dfm.currentPage.nodes.length === 0) {
+            document.getElementById("saveModelButton").style.display = "none";
+        }
     },
 
     doHoverText: function (event) {

@@ -3,7 +3,7 @@
 dfm.FlowPage = class {
     constructor() {
         this.id = null; // If known
-        this.hierarchical_page_id = "";
+        this.hierarchical_id = "";
         this.title = "";
         this.description = "";
         this.authors = [];
@@ -103,12 +103,7 @@ dfm.FlowPage = class {
         let nodeObj = this.getNode(nodeNum);
         if (nodeObj) {
             let index = nodeObj.index;
-            if (index === 0) {
-                this.nodes = this.nodes.splice(1);
-            }
-            else {
-                this.nodes = this.nodes.splice(index, 1);
-            }
+            this.nodes.splice(index, 1);
         }
     }
 
