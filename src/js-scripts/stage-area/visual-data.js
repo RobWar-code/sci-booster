@@ -54,6 +54,10 @@ dfm.FlowVisuals = class {
         dfm.stageApp.add(this.nodeLayer);
     }
 
+    redoPage() {
+
+    }
+
     addNode(label, nodeNum, x, y) {
         let node = Misc.copyObject(this.nodeTemplate);
         node.active = true;
@@ -457,7 +461,7 @@ dfm.FlowVisuals = class {
         dfm.modelEditMode = true;
 
         document.getElementById("flowDoneButton").style.display = "none";
-        document.getElementById("flowDrawCancelButton").style.display = "none";
+        document.getElementById("cancelFlowDrawButton").style.display = "none";
         flowModelPage.displayFlowModelEditMessage();
     }
 

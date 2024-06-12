@@ -1,0 +1,70 @@
+{
+	"flow_model_id": null,
+	"page": {
+		"id": null,
+		"hierarchical_id": "01",
+		"title": "Test Model 1",
+		"description": "A test model to demonstrate the effectiveness of the add-page routines.",
+		"keywords": "example test",
+		"authors": ["warner3", "John T Smythe"],
+		"references": [
+			{
+				"source": "internet",
+				"title": "Example Devices",
+				"author": "Jackson Taylor"
+			}
+		],
+		"nodes": [
+			{
+				"id": null,
+				"node_num": "01",
+				"x": 50,
+				"y": 30,
+				"label": "Petrol Station",
+				"type": "mechanism",
+				"definition": "Fuel station for refuelling",
+				"keywords": "fueling station, fuels",
+				"hyperlink": "https://narayana-art.co.uk",
+				"has_child_page": false
+			},
+			{
+				"id": null,
+				"node_num": "02",
+				"x": 50,
+				"y": 190,
+				"label": "car",
+				"type": "mechanism",
+				"definition": "An example vehicles",
+				"keywords":"vehicles",
+				"hyperlink": "https://narayana-art.co.uk",
+				"has_child_page": false
+			}
+		],
+		"flows": [
+			{
+				"id": null,
+				"flow_num": "01",
+				"source_node_num": "01",
+				"destination_node_num": "02",
+				"label": "petrol",
+				"label_x": -40,
+				"label_y": 40,
+				"label_width": 60,
+				"drawing_group_x": 120,
+				"drawing_group_y": 120,
+				"definition": "An example flow",
+				"keywords": "fuels", 
+				"hyperlink": "https://narayana-art.co.uk",
+				"arrow_points": [{"x": -12, "y":10}, {"x": 0, "y": 20}, {"x": 12, "y": 10}],
+				"points": [{"x": 0, "y": 0}, {"x": 0, "y": 60}],
+				"conversion_formulas": [
+					{
+						"formula": "C6H6O2 + 8O2 = 6CO2 + 3H2O + O",
+						"description": "petrol + air to water and carbon dioxide"
+					}
+				]
+			}
+
+		]
+	}
+}

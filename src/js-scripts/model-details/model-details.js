@@ -139,7 +139,7 @@ const modelDetails = {
     if (!dfm.modelReferencesVisible) {
       e.style.display = "block";
       if (dfm.currentPageSet) {
-        displayReferencesList();
+        this.displayReferencesList();
       }
       dfm.modelReferencesVisible = true;
     }

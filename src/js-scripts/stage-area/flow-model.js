@@ -17,12 +17,18 @@ dfm.FlowPage = class {
 
     set(pageObj) {
         this.id = pageObj.id;
-        this.hierarchical_page_id = pageObj.hierarchical_page_id;
+        this.hierarchical_id = pageObj.hierarchical_id;
         this.title = pageObj.title;
         this.description = pageObj.description;
         this.authors = pageObj.authors;
         this.references = pageObj.references;
         this.keywords = pageObj.keywords;
+    }
+
+    setPageData(page) {
+        this.set(page);
+        this.nodes = page.nodes;
+        this.flows = page.flows;
     }
 
     addNode (node) {
@@ -247,5 +253,75 @@ dfm.FlowPageData = class {
             this.page.flows.splice(itemNum, 1);
             console.log("Deleted flow:", this.page.flows);
         }
+    }
+
+    // Server Interface
+    async saveModel() {
+        let pageJSONObject = this.prepareJSONObject();
+        let pageJSON = JSON.stringify(pageJSONObject);
+        let responseData = await this.sendPage(pageJSON);
+        let pageData = JSON.parse(responseData);
+        this.setPageData(pageData);
+        dfm.currentVisual.redoPage();
+    }
+
+    async sendPage(pageJSON) {
+        try {
+            let response = await fetch(dfm.phpPath + 'flow-model/receive-page.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: pageJSON
+            })
+
+            let responseData = await response.json();
+
+            console.log("responseData:", responseData);
+            return responseData;
+        }
+        catch {(error) => {
+            console.error("Problem with receive-page script call", error);
+            return {result: false, error: "addUser Systems Error"};
+        }};
+
+    }
+
+    prepareJSONObject() {
+        let pageJSONObj = {
+            flow_model_id: this.id,
+            page: {
+                id: this.page.id,
+                hierarchical_id: this.page.hierarchical_id,
+                title: this.page.title,
+                keywords: this.page.keywords,
+                description: this.page.description,
+                authors: [],
+                references: [],
+                nodes: [],
+                flows: []
+
+            }
+        }     
+        for (let author of this.page.authors) {
+            pageJSONObj.page.authors.push(author);
+        }
+        for (let ref of this.page.references) {
+            pageJSONObj.page.references.push(ref);
+        }
+        for (let node of this.page.nodes) {
+            pageJSONObj.page.nodes.push(node);
+        }
+        for (let flow of this.page.flows) {
+            pageJSONObj.page.flows.push(flow);
+        }
+        console.log("Page Obj:", pageJSONObj);
+        return pageJSONObj;
+    }
+
+    setPageData(pageData) {
+        this.flow_model_id = pageData.flow_model_id;
+        let page = pageData.page;
+        this.page.setPageData(page);
     }
 }

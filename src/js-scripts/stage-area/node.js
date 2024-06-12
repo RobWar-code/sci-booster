@@ -2,7 +2,8 @@
 
 dfm.Node = class {
     constructor () {
-        this.id = ""; // If known
+        this.id = null; // If known
+        this.page_id = null;
         this.node_num = ""; // Auto
         this.x = 0;
         this.y = 0;

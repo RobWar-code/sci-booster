@@ -11,6 +11,12 @@ Contents
 
     * Provide the complete specifications in the analysis for the flow definition objects
 
+    Strip HTML chars from authors, references and hyperlinks
+
+    trim all input fields
+
+    Do the Page Details button operation
+
     Create the mysql tables
         run/check the php code (create-tables.php)
 

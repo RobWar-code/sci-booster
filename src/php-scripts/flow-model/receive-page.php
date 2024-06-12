@@ -1,17 +1,26 @@
 <?php
 include_once __DIR__  . "/../db-connect.php";
 include_once __DIR__ . "/add-page.php";
+include_once __DIR__ . "/extract-page.php";
 
 // Collect the JSON data
 header('Content-Type: application/json');
 
 $inputData = json_decode(file_get_contents('php://input'), true);
 
+// Test Script
+// $inputData = json_decode(file_get_contents(__DIR__ . '/../test/test-model.json'), true);
+
 // Check whether this is a model that does not already exist
 if ($inputData['flow_model_id'] === NULL) {
     $flowModelId = addFlowModel($inputData['page']['title']);
     if ($flowModelId != NULL) {
-        addPage($flowModelId, $inputData);
+        $pageId = addPage($flowModelId, $inputData);
+    }
+    if ($flowModelId != NULL && $pageId != NULL) {
+        $pageData = extractPage($flowModelId, $pageId);
+        $pageData['result'] = true;
+        echo json_encode($pageData);
     }
 }
 // Else - Check whether page already exists
@@ -21,7 +30,7 @@ function addFlowModel($title) {
 
     $flowModelId = NULL;
 
-    $sql="INSERT INTO flow_model VALUES (?)";
+    $sql="INSERT INTO flow_model (title) VALUES (?)";
 
     $stmt = $dbConn->prepare($sql);
     if ($stmt === FALSE) {
@@ -35,7 +44,7 @@ function addFlowModel($title) {
     }
     else {
         // Get the id
-        $sql = "SELECT * FROM flow_model WHERE title = {$title}";
+        $sql = "SELECT * FROM flow_model WHERE title = '$title'";
         $result = $dbConn->query($sql);
         if ($result && $row = $result->fetch_assoc()) {
             $flowModelId = $row['id'];

@@ -26,6 +26,8 @@ Contents
 		Flow Diagram Data Structures
 		Flow Drawing Logic
 	Flow Model Database Transactions
+		Save Operation Preparations
+		Adding a New Page
 
 <h1>File Modularisation/Structure
 
@@ -725,9 +727,11 @@ Contents
 				// are NodeNums, the first/top level is always "01"
 			"title": "",
 			"keywords": "",
+			"description": "",
 			"authors": [""], // Username or Author
 			"references": [
 				{
+					"id": ,// null if not known
 					"source": "", // ie: "Web Page" or Publisher
 					"title": "",
 					"author": ""
@@ -737,6 +741,7 @@ Contents
 
 			"nodes": [
 				{
+					"id": , // null if not known
 					"node_num" : "", // (ie: "01")
 					"label": "",
 					"type": "", // (Mechanism/Effect)
@@ -750,6 +755,7 @@ Contents
 
 			"flows" : [
 				{
+					"id": ,//null if not known
 					"source_node_num": "", 
 					"destination_node_num": "", // (optional)
 					"label": "",
@@ -757,6 +763,7 @@ Contents
 					"definition": "", // (optional)
 					"conversion_formulas": [
 						{
+							"id": , // null if not known
 							"formula": "",
 							"description": ""
 						},
@@ -767,8 +774,9 @@ Contents
 					"drawing_group_y": 0,
 					"label_x": 0,
 					"label_y": 0,
-					"arrow_points": [{x:, y:}]
-					"points": [{x:, y:}]
+					"label_width": 0,
+					"arrow_points": [{id:, x:, y:}],
+					"points": [{id:, x:, y:}]
 				},
 				..
 			]
@@ -776,14 +784,32 @@ Contents
 		}
 	}
 
+<h2>Save Operation Preparations
+	The current page object (dfm.currentPage - class flowModel) first prepares
+	the javascript object which is to be saved on the server using the PHP/MySql
+	routines.
+
+	The save operation returns the page data, including the auto id's. This is reloaded
+	into the current page data for representation as a graphic.
 
 <h2>Adding a New Page
 	The php routine receive-page.php first checks the flow_model_id, if this is null,
+	when the operation is complete it returns the refetched page for use by the
+	calling javascript function.
+		{
+			result: true/false, // whether the operation worked
+			flow_model_id: ,
+			page: {
+
+			}
+		}
+		
 	it invokes the 
 		addFlowModel function
-			This first the page title to ensure that it is unique.
+			This first checks the page title to ensure that it is unique.
 			This checks the hierarchical_id of the page, and if it is 01 it adds the page 
 			title to the flow_model table and returns the flow_model_id.
+
 	it then invokes the
 		addPage function - which performs the following:
 			Add the individual details to the page table, return the page_id

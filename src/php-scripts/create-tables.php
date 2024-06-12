@@ -21,10 +21,10 @@
     )";
 
     if ($dbConn->query($sql) === TRUE) {
-        echo "Added user table";
+        echo "Added user table<br>";
     }
     else {
-        echo "Problem adding user table: " . $dbConn->error;
+        echo "Problem adding user table: " . $dbConn->error . "<br>";
     }
     */
     /*
@@ -67,17 +67,18 @@
     }
     */
 
+    /*
     // flow_model Table
     $sql = "CREATE TABLE flow_model (
         id INT AUTO_INCREMENT PRIMARY KEY,
-        title VARCHAR(126) NOT NULL UNIQUE
+        title VARCHAR(128) NOT NULL UNIQUE
     )";
 
     if ($dbConn->query($sql) === TRUE) {
-        echo "Added flow_model table";
+        echo "Added flow_model table<br>";
     }
     else {
-        echo "Problem adding flow_model table: " . $dbConn->error;
+        echo "Problem adding flow_model table: " . $dbConn->error . "<br>";
     }
 
     // page Table
@@ -92,10 +93,10 @@
     )";
 
     if ($dbConn->query($sql) === TRUE) {
-        echo "Added page table";
+        echo "Added page table<br>";
     }
     else {
-        echo "Problem adding page table: " . $dbConn->error;
+        echo "Problem adding page table: " . $dbConn->error ."<br>";
     }
 
     // node Table
@@ -115,11 +116,44 @@
     )";
 
     if ($dbConn->query($sql) === TRUE) {
-        echo "Added node table";
+        echo "Added node table<br>";
     }
     else {
-        echo "Problem adding node table: " . $dbConn->error;
+        echo "Problem adding node table: " . $dbConn->error . "<br>";
     }
+*/
+    $sql = "DROP TABLE IF EXISTS flow_point";
+    if ($dbConn->query($sql) === TRUE) {
+        echo "Dropped flow_point table successfully<br>";
+    }
+    else {
+        echo "Drop flow_point table failed<br>" . $dbConn->error . "<br>";
+    }
+
+    $sql = "DROP TABLE IF EXISTS flow_arrow_point";
+    if ($dbConn->query($sql) === TRUE) {
+        echo "Dropped flow_arrow_point table successfully<br>";
+    }
+    else {
+        echo "Drop flow_arrow_point table failed<br>" . $dbConn->error . "<br>";
+    }
+
+    $sql = "DROP TABLE IF EXISTS conversion_formula";
+    if ($dbConn->query($sql) === TRUE) {
+        echo "Dropped conversion_formula table successfully<br>";
+    }
+    else {
+        echo "Drop conversion_formula table failed <br>" . $dbConn->error . "<br>";
+    }
+
+    $sql = "DROP TABLE IF EXISTS flow";
+    if ($dbConn->query($sql) === TRUE) {
+        echo "Dropped flow table successfully <br>";
+    }
+    else {
+        echo "Drop flow table failed<br>" . $dbConn->error . "<br>";
+    }
+
 
     // flow Table
     $sql = "CREATE TABLE flow (
@@ -136,19 +170,18 @@
         definition VARCHAR(4096),
         hyperlink VARCHAR(255),
         source_void TINYINT NOT NULL,
-        source_node_id INT,
+        source_node_num CHAR(2),
         destination_void TINYINT NOT NULL,
-        destination_node_id INT,
-        FOREIGN KEY (page_id) REFERENCES page(id),
-        FOREIGN KEY (source_node_id) REFERENCES node(id)
-        FOREIGN KEY (destination_node_id) REFERENCES node(id)
+        destination_node_num CHAR(2),
+        FOREIGN KEY (page_id) REFERENCES page(id)
     )";
 
     if ($dbConn->query($sql) === TRUE) {
-        echo "Added flow table";
+        echo "Added flow table<br>";
     }
     else {
-        echo "Problem adding flow table: " . $dbConn->error;
+        echo "Problem adding flow table: " . $dbConn->error . "<br>";
+        exit;
     }
 
     // flow_point Table
@@ -161,10 +194,10 @@
     )";
 
     if ($dbConn->query($sql) === TRUE) {
-        echo "Added flow_point table";
+        echo "Added flow_point table<br>";
     }
     else {
-        echo "Problem adding flow_point table: " . $dbConn->error;
+        echo "Problem adding flow_point table: " . $dbConn->error . "<br>";
     }
 
     // flow_arrow_point Table
@@ -177,12 +210,12 @@
     )";
 
     if ($dbConn->query($sql) === TRUE) {
-        echo "Added flow_arrow_point table";
+        echo "Added flow_arrow_point table<br>";
     }
     else {
-        echo "Problem adding flow_arrow_point table: " . $dbConn->error;
+        echo "Problem adding flow_arrow_point table: " . $dbConn->error . "<br>";
     }
-    
+/*    
     // external_author Table
     $sql = "CREATE TABLE external_author (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -196,7 +229,7 @@
     else {
         echo "Problem adding external_author table: " . $dbConn->error;
     }
-    
+  
     // references Table
     $sql = "CREATE TABLE reference (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -205,31 +238,31 @@
         title VARCHAR(128),
         external_author_id INT,
         FOREIGN KEY (page_id) REFERENCES page(id),
-        FOREIGN KEY (external_author_id REFERENCES external_author(id)
+        FOREIGN KEY (external_author_id) REFERENCES external_author(id)
     )";
 
     if ($dbConn->query($sql) === TRUE) {
-        echo "Added reference table";
+        echo "Added reference table<br>";
     }
     else {
-        echo "Problem adding reference table: " . $dbConn->error;
+        echo "Problem adding reference table: " . $dbConn->error . "<br>";
     }
 
-    // external_authors_page_link Table
+    // external_author_page_link Table
     // references Table
     $sql = "CREATE TABLE external_author_page_link (
         id INT AUTO_INCREMENT PRIMARY KEY,
         page_id INT,
         external_author_id INT,
         FOREIGN KEY (page_id) REFERENCES page(id),
-        FOREIGN KEY (external_author_id REFERENCES external_author(id)
+        FOREIGN KEY (external_author_id) REFERENCES external_author(id)
     )";
 
     if ($dbConn->query($sql) === TRUE) {
-        echo "Added external_author_page_link table";
+        echo "Added external_author_page_link table<br>";
     }
     else {
-        echo "Problem adding external_author_page_link table: " . $dbConn->error;
+        echo "Problem adding external_author_page_link table: " . $dbConn->error . "<br>";
     }
 
     // page_user_link Table
@@ -238,30 +271,30 @@
         page_id INT,
         user_id INT,
         FOREIGN KEY (page_id) REFERENCES page(id),
-        FOREIGN KEY (user_id REFERENCES user(id)
+        FOREIGN KEY (user_id) REFERENCES user(id)
     )";
 
     if ($dbConn->query($sql) === TRUE) {
-        echo "Added page_user_link table";
+        echo "Added page_user_link table<br>";
     }
     else {
-        echo "Problem adding page_user_link table: " . $dbConn->error;
+        echo "Problem adding page_user_link table: " . $dbConn->error . "<br>";
     }
-    
+*/    
     // conversion_formula Table
     $sql = "CREATE TABLE conversion_formula (
         id INT AUTO_INCREMENT PRIMARY KEY,
         flow_id INT,
         formula VARCHAR(1024),
-        description VARCHAR(4096)
+        description VARCHAR(4096),
         FOREIGN KEY (flow_id) REFERENCES flow(id)
     )";
 
     if ($dbConn->query($sql) === TRUE) {
-        echo "Added conversion_formula table";
+        echo "Added conversion_formula table<br>";
     }
     else {
-        echo "Problem adding conversion_formula table: " . $dbConn->error;
+        echo "Problem adding conversion_formula table: " . $dbConn->error . "<br>";
     }
     
 ?>
