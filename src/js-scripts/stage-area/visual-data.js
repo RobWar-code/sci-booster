@@ -55,7 +55,32 @@ dfm.FlowVisuals = class {
     }
 
     redoPage() {
+        this.destroyCurrentPage();
+        this.redoNodes();
+        this.redoFlows();
+    }
 
+    redoNodes() {
+        for (let node of dfm.currentPage.nodes) {
+            let nodeNum = node.node_num;
+            let label = node.label;
+            let x = node.x;
+            let y = node.y;
+            this.addNode(nodeNum, label, x, y);
+        }
+    }
+
+    redoFlows() {
+        for (let flow of dfm.currentPage.flows) {
+            this.makeVisualFlow(flow);           
+        }
+    }
+
+    destroyCurrentPage() {
+        this.nodeLayer.destroy();
+        this.setStageDetails();
+        this.nodes = [];
+        this.flows = [];
     }
 
     addNode(label, nodeNum, x, y) {
@@ -425,10 +450,12 @@ dfm.FlowVisuals = class {
             points.push({x: x, y: y});
         }
         this.currentFlow.points = points;
+        console.log("Current Flow Points:", this.currentFlow.points)
 
         // arrow
         let flowArrowPoints = [];
         points = this.currentFlowDrawing.flowArrow.getAttr("points");
+        console.log("Arrow Points:", points);
         for (let i = 0; i < points.length; i += 2) {
             let x = points[i];
             let y = points[i + 1];

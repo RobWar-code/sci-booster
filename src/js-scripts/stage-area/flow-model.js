@@ -227,6 +227,7 @@ dfm.FlowPageData = class {
 
     addFlow(flow) {
         this.page.flows.push(flow);
+        console.log("Flows at addFlow:", this.page.flows);
     }
 
     updateFlow(flow) {
@@ -259,10 +260,14 @@ dfm.FlowPageData = class {
     async saveModel() {
         let pageJSONObject = this.prepareJSONObject();
         let pageJSON = JSON.stringify(pageJSONObject);
+        console.log("pageJSON:", pageJSON);
         let responseData = await this.sendPage(pageJSON);
-        let pageData = JSON.parse(responseData);
-        this.setPageData(pageData);
-        dfm.currentVisual.redoPage();
+        if (responseData.result) {
+            /*
+            this.setPageData(pageData);
+            dfm.currentVisual.redoPage();
+            */
+        }
     }
 
     async sendPage(pageJSON) {
@@ -300,7 +305,6 @@ dfm.FlowPageData = class {
                 references: [],
                 nodes: [],
                 flows: []
-
             }
         }     
         for (let author of this.page.authors) {

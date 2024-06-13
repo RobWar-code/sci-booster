@@ -14,6 +14,13 @@ $inputData = json_decode(file_get_contents('php://input'), true);
 // Check whether this is a model that does not already exist
 if ($inputData['flow_model_id'] === NULL) {
     $flowModelId = addFlowModel($inputData['page']['title']);
+
+    $report = [];
+    $report['result'] = false;
+    $report['flow_model_id'] = $flowModelId;
+    echo json_encode($report);
+    exit(0);
+
     if ($flowModelId != NULL) {
         $pageId = addPage($flowModelId, $inputData);
     }
@@ -21,6 +28,12 @@ if ($inputData['flow_model_id'] === NULL) {
         $pageData = extractPage($flowModelId, $pageId);
         $pageData['result'] = true;
         echo json_encode($pageData);
+    }
+    else {
+        $report = [];
+        $report['result'] = false;
+        $report['error'] = "Problems saving the page data";
+        echo json_encode($report);
     }
 }
 // Else - Check whether page already exists
