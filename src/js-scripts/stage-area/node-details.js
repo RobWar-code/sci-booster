@@ -61,8 +61,6 @@ const nodeDetails = {
 
     displayNodeDetailsModal: function (editMode) {
 
-        console.log("Got to display node details, editMode:", editMode);
-
         if (editMode === "new") {
             // Clear the modal form fields
             document.getElementById("nodeLabel").value = "";
@@ -89,18 +87,18 @@ const nodeDetails = {
 
         // Check the field contents
         let label = document.getElementById("nodeLabel").value;
-        label = Misc.stripHTML(label);
+        label = Misc.stripHTML(label).trim();
         if (label === "") {
             document.getElementById("nodeErrors").value = "Bad node label submitted";
             document.getElementById("nodeErrors").style.display = "block";
             return;
         }
         let keywords = document.getElementById("nodeKeywords").value;
-        keywords = Misc.stripHTML(keywords);
+        keywords = Misc.stripHTML(keywords).trim();
         let definition = document.getElementById("nodeDefinition").value;
-        definition = Misc.stripHTML(definition);
+        definition = Misc.stripHTML(definition).trim();
         let hyperlink = document.getElementById("nodeHyperlink").value;
-        hyperlink = Misc.stripHTML(hyperlink);
+        hyperlink = Misc.stripHTML(hyperlink).trim();
 
         let nodeNum = document.getElementById("nodeNum").innerText;
         let node = null; 
@@ -120,6 +118,8 @@ const nodeDetails = {
         document.getElementById("nodeDetails").style.display = "none";
 
         if (dfm.currentPage.nodeEditMode === "new") {
+            node.x = dfm.newNodeX;
+            node.y = dfm.newNodeY;
             dfm.currentPage.addNode(node);
             dfm.currentVisual.addNode(label, node.node_num, dfm.newNodeX, dfm.newNodeY);
         }

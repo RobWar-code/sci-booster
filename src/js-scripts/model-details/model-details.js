@@ -1,7 +1,6 @@
 const modelDetails = {
 
   newModel: function() {
-    console.log("At newModel");
     e = document.getElementById("modelDetails");
     e.style.display = "block";
     document.getElementById("additionalModelDetailsDiv").style.display = "none";
@@ -22,9 +21,9 @@ const modelDetails = {
 
   submitModelDetails: function (event) {
     event.preventDefault();
-    let title = Misc.stripHTML(document.getElementById("modelTitle").value);
-    let description = Misc.stripHTML(document.getElementById("modelDescription").value);
-    let keywords = Misc.stripHTML(document.getElementById("modelKeywords").value);
+    let title = Misc.stripHTML(document.getElementById("modelTitle").value).trim();
+    let description = Misc.stripHTML(document.getElementById("modelDescription").value).trim();
+    let keywords = Misc.stripHTML(document.getElementById("modelKeywords").value).trim();
 
     if (!(title === "" && description === "" && keywords === "")) {
       if (!dfm.currentPageSet) {
@@ -86,7 +85,7 @@ const modelDetails = {
     event.preventDefault();
     console.log("Got to submit author");
     if (dfm.currentPageSet) {
-      let author = Misc.stripHTML(document.getElementById("modelAuthor").value);
+      let author = Misc.stripHTML(document.getElementById("modelAuthor").value).trim();
       if (author != "") {
         dfm.currentPage.page.authors.push(author);
         console.log("Author:", author);
@@ -154,9 +153,9 @@ const modelDetails = {
     console.log("Got to submit references");
     if (dfm.currentPageSet) {
       let refObj = {};
-      refObj.source = Misc.stripHTML(document.getElementById("modelReferenceSource").value);
-      refObj.author = Misc.stripHTML(document.getElementById("modelReferenceAuthor").value);
-      refObj.title = Misc.stripHTML(document.getElementById("modelReferenceTitle").value);
+      refObj.source = Misc.stripHTML(document.getElementById("modelReferenceSource").value).trim();
+      refObj.author = Misc.stripHTML(document.getElementById("modelReferenceAuthor").value).trim();
+      refObj.title = Misc.stripHTML(document.getElementById("modelReferenceTitle").value).trim();
       if (!(refObj.source === "" && refObj.author === "" && refObj.title === "")) {
         document.getElementById("modelReferenceSource").value = "";
         document.getElementById("modelReferenceAuthor").value = "";

@@ -107,7 +107,7 @@ flowDetails = {
         }
         this.currentFlow.flow_num = document.getElementById("flowNum").innerText;
         this.currentFlow.label = label;
-        let sourceNodeNum = Misc.stripHTML(document.getElementById("flowSourceNodeNum").value);
+        let sourceNodeNum = Misc.stripHTML(document.getElementById("flowSourceNodeNum").value).trim();
         // Check whether the given node num exists
         if (sourceNodeNum != "") {
             if (!dfm.currentPage.nodeExists(sourceNodeNum)) {
@@ -117,7 +117,7 @@ flowDetails = {
             }
             this.currentFlow.source_node_num = sourceNodeNum; 
         }
-        let destinationNodeNum = Misc.stripHTML(document.getElementById("flowDestinationNodeNum").value);
+        let destinationNodeNum = Misc.stripHTML(document.getElementById("flowDestinationNodeNum").value).trim();
         // Check whether the given node num exists
         if (destinationNodeNum != "") {
             if (!dfm.currentPage.nodeExists(destinationNodeNum)) {
@@ -132,15 +132,14 @@ flowDetails = {
             errElem.style.display = "block";
             return;
         }
-        let keywords = Misc.stripHTML(document.getElementById("flowKeywords").value);
+        let keywords = Misc.stripHTML(document.getElementById("flowKeywords").value).trim();
         this.currentFlow.keywords = keywords;
-        let definition = Misc.stripHTML(document.getElementById("flowDefinition").value);
+        let definition = Misc.stripHTML(document.getElementById("flowDefinition").value).trim();
         this.currentFlow.definition = definition;
-        let hypertext = Misc.stripHTML(document.getElementById("flowHypertext").value);
+        let hypertext = Misc.stripHTML(document.getElementById("flowHypertext").value).trim();
         this.currentFlow.hypertext = hypertext;
         if (this.editMode === "new") {
             dfm.currentPage.addFlow(this.currentFlow);
-            console.log("Added new flow:", dfm.currentPage.flows)
         }
         else {
             dfm.currentPage.updateFlow(this.currentFlow);
@@ -201,8 +200,8 @@ flowDetails = {
 
     submitFormula: function(event) {
         event.preventDefault();
-        let formula = Misc.stripHTML(document.getElementById("flowFormula").value);
-        let description = Misc.stripHTML(document.getElementById("flowFormulaDescription").value);
+        let formula = Misc.stripHTML(document.getElementById("flowFormula").value).trim();
+        let description = Misc.stripHTML(document.getElementById("flowFormulaDescription").value).trim();
         if (formula != "") {
             let conversion_formula = {formula: formula, description: description};
             this.currentFlow.conversion_formulas.push(conversion_formula);
@@ -235,11 +234,9 @@ flowDetails = {
     drawFlow: function() {
         dfm.flowDrawMode = true;
         if (this.editMode === "new") {
-            console.log("Got to draw flow - new");
             dfm.currentVisual.initialiseFlowDraw(this.currentFlow);
         }
         else {
-            console.log("Got to draw flow - edit")
             dfm.currentVisual.initialiseFlowEdit(this.currentFlow);
         }
         document.getElementById("flowDetails").style.display = "none";

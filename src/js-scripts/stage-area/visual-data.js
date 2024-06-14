@@ -61,7 +61,7 @@ dfm.FlowVisuals = class {
     }
 
     redoNodes() {
-        for (let node of dfm.currentPage.nodes) {
+        for (let node of dfm.currentPage.page.nodes) {
             let nodeNum = node.node_num;
             let label = node.label;
             let x = node.x;
@@ -71,7 +71,7 @@ dfm.FlowVisuals = class {
     }
 
     redoFlows() {
-        for (let flow of dfm.currentPage.flows) {
+        for (let flow of dfm.currentPage.page.flows) {
             this.makeVisualFlow(flow);           
         }
     }
@@ -450,12 +450,10 @@ dfm.FlowVisuals = class {
             points.push({x: x, y: y});
         }
         this.currentFlow.points = points;
-        console.log("Current Flow Points:", this.currentFlow.points)
 
         // arrow
         let flowArrowPoints = [];
         points = this.currentFlowDrawing.flowArrow.getAttr("points");
-        console.log("Arrow Points:", points);
         for (let i = 0; i < points.length; i += 2) {
             let x = points[i];
             let y = points[i + 1];
@@ -592,7 +590,6 @@ dfm.FlowVisuals = class {
     drawFlowClick(event) {
         event.cancelBubble = true;
         ({x: this.flowClickX, y: this.flowClickY} = dfm.stageApp.getPointerPosition());
-        console.log("got to drawFlowClick", this.flowClickX, this.flowClickY);
         if (this.drawFlowClickTime != 0) {
             if (Date.now() - this.drawFlowClickTime < 500 && !this.flowLabelSet) {
                 clearTimeout(this.drawFlowTimeout);
@@ -608,7 +605,6 @@ dfm.FlowVisuals = class {
 
     drawFlow(e) {
         let flowNodeNum = this.getNextFlowNodeNum();
-        console.log("Got flowNodeNum:", flowNodeNum);
         let x = this.flowClickX / dfm.scaleX;
         let y = this.flowClickY;
         if (!this.flowDrawStarted) {
@@ -939,8 +935,6 @@ dfm.FlowVisuals = class {
         let p2x = l3.b.x;
         let p2y = l3.b.y;
 
-        console.log("p1x, p1y, x, y, p2x, p2y", p1x, p1y, x, y, p2x, p2y);
-
         // Add the arrow to the line
         let line = new Konva.Line({
             points: [p1x, p1y, x, y, p2x, p2y],
@@ -1039,11 +1033,9 @@ dfm.FlowVisuals = class {
         let numList = [];
         for (let item of this.currentFlowDrawing.points) {
             let nodeNum = item.marker.getAttr('nodeNum');
-            console.log("Got next node item, nodeNum:", nodeNum);
             numList.push(nodeNum);
         }
         numList = numList.sort();
-        console.log("numList", numList)
         for (let nodeNum of numList) { 
             if (count === 0) {
                 if (nodeNum > 0) {

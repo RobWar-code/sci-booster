@@ -59,7 +59,6 @@ document.addEventListener("graphicsLoaded", (e) => {
 });
 
 function flowMain() {
-    console.log("Hello World");
     stageApp.startStageApp();
 };
 

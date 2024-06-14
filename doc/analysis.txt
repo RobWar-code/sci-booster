@@ -28,6 +28,7 @@ Contents
 	Flow Model Database Transactions
 		Save Operation Preparations
 		Adding a New Page
+		Updating a Previously Saved Page
 
 <h1>File Modularisation/Structure
 
@@ -817,3 +818,11 @@ Contents
 			Process the authors and references lists into their appropriate tables
 			checking whether they are to be added or inserted.
 			Process the nodes and flows.
+
+<h2>Updating a Previously Saved Page
+	A page due for update is identified by the flow_model_id and page_id being set.
+
+	The page data is retrieved from the database and compared with the new version
+	section by section as follows:
+
+	

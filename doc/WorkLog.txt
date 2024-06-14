@@ -5,24 +5,40 @@ Contents
     Work Done
 
 <h1>Work Due
-    Clear-out the console logging
+    Do the Page Details button operation
 
-    Add the page hierarchical id to the page details
+    Allow for different classes of user in the various edit options of the modal model form
+
+    Make an object for the hover text code
+
+    Add the php update page save procedures
+
+        Do update save page analysis
+
+    Add Zoom Back button to page options
+
+    Update the README with user features changes
+
+<h1>Work Done
+    14/06/2024
+
+    * Clear-out the console logging
+
+    * Add the page hierarchical id to the page details
 
     * Provide the complete specifications in the analysis for the flow definition objects
 
-    Strip HTML chars from authors, references and hyperlinks
+    * Strip HTML chars from authors, references and hyperlinks
 
-    trim all input fields
+    * trim all input fields
 
-    Do the Page Details button operation
 
-    Create the mysql tables
-        run/check the php code (create-tables.php)
+    * Create the mysql tables
+        * run/check the php code (create-tables.php)
 
-    Define the php procedures for saving a flow model page to the database
+    * Define the php procedures for saving a flow model page to the database
 
-    Page Save Operations
+    * Page Save Operations
 
     * For the sake of readability add all functions to objects of similar 
         name to module file
@@ -31,15 +47,13 @@ Contents
 
     * Set-up the model Details button events
 
-    Allow for different classes of user in the various edit options of the modal model form
 
     * When edit mode is on, include a message line to click the stage to add a node.
 
-    Make an object for the hover text code
     
-    Check-out the textareas
+    * Check-out the textareas
     
-    Do the diagram editing operations
+    * Do the diagram editing operations
 
         * Add node operation
 
@@ -103,18 +117,13 @@ Contents
 
             * Do the flow dismiss operation
 
-            Do Cancel Flow button
+            * Do Cancel Flow Draw button
 
             * Do the edit flow details operations
             
     * Rework/replace the Konva flow-diagram code with the structured
     model.
 
-    Add Zoom Back button to page options
-
-    Update the README with user features changes
-
-<h1>Work Done
     15/05/2024 
     
     * Do the new flow model modal

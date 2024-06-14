@@ -19,9 +19,6 @@
         if (sizeof($page) > 0) {
             $pageData['page'] = $page;
         }
-        $pageJSON = json_encode($pageData);
-        echo $pageJSON . "<br>"; 
-
         return $pageData;
     }
 

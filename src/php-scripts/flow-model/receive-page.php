@@ -15,14 +15,17 @@ $inputData = json_decode(file_get_contents('php://input'), true);
 if ($inputData['flow_model_id'] === NULL) {
     $flowModelId = addFlowModel($inputData['page']['title']);
 
-    $report = [];
-    $report['result'] = false;
-    $report['flow_model_id'] = $flowModelId;
-    echo json_encode($report);
-    exit(0);
 
     if ($flowModelId != NULL) {
         $pageId = addPage($flowModelId, $inputData);
+        /*
+        $report = [];
+        $report['result'] = false;
+        $report['page_id'] = $pageId;
+        $report['flow_model_id'] = $flowModelId;
+        echo json_encode($report);
+        exit(0);
+        */
     }
     if ($flowModelId != NULL && $pageId != NULL) {
         $pageData = extractPage($flowModelId, $pageId);

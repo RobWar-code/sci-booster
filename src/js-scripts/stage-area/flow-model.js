@@ -35,6 +35,14 @@ dfm.FlowPage = class {
         this.nodes.push(node);
     }
 
+    setNodeCoords (nodeNum, x, y) {
+        let nodeObj = this.getNode(nodeNum);
+        if (nodeObj != null) {
+            nodeObj.node.x = x;
+            nodeObj.node.y = y;
+        }
+    }
+
     getNode (nodeNum) {
         let found = false;
         let index = 0;
@@ -192,6 +200,10 @@ dfm.FlowPageData = class {
         this.page.addNode(node);
     }
 
+    setNodeCoords (nodeNum, x, y) {
+        this.page.setNodeCoords(nodeNum, x, y);
+    }
+
     getNode (nodeNum) {
         let nodeObj = this.page.getNode(nodeNum);
         let node = null;
@@ -227,7 +239,6 @@ dfm.FlowPageData = class {
 
     addFlow(flow) {
         this.page.flows.push(flow);
-        console.log("Flows at addFlow:", this.page.flows);
     }
 
     updateFlow(flow) {
@@ -252,7 +263,6 @@ dfm.FlowPageData = class {
         }
         else {
             this.page.flows.splice(itemNum, 1);
-            console.log("Deleted flow:", this.page.flows);
         }
     }
 
@@ -260,13 +270,10 @@ dfm.FlowPageData = class {
     async saveModel() {
         let pageJSONObject = this.prepareJSONObject();
         let pageJSON = JSON.stringify(pageJSONObject);
-        console.log("pageJSON:", pageJSON);
-        let responseData = await this.sendPage(pageJSON);
-        if (responseData.result) {
-            /*
+        let pageData = await this.sendPage(pageJSON);
+        if (pageData.result) {
             this.setPageData(pageData);
             dfm.currentVisual.redoPage();
-            */
         }
     }
 
@@ -282,7 +289,6 @@ dfm.FlowPageData = class {
 
             let responseData = await response.json();
 
-            console.log("responseData:", responseData);
             return responseData;
         }
         catch {(error) => {
@@ -319,7 +325,6 @@ dfm.FlowPageData = class {
         for (let flow of this.page.flows) {
             pageJSONObj.page.flows.push(flow);
         }
-        console.log("Page Obj:", pageJSONObj);
         return pageJSONObj;
     }
 

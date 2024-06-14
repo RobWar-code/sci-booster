@@ -1,6 +1,5 @@
 const login = {
     loadLoginModal: async function () {
-        console.log("userStatus:", dfm.userStatus);
         document.getElementById("loginDetails").style.display = "block";
         document.getElementById("loginOptionsDiv").style.display = "block";
         
@@ -163,7 +162,6 @@ const login = {
                 errElem.style.display = "block";
             }
             else {
-                console.log("Logged in");
                 let messageElem = document.getElementById("loginDonePara");
                 messageElem.style.display = "block";
                 setTimeout(() => {
@@ -195,7 +193,6 @@ const login = {
 
             let responseData = await response.json();
 
-            console.log("responseData:", responseData);
             return responseData;
         }
         catch {(error) => {
@@ -248,7 +245,6 @@ const login = {
 
             let responseData = await response.json();
 
-            console.log("responseData:", responseData);
             return responseData;
         }
         catch {(error) => {
