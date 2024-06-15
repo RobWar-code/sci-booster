@@ -825,4 +825,12 @@ Contents
 	The page data is retrieved from the database and compared with the new version
 	section by section as follows:
 
+		page - check singleton details, if modified, update record.
+
+		authors - sort and compare the retrieved version and the given version
+			If there is a new entry, add it
+			If an entry is present in the retrieved list, but not in the given,
+				delete the link, but not the author.
+
+
 	
