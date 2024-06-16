@@ -847,5 +847,27 @@ Contents
 		and deletions.
 
 		nodes - As for the other lists, compare and look for additions, deletions
-		and updates.
-	
+		and updates. When comparing nodes, use the label and nodeNum and treat a 
+		difference of two characters or less as a correction (same name). If there
+		are five or less characters, match for exactly the same.
+
+			If a deletion is due, check to see if there are children of the node.
+			Delete this node and all its child pages.
+
+			If an addition is due, insert it.
+
+			If an update is due, compare the fields (properties) and draw a list
+			of modified fields for the UPDATE statement.
+
+		flows - As for the other lists, compare for additions, deletions and updates.
+		When comparing flows check the flow_num and the label, comparing the label
+		for two or less character changes (same). If there are five or less characters,
+		match for exactly the same.
+
+			If a deletion is due, delete the record.
+
+			If an addition is due, add the record.
+
+			If an update is due, update the record. If the points or arrow_points
+			lists do not match, replace them entirely.
+			Compare the sets of conversion_formulas and update as necessary.
