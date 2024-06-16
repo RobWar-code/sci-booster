@@ -819,6 +819,10 @@ Contents
 			checking whether they are to be added or inserted.
 			Process the nodes and flows.
 
+	Allow for the page_id to be null and the flow_model_id to be set. Update
+	the parent page component node to indicate that it has a child page. Add
+	the new page details.
+
 <h2>Updating a Previously Saved Page
 	A page due for update is identified by the flow_model_id and page_id being set.
 
@@ -828,9 +832,20 @@ Contents
 		page - check singleton details, if modified, update record.
 
 		authors - sort and compare the retrieved version and the given version
-			If there is a new entry, add it
+			If there is a new entry, add it (link and entry)
 			If an entry is present in the retrieved list, but not in the given,
 				delete the link, but not the author.
 
+		references - sort and compare the retrieved version and the given version
+			If there is a new entry, add it (allowing for the author)
+			If an entry is present in the retrieved list, but not in the given,
+				Delete the reference and the author link, but not the author
+			If an entry is present in both lists, check to see whether an update
+			is required.
 
+		notes: It is worth writing a compareLists() function to report additions
+		and deletions.
+
+		nodes - As for the other lists, compare and look for additions, deletions
+		and updates.
 	
