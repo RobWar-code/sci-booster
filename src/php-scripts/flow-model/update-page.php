@@ -1,6 +1,7 @@
 <?php
     include_once __DIR__ . '/../db-connect.php';
     include_once __DIR__ . '/extract-page.php';
+    include_once __DIR__ . '/../lib/keyedSort.php';
 
     function updatePage($flowModelData) {
         $flowModelId = $flowModelData['flow_model_id'];
@@ -10,6 +11,7 @@
         $pageData = $flowModelData['page'];
 
         updatePageDetails($pageData, $oldPageData);
+        updateAuthors($pageData, $oldPageData);
 
     }
 
@@ -19,9 +21,18 @@
         $fieldsRef = $pageData;
         $oldFieldsRef = $oldPageData;
         $fieldNames = ["hierarchical_id", "title", "keywords", "description"];
-        $destFieldNames = "";
+        $destFieldNames = [];
         $types = "ssss";
         updateFields($table, $id, $fieldsRef, $oldFieldsRef, $fieldNames, $destFieldNames, $types);
+    }
+
+    function updateAuthors($pageData, $oldPageData) {
+        global $dbConn;
+
+        $pageId = $pageData['id'];
+        $key = "";
+        $useSimilar = true;
+        $arrayDiffs = compareArrays($pageData, $oldPageData, $key, $useSimilar);
     }
 
     /**
@@ -40,7 +51,7 @@
                 if ($count > 0) {
                     $changeFields += ", ";
                 }
-                if ($destFieldNames != "") {
+                if (count($destFieldNames) != 0) {
                     $changeFields += $destFieldNames[$count] . " = ?";
                 }
                 else {
@@ -66,3 +77,4 @@
         }
 
     }
+
