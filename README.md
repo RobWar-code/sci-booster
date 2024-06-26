@@ -59,7 +59,6 @@ The flow lines between nodes are draughted automatically.
 - external_author
 - external_author_page_link
 - reference
-- external_author_reference_link
 - node
 - node_flow_link
 - flow
@@ -212,19 +211,22 @@ This feature allows for the importation/exportation of data for other
 sources, notably ChatGPT, in which the data may be easily edited for
 import.
 
-The following definition is known as the "JSON Hierarchical Flow Page 
+The following definition is known as the "JSON Hierarchical Flow Model 
 Definition Version 1.3"
 
 Clarifications:
 
-- The top level (page) of a flow model has two, three or four nodes and all subsequent
+- The top level (page) of a flow model has upto four nodes and all subsequent
 pages are further definitions of the component nodes that they describe.
+- The "id" field of each section of the json model should be present and set to null unless
+it is known via the site database.
 - The hierarchical_id of the top-level page is "01" and its details apply to the whole model
 as well as the page that they describe
 - All definitions (nodes / pages) should confine themselves to the constraint of the parent.
 - Pages inherit the flows from their parent node (whether source or destination), ideally they should
 be re-presented in the page
-- it is permitted to branch a flow and a component from a component (as in motion from petrol flow, for example)
+- It is permitted to have more than one from flow from a component (as in motion from petrol flow, 
+for example)
 - A page should not consist of more than 8 component nodes
 - A node number (NodeNum) is unique to a page only and consists of two digits, ie: "01".
 - A hierarchical_id is built from its parent node numbers in order of descent, ie: "010204".
@@ -233,16 +235,25 @@ be re-presented in the page
 ```js
 flow_models: [
 	{
-		"id": , // Auto Long Int
+		"flow_model_id": , // Auto Long Int, may be null
 		"pages" : [
 			{
+				"id": , // May be null
 		 		"hierarchical_id": "", // ie: 01020406 for a level four page. Note that the numbers (apart from the first)
 					// are NodeNums, the first/top level is always "01"
 				"title": "",
 				"keywords": "",
-				"authors": [""], // Username or Author
+				"user_authors": [
+					"id": , // May be null (id of the link)
+					"username": ""
+				], // Authors who are users
+				"external_authors": [
+					"id": , // May be null (id of the link)
+					"author": ""
+				]
 				"references": [
 					{
+						"id": , // may be null
 						"source": "", // ie: "Web Page" or Publisher
 						"title:",
 						"author:"
@@ -252,6 +263,7 @@ flow_models: [
 
 				"nodes": [
 					{
+						"id": , // May be null
 						"node_num" : "", // (ie: "01")
 						"label": "",
 						"type": "", // (Mechanism/Effect)
@@ -265,6 +277,7 @@ flow_models: [
 
 				"flows" : [
 					{
+						"id": , // May be null
 						"source_node_num": "", 
 						"destination_node_num": "", // (optional)
 						"label": "",
@@ -272,6 +285,7 @@ flow_models: [
 						"definition": "", // (optional)
 						"conversion_formulas": [
 							{
+								"id": , // May be null
 								"formula": "",
 								"description": ""
 							},

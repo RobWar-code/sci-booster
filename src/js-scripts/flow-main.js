@@ -16,6 +16,7 @@ dfm.currentPageSet = false;
 dfm.modelEditMode = false;
 dfm.topPage = false;
 dfm.modelAuthorsVisible = false;
+dfm.modelExtAuthorsVisible = false;
 dfm.modelReferencesVisible = false;
 dfm.flowDrawMode = false;
 

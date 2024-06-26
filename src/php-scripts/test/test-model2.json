@@ -1,17 +1,32 @@
 {
 	"flow_model_id": null,
+    "flow_model_title": "Test Model 1",
 	"page": {
 		"id": null,
 		"hierarchical_id": "01",
 		"title": "Test Model 1",
-		"description": "A test model to demonstrate the effectiveness of the add-page routines.",
+		"description": "A test model to demonstrate the effectiveness of the update-page routines.",
 		"keywords": "example test",
-		"authors": ["warner3", "John T Smythe"],
+		"user_authors": [{"id": null, "username": "warner2"}, {"id": null, "username": "warner3"}],
+		"external_authors": [{"id": null, "author": "Harold Pinter"}],
 		"references": [
 			{
+				"id": null,
 				"source": "internet",
 				"title": "Example Devices",
-				"author": "Jackson Taylor"
+				"author": {"id": null, "author": "Jackson Taylor"}
+			},
+			{
+				"id": null,
+				"source": "web page",
+				"title": "The Machines",
+				"author": {"id": null, "author": "Johnson H James"}
+			},
+			{
+				"id": null,
+				"source": "Merit Books",
+				"title": "The Nature System",
+				"author": {"id": null, "author": "Herbert Ansen"}
 			}
 		],
 		"nodes": [
@@ -59,6 +74,7 @@
 				"points": [{"x": 0, "y": 0}, {"x": 0, "y": 60}],
 				"conversion_formulas": [
 					{
+						"id": null,
 						"formula": "C6H6O2 + 8O2 = 6CO2 + 3H2O + O",
 						"description": "petrol + air to water and carbon dioxide"
 					}

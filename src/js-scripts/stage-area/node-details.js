@@ -118,6 +118,7 @@ const nodeDetails = {
         document.getElementById("nodeDetails").style.display = "none";
 
         if (dfm.currentPage.nodeEditMode === "new") {
+            node.id = null;
             node.x = dfm.newNodeX;
             node.y = dfm.newNodeY;
             dfm.currentPage.addNode(node);

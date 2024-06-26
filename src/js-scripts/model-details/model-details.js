@@ -83,12 +83,10 @@ const modelDetails = {
 
   submitAuthor: function (event) {
     event.preventDefault();
-    console.log("Got to submit author");
     if (dfm.currentPageSet) {
       let author = Misc.stripHTML(document.getElementById("modelAuthor").value).trim();
       if (author != "") {
-        dfm.currentPage.page.authors.push(author);
-        console.log("Author:", author);
+        dfm.currentPage.page.user_authors.push({id: null, username: author});
         this.displayAuthorsList();
         document.getElementById("modelAuthor").value="";
         if (author != "") {
@@ -102,15 +100,14 @@ const modelDetails = {
   },
 
   displayAuthorsList: function () {
-    console.log("Got to displayAuthorsList")
     // Remove the old list
     document.getElementById("authorsList").remove();
     // Build the replacement html
     let listDiv = document.getElementById("authorsListDiv");
     let listHtml = "<ul id=\"authorsList\">";
     let count = 0;
-    for (author of dfm.currentPage.page.authors) {
-      listHtml += `<li data-item="${count}" onclick="modelDetails.deleteAuthor(event)">${author}</li>`;
+    for (authorItem of dfm.currentPage.page.user_authors) {
+      listHtml += `<li data-item="${count}" onclick="modelDetails.deleteAuthor(event)">${authorItem.username}</li>`;
       ++count;
     }
     listHtml += "</ul>";
@@ -119,17 +116,75 @@ const modelDetails = {
   },
 
   deleteAuthor: function (event) {
-    console.log("Got to deleteAuthor");
     let listItem = event.target;
     let itemNum = parseInt(listItem.dataset.item);
-    console.log("itemNum:", itemNum);
-    if (dfm.currentPage.page.authors.length === 1) {
-      dfm.currentPage.page.authors = [];
+    if (dfm.currentPage.page.user_authors.length === 1) {
+      dfm.currentPage.page.user_authors = [];
     }
     else {
-      dfm.currentPage.page.authors = dfm.currentPage.page.authors.splice(itemNum, 1);
+      dfm.currentPage.page.user_authors = dfm.currentPage.page.user_authors.splice(itemNum, 1);
     }
-    console.log("list:", dfm.currentPage.page.authors);
+    this.displayAuthorsList();
+  },
+
+  toggleExtAuthors: function () {
+    e = document.getElementById("extAuthorsDiv");
+    if (!dfm.modelExtAuthorsVisible) {
+      e.style.display = "block";
+      if (dfm.currentPageSet) {
+        this.displayExtAuthorsList();
+      }
+      dfm.modelExtAuthorsVisible = true;
+    }
+    else {
+      e.style.display = "none";
+      dfm.modelExtAuthorsVisible = false;
+    }
+  },
+
+  submitExtAuthor: function (event) {
+    event.preventDefault();
+    if (dfm.currentPageSet) {
+      let author = Misc.stripHTML(document.getElementById("modelExtAuthor").value).trim();
+      if (author != "") {
+        dfm.currentPage.page.external_authors.push({id: null, author: author});
+        this.displayExtAuthorsList();
+        document.getElementById("modelExtAuthor").value="";
+        if (author != "") {
+          document.getElementById("modelExtAuthorTick").style.display = "inline";
+        }
+      }
+      else {
+          document.getElementById("modelExtAuthorTick").style.display = "none";
+      }
+    }
+  },
+
+  displayExtAuthorsList: function () {
+    // Remove the old list
+    document.getElementById("extAuthorsList").remove();
+    // Build the replacement html
+    let listDiv = document.getElementById("extAuthorsListDiv");
+    let listHtml = "<ul id=\"extAuthorsList\">";
+    let count = 0;
+    for (authorItem of dfm.currentPage.page.external_authors) {
+      listHtml += `<li data-item="${count}" onclick="modelDetails.deleteExtAuthor(event)">${authorItem.author}</li>`;
+      ++count;
+    }
+    listHtml += "</ul>";
+    listDiv.innerHTML = listHtml;
+    listDiv.style.display = "block";
+  },
+
+  deleteExtAuthor: function (event) {
+    let listItem = event.target;
+    let itemNum = parseInt(listItem.dataset.item);
+    if (dfm.currentPage.page.external_authors.length === 1) {
+      dfm.currentPage.page.external_authors = [];
+    }
+    else {
+      dfm.currentPage.page.external_authors = dfm.currentPage.page.external_authors.splice(itemNum, 1);
+    }
     this.displayAuthorsList();
   },
 
@@ -153,6 +208,7 @@ const modelDetails = {
     console.log("Got to submit references");
     if (dfm.currentPageSet) {
       let refObj = {};
+      refObj.id = null;
       refObj.source = Misc.stripHTML(document.getElementById("modelReferenceSource").value).trim();
       refObj.author = Misc.stripHTML(document.getElementById("modelReferenceAuthor").value).trim();
       refObj.title = Misc.stripHTML(document.getElementById("modelReferenceTitle").value).trim();

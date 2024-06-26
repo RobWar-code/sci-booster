@@ -6,7 +6,8 @@ dfm.FlowPage = class {
         this.hierarchical_id = "";
         this.title = "";
         this.description = "";
-        this.authors = [];
+        this.user_authors = [];
+        this.external_authors = [];
         this.references = []; // [{source:, author:, title: }],
         this.keywords = "";
         this.maxNodes = 8;
@@ -20,7 +21,8 @@ dfm.FlowPage = class {
         this.hierarchical_id = pageObj.hierarchical_id;
         this.title = pageObj.title;
         this.description = pageObj.description;
-        this.authors = pageObj.authors;
+        this.user_authors = pageObj.user_authors;
+        this.external_authors = pageObj.external_authors;
         this.references = pageObj.references;
         this.keywords = pageObj.keywords;
     }
@@ -313,8 +315,11 @@ dfm.FlowPageData = class {
                 flows: []
             }
         }     
-        for (let author of this.page.authors) {
-            pageJSONObj.page.authors.push(author);
+        for (let authorItem of this.page.user_authors) {
+            pageJSONObj.page.user_authors.push(authorItem);
+        }
+        for (let authorItem of this.page.external_authors) {
+            pageJSONObj.page.external_authors.push(authorItem);
         }
         for (let ref of this.page.references) {
             pageJSONObj.page.references.push(ref);

@@ -717,6 +717,7 @@ Contents
 
 	Flow models are loaded and saved as pages, with the data being passed from
 	the Javascript as a JSON object.
+	In each case, the id may be null, this indicates that the data is NEW.
 
 	The json object is as follows:
 	{
@@ -729,7 +730,8 @@ Contents
 			"title": "",
 			"keywords": "",
 			"description": "",
-			"authors": [""], // Username or Author
+			"user_authors": [], // [{"id":, "username": }, ..] The id may be null
+			"external_authors":[], // [{"id":, "author": }, ..] The id may be null
 			"references": [
 				{
 					"id": ,// null if not known
@@ -825,6 +827,24 @@ Contents
 
 <h2>Updating a Previously Saved Page
 	A page due for update is identified by the flow_model_id and page_id being set.
+
+	The rule for acknowledging an update rather than an addition or deletion, is
+	that the id for the item is present and not null for an update. This is
+	problematic for page authors, which may be users or external authors, so
+	the input format is modified to compel the user to indicate which applies.
+	In this case the data should treat each json author as a record. (ie:
+	array of associative arrays, rather than strings).
+
+	I had considered using minor variance as an update indicator, however this
+	introduces unpredictable consequences and is likely to confuse the user.
+	Where spellings are similar, the user should be warned. ie: "Did you mean?"
+	and this check should be performed when the submit button for the item
+	is clicked. Currently, this should only be used for external authors.
+
+	Where the data is to be updated from an external source in which the id's
+	of the data are not known, the tag "update" of the record should be set to 
+	true. In this case the data should be matched by unique field, rather than
+	by id. Non-matching values are taken to be new data.
 
 	The page data is retrieved from the database and compared with the new version
 	section by section as follows:

@@ -6,19 +6,10 @@
     <title>Flow Model Test</title>
 </head>
 <body>
-    <h1>Test Model Load</h1>
+    <h1>Test Model Load/Update</h1>
     <div>
 <?php
-    include_once __DIR__ . '/clear-tables.php';
-
-    clearTables();
-
-    include_once __DIR__ . '/../flow-model/receive-page.php';
-
-    include_once __DIR__ . '/dump-tables.php';
-
-    dumpTables();
-    
+    include_once __DIR__ . '/../flow-model/receive-page.php';    
 ?>
     </div>
 </body>

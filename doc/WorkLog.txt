@@ -11,9 +11,32 @@ Contents
 
     Make an object for the hover text code
 
+    Rework Authors:
+        Split as User Authors, External Authors
+
+        Modify the page input form
+
+        Change the JSON formats for page authors to:
+            userAuthors: [{"id":, "username": }]
+            externalAuthors: [{"id":, "name": }]
+            Update Analysis
+            Update README
+            Update test-model data
+            Update php
+                receive-page.php, debug scripts allow for missing id in update data.
+                extract-page.php
+                add-page.php
+                update-page.php
+                
     Add the php update page save procedures
 
         Do update save page analysis
+
+        * Do update page details
+        * Do update authors
+        Do update references
+        Do update nodes
+        Do update flows
 
     Add Zoom Back button to page options
 

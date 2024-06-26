@@ -139,6 +139,7 @@ flowDetails = {
         let hypertext = Misc.stripHTML(document.getElementById("flowHypertext").value).trim();
         this.currentFlow.hypertext = hypertext;
         if (this.editMode === "new") {
+            this.currentFlow.id = null;
             dfm.currentPage.addFlow(this.currentFlow);
         }
         else {
@@ -203,7 +204,7 @@ flowDetails = {
         let formula = Misc.stripHTML(document.getElementById("flowFormula").value).trim();
         let description = Misc.stripHTML(document.getElementById("flowFormulaDescription").value).trim();
         if (formula != "") {
-            let conversion_formula = {formula: formula, description: description};
+            let conversion_formula = {id: null, formula: formula, description: description};
             this.currentFlow.conversion_formulas.push(conversion_formula);
             dfm.currentPage.updateFlow(this.currentFlow);
             this.displayFlowFormulas();

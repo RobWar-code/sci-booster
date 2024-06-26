@@ -50,7 +50,7 @@
           <button type="submit" class="textButton">Submit Details</button>
         </form>
         <div id="additionalModelDetailsDiv">
-          <button class="textButton" onclick="modelDetails.toggleAuthors()">Authors</button>
+          <button class="textButton" onclick="modelDetails.toggleAuthors()">User Authors</button>
           <div id="authorsDiv">
               <div id="authorsListDiv">
                 <ul id="authorsList">
@@ -62,6 +62,20 @@
                 <input type="text" class="modalFormItem" name="modelAuthor" id="modelAuthor">
                 <button type="submit" class="textButton">Submit Author</button>
                 <span class="modalFormCheckmark" id="modelAuthorTick">&#x2713;</span>
+              </form>
+          </div>
+          <button class="textButton" onclick="modelDetails.toggleExtAuthors()">External Authors</button>
+          <div id="extAuthorsDiv">
+              <div id="extAuthorsListDiv">
+                <ul id="extAuthorsList">
+                </ul>
+              </div>
+              <p class="modalFormAdvisory">Click on an author to remove it</p>
+              <form id="extAuthorInputForm" onsubmit="modelDetails.submitAuthor(event)">
+                <label for="extModelAuthor" class="modalFormLabel">Author:</label>
+                <input type="text" class="modalFormItem" name="extModelAuthor" id="extModelAuthor">
+                <button type="submit" class="textButton">Submit Author</button>
+                <span class="modalFormCheckmark" id="extModelAuthorTick">&#x2713;</span>
               </form>
           </div>
           <p><button class="textButton" onclick="modelDetails.toggleReferences()">References</button></p>
