@@ -807,23 +807,22 @@ Contents
 			}
 		}
 		
-	it invokes the 
-		addFlowModel function
-			This first checks the page title to ensure that it is unique.
-			This checks the hierarchical_id of the page, and if it is 01 it adds the page 
-			title to the flow_model table and returns the flow_model_id.
+	The receive-page operation parses the input json data as record item by record item.
+	Each record type has a corresponding parse function, 
+	ie: parseUserAuthors -> parseUserAuthor.
+	These functions check to see whether or not the id field is null. If it is not null,
+	then the record is transmitted to the corresponding update routine (ie: updateUserAuthor).
+	If the id field is null, then the unique field(s) are searched for in the database
+	and if they are an exact match, then the record is updated, otherwise it is added.
+	Included in the record array parsing functions are the procedures for identifying
+	records to be deleted.
 
-	it then invokes the
-		addPage function - which performs the following:
-			Add the individual details to the page table, return the page_id
-			Add the flow_model_page_link entry to its table		
-			Process the authors and references lists into their appropriate tables
-			checking whether they are to be added or inserted.
-			Process the nodes and flows.
+	The parse operations are in the receive-page.php module, and add and update routines
+	in their corresponding modules. Deletion functions are in the delete-records.php module.
 
-	Allow for the page_id to be null and the flow_model_id to be set. Update
-	the parent page component node to indicate that it has a child page. Add
-	the new page details.
+
+	The module invokes the 
+		handlePageData function. Which parses each input record type in turn.
 
 <h2>Updating a Previously Saved Page
 	A page due for update is identified by the flow_model_id and page_id being set.
@@ -841,10 +840,24 @@ Contents
 	and this check should be performed when the submit button for the item
 	is clicked. Currently, this should only be used for external authors.
 
-	Where the data is to be updated from an external source in which the id's
-	of the data are not known, the tag "update" of the record should be set to 
-	true. In this case the data should be matched by unique field, rather than
-	by id. Non-matching values are taken to be new data.
+	In Summary (Records and Sub-Records):
+
+	A record for update from the system is identified by the presence of a 
+	non-null id field. Ambiguities will already have been resolved by the user. 
+	All field changes will be taken to be applicable. New records will be 
+	denoted by the null id field.
+
+	A model record for input from outside the system is first
+	parsed by the system and a report of ambiguities sent to the user
+	to resolve. The resolved record includes any id's where unique field
+	matches were found and for which the user has agreed.
+
+	Test data records will always have null id's.
+
+	Records with a null id field are always parsed against the table for
+	an exact match (to be treated as an update) otherwise added.
+
+	Procedures:
 
 	The page data is retrieved from the database and compared with the new version
 	section by section as follows:
