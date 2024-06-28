@@ -30,8 +30,8 @@ if ($inputData) {
 }
 
 function handlePageData($inputData) {
-// Check whether this is a model that does not already exist
-    if ($inputData['flow_model_id'] === NULL) {
+    // Check whether this is a model that does not already exist
+    if (!$inputData['update'] && $inputData['flow_model_id'] === NULL) {
         $flowModelId = addFlowModel($inputData['page']['title']);
 
         if ($flowModelId != NULL) {
@@ -59,6 +59,17 @@ function handlePageData($inputData) {
         }
     }
     else {
+        // Update Modes
+        if ($inputData["flowModelId"] === NULL) {
+            $inputData = getSetModelAndPageIds($inputData);
+            if ($inputData['result'] === false) {
+                $report = [];
+                $report['result'] = false;
+                $report['error'] = "Could not find page to update";
+                echo json_encode($report); 
+                exit;   
+            }
+        }
         $flowModelId = $inputData['flow_model_id'];
         $pageId = $inputData['page']['id'];
         if ($pageId != NULL) {
@@ -103,15 +114,11 @@ function testSetIds($inputData) {
     $flowModelId = NULL;
     $pageId = NULL;
 
-    $inputData = testGetSetModelAndPageIds($inputData);
-    $pageData = testGetSetUserAuthorIds($inputData['page']);
-    $pageData = testGetSetExternalAuthorIds($pageData);
-
-    $inputData['page'] = $pageData;
+    $inputData = getSetModelAndPageIds($inputData);
     return $inputData;
 }
 
-function testGetSetModelAndPageIds($inputData) {
+function getSetModelAndPageIds($inputData) {
     global $dbConn;
 
     // Get the ids for the model/page
@@ -119,8 +126,9 @@ function testGetSetModelAndPageIds($inputData) {
     $sql = "SELECT id FROM flow_model WHERE title = '$flowModel'";
     $result = $dbConn->query($sql);
     if (!$result) {
-        echo "testSetIds: could not find model - " . $flowModel . " " . $dbConn->error;
-    }
+        $inputData['result'] = false;
+        return $inputData;
+    } 
     else {
         if ($row = $result->fetch_assoc()) {
             $flowModelId = $row['id'];
@@ -128,7 +136,8 @@ function testGetSetModelAndPageIds($inputData) {
             $sql = "SELECT id FROM page WHERE flow_model_id = $flowModelId AND hierarchical_id = '$hierarchicalId'";
             $result = $dbConn->query($sql);
             if (!$result) {
-                echo "testSetIds: Could not find page - " . $flowModelId . " " . $hierarchicalId . " " . $dbConn->error;
+                $inputData['result'] = false;
+                return $inputData;
             } 
             else {
                 if ($row = $result->fetch_assoc()) {

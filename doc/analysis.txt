@@ -16,6 +16,10 @@ Contents
 		Page Information
 		Page Options Buttons
 			New Model / New Page Operations
+				External Author Data Policies
+				Reference Data Policies
+				Node Data Policies
+				Flow Data Policies
 		Flow Diagram
 			Nodes
 				Node Option Buttons
@@ -330,7 +334,9 @@ Contents
 		The following fields only become visible when the details above
 		are submitted. The title at least must be set by the user.
 
-		Authors
+		User Authors
+
+		External Authors
 
 		References
 			Source
@@ -346,6 +352,57 @@ Contents
 	Note that the same form is presented for details display, but with fields edit 
 	disabled and the submit buttons concealed.
 
+<h4>External Author Data Policies
+
+	External Authors are maintained as a list against which subsequent inputs are
+	checked. The server routines can only accept exact matches as identities, so
+	any verification/manipulation must be done by the javascript user interface.
+
+	If an author name is not matched, then for an update the original is deleted
+	from the author table unless it appears in other records.
+
+	The verification routines are part of phase III of the project. Otherwise, because
+	the dataset is small, the inefficiencies are not worthwhile.
+
+	The problem with author names is to establish what might be mis-spellings or
+	variant spellings of the same identity. It is beyond the scope of this project
+	to perform statistical checks against the internet, for example. The best that
+	can be done is to check with the user.
+
+	In the case of checking with the user, we can use the last name as the most 
+	consistent part of the name. Because the database is likely to be quite small,
+	we can use the first two characters of the last name to create a narrowed-down
+	list of names (mysql regexp) to parse against the name entered. If there are
+	any such matches, the list can be presented to the user for selection/checking.
+
+<h4>Reference Data Policies
+
+	It is beyond the scope of the current phase of this project to record/verify
+	publications per se, so these are listed as unique items associated with the
+	page. If these records are not exactly matched by the title then they are
+	deleted.
+
+<h4>Node Data Policies
+
+	Nodes are always unique to a page.
+
+	Nodes may be deleted and their hierarchical id's repeated, so this cannot be used
+	for update identification. Instead the id is used to match the records as updates. 
+	If the id is not available, an exact match by label is used.
+
+<h4>Flow Data Policies
+
+	Flows are always unique to a page.
+
+	Flows may be deleted and their flow numbers repeated, so this cannot be used
+	for update identification. Instead the id is used to match the records as updates. 
+	If the id is not available, an exact match by label is used.
+
+<h4>Conversion Formulas Data Policies
+
+	Conversion formulas are unique to the flows for which they are defined. The
+	presence of an id indicates update, they are matched exactly by formula and
+	variants deleted.
 
 <h2>Flow Diagram
 
@@ -722,6 +779,8 @@ Contents
 	The json object is as follows:
 	{
 		"flow_model_id": , // Auto Long Int, can be null
+		"flow_model_title": , // Same as the title for page hierarchical_id "01"
+		"update": , // true or false, whether this record is an update
 		"page" : 
 		{
 			"id": ,// May be null
@@ -730,14 +789,14 @@ Contents
 			"title": "",
 			"keywords": "",
 			"description": "",
-			"user_authors": [], // [{"id":, "username": }, ..] The id may be null
-			"external_authors":[], // [{"id":, "author": }, ..] The id may be null
+			"user_authors": [], // [{"id":, "username": ""}, ..] The id may be null
+			"external_authors":[], // [{"id":, "author": ""}, ..] The id may be null
 			"references": [
 				{
 					"id": ,// null if not known
 					"source": "", // ie: "Web Page" or Publisher
 					"title": "",
-					"author": ""
+					"author": {"id": "", "author": ""}
 				},
 				..
 			], // The sources of the information, ie: book, paper titles
@@ -807,18 +866,21 @@ Contents
 			}
 		}
 		
-	The receive-page operation parses the input json data as record item by record item.
-	Each record type has a corresponding parse function, 
-	ie: parseUserAuthors -> parseUserAuthor.
-	These functions check to see whether or not the id field is null. If it is not null,
-	then the record is transmitted to the corresponding update routine (ie: updateUserAuthor).
-	If the id field is null, then the unique field(s) are searched for in the database
-	and if they are an exact match, then the record is updated, otherwise it is added.
-	Included in the record array parsing functions are the procedures for identifying
-	records to be deleted.
+	The receive-page operation first checks the input json flow-model page.
+	If the flow-model and page id's are set, then this is an update. If not,
+	then it is passed to the addPage function.
 
-	The parse operations are in the receive-page.php module, and add and update routines
-	in their corresponding modules. Deletion functions are in the delete-records.php module.
+	If the flow model id and page id are not set, but the "update" field of
+	the flow-model level is set then the record is handled by the update page
+	routines, with checking done on individual records that may have id's set
+	to indicate updates.
+	
+	Included in the record array parsing functions are the procedures for identifying
+	records to be deleted. If a referenced item is no longer present and matched
+	in the update record then it is deleted.
+
+	The add and update routines are in their corresponding modules. 
+	Deletion functions are in the delete-records.php module.
 
 
 	The module invokes the 

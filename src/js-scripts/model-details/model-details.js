@@ -210,9 +210,9 @@ const modelDetails = {
       let refObj = {};
       refObj.id = null;
       refObj.source = Misc.stripHTML(document.getElementById("modelReferenceSource").value).trim();
-      refObj.author = Misc.stripHTML(document.getElementById("modelReferenceAuthor").value).trim();
+      refObj.author = {id: null, author: Misc.stripHTML(document.getElementById("modelReferenceAuthor").value).trim()};
       refObj.title = Misc.stripHTML(document.getElementById("modelReferenceTitle").value).trim();
-      if (!(refObj.source === "" && refObj.author === "" && refObj.title === "")) {
+      if (!(refObj.source === "" && refObj.author.author === "" && refObj.title === "")) {
         document.getElementById("modelReferenceSource").value = "";
         document.getElementById("modelReferenceAuthor").value = "";
         document.getElementById("modelReferenceTitle").value = "";
@@ -231,7 +231,7 @@ const modelDetails = {
       listHtml += '<li>';
       listHtml += `<div data-item="${count}" onclick="modelDetails.deleteReference(event)">`;
       listHtml += `<p class="modalFormListItem">Source: ${reference.source}</p>`;
-      listHtml += `<p class="modalFormListItem">Author: ${reference.author}</p>`;
+      listHtml += `<p class="modalFormListItem">Author: ${reference.author.author}</p>`;
       listHtml += `<p class="modalFormListItem">Title: ${reference.title}</p>`;
       listHtml += '<hr class="modalListHR" />';
       listHtml += '</div>';

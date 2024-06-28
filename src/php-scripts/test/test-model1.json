@@ -1,5 +1,7 @@
 {
 	"flow_model_id": null,
+	"flow_model_title": "Test Model 1",
+	"update": false,
 	"page": {
 		"id": null,
 		"hierarchical_id": "01",

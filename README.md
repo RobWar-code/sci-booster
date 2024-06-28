@@ -218,8 +218,10 @@ Clarifications:
 
 - The top level (page) of a flow model has upto four nodes and all subsequent
 pages are further definitions of the component nodes that they describe.
-- The "id" field of each section of the json model should be present and set to null unless
-it is known via the site database.
+- The flow_model_title should always be present at the top level and must the same
+as for the first page of hierarchical_id "01"
+- The "id" field of each field where shown below of the json model should be present and 
+set to null unless it is known via the site database.
 - The hierarchical_id of the top-level page is "01" and its details apply to the whole model
 as well as the page that they describe
 - All definitions (nodes / pages) should confine themselves to the constraint of the parent.
@@ -230,12 +232,15 @@ for example)
 - A page should not consist of more than 8 component nodes
 - A node number (NodeNum) is unique to a page only and consists of two digits, ie: "01".
 - A hierarchical_id is built from its parent node numbers in order of descent, ie: "010204".
-- When using keywords, beware of terms such as "flow" which are likely to be too common to be useful
+- When using keyword fields, beware of terms such as "flow" which are likely to be 
+too common to be useful
 
 ```js
 flow_models: [
 	{
 		"flow_model_id": , // Auto Long Int, may be null
+		"flow_model_title": "", // Must the same the first page with hierarchical_id of "01"
+		"update": , // true/false whether this is an update
 		"pages" : [
 			{
 				"id": , // May be null
@@ -250,13 +255,16 @@ flow_models: [
 				"external_authors": [
 					"id": , // May be null (id of the link)
 					"author": ""
-				]
+				],
 				"references": [
 					{
 						"id": , // may be null
 						"source": "", // ie: "Web Page" or Publisher
-						"title:",
-						"author:"
+						"title":,
+						"author": {
+							"id":, // May be null
+							"author": "" 
+						}
 					},
 					..
 				], // The sources of the information, ie: book, paper titles

@@ -149,12 +149,12 @@ function addPageExternalAuthor($externalAuthor, $pageId) {
         $sql = "INSERT INTO external_author_page_link (page_id, external_author_id) VALUES (?, ?)";
         $stmt = $dbConn->prepare($sql);
         if ($stmt === FALSE) {
-            error_log("addPageExternalAuthors: sql to insert author link failed" . $dbConn->error, 0);
+            error_log("addPageExternalAuthor: sql to insert author link failed" . $dbConn->error, 0);
         }
         else {
             $stmt->bind_param("ii", $pageId, $authorId);
             if ($stmt->execute() === FALSE) {
-                error_log("addPageExternalAuthors: failed to insert page author link" . $dbConn->error, 0);
+                error_log("addPageExternalAuthor: failed to insert page author link" . $dbConn->error, 0);
             }
         }
     }

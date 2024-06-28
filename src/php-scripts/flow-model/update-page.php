@@ -4,6 +4,7 @@
     include_once __DIR__ . '/extract-page.php';
     include_once __DIR__ . '/search-db.php';
     include_once __DIR__ . '/../lib/compareArrays.php';
+    include_once __DIR__ . '/../lib/findKeyedValue.php';
     include_once __DIR__ . '/misc-funcs.php';
 
     function updatePage($flowModelData) {
@@ -14,7 +15,8 @@
         $pageData = $flowModelData['page'];
 
         updatePageDetails($pageData, $oldPageData);
-        updatePageAuthors($pageData, $oldPageData);
+        updatePageUserAuthors($pageData, $oldPageData);
+        updatePageExternalAuthors($pageId, $pageData, $oldPageData);
         updatePageReferences($pageData, $oldPageData);
         updateNodes($pageData, $oldPageData);
     }
@@ -30,60 +32,52 @@
         updateFields($table, $id, $fieldsRef, $oldFieldsRef, $fieldNames, $destFieldNames, $types);
     }
 
-    function updatePageAuthors($pageData, $oldPageData) {
+    function updatePageUserAuthors($pageData, $oldPageData) {
 
         $pageId = $pageData['id'];
 
         // Separate the usernames from the external authors
-        $authorList = $pageData['authors'];
-        $oldAuthorList = $oldPageData['authors'];
-        $lists1 = separateUsers($authorList);
-        $usernames = $lists1['users'];
-        $externalAuthors = $lists1['externalAuthors'];
-        $lists2 = separateUsers($oldAuthorList);
-        $oldUsernames = $lists2['users'];
-        $oldExternalAuthors = $lists2['externalAuthors'];
-
-        // Process the usernames
-        if (count($usernames) > 0 || count($oldUsernames) > 0) {
-            updateUserAuthors($pageId, $usernames, $oldUsernames);
-        }
-
-        if (count($externalAuthors) > 0 || count($oldUsernames) > 0) {
-            updateExternalAuthors($pageId, $externalAuthors, $oldExternalAuthors);
-        }        
+        $authorList = $pageData['user_authors'];
+        $oldAuthorList = $oldPageData['user_authors'];
+        updateUserAuthors($pageId, $authorList, $oldAuthorList);
     }
 
-    function updateExternalAuthors($pageId, $authors, $oldAuthors) {
+    function updatePageExternalAuthors($pageId, $pageData, $oldPageData) {
         global $dbConn;
 
-        $key = "";
-        $useSimilar = true;
-        $arrayDiffs = compareArrays($authors, $oldAuthors, $key, $useSimilar);
+        $authors = $pageData['external_authors'];
+        $oldAuthors = $pageData['external_authors'];
 
-        // Check for updates (ie: minor spelling corrections)
-        $same = $arrayDiffs['same'];
-        if (count($same) > 0) {
-            for ($i = 0; $i < count($same); $i += 2) {
-                $index = $same[$i];
-                $oldIndex = $same[$i + 1];
-                if ($authors[$index] != $oldAuthors[$oldIndex]) {
-                    $author = $authors[$index];
-                    $oldName = $oldAuthors[$oldIndex];
-                    $authorId = NULL;
-                    updateExternalAuthor($author, $oldName, $authorId);
-                }
-            }
-        }
+        $key = "author";
+        $useSimilar = false;
+        $arrayDiffs = compareArrays($authors, $oldAuthors, $key, $useSimilar);
         $aOnly = $arrayDiffs['aOnly'];
+        $bOnly = $arrayDiffs['bOnly'];
         if (count($aOnly) > 0) {
             // Do inserts
             foreach($aOnly as $index) {
-                $author = $authors[$index];
-                addPageAuthor($author, $pageId);
+                // Check whether the id is present
+                if (isset($authors[$index]['id'])) {
+                    $authorId = $authors[$index]['id'];
+                    // Check for the same id in the oldAuthors list
+                    $oldIndex = findKeyedValue($oldAuthors, "id", $authorId);
+                    if ($oldIndex === -1) {
+                        error_log("updatePageExternalAuthors: id not found in old data $authorId", 0);
+                    }
+                    else {
+                        // Remove the entry from the old authors only list (bOnly)
+                        $bOnly = deleteKeyedRefValue($bOnly, $oldAuthors, "id", $authorId);
+                        $author = $authors[$index]['author'];
+                        $oldAuthor = $oldAuthors[$oldIndex]['author'];
+                        updateExternalAuthor($author, $oldAuthor, $authorId);
+                    }
+                }
+                else {
+                    $author = $authors[$index];
+                    addPageExternalAuthor($author, $pageId);
+                }
             }
         }
-        $bOnly = $arrayDiffs['bOnly'];
         if (count($bOnly) > 0) {
             // Delete the page author links
             foreach($bOnly as $index) {
@@ -93,19 +87,35 @@
         }
     }
 
-    function updateUserAuthors($pageId, $usernames, $oldUsernames) {
+    function deleteKeyedRefValue($refArray, $array, $key, $value) {
+        $newArray = [];
+        foreach($refArray as $index) {
+            $record = $array[$index];
+            if (!array_key_exists($record, $key)) {
+                array_push($newArray, $record);
+            }
+            else {
+                if ($record[$key] != $value) {
+                    array_push($newArray, $record);
+                }
+            }
+        }
+        return $newArray;
+    }
+
+    function updateUserAuthors($pageId, $authorList, $oldAuthorList) {
         global $dbConn;
 
         // Compare the two lists
-        $key = "";
+        $key = "author";
         $useSimilar = false;
-        $arrayDiffs = compareArrays($usernames, $oldUsernames, $key, $useSimilar);
+        $arrayDiffs = compareArrays($authorList, $oldAuthorList, $key, $useSimilar);
         $newNamesOnly = $arrayDiffs['aOnly'];
         $oldNamesOnly = $arrayDiffs['bOnly'];
         if (count($newNamesOnly) > 0) {
             // Add the user page links
             foreach ($newNamesOnly as $index) {
-                $username = $usernames[$index];
+                $username = $authorList[$index]['username'];
                 // Get the user id
                 $sql = "SELECT id FROM user WHERE username = '$username'";
                 $result = $dbConn->query($sql);
@@ -122,7 +132,7 @@
         if (count($oldNamesOnly) > 0) {
             // Delete the old users only items
             foreach ($oldNamesOnly as $index) {
-                $username = $oldUsernames[$index];
+                $username = $oldAuthorList[$index]['id'];
                 // Get the user id
                 $sql = "SELECT id FROM user WHERE username = '$username'";
                 $result = $dbConn->query($sql);
@@ -153,27 +163,6 @@
                 error_log("deleteUserPageLink: problem delete user/page link - " . $dbConn->error, 0);
             }
         }
-    }
-
-    function separateUsers($authorList) {
-        global $dbConn;
-
-        $users = [];
-        $externalAuthors = [];
-        foreach ($authorList as $item) {
-            $sql = "SELECT * FROM user WHERE username = '$item'";
-            $result = $dbConn->query($sql);
-            if (!$result) {
-                error_log("separateUsers: select user failed - " . $dbConn->error, 0);
-            }
-            elseif ($result->num_rows === 1) {
-                array_push($users, $item);
-            }
-            elseif ($result->num_rows === 0) {
-                array_push($externalAuthors, $item);
-            }
-        }
-        return ['users'=>$users, 'externalAuthors'=>$externalAuthors];
     }
 
     function deleteAuthorPageLink($author, $pageId) {
@@ -227,7 +216,6 @@
 
         if ($authorId === NULL) {
             // The author given is not a user, so update the author name
-            $externalAuthorId = NULL;
             $result = findExternalAuthor($oldAuthor, $authorId);
             if ($result === FALSE) {
                 error_log("updateAuthors: Problem doing external author search - " . $oldAuthor, 0);
