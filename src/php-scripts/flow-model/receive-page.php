@@ -22,11 +22,7 @@ $inputData = json_decode(file_get_contents(__DIR__ . "/../test/test-model2.json"
 echo "<br>";
 echo "Update record: " . $inputData['flow_model_title'] . "<br>";
 if ($inputData) {
-    $inputData = testSetIds($inputData);
-    exit();
-    if ($inputData) {
-        handlePageData($inputData);
-    }
+    handlePageData($inputData);
 }
 
 function handlePageData($inputData) {
@@ -60,7 +56,7 @@ function handlePageData($inputData) {
     }
     else {
         // Update Modes
-        if ($inputData["flowModelId"] === NULL) {
+        if ($inputData["flow_model_id"] === NULL) {
             $inputData = getSetModelAndPageIds($inputData);
             if ($inputData['result'] === false) {
                 $report = [];
@@ -110,13 +106,6 @@ function addFlowModel($title) {
     return $flowModelId;
 }
 
-function testSetIds($inputData) {
-    $flowModelId = NULL;
-    $pageId = NULL;
-
-    $inputData = getSetModelAndPageIds($inputData);
-    return $inputData;
-}
 
 function getSetModelAndPageIds($inputData) {
     global $dbConn;

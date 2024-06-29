@@ -146,6 +146,7 @@ const modelDetails = {
     event.preventDefault();
     if (dfm.currentPageSet) {
       let author = Misc.stripHTML(document.getElementById("modelExtAuthor").value).trim();
+      author = Misc.stripRedundantNameChars(author);
       if (author != "") {
         dfm.currentPage.page.external_authors.push({id: null, author: author});
         this.displayExtAuthorsList();

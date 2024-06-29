@@ -343,7 +343,9 @@ Contents
 			Title
 			Author
 
-	The form is submitted section by section to the dfm.currentPageData object
+	The form is submitted section by section to the dfm.currentPageData object.
+	All fields are parsed for and cleared of HTML. Author names have white space
+	de-duplicated and "." removed.
 
 	Also created is the dfm.FlowVisuals object for the page
 

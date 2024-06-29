@@ -120,28 +120,9 @@ function addPageExternalAuthor($externalAuthor, $pageId) {
     if (!$gotAuthor) {
         // Add the author as an external author
         $insertedAuthor = false;
-        $sql = "INSERT INTO external_author (first_name, last_name) VALUES (?, ?)";
-        $stmt = $dbConn->prepare($sql);
-        if ($stmt === FALSE) {
-            error_log("addPageExternalAuthor: error attempting to add author (sql)" . $dbConn->error, 0);
-        }
-        else {
-            $stmt->bind_param("ss", $firstName, $lastName);
-            if ($stmt->execute()) {
-                $insertedAuthor = true;
-            }
-            else {
-                error_log("addPageExternalAuthor: problem inserting author" . $dbConn->error, 0);
-            }
-        }
-        if ($insertedAuthor) {
-            // Get the author id
-            $sql = "SELECT * FROM external_author WHERE last_name = '$lastName' AND first_name = '$firstName'";
-            $result = $dbConn->query($sql);
-            if ($result && $row = $result->fetch_assoc()) {
-                $authorId = $row['id'];
-                $gotAuthor = true;
-            }
+        $authorId = addExternalAuthor($externalAuthor);
+        if ($authorId != null) {
+            $gotAuthor = true;
         }
     }
     if ($gotAuthor) {
@@ -158,6 +139,41 @@ function addPageExternalAuthor($externalAuthor, $pageId) {
             }
         }
     }
+}
+
+function addExternalAuthor($author) {
+    global $dbConn;
+
+    $authorId = null;
+    $insertedAuthor = false;
+
+    $nameParts = extractFirstAndLastNames($author);
+    $firstName = $nameParts['firstName'];
+    $lastName = $nameParts['lastName'];
+
+    $sql = "INSERT INTO external_author (first_name, last_name) VALUES (?, ?)";
+    $stmt = $dbConn->prepare($sql);
+    if ($stmt === FALSE) {
+        error_log("addExternalAuthor: error attempting to add author (sql)" . $dbConn->error, 0);
+    }
+    else {
+        $stmt->bind_param("ss", $firstName, $lastName);
+        if ($stmt->execute()) {
+            $insertedAuthor = true;
+        }
+        else {
+            error_log("addExternalAuthor: problem inserting author" . $dbConn->error, 0);
+        }
+    }
+    if ($insertedAuthor) {
+        // Get the author id
+        $sql = "SELECT * FROM external_author WHERE last_name = '$lastName' AND first_name = '$firstName'";
+        $result = $dbConn->query($sql);
+        if ($result && $row = $result->fetch_assoc()) {
+            $authorId = $row['id'];
+        }
+    }
+    return $authorId;
 }
 
 function addUserPageLink($pageId, $userId) {
@@ -187,7 +203,7 @@ function addPageReference($pageId, $reference) {
 
     $source = $reference["source"];
     $title = $reference["title"];
-    $author = $reference["author"];
+    $author = $reference["author"]["author"];
     $gotAuthor = false;
 
     // Process the author name

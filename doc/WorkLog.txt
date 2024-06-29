@@ -5,47 +5,57 @@ Contents
     Work Done
 
 <h1>Work Due
-    Do the Page Details button operation
 
-    Do Model Details edit option
-
-    Allow for different classes of user in the various edit options of the modal model form
-
-    Make an object for the hover text code
-
-    Rework Page Authors:
-        * Split as User Authors, External Authors
-
-        Modify the page input form
-
-        Change the JSON formats for page authors to:
-            * userAuthors: [{"id":, "username": }]
-            * externalAuthors: [{"id":, "name": }]
-
-            * Update Analysis
-            * Update README
-            Update test-model data
-            Update php
-                receive-page.php, debug scripts allow for missing id in update data.
-                extract-page.php
-                add-page.php
-                update-page.php
-                
     Add the php update page save procedures
 
         Do update save page analysis
 
         * Do update page details
         * Do update authors
-        Do update references
+        * Do update references
         Do update nodes
         Do update flows
 
+    Do the Page Details button operation
+
+    Do Model Page Details edit option
+
+    Allow for different classes of user in the various edit options of the modal model form
+
+    Make an object for the hover text code
+
+    Add the Zoom In page functionality
+      
     Add Zoom Back button to page options
 
     Update the README with user features changes
 
 <h1>Work Done
+
+    29/06/2024
+    
+    * On the model details form submit - strip redundant white space and "." from 
+    external authors and reference author
+
+    * Rework Page Authors:
+        * Split as User Authors, External Authors
+
+        * Modify the model details form
+
+        * Change the JSON formats for page authors to:
+            * userAuthors: [{"id":, "username": }]
+            * externalAuthors: [{"id":, "author": }]
+            * reference author {"id":, "author": }
+
+        * Update Analysis
+        * Update README
+        * Update test-model data
+        * Update php
+            * receive-page.php, debug scripts allow for missing id in update data.
+            * extract-page.php
+            * add-page.php
+            * update-page.php
+
     14/06/2024
 
     * Clear-out the console logging

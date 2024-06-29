@@ -7,8 +7,11 @@
         $pageData['flow_model_id'] = $flowModelId;
 
         $page = fetchPage($pageId);
-        $authors = fetchAuthors($pageId);
-        $page['authors'] = $authors;
+        $pageData['flow_model_title'] = $page['title'];
+        $userAuthors = fetchUserAuthors($pageId);
+        $page['user_authors'] = $userAuthors;
+        $externalAuthors = fetchExternalAuthors($pageId);
+        $page['external_authors'] = $externalAuthors;
         $references = fetchReferences($pageId);
         $page['references'] = $references;
         $nodes = fetchNodes($pageId);
@@ -43,7 +46,7 @@
         return $page;
     }
 
-    function fetchAuthors($pageId) {
+    function fetchUserAuthors($pageId) {
         global $dbConn;
 
         $authors = [];
@@ -62,12 +65,18 @@
                         $stmt2->store_result();
                         $stmt2->bind_result($username);
                         $stmt2->fetch();
-                        array_push($authors, $username);
+                        array_push($authors, ['id'=>$id, 'username'=>$username]);
                     }
                 }
             }
         }
+        return $authors;
+    }
 
+    function fetchExternalAuthors($pageId) {
+        global $dbConn;
+
+        $authors = [];
         // Collect the external authors
         $sql = "SELECT * FROM external_author_page_link WHERE page_id = $pageId";
         $stmt = $dbConn->prepare($sql);
@@ -76,7 +85,7 @@
             $stmt->bind_result($id, $pageId, $externalAuthorId);
             while($stmt->fetch()){
                 $authorName = getAuthorName($externalAuthorId);
-                array_push($authors, $authorName);
+                array_push($authors, ['id'>=$id, 'author'=>$authorName]);
             }
         }
         return $authors;
@@ -88,7 +97,7 @@
         $references = [];
         $sql = "SELECT * FROM reference WHERE page_id = $pageId";
         $stmt = $dbConn->prepare($sql);
-        if ($result = $stmt->execute()) {
+        if ($stmt->execute()) {
             $stmt->store_result();
             $stmt->bind_result($referenceId, $pageId, $source, $title, $externalAuthorId);
             while($stmt->fetch()) {
@@ -96,8 +105,13 @@
                 $refItem['id'] = $referenceId;
                 $refItem['source'] = $source;
                 $refItem['title'] = $title;
-                $authorName = getAuthorName($externalAuthorId);
-                $refItem['author'] = $authorName;
+                if ($externalAuthorId === null) {
+                    $authorName = "";
+                }
+                else {
+                    $authorName = getAuthorName($externalAuthorId);
+                }
+                $refItem['author'] = ['id'=>$externalAuthorId, 'author'=>$authorName];
                 array_push($references, $refItem);
             }
         }

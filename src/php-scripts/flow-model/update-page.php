@@ -260,45 +260,36 @@
         if (count($same) > 0) {
             for($i = 0; $i < count($same); $i += 2) {
                 $index = $same[$i];
-                $reference = $references[$index];
                 $oldIndex = $same[$i + 1];
+                $reference = $references[$index];
                 $oldReference = $oldReferences[$oldIndex];
-                if ($reference['author'] != $oldReference['author']) {
-                    // Modify the author spelling
-                    // Get the Author id from the reference
-                    $referenceId = $oldReference['id'];
-                    $sql = "SELECT external_author_id FROM reference WHERE id = $referenceId";
-                    $result = $dbConn->query($sql);
-                    if (!$result) {
-                        echo "updatePageReferences: could not obtain author id - " . $dbConn->error, 0;
-                    }
-                    else {
-                        $row = $result->fetch_assoc();
-                        $authorId = $row['external_author_id'];
-                        // Update the author spelling
-                        $author = $reference['author'];
-                        $oldAuthor = $oldReference['author'];
-                        updateExternalAuthor($author, $oldAuthor, $authorId);
-                    }
-                }
+                $oldReferenceId = $oldReferences[$oldIndex]['id'];
+                $externalAuthorId = checkAndUpdateReferenceAuthor($reference, $oldReference);
                 // Check the other fields
                 $table = 'reference';
-                $id = $oldReference['id'];
-                $fieldNames = ['source', 'title'];
+                $reference['author'] = $externalAuthorId;
+                $fieldNames = ['source', 'title', 'author'];
                 $destFieldNames = [];
-                $types = "ss";
-                updateFields($table, $id, $reference, $oldReference, $fieldNames, $destFieldNames, $types);
+                $types = "ssi";
+                updateFields($table, $oldReferenceId, $reference, $oldReference, $fieldNames, $destFieldNames, $types);
             }
         }
         $aOnly = $arrayDiffs['aOnly'];
+        $bOnly = $arrayDiffs['bOnly'];
         if (count($aOnly) > 0) {
             // Do reference additions
             foreach ($aOnly as $index) {
                 $reference = $references[$index];
+                if (isset($reference['id'])) {
+                    // Remove the corresponding item from $bOnly
+                    deleteKeyedRefValue($bOnly, $oldReferences, "id", $reference['id']);
+                    // Update the reference, including the title
+                    // Check and update the author
+
+                }
                 addPageReference($pageId, $reference);
             }
         }
-        $bOnly = $arrayDiffs['bOnly'];
         if (count($bOnly) > 0) {
             // Do reference deletions
             foreach ($bOnly as $index) {
@@ -306,6 +297,30 @@
                 deleteReference($referenceId);
             }
         }
+    }
+
+    function checkAndUpdateReferenceAuthor($reference, $oldReference){
+        $author = $reference['author']['author'];
+        $externalAuthorId = null;
+        if ($author != "") {
+            $oldExternalAuthorId = $oldReference['author']['id'];
+            if (isset($reference['author']['id'])) {
+                $externalAuthorId = $reference['author']['id'];
+                if ($author != $oldReference['author']['author']) {
+                    // Modify the author spelling
+                    // Get the Author id from the reference
+                    if ($oldExternalAuthorId === $externalAuthorId) {
+                        // Update the author spelling
+                        $oldAuthor = $oldReference['author']['author'];
+                        updateExternalAuthor($author, $oldAuthor, $externalAuthorId);
+                    }
+                }
+            }
+            else {
+                $externalAuthorId = addExternalAuthor($author);
+            }
+        }
+        return $externalAuthorId;
     }
 
     function deleteReference($referenceId) {
