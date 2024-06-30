@@ -285,7 +285,7 @@
                     deleteKeyedRefValue($bOnly, $oldReferences, "id", $reference['id']);
                     // Update the reference, including the title
                     // Check and update the author
-
+                    checkAndUpdateReferenceAuthor($reference, $oldReferences);
                 }
                 addPageReference($pageId, $reference);
             }
@@ -299,26 +299,31 @@
         }
     }
 
-    function checkAndUpdateReferenceAuthor($reference, $oldReference){
+    /**
+     * Assuming that the id for the reference author is present,
+     * but the old author name may be different, update the
+     * author name accordingly.
+     */
+    function checkAndUpdateReferenceAuthor($reference, $oldReferences){
         $author = $reference['author']['author'];
-        $externalAuthorId = null;
-        if ($author != "") {
-            $oldExternalAuthorId = $oldReference['author']['id'];
-            if (isset($reference['author']['id'])) {
-                $externalAuthorId = $reference['author']['id'];
-                if ($author != $oldReference['author']['author']) {
-                    // Modify the author spelling
-                    // Get the Author id from the reference
-                    if ($oldExternalAuthorId === $externalAuthorId) {
-                        // Update the author spelling
-                        $oldAuthor = $oldReference['author']['author'];
-                        updateExternalAuthor($author, $oldAuthor, $externalAuthorId);
-                    }
-                }
+        $externalAuthorId = $reference['author']['id'];
+        // Find the old author
+        $found = false;
+        $index = 0;
+        foreach($oldReferences as $oldReference) {
+            if ($oldReference['author']['id'] === $externalAuthorId) {
+                $found = true;
+                break;
             }
-            else {
-                $externalAuthorId = addExternalAuthor($author);
-            }
+            ++$index;
+        }
+        if ($found) {
+            $oldAuthor = $oldReference['author']['author'];
+            if ($author != $oldAuthor) {
+                // Modify the author spelling
+                // Update the author spelling
+                updateExternalAuthor($author, $oldAuthor, $externalAuthorId);
+            }            
         }
         return $externalAuthorId;
     }
@@ -333,7 +338,32 @@
     }
 
     function updateNodes($pageData, $oldPageData) {
+        // compare the old and new node lists by label
+        $nodes = $pageData['nodes'];
+        $oldNodes = $oldPageData['nodes'];
+        $useSimilar = false;
+        $arrayDiffs = compareArrays($nodes, $oldNodes, 'label', $useSimilar);
+        $same = $arrayDiffs['same'];
+        $aOnly = $arrayDiffs['aOnly'];
+        $bOnly = $arrayDiffs['bOnly'];
+        if (count($same) > 0) {
+            for ($i = 0; $i < count($same); $i + 2) {
+                $index = $same[$i];
+                $oldIndex = $same[$i + 1];
+                
+            }
+        }
 
+    }
+
+    function updateNode($node, $oldPageData) {
+        // Check whether the node id is present in the node data
+        $nodeDone = false;
+        if (isset($node['id'])) {
+            // Find the corresponding node in the old data
+            $found = false;
+
+        }
     }
 
     /**
@@ -378,4 +408,3 @@
         }
 
     }
-

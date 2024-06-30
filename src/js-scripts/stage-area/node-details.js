@@ -93,6 +93,12 @@ const nodeDetails = {
             document.getElementById("nodeErrors").style.display = "block";
             return;
         }
+        else {
+            // Check whether this label already appears on the page
+            if (isDuplicateLabel(this.editMode, label)) {
+                return;
+            }
+        }
         let keywords = document.getElementById("nodeKeywords").value;
         keywords = Misc.stripHTML(keywords).trim();
         let definition = document.getElementById("nodeDefinition").value;
@@ -131,6 +137,33 @@ const nodeDetails = {
         if (dfm.currentPage.page.nodes.length === 1) {
             document.getElementById("saveModelButton").style.display = "inline";
         }
+    },
+
+    isDuplicateLabel: function (editMode, label) {
+        let nodes = this.currentPage.nodes;
+        let found = false;
+        let index = 0;
+        let count = 0;
+        for (let node of nodes) {
+            if (node.label === label) {
+                if (editMode === "new") {
+                    found = true;
+                    break;
+                }
+                else {
+                    if (++count > 1) {
+                        found = true;
+                        break;
+                    }
+                }
+            }
+        }
+        if (found) {
+            document.getElementById("nodeErrors").value = "Duplicate node label submitted";
+            document.getElementById("nodeErrors").style.display = "block";
+            return true;
+        }
+        return false;
     },
 
     deleteNode: function () {
