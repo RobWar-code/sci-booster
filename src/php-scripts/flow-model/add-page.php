@@ -71,32 +71,36 @@ function addPageUserAuthor($userAuthor, $pageId) {
     }
     else {
         $stmt->bind_param("s", $username);
-        if ($stmt->execute()){
+        if (!$stmt->execute()){
             error_log("addPageUserAuthor: problem searching for $username - " . $dbConn->error, 0);
         }
-        elseif($stmt->num_rows > 0) {
+        else {
             $stmt->store_result();
             $stmt->bind_result($userId);
-            $stmt->fetch();
-            if ($userId != null) {
-                // Add the user page link
-                $sql = "INSERT UNIQUE INTO user_page_link (user_id, page_id) VALUES (?, ?)";
-                $stmt = $dbConn->prepare($sql);
-                if ($stmt === FALSE) {
-                    error_log("addPageUserAuthor: problem with insert sql - " . $dbConn->error, 0);
-                }
-                $stmt->bind_param("ii", $userId, $pageId);
-                if (!$stmt->execute()) {
-                    error_log("addPageUserAuthor: problem inserting user_page_link - " . $dbConn->error, 0);
+            if ($stmt->num_rows > 0) {
+                $stmt->fetch();
+                if ($userId != null) {
+                    // Add the user page link
+                    $sql = "INSERT INTO page_user_link (user_id, page_id) VALUES (?, ?)";
+                    $stmt = $dbConn->prepare($sql);
+                    if ($stmt === FALSE) {
+                        error_log("addPageUserAuthor: problem with insert sql - " . $dbConn->error, 0);
+                    }
+                    else {
+                        $stmt->bind_param("ii", $userId, $pageId);
+                        if (!$stmt->execute()) {
+                            error_log("addPageUserAuthor: problem inserting user_page_link - " . $dbConn->error, 0);
+                        }
+                    }
                 }
             }
         }
     }
 }
 
-function addPageExternalAuthors($pageData, $pageId) {
-    foreach($pageData['external_authors'] as $externalAuthor) {
-        addPageExternalAuthor($externalAuthor, $pageId);
+function addPageExternalAuthors($pageId, $externalAuthors) {
+    foreach ($externalAuthors as $externalAuthor) {
+        addPageExternalAuthor ($externalAuthor, $pageId);
     }
 }
 
@@ -107,6 +111,8 @@ function addPageExternalAuthor($externalAuthor, $pageId) {
     $gotUser = false;
     // Extract the first (names) and last name
     $author = $externalAuthor['author']; 
+    // Debug
+    echo "<br>Author: $author<br>";
     $nameParts = extractFirstAndLastNames($author);
     $firstName = $nameParts['firstName'];
     $lastName = $nameParts['lastName'];
@@ -120,7 +126,7 @@ function addPageExternalAuthor($externalAuthor, $pageId) {
     if (!$gotAuthor) {
         // Add the author as an external author
         $insertedAuthor = false;
-        $authorId = addExternalAuthor($externalAuthor);
+        $authorId = addExternalAuthor($author);
         if ($authorId != null) {
             $gotAuthor = true;
         }
@@ -147,6 +153,8 @@ function addExternalAuthor($author) {
     $authorId = null;
     $insertedAuthor = false;
 
+    // Debug
+    echo "<br>addExternalAuthor: author - $author<br>";
     $nameParts = extractFirstAndLastNames($author);
     $firstName = $nameParts['firstName'];
     $lastName = $nameParts['lastName'];
@@ -207,6 +215,8 @@ function addPageReference($pageId, $reference) {
     $gotAuthor = false;
 
     // Process the author name
+    // Debug
+    echo "<br>addPageReference: $author<br>";
     $nameParts = extractFirstAndLastNames($author);
     $firstName = $nameParts['firstName'];
     $lastName = $nameParts['lastName'];
@@ -266,43 +276,48 @@ function addPageReference($pageId, $reference) {
 function addNodes($pageId, $nodes) {
     global $dbConn;
     foreach($nodes as $node) {
-        $insertedNode = false;
-        $gotNodeId = false;
-        if ($node['has_child_page']) {
-            $hasChildPage = 1;
+        addNode($node);
+    }
+}
+
+function addNode($node) {
+    global $dbConn;
+
+    $insertedNode = false;
+    if ($node['has_child_page']) {
+        $hasChildPage = 1;
+    }
+    else {
+        $hasChildPage = 0;
+    }
+    $sql = "INSERT INTO node (page_id, node_num, label, x_coord, y_coord, 
+        type, definition, keywords, hyperlink, has_child_page) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $dbConn->prepare($sql);
+    if ($stmt === FALSE) {
+        error_log("addNodes: problem with sql:" . $dbConn->error, 0);
+    }
+    else {
+        $stmt->bind_param("issiissssi", $pageId, $node['node_num'], $node['label'], $node['x'],
+            $node['y'], $node['type'], $node['definition'], $node['keywords'],
+            $node['hyperlink'], $hasChildPage);
+        if (!$stmt->execute()) {
+            error_log("addNodes: failed to save node:" . $node['node_num'] . " " . $dbConn->error);
         }
         else {
-            $hasChildPage = 0;
+            $insertedNode = true;
         }
-        $sql = "INSERT INTO node (page_id, node_num, label, x_coord, y_coord, 
-            type, definition, keywords, hyperlink, has_child_page) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        $stmt = $dbConn->prepare($sql);
-        if ($stmt === FALSE) {
-            error_log("addNodes: problem with sql:" . $dbConn->error, 0);
+    }
+    if ($insertedNode) {
+        // Get the node id
+        $nodeNum = $node['node_num'];
+        $sql = "SELECT id FROM node WHERE page_id = '$pageId' AND node_num = '$nodeNum'";
+        $result = $dbConn->query($sql);
+        if ($result && $row = $result->fetch_assoc()) {
+            $nodeId = $row['id'];
+            $gotNodeId = true;
         }
         else {
-            $stmt->bind_param("issiissssi", $pageId, $node['node_num'], $node['label'], $node['x'],
-                $node['y'], $node['type'], $node['definition'], $node['keywords'],
-                $node['hyperlink'], $hasChildPage);
-            if (!$stmt->execute()) {
-                error_log("addNodes: failed to save node:" . $node['node_num'] . " " . $dbConn->error);
-            }
-            else {
-                $insertedNode = true;
-            }
-        }
-        if ($insertedNode) {
-            // Get the node id
-            $nodeNum = $node['node_num'];
-            $sql = "SELECT id FROM node WHERE page_id = '$pageId' AND node_num = '$nodeNum'";
-            $result = $dbConn->query($sql);
-            if ($result && $row = $result->fetch_assoc()) {
-                $nodeId = $row['id'];
-                $gotNodeId = true;
-            }
-            else {
-                error_log("addNodes: could not find inserted node: $nodeNum" . $dbConn->error);
-            }
+            error_log("addNodes: could not find inserted node: $nodeNum" . $dbConn->error);
         }
     }
 }

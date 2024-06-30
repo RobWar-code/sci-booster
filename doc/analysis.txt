@@ -632,7 +632,7 @@ Contents
 		dfm.Node = class {
 			constructor () {
 				this.id = ""; // If known
-				this.nodeNum = ""; // Auto
+				this.node_num = ""; // Auto
 				this.x = 0;
 				this.y = 0;
 				this.label = "";
@@ -640,14 +640,14 @@ Contents
 				this.definition = "";
 				this.keywords = "";
 				this.hyperlink = "";
-				this.hasChildPage = false;
+				this.has_child_page = false;
 			}
 		}
 
 		dfm.Flow = class {
 			constructor() {
 				this.id = null; // If known
-				this.flowNum = "";
+				this.flow_num = "";
 				this.source_node_num = 0;
 				this.destination_node_num: = 0;
 				this.label = "";
@@ -671,8 +671,9 @@ Contents
 				this.hierarchical_page_id = "";
 				this.title = "";
 				this.description = "";
-				this.authors = [];
-				this.references = []; // [{source:, author:, title: }],
+				this.user_authors = []; // [{id: , username: ""}]
+				this.external_authors = []; // [{id: , author: ""}]
+				this.references = []; // [{id:, source:, author:, title: }],
 				this.keywords = "";
 				this.nodes = []; // [Node objects]
 				this.flows = []; // [Flow objects]

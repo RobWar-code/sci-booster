@@ -339,6 +339,7 @@
 
     function updateNodes($pageData, $oldPageData) {
         // compare the old and new node lists by label
+        $invalid = false;
         $nodes = $pageData['nodes'];
         $oldNodes = $oldPageData['nodes'];
         $useSimilar = false;
@@ -350,19 +351,88 @@
             for ($i = 0; $i < count($same); $i + 2) {
                 $index = $same[$i];
                 $oldIndex = $same[$i + 1];
-                
+                $node = $nodes[$index];
+                $oldNode = $oldNodes[$oldIndex];
+                if (isset($node['id'])) {
+                    $nodeId = $node['id'];
+                    $oldNodeId = $oldNode['id'];
+                    if ($nodeId != $oldNodeId) {
+                        $label = $node['label'];
+                        error_log("UpdateNodes: mismatched id with title the same $label", 0);
+                        $invalid = true;
+                    }
+                    else {
+                        updateNode($node, $oldNode, $nodeId);
+                    }
+                }
+                else {
+                    $nodeId = $oldNode['id'];
+                    updateNode($node, $oldNode, $nodeId);
+                }
             }
         }
-
+        if (count($aOnly) > 0) {
+            foreach ($aOnly as $index) {
+                $node = $nodes[$index];
+                // Check whether a matched id exists
+                if (isset($node['id'])) {
+                    // Search for corresponding
+                    $nodeId = $node['id'];
+                    $found = false;
+                    foreach ($oldNodes as $oldNode) {
+                        if ($oldNode['id'] === $nodeId) {
+                            $found = true;
+                            break;
+                        }
+                    }
+                    if ($found) {
+                        updateNode($node, $oldNode, $nodeId);
+                    }
+                    else {
+                        // The labels are not matched and neither are the id's
+                        $label = $node['label'];
+                        error_log("updateNodes: - potential new entry already has id - $label");
+                        $invalid = true;
+                    }
+                }
+                else {
+                    // Assume New Node
+                    addNode($node);
+                }
+            }
+        }
+        if (count($bOnly) > 0) {
+            foreach ($bOnly as $index) {
+                $oldNode = $oldNodes[$index];
+                $oldNodeId = $oldNode['id'];
+                deleteNode($oldNodeId);
+            }
+        }
     }
 
-    function updateNode($node, $oldPageData) {
-        // Check whether the node id is present in the node data
-        $nodeDone = false;
-        if (isset($node['id'])) {
-            // Find the corresponding node in the old data
-            $found = false;
+    function deleteNode($nodeId) {
+        global $dbConn;
 
+        $sql = "DELETE FROM node WHERE id = $nodeId";
+        $result = $dbConn->query($sql);
+        if (!$result) {
+            error_log ("deleteNode: failed to delete record - $nodeId - " . $dbConn->error);
+        }
+    }
+
+    function updateNode($node, $oldNode, $nodeId) {
+        // Check whether the node id is present in the node data
+        if (isset($nodeId)) {
+            // Identify the fields that are different and update
+            $table = "node";
+            $fieldNames = ['node_num', 'x', 'y', 'label', 'type', 'definition', 
+                'keywords', 'hyperlink', 'has_child_page'];
+            $destFieldNames = ['node_num', 'coord_x', 'coord_y', 'label', 
+                'type', 'definition', 'keywords', 'hyperlink', 'has_child_page'];
+            $fieldValues = $node;
+            $oldFieldValues = $oldNode;
+            $types = "siisssssi";
+            updateFields($table, $nodeId, $fieldValues, $oldFieldValues, $fieldNames, $destFieldNames, $types);
         }
     }
 
@@ -406,5 +476,4 @@
                 }
             }
         }
-
     }

@@ -38,8 +38,8 @@
 				"y": 30,
 				"label": "Petrol Station",
 				"type": "mechanism",
-				"definition": "Fuel station for refuelling",
-				"keywords": "fueling station, fuels",
+				"definition": "Fuelling station for refuelling",
+				"keywords": "fuelling station, fuels",
 				"hyperlink": "https://narayana-art.co.uk",
 				"has_child_page": false
 			},
@@ -48,10 +48,10 @@
 				"node_num": "02",
 				"x": 50,
 				"y": 190,
-				"label": "car",
+				"label": "truck",
 				"type": "mechanism",
-				"definition": "An example vehicles",
-				"keywords":"vehicles",
+				"definition": "An example of a diesel vehicle",
+				"keywords":"vehicle",
 				"hyperlink": "https://narayana-art.co.uk",
 				"has_child_page": false
 			}

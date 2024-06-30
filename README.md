@@ -249,11 +249,11 @@ flow_models: [
 				"title": "",
 				"keywords": "",
 				"user_authors": [
-					"id": , // May be null (id of the link)
+					"id": , // May be null (id of the user)
 					"username": ""
 				], // Authors who are users
 				"external_authors": [
-					"id": , // May be null (id of the link)
+					"id": , // May be null (id of the author)
 					"author": ""
 				],
 				"references": [
