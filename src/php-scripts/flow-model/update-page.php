@@ -46,7 +46,7 @@
         global $dbConn;
 
         $authors = $pageData['external_authors'];
-        $oldAuthors = $pageData['external_authors'];
+        $oldAuthors = $oldPageData['external_authors'];
 
         $key = "author";
         $useSimilar = false;
@@ -56,6 +56,9 @@
         if (count($aOnly) > 0) {
             // Do inserts
             foreach($aOnly as $index) {
+                // Debug 
+                $author = $authors[$index]['author'];
+                echo "<br>updatePageExternalAuthors - $author<br>";
                 // Check whether the id is present
                 if (isset($authors[$index]['id'])) {
                     $authorId = $authors[$index]['id'];
@@ -81,7 +84,7 @@
         if (count($bOnly) > 0) {
             // Delete the page author links
             foreach($bOnly as $index) {
-                $author = $oldAuthors[$index];
+                $author = $oldAuthors[$index]['author'];
                 deleteAuthorPageLink($author, $pageId);
             }
         }
@@ -107,15 +110,19 @@
         global $dbConn;
 
         // Compare the two lists
-        $key = "author";
+        $key = "username";
         $useSimilar = false;
         $arrayDiffs = compareArrays($authorList, $oldAuthorList, $key, $useSimilar);
         $newNamesOnly = $arrayDiffs['aOnly'];
+        // Debug
+        echo "<br>updateUserAuthors: " . count($arrayDiffs['aOnly']) . " " . count($arrayDiffs['bOnly']) . "<br>";
         $oldNamesOnly = $arrayDiffs['bOnly'];
         if (count($newNamesOnly) > 0) {
             // Add the user page links
             foreach ($newNamesOnly as $index) {
                 $username = $authorList[$index]['username'];
+                // Debug
+                echo "<br>updateUserAuthors: $username<br>";
                 // Get the user id
                 $sql = "SELECT id FROM user WHERE username = '$username'";
                 $result = $dbConn->query($sql);
@@ -264,12 +271,12 @@
                 $reference = $references[$index];
                 $oldReference = $oldReferences[$oldIndex];
                 $oldReferenceId = $oldReferences[$oldIndex]['id'];
-                $externalAuthorId = checkAndUpdateReferenceAuthor($reference, $oldReference);
+                $externalAuthorId = checkAndUpdateReferenceAuthor($reference, $oldReferences);
                 // Check the other fields
                 $table = 'reference';
                 $reference['author'] = $externalAuthorId;
                 $fieldNames = ['source', 'title', 'author'];
-                $destFieldNames = [];
+                $destFieldNames = ['source', 'title', 'external_author_id'];
                 $types = "ssi";
                 updateFields($table, $oldReferenceId, $reference, $oldReference, $fieldNames, $destFieldNames, $types);
             }
@@ -339,7 +346,7 @@
 
     function updateNodes($pageData, $oldPageData) {
         // compare the old and new node lists by label
-        $invalid = false;
+        $pageId = $oldPageData['id'];
         $nodes = $pageData['nodes'];
         $oldNodes = $oldPageData['nodes'];
         $useSimilar = false;
@@ -348,7 +355,7 @@
         $aOnly = $arrayDiffs['aOnly'];
         $bOnly = $arrayDiffs['bOnly'];
         if (count($same) > 0) {
-            for ($i = 0; $i < count($same); $i + 2) {
+            for ($i = 0; $i < count($same); $i += 2) {
                 $index = $same[$i];
                 $oldIndex = $same[$i + 1];
                 $node = $nodes[$index];
@@ -397,7 +404,7 @@
                 }
                 else {
                     // Assume New Node
-                    addNode($node);
+                    addNode($node, $pageId);
                 }
             }
         }
@@ -442,7 +449,6 @@
      */
     function updateFields($table, $id, $fieldsRef, $oldFieldsRef, $fieldNames, $destFieldNames, $types) {
         global $dbConn;
-
         $changeFields = "";
         $bindParam = "";
         $fieldValues = [];
@@ -467,7 +473,7 @@
             $sql = "UPDATE $table SET " . $changeFields . " WHERE id = $id";
             $stmt = $dbConn->prepare($sql);
             if ($stmt === FALSE) {
-                error_log("updateFields: could not prepare: " . $dbConn->error, 0);
+                error_log("updateFields: table - $table - could not prepare: " . $dbConn->error, 0);
             }
             else {
                 $stmt->bind_param($bindParam, ...$fieldValues);

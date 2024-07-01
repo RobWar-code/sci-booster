@@ -276,11 +276,11 @@ function addPageReference($pageId, $reference) {
 function addNodes($pageId, $nodes) {
     global $dbConn;
     foreach($nodes as $node) {
-        addNode($node);
+        addNode($node, $pageId);
     }
 }
 
-function addNode($node) {
+function addNode($node, $pageId) {
     global $dbConn;
 
     $insertedNode = false;

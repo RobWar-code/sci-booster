@@ -133,6 +133,7 @@ function getSetModelAndPageIds($inputData) {
                     $pageId = $row['id'];
                     $inputData['flow_model_id'] = $flowModelId;
                     $inputData['page']['id'] = $pageId;
+                    $inputData['result'] = true;
                     return $inputData;
                 }
             }

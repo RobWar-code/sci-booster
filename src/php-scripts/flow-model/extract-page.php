@@ -65,7 +65,7 @@
                         $stmt2->store_result();
                         $stmt2->bind_result($username);
                         $stmt2->fetch();
-                        array_push($authors, ['id'=>$id, 'username'=>$username]);
+                        array_push($authors, ['id'=>$userId, 'username'=>$username]);
                     }
                 }
             }
@@ -85,7 +85,7 @@
             $stmt->bind_result($id, $pageId, $externalAuthorId);
             while($stmt->fetch()){
                 $authorName = getAuthorName($externalAuthorId);
-                array_push($authors, ['id'>=$id, 'author'=>$authorName]);
+                array_push($authors, ['id'=>$externalAuthorId, 'author'=>$authorName]);
             }
         }
         return $authors;
