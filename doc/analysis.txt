@@ -16,10 +16,6 @@ Contents
 		Page Information
 		Page Options Buttons
 			New Model / New Page Operations
-				External Author Data Policies
-				Reference Data Policies
-				Node Data Policies
-				Flow Data Policies
 		Flow Diagram
 			Nodes
 				Node Option Buttons
@@ -33,6 +29,10 @@ Contents
 		Save Operation Preparations
 		Adding a New Page
 		Updating a Previously Saved Page
+		External Author Data Policies
+		Reference Data Policies
+		Node Data Policies
+		Flow Data Policies
 
 <h1>File Modularisation/Structure
 
@@ -354,75 +354,6 @@ Contents
 	Note that the same form is presented for details display, but with fields edit 
 	disabled and the submit buttons concealed.
 
-<h4>External Author Data Policies
-
-	External Authors are maintained as a list against which subsequent inputs are
-	checked. The server routines can only accept exact matches as identities, so
-	any verification/manipulation must be done by the javascript user interface.
-
-	If an author name is not matched, then for an update the original is deleted
-	from the author table unless it appears in other records.
-
-	The verification routines are part of phase III of the project. Otherwise, because
-	the dataset is small, the inefficiencies are not worthwhile.
-
-	The problem with author names is to establish what might be mis-spellings or
-	variant spellings of the same identity. It is beyond the scope of this project
-	to perform statistical checks against the internet, for example. The best that
-	can be done is to check with the user.
-
-	In the case of checking with the user, we can use the last name as the most 
-	consistent part of the name. Because the database is likely to be quite small,
-	we can use the first two characters of the last name to create a narrowed-down
-	list of names (mysql regexp) to parse against the name entered. If there are
-	any such matches, the list can be presented to the user for selection/checking.
-
-<h4>Reference Data Policies
-
-	It is beyond the scope of the current phase of this project to record/verify
-	publications per se, so these are listed as unique items associated with the
-	page. If these records are not exactly matched by the title then they are
-	deleted.
-
-<h4>Node Data Policies
-
-	Nodes are always unique to a page.
-
-	Nodes may be deleted and their hierarchical id's repeated, so this cannot be used
-	for update identification. Instead the id is used to match the records as updates. 
-	If the id is not available, an exact match by label is used.
-
-	Id Mismatch Considerations
-
-		If the labels, but not the id's of the nodes match and the id is present, 
-		then this might have arisen for the following reasons:
-
-			1. The label may have been duplicated on that page (this should be
-			prevented by the user interface)
-
-			2. A label of that name may have been deleted and re-added to that
-			page. But in this case, the id would be null.
-
-			3. The node may have been copied into this page from elsewhere. This
-			could only apply if the facility were available. So might be reconsidered
-			for Phase III.
-
-			In conclusion, we can log this arising as a probable error and report
-			it, and skip the update.
-
-<h4>Flow Data Policies
-
-	Flows are always unique to a page.
-
-	Flows may be deleted and their flow numbers repeated, so this cannot be used
-	for update identification. Instead the id is used to match the records as updates. 
-	If the id is not available, an exact match by label is used.
-
-<h4>Conversion Formulas Data Policies
-
-	Conversion formulas are unique to the flows for which they are defined. The
-	presence of an id indicates update, they are matched exactly by formula and
-	variants deleted.
 
 <h2>Flow Diagram
 
@@ -923,67 +854,111 @@ Contents
 	and this check should be performed when the submit button for the item
 	is clicked. Currently, this should only be used for external authors.
 
-	In Summary (Records and Sub-Records):
+<h2>External Author Data Policies
 
-	A record for update from the system is identified by the presence of a 
-	non-null id field. Ambiguities will already have been resolved by the user. 
-	All field changes will be taken to be applicable. New records will be 
-	denoted by the null id field.
+	External Authors are maintained as a list against which subsequent inputs are
+	checked. The server routines can only accept exact matches as identities, so
+	any verification/manipulation must be done by the javascript user interface.
 
-	A model record for input from outside the system is first
-	parsed by the system and a report of ambiguities sent to the user
-	to resolve. The resolved record includes any id's where unique field
-	matches were found and for which the user has agreed.
+	If an author name is not matched, then for an update the original is deleted
+	from the author table unless it appears in other records.
 
-	Test data records will always have null id's.
+	The verification routines are part of phase III of the project. Otherwise, because
+	the dataset is small, the inefficiencies are not worthwhile.
 
-	Records with a null id field are always parsed against the table for
-	an exact match (to be treated as an update) otherwise added.
+	The problem with author names is to establish what might be mis-spellings or
+	variant spellings of the same identity. It is beyond the scope of this project
+	to perform statistical checks against the internet, for example. The best that
+	can be done is to check with the user.
 
-	Procedures:
+	In the case of checking with the user, we can use the last name as the most 
+	consistent part of the name. Because the database is likely to be quite small,
+	we can use the first two characters of the last name to create a narrowed-down
+	list of names (mysql regexp) to parse against the name entered. If there are
+	any such matches, the list can be presented to the user for selection/checking.
 
-	The page data is retrieved from the database and compared with the new version
-	section by section as follows:
+<h2>Reference Data Policies
 
-		page - check singleton details, if modified, update record.
+	It is beyond the scope of the current phase of this project to record/verify
+	publications per se, so these are listed as unique items associated with the
+	page. If these records are not exactly matched by the title then they are
+	deleted.
 
-		authors - sort and compare the retrieved version and the given version
-			If there is a new entry, add it (link and entry)
-			If an entry is present in the retrieved list, but not in the given,
-				delete the link, but not the author.
+<h2>Node Data Policies
 
-		references - sort and compare the retrieved version and the given version
-			If there is a new entry, add it (allowing for the author)
-			If an entry is present in the retrieved list, but not in the given,
-				Delete the reference and the author link, but not the author
-			If an entry is present in both lists, check to see whether an update
-			is required.
+	Nodes are always unique to a page.
 
-		notes: It is worth writing a compareLists() function to report additions
-		and deletions.
+	Nodes may be deleted and their hierarchical id's repeated, so this cannot be used
+	for update identification. Instead the id is used to match the records as updates. 
+	If the id is not available, an exact match by label is used.
 
-		nodes - As for the other lists, compare and look for additions, deletions
-		and updates. When comparing nodes, use the label and nodeNum and treat a 
-		difference of two characters or less as a correction (same name). If there
-		are five or less characters, match for exactly the same.
+	Id Mismatch Considerations
 
-			If a deletion is due, check to see if there are children of the node.
-			Delete this node and all its child pages.
+		If the labels, but not the id's of the nodes match and the id is present, 
+		then this might have arisen for the following reasons:
 
-			If an addition is due, insert it.
+			1. The label may have been duplicated on that page (this should be
+			prevented by the user interface)
 
-			If an update is due, compare the fields (properties) and draw a list
-			of modified fields for the UPDATE statement.
+			2. A label of that name may have been deleted and re-added to that
+			page. But in this case, the id would be null.
 
-		flows - As for the other lists, compare for additions, deletions and updates.
-		When comparing flows check the flow_num and the label, comparing the label
-		for two or less character changes (same). If there are five or less characters,
-		match for exactly the same.
+			3. The node may have been copied into this page from elsewhere. This
+			could only apply if the facility were available. So might be reconsidered
+			for Phase III.
 
-			If a deletion is due, delete the record.
+			In conclusion, we can log this arising as a probable error and report
+			it, and skip the update.
 
-			If an addition is due, add the record.
+	If the node has a child page (has_child_page is set) and the page is to be deleted
+	then that child and all of its children must also be deleted.
 
-			If an update is due, update the record. If the points or arrow_points
-			lists do not match, replace them entirely.
-			Compare the sets of conversion_formulas and update as necessary.
+	This process involves a search to the bottom of the parent child hierarchy to build 
+	a list to manage the deletion of pages as follows:
+
+		createPageHierarchyList:
+			Args:
+				beginProcess - true/false
+				fromNode - true/false - Whether the list begins with a node or a page
+				flowModelId
+				parentHierarchicalId - parent page hierarchical id
+				parentNodeNum - "" If top level
+				&hierarchicalIdList (this accumulates a list of the pages to be deleted)
+
+			Returns:
+				&hierachicalIdList - [
+					{hierarchicalId: "", numChildren: , nodeData[{id: , nodeNum:, hasChildPage: }], lastNodeIndexChecked}
+				]
+
+			if beginProcess:
+				if (!fromNode) {
+					set hierarchicalIdListItem = {hierachicalId: parentHierarchicalId}
+				}
+				else {
+					set pageHierachicalId = parentHierarchicalId + parentNodeNum
+					set hierarchicalIdListItem = {hierachicalId: pageHierarchicalId}
+				}
+			select the id, node_num and has_child_page properties of the nodes of the page
+
+			let count = 0;
+			let nodeData = [];
+			let numChildren = 0;
+			for each node of the page
+				set the node data details
+				if (hasChildPage) {
+
+				}
+
+<h2>Flow Data Policies
+
+	Flows are always unique to a page.
+
+	Flows may be deleted and their flow numbers repeated, so this cannot be used
+	for update identification. Instead the id is used to match the records as updates. 
+	If the id is not available, an exact match by label is used.
+
+<h2>Conversion Formulas Data Policies
+
+	Conversion formulas are unique to the flows for which they are defined. The
+	presence of an id indicates update, they are matched exactly by formula and
+	variants deleted.
