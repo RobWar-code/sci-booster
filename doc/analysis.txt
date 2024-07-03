@@ -913,41 +913,41 @@ Contents
 	If the node has a child page (has_child_page is set) and the page is to be deleted
 	then that child and all of its children must also be deleted.
 
-	This process involves a search to the bottom of the parent child hierarchy to build 
-	a list to manage the deletion of pages as follows:
+	This process involves a recursive set of calls down to the lowest pages.
 
-		createPageHierarchyList:
+		deletePage:
 			Args:
 				beginProcess - true/false
 				fromNode - true/false - Whether the list begins with a node or a page
 				flowModelId
-				parentHierarchicalId - parent page hierarchical id
-				parentNodeNum - "" If top level
-				&hierarchicalIdList (this accumulates a list of the pages to be deleted)
-
+				pageHierarchicalId
 			Returns:
-				&hierachicalIdList - [
-					{hierarchicalId: "", numChildren: , nodeData[{id: , nodeNum:, hasChildPage: }], lastNodeIndexChecked}
-				]
+				true/false - successful 
 
-			if beginProcess:
-				if (!fromNode) {
-					set hierarchicalIdListItem = {hierachicalId: parentHierarchicalId}
-				}
-				else {
-					set pageHierachicalId = parentHierarchicalId + parentNodeNum
-					set hierarchicalIdListItem = {hierachicalId: pageHierarchicalId}
-				}
-			select the id, node_num and has_child_page properties of the nodes of the page
+			select the pageId and hierarchicalId
 
-			let count = 0;
-			let nodeData = [];
-			let numChildren = 0;
-			for each node of the page
-				set the node data details
-				if (hasChildPage) {
+			// Delete Other Page Attributes
 
-				}
+			// Delete Nodes
+			select nodes from database where page_id = pageId
+			for each node of the page:
+				let nodeId = node.id
+				let nodeNum = node.node_num
+				// set the node data details
+				deleteNode(hierarchicalId, node)
+				
+		deleteNode:
+			Args: 
+				pageHierarchicalId
+				node - the node record
+
+				if (node.hasChildPage):
+					nodeNum = node.nodeNum
+					deletionPageHierarchicalId = pageHierachicalId + nodeNum
+					deletePage(begin, flowModelId, deletionPageHierarchicalId)
+
+				delete node record
+			
 
 <h2>Flow Data Policies
 
