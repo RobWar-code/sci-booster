@@ -20,6 +20,7 @@
         updatePageExternalAuthors($pageId, $pageData, $oldPageData);
         updatePageReferences($pageData, $oldPageData);
         updateNodes($pageData, $oldPageData);
+        updateFlows($pageData, $oldPageData);
     }
 
     function updatePageDetails($pageData, $oldPageData) {
@@ -342,7 +343,9 @@
             foreach ($bOnly as $index) {
                 $oldNode = $oldNodes[$index];
                 $oldNodeId = $oldNode['id'];
-                deleteNode($oldNodeId);
+                $flowModelId = $oldPageData['flow_model_id'];
+                $pageHierarchicalId = $oldPageData['hierarchical_id'];
+                deleteNodeAndChildPages($oldNodeId, $flowModelId, $pageHierarchicalId);
             }
         }
     }
@@ -361,6 +364,71 @@
             $types = "siisssssi";
             updateFields($table, $nodeId, $fieldValues, $oldFieldValues, $fieldNames, $destFieldNames, $types);
         }
+    }
+
+
+    function updateFlows($pageData, $oldPageData) {
+
+        $pageId = $oldPageData['id'];
+        $flows = $pageData['flows'];
+        $oldFlows = $oldPageData['flows'];
+
+        // Set-up a check list for old flows matched (to use for deletions)
+        $oldMatch = [];
+        for ($i = 0; $i < count($oldFlows); $i++) {
+            array_push($oldMatch, false);
+        }
+
+        foreach($flows as $flow) {
+            // Search for a corresponding entry in old flows
+            $flowId = null;
+            $flowNum = $flow['flow_num'];
+            $label = $flow['label'];
+            if (isset($flow['$id'])) {
+                $flowId = $flow['id'];
+            }
+            $oldFlowData = findOldFlowMatch($oldFlows, $flowNum, $label, $flowId);
+            if ($oldFlowData != null) {
+                $oldFlow = $oldFlowData['oldFlow'];
+                $oldMatch[$oldFlowData['index']] = true;
+                // Match found so do update
+                $table = "flow";
+                $id = $oldFlow['id'];
+                $fieldNames = ['flow_num', 'label', 'drawing_group_x', 'drawing_group_y']
+                updateFields($table, $id, $fieldsRef, $oldFieldsRef, $fieldNames, $destFieldNames, $types)
+            }
+        }
+    }
+
+    /**
+    * The labels of flows may be repeated several times (ie: not unique)
+    * So if the id of the flow is absent, we can only identify a label
+    * as unique from the flow_num and the label taken together,
+    * Otherwise we use the id to ensure that we have a match.
+    * return ['oldFlow'=>$oldFlow, 'index'=>$index] or null.
+    */
+    function findOldFlowMatch($oldFlows, $flowNum, $label, $id) {
+        $found = false;
+        $index = 0;
+        foreach($oldFlows as $oldFlow) {
+            if ($id != null) {
+                if ($id === $oldFlow['id']) {
+                    $found = true;
+                    break;
+                }
+            }
+            else {
+                if ($oldFlow['flow_num'] === $flowNum && $oldFlow['label'] === $label) {
+                    $found = true;
+                    break;
+                }
+            }
+            ++$index;
+        }
+        if (!$found) {
+            return null;
+        }
+        return ['oldFlow'=>$oldFlow, 'index'=>$index];
     }
 
     /**

@@ -141,6 +141,23 @@ function deleteAuthorPageLink($author, $pageId) {
     }
 }
 
+function deletePageReferences($pageId) {
+    global $dbConn;
+
+    $sql = "SELECT id FROM reference WHERE page_id = $pageId";
+    $result = $dbConn->query($sql);
+    if (!$result) {
+        error_log("deletePageReferences: Unable to perform deletions" . $dbConn->error, 0); 
+    }
+    else {
+        while ($row = $result->fetch_assoc()) {
+            $referenceId = $row['id'];
+            deleteReference($referenceId);
+        }
+    }
+
+}
+
 function deleteReference($referenceId) {
     global $dbConn;
     $sql = "DELETE FROM reference WHERE id = $referenceId";
@@ -182,7 +199,35 @@ function deletePageNodes($pageId, $flowModelId, $hierarchicalId) {
 }
 
 function deleteNodeAndChildPages($nodeId, $flowModelId, $pageHierarchicalId) {
+    global $dbConn;
 
+    $foundNode = false;
+    $hasChildPage = 0;
+    $node_num = "";
+    $sql = "SELECT has_child_page, node_num FROM node WHERE id = $nodeId";
+    $result = $dbConn->query($sql);
+    if (!$result) {
+        error_log("deleteNodeAndChildPages: Unable to select node $nodeId - " . $dbConn->error, 0);
+    }
+    else {
+        if ($result->num_rows != 1) {
+            error_log("deleteNodeAndChildPages: Single item not found for node Id $nodeId - ", 0);
+        }
+        else {
+            $row = $result->fetch_assoc();
+            $hasChildPage = $row['has_child_page'];
+            $nodeNum = $row['node_num'];
+            $foundNode = true;
+        }
+    }
+    if ($foundNode) {
+        if ($hasChildPage === 1) {
+            $pageId = null;
+            $deletionPageHierarchicalId = $pageHierarchicalId . $nodeNum;
+            deletePage($flowModelId, $deletionPageHierarchicalId, $pageId);
+        }
+        deleteNode($nodeId);
+    }
 }
 
 function deleteNode($nodeId) {
@@ -192,5 +237,42 @@ function deleteNode($nodeId) {
     $result = $dbConn->query($sql);
     if (!$result) {
         error_log ("deleteNode: failed to delete record - $nodeId - " . $dbConn->error);
+    }
+}
+
+function deletePageFlows($pageId) {
+    global $dbConn;
+
+    $sql = "SELECT id FROM flow WHERE page_id = $pageId";
+    $result = $dbConn->query($sql);
+    if (!$result) {
+        error_log("deletePageFlows: Could not perform select" . $dbConn->error, 0);
+    }
+    else {
+        while ($row = $result->fetch_assoc()) {
+            $flowId = $row['id'];
+            deleteConversionFormulas($flowId);
+            deleteFlow($flowId);
+        }
+    }
+
+}
+
+function deleteFlow($flowId) {
+    global $dbConn;
+    $sql = "DELETE FROM flow WHERE id = $flowId";
+    $result = $dbConn->query($sql);
+    if (!$result) {
+        error_log("deleteFlow: Could not delete flow - $flowId - " . $dbConn->error, 0);
+    }
+}
+
+function deleteConversionFormulas($flowId) {
+    global $dbConn;
+
+    $sql = "DELETE FROM conversion_formula WHERE flow_id = $flowId";
+    $result = $dbConn->query($sql);
+    if (!$result) {
+        error_log("deleteConversionFormulas: problem with deletion" . $dbConn->error, 0);
     }
 }
