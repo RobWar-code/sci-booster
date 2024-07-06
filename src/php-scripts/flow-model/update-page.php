@@ -389,14 +389,90 @@
             }
             $oldFlowData = findOldFlowMatch($oldFlows, $flowNum, $label, $flowId);
             if ($oldFlowData != null) {
+                // Match found so do update
+                // Check for void source/destination
+                if ($flow['source_node_num'] === "") {
+                    $flow['source_void'] = 1;
+                }
+                else {
+                    $flow['source_void'] = 0;
+                }
+                if ($flow['destination_node_num'] === "") {
+                    $flow['destination_void'] = 1;
+                }
+                else {
+                    $flow['destination_void'] = 0;
+                }
+
                 $oldFlow = $oldFlowData['oldFlow'];
                 $oldMatch[$oldFlowData['index']] = true;
-                // Match found so do update
                 $table = "flow";
                 $id = $oldFlow['id'];
-                $fieldNames = ['flow_num', 'label', 'drawing_group_x', 'drawing_group_y']
-                updateFields($table, $id, $fieldsRef, $oldFieldsRef, $fieldNames, $destFieldNames, $types)
+                $fieldNames = ['flow_num', 'label', 'drawing_group_x', 'drawing_group_y', 
+                    'label_x', 'label_y', 'label_width', 'definition', 'keywords', 
+                    'hyperlink', 'source_node_num', 'source_void', 
+                    'destination_node_num', 'destination_void'];
+                $destFieldNames = [];
+                $types = "ssiiiiissssisi";
+                updateFields($table, $id, $flow, $oldFlow, $fieldNames, $destFieldNames, $types);
+                // Replace the arrow points and line points coordinates
+                replaceFlowArrowPoints($id, $flow['arrow_points']);
+                replaceFlowPoints($id, $flow['points']);
+                // Update the conversion formulas
+                updateConversionFormulas($id, $flow['conversion_formulas'], $oldFlow['conversion_formulas']);
             }
+        }
+    }
+
+    function updateConversionFormulas($flowId, $formulas, $oldFormulas) {
+        global $dbConn;
+
+        $key = "formula";
+        $useSimilar = false;
+        $arrayDiffs = compareArrays($formulas, $oldFormulas, $key, $useSimilar);
+        $same = $arrayDiffs['same'];
+        $aOnly = $arrayDiffs['aOnly'];
+        $bOnly = $arrayDiffs['bOnly'];
+        if (count($same) > 0) {
+            for ($i = 0; $i < count($same); $i += 2) {
+                $conversionFormula = $formulas[$same[$i]];
+                $oldConversionFormula = $oldFormulas[$same[$i + 1]];
+                $idSet = false;
+                $formulaId = null;
+                if (isset($conversionFormula['id'])) {
+                    $idSet = true;
+                    $formulaId = $conversionFormula['id'];
+                }
+                // new id not set - update
+                // id set - matches old - update
+                // id set - does not match old - data error
+            }
+        }
+    }
+
+    function replaceFlowArrowPoints($flowId, $flowArrowPoints) {
+        global $dbConn;
+        $sql = "DELETE FROM flow_arrow_point WHERE flow_id = $flowId";
+        $result = $dbConn->query($sql);
+        if (!$result) {
+            error_log("replaceFlowArrowPoints: delete query failed - " . $dbConn->error, 0);
+        }
+        else {
+            // Add the new points
+            addArrowPoints($flowId, $flowArrowPoints);
+        }
+    }
+
+    function replaceFlowPoints($flowId, $flowPoints) {
+        global $dbConn;
+        $sql = "DELETE FROM flow_point WHERE flow_id = $flowId";
+        $result = $dbConn->query($sql);
+        if (!$result) {
+            error_log('replaceFlowPoints: delete query failed - ' . $dbConn->error, 0);
+        }
+        else {
+            // Add the new points
+            addFlowPoints($flowId, $flowPoints);
         }
     }
 
