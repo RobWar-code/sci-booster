@@ -276,3 +276,13 @@ function deleteConversionFormulas($flowId) {
         error_log("deleteConversionFormulas: problem with deletion" . $dbConn->error, 0);
     }
 }
+
+function deleteConversionFormula($formulaId) {
+    global $dbConn;
+
+    $sql = "DELETE FROM conversion_formula WHERE id = $formulaId";
+    $result = $dbConn->query($sql);
+    if (!$result) {
+        error_log("deleteConversionFormula: problem with deletion: " . $dbConn->error, 0);
+    }
+}

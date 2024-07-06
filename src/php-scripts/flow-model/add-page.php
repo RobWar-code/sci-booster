@@ -433,19 +433,25 @@ function addFlowPoints($flowId, $flowPoints){
 }
 
 function addConversionFormulas($flowId, $conversionFormulas) {
-    global $dbConn;
 
     foreach($conversionFormulas as $conversionFormula) {
-        $sql = "INSERT INTO conversion_formula (flow_id, formula, description) VALUES (?, ?, ?)";
-        $stmt = $dbConn->prepare($sql);
-        if ($stmt === FALSE) {
-            error_log("addConversionFormulas: problem with sql:" . $dbConn->error, 0);
-        }
-        else {
-            $stmt->bind_param("iss", $flowId, $conversionFormula['formula'], $conversionFormula['description']);
-            if (!$stmt->execute()) {
-                error_log("addConversionFormulas: problem insert formula:" . $dbConn->error, 0);
-            }
+        addConversionFormula($flowId, $conversionFormula);
+    }
+}
+
+function addConversionFormula($flowId, $conversionFormula) {
+    global $dbConn;
+
+    $sql = "INSERT INTO conversion_formula (flow_id, formula, description) VALUES (?, ?, ?)";
+    $stmt = $dbConn->prepare($sql);
+    if ($stmt === FALSE) {
+        error_log("addConversionFormula: problem with sql:" . $dbConn->error, 0);
+    }
+    else {
+        $stmt->bind_param("iss", $flowId, $conversionFormula['formula'], $conversionFormula['description']);
+        if (!$stmt->execute()) {
+            error_log("addConversionFormula: problem insert formula:" . $dbConn->error, 0);
         }
     }
+
 }

@@ -962,3 +962,16 @@ Contents
 	Conversion formulas are unique to the flows for which they are defined. The
 	presence of an id indicates update, they are matched exactly by formula and
 	variants deleted.
+
+	If the id is present and matches an old id, then this is an update
+
+	If the id is present but does not match an old id then this is an error
+
+	If the id is not present and the formula matches
+	then this is an update
+
+	If the id is not present and the formula does not match 
+	then this a new formula
+
+	Old formulas not marked for update, are deleted
+

@@ -427,25 +427,111 @@
     function updateConversionFormulas($flowId, $formulas, $oldFormulas) {
         global $dbConn;
 
-        $key = "formula";
-        $useSimilar = false;
-        $arrayDiffs = compareArrays($formulas, $oldFormulas, $key, $useSimilar);
-        $same = $arrayDiffs['same'];
-        $aOnly = $arrayDiffs['aOnly'];
-        $bOnly = $arrayDiffs['bOnly'];
-        if (count($same) > 0) {
-            for ($i = 0; $i < count($same); $i += 2) {
-                $conversionFormula = $formulas[$same[$i]];
-                $oldConversionFormula = $oldFormulas[$same[$i + 1]];
-                $idSet = false;
-                $formulaId = null;
-                if (isset($conversionFormula['id'])) {
-                    $idSet = true;
-                    $formulaId = $conversionFormula['id'];
+        // Set-up the update checklist for the old formulas
+        $oldMatches = [];
+        for ($i = 0; $i < count($oldFormulas); $i++) {
+            array_push($oldMatches, false);
+        }
+
+        for ($i = 0; $i < count($formulas); $i++) {
+            $conversionFormula = $formulas[$i];
+            $formulaId = null;
+            if (isset($conversionFormula['id'])) {
+                $formulaId = $conversionFormula['id'];
+            }
+            if ($formulaId != null) {
+                $oldIndex = findFormulaIdInSet($formulaId, $oldFormulas);
+                if ($oldIndex === -1) {
+                    error_log("updateConversionFormulas: Orphan formula id in data", 0);
                 }
-                // new id not set - update
-                // id set - matches old - update
-                // id set - does not match old - data error
+                else {
+                    updateConversionFormula($formulaId, $conversionFormula);
+                    $oldMatches[$oldIndex] = true;
+                }
+            }
+            else {
+                // Check old flows by flow_num
+                $formula = $conversionFormula['formula'];
+                $oldIndex = findFormulaInSet($formula, $oldFormulas);
+                if ($oldIndex === -1) {
+                    addConversionFormula($flowId, $conversionFormula);
+                }
+                else {
+                    $formulaId = $oldFormulas[$oldIndex]['id'];
+                    updateConversionFormula($formulaId, $conversionFormula);
+                    $oldMatches[$oldIndex] = true;
+                }
+            }
+        }
+
+        if (count($oldMatches) > 0) {
+            for ($i = 0; $i < count($oldMatches); $i++) {
+                if (!$oldMatches[$i]) {
+                    deleteConversionFormula($oldFormulas[$i]['id']);
+                }
+            }
+        }
+
+    }
+
+    function findFormulaIdInSet($formulaId, $formulas) {
+        $index = 0;
+        $found = false;
+        foreach($formulas as $formula) {
+            if ($formula['id'] === $formulaId) {
+                $found = true;
+                break;
+            }
+            ++$index;
+        }
+        if (!$found) {
+            return -1;
+        }
+        else {
+            return $index;
+        }
+    }
+
+    function findFormulaInSet($formula, $formulas) {
+        $index = 0;
+        $found = false;
+        foreach($formulas as $oldFormula) {
+            if ($oldFormula['id'] === $formula) {
+                $found = true;
+                break;
+            }
+            ++$index;
+        }
+        if (!$found) {
+            return -1;
+        }
+        else {
+            return $index;
+        }
+    }
+
+    function updateConversionFormula($formulaId, $conversionFormula) {
+        global $dbConn;
+
+        $sql = "SELECT * FROM conversion_formula WHERE id = $formulaId";
+        $result = $dbConn->query($sql);
+        if (!$result) {
+            error_log("updateConversionFormula: select failed - " . $dbConn->error, 0);
+        }
+        else {
+            if ($result->num_rows != 1) {
+                error_log("updateConversionFormula: missing record or extra records id - $formulaId - " . $dbConn->error, 0);
+            }
+            else {
+                $row = $result->fetch_assoc();
+                $oldConversionFormula = [];
+                $oldConversionFormula['formula'] = $row['formula'];
+                $oldConversionFormula['description'] = $row['description'];
+                $table = "conversion_formula";
+                $fieldNames = ["formula", "description"];
+                $destFieldNames = [];
+                $types = "ss";
+                updateFields($table, $formulaId, $conversionFormula, $oldConversionFormula, $fieldNames, $destFieldNames, $types);
             }
         }
     }
