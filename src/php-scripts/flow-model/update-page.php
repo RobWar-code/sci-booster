@@ -252,8 +252,11 @@
      * author name accordingly.
      */
     function checkAndUpdateReferenceAuthor($reference, $oldReferences){
+        global $dbConn;
+
         $author = $reference['author']['author'];
-        $externalAuthorId = $reference['author']['id'];
+
+        $externalAuthorId = isset($reference['author']['id']) ? $reference['author']['id'] : null;
         // Find the old author
         $found = false;
         $index = 0;
@@ -271,6 +274,16 @@
                 // Update the author spelling
                 updateExternalAuthor($author, $oldAuthor, $externalAuthorId);
             }            
+        }
+        else {
+            $result = findExternalAuthor($author, $externalAuthorId);
+            if ($result && $result->num_rows == 1) {
+                $row = $result->fetch_assoc();
+                $externalAuthorId = $row['id'];
+            }
+            else if ($result) {
+                $externalAuthorId = addExternalAuthor($author);
+            }
         }
         return $externalAuthorId;
     }
