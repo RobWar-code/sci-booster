@@ -12,12 +12,12 @@ function deletePage($flowModelId, $hierarchicalPageId, $pageId) {
         $sql = "SELECT id FROM page WHERE flow_model_id = ? AND hierarchical_id = ?";
         $stmt = $dbConn->prepare($sql);
         if ($stmt === FALSE) {
-            error_log("deletePage: problem with sql " . $dbConn->error, 0);
+            error_log("deletePage: problem with sql {$dbConn->error}", 0);
         }
         else {
             $stmt->bind_param("is", $flowModelId, $hierarchicalPageId);
             if (!$stmt->execute()) {
-                error_log("deletePage: failed to select page by flowModelId, hierarchicalId: " . $dbConn->error, 0);
+                error_log("deletePage: failed to select page by flowModelId, hierarchicalId: {$dbConn->error}", 0);
             }
             else {
                 $stmt->store_result();
@@ -36,7 +36,7 @@ function deletePage($flowModelId, $hierarchicalPageId, $pageId) {
         $sql = "SELECT flow_model_id, hierarchical_id FROM page WHERE page_id = $pageId";
         $result = $dbConn->query($sql);
         if (!$result) {
-            error_log("deletePage: Could not read database page" . $dbConn->error, 0);
+            error_log("deletePage: Could not read database page {$dbConn->error}", 0);
         }
         else {
             if ($result->num_rows != 1) {
@@ -65,7 +65,7 @@ function deleteUserAuthorPageLinks($pageId) {
     $sql = "DELETE FROM page_user_link WHERE pageId = $pageId";
     $result = $dbConn->query($sql);
     if (!$result) {
-        error_log("deleteUserAuthorLink: failed to delete user authors for page $pageId - " . $dbConn->error, 0);
+        error_log("deleteUserAuthorLink: failed to delete user authors for page $pageId - {$dbConn->error}", 0);
     }
 }
 
@@ -75,12 +75,12 @@ function deleteUserPageLink($pageId, $userId) {
     $sql = "DELETE FROM page_user_link WHERE page_id = ? AND user_id = ?";
     $stmt = $dbConn->prepare($sql);
     if ($stmt === FALSE) {
-        error_log("deleteUserPageLink: Problem with sql - " . $dbConn->error, 0);
+        error_log("deleteUserPageLink: Problem with sql - {$dbConn->error}", 0);
     }
     else {
         $stmt->bind_param("ii", $pageId, $userId);
         if (!$stmt->execute()) {
-            error_log("deleteUserPageLink: problem delete user/page link - " . $dbConn->error, 0);
+            error_log("deleteUserPageLink: problem delete user/page link - {$dbConn->error}", 0);
         }
     }
 }
@@ -91,7 +91,7 @@ function deleteExternalAuthorPageLinks($pageId) {
     $sql = "DELETE FROM external_author_page_link WHERE page_id = $pageId";
     $result = $dbConn->query($sql);
     if (!$result) {
-        error_log("deleteExternalAuthorPageLinks: deletion failed for page $pageId - " . $dbConn->error, 0);
+        error_log("deleteExternalAuthorPageLinks: deletion failed for page $pageId - {$dbConn->error}", 0);
     }
 }
 
@@ -107,18 +107,18 @@ function deleteAuthorPageLink($author, $pageId) {
     $sql = "SELECT id FROM external_author WHERE first_name = ? AND last_name = ?";
     $stmt = $dbConn->prepare($sql);
     if ($stmt === FALSE) {
-        error_log("deleteAuthorPageLink: sql error select " . $dbConn->error, 0);
+        error_log("deleteAuthorPageLink: sql error select {$dbConn->error}", 0);
     }
     else {
         $stmt->bind_param("ss", $firstName, $lastName);
         if (!$stmt->execute()){
-            error_log("deleteAuthorPageLink: select failed - " . $dbConn->error, 0);
+            error_log("deleteAuthorPageLink: select failed - {$dbConn->error}", 0);
         }
         else {
             $stmt->store_result();
             $stmt->bind_result($externalAuthorId);
             if ($stmt->num_rows === 0) {
-                error_log("deleteAuthorPageLink: could not find old author " . $author . " " . $dbConn->error, 0);
+                error_log("deleteAuthorPageLink: could not find old author - $author  - {$dbConn->error}", 0);
             }
             else {
                 $gotAuthorId = true;
@@ -130,12 +130,12 @@ function deleteAuthorPageLink($author, $pageId) {
         $sql = "DELETE FROM external_author_page_link WHERE page_id = ? AND external_author_id = ?";
         $stmt = $dbConn->prepare($sql);
         if ($stmt === FALSE) {
-            error_log("deleteAuthorPageLink: delete author page link, sql failed - " . $dbConn->error, 0);
+            error_log("deleteAuthorPageLink: delete author page link, sql failed - {$dbConn->error}", 0);
         }
         else {
             $stmt->bind_param("ii", $pageId, $externalAuthorId);
             if (!$stmt->execute()) {
-                error_log("deleteAuthorPageLink: delete failed - " . $dbConn->error, 0);
+                error_log("deleteAuthorPageLink: delete failed - {$dbConn->error}", 0);
             }
         }
     }
@@ -147,7 +147,7 @@ function deletePageReferences($pageId) {
     $sql = "SELECT id FROM reference WHERE page_id = $pageId";
     $result = $dbConn->query($sql);
     if (!$result) {
-        error_log("deletePageReferences: Unable to perform deletions" . $dbConn->error, 0); 
+        error_log("deletePageReferences: Unable to perform deletions - {$dbConn->error}", 0); 
     }
     else {
         while ($row = $result->fetch_assoc()) {
@@ -163,7 +163,7 @@ function deleteReference($referenceId) {
     $sql = "DELETE FROM reference WHERE id = $referenceId";
     $result = $dbConn->query($sql);
     if (!$result) {
-        error_log("deleteReference: Could not delete reference - " . $dbConn->error, 0);
+        error_log("deleteReference: Could not delete reference - {$dbConn->error}", 0);
     }
 }
 
@@ -174,11 +174,11 @@ function deletePageNodes($pageId, $flowModelId, $hierarchicalId) {
     $sql = "SELECT id, node_num, has_child_page FROM node WHERE page_id = $pageId";
     $result = $dbConn->query($sql);
     if (!$result) {
-        error_log("deleteNodes: unable to fetch from node table" . $dbConn->error);
+        error_log("deleteNodes: unable to fetch from node table - {$dbConn->error}", 0);
     }
     else {
         if ($result->num_rows === 0) {
-            error_log("deleteNodes: page of $pageId has no nodes");
+            error_log("deleteNodes: page of $pageId has no nodes", 0);
         }
         else {
             $gotNodes = true;
@@ -207,11 +207,11 @@ function deleteNodeAndChildPages($nodeId, $flowModelId, $pageHierarchicalId) {
     $sql = "SELECT has_child_page, node_num FROM node WHERE id = $nodeId";
     $result = $dbConn->query($sql);
     if (!$result) {
-        error_log("deleteNodeAndChildPages: Unable to select node $nodeId - " . $dbConn->error, 0);
+        error_log("deleteNodeAndChildPages: Unable to select node $nodeId - {$dbConn->error}", 0);
     }
     else {
         if ($result->num_rows != 1) {
-            error_log("deleteNodeAndChildPages: Single item not found for node Id $nodeId - ", 0);
+            error_log("deleteNodeAndChildPages: Single item not found for node Id $nodeId", 0);
         }
         else {
             $row = $result->fetch_assoc();
@@ -236,7 +236,7 @@ function deleteNode($nodeId) {
     $sql = "DELETE FROM node WHERE id = $nodeId";
     $result = $dbConn->query($sql);
     if (!$result) {
-        error_log ("deleteNode: failed to delete record - $nodeId - " . $dbConn->error);
+        error_log ("deleteNode: failed to delete record - $nodeId - {$dbConn->error}", 0);
     }
 }
 
@@ -246,7 +246,7 @@ function deletePageFlows($pageId) {
     $sql = "SELECT id FROM flow WHERE page_id = $pageId";
     $result = $dbConn->query($sql);
     if (!$result) {
-        error_log("deletePageFlows: Could not perform select" . $dbConn->error, 0);
+        error_log("deletePageFlows: Could not perform select - {$dbConn->error}", 0);
     }
     else {
         while ($row = $result->fetch_assoc()) {
@@ -263,7 +263,7 @@ function deleteFlow($flowId) {
     $sql = "DELETE FROM flow WHERE id = $flowId";
     $result = $dbConn->query($sql);
     if (!$result) {
-        error_log("deleteFlow: Could not delete flow - $flowId - " . $dbConn->error, 0);
+        error_log("deleteFlow: Could not delete flow - $flowId - {$dbConn->error}", 0);
     }
 }
 
@@ -273,7 +273,7 @@ function deleteConversionFormulas($flowId) {
     $sql = "DELETE FROM conversion_formula WHERE flow_id = $flowId";
     $result = $dbConn->query($sql);
     if (!$result) {
-        error_log("deleteConversionFormulas: problem with deletion" . $dbConn->error, 0);
+        error_log("deleteConversionFormulas: problem with deletion - {$dbConn->error}", 0);
     }
 }
 
@@ -283,6 +283,6 @@ function deleteConversionFormula($formulaId) {
     $sql = "DELETE FROM conversion_formula WHERE id = $formulaId";
     $result = $dbConn->query($sql);
     if (!$result) {
-        error_log("deleteConversionFormula: problem with deletion: " . $dbConn->error, 0);
+        error_log("deleteConversionFormula: problem with deletion: {$dbConn->error}", 0);
     }
 }

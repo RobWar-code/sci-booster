@@ -69,7 +69,7 @@
 				"drawing_group_x": 120,
 				"drawing_group_y": 120,
 				"definition": "An example flow",
-				"keywords": "fuels", 
+				"keywords": "fuel", 
 				"hyperlink": "https://narayana-art.co.uk",
 				"arrow_points": [{"x": -12, "y":10}, {"x": 0, "y": 20}, {"x": 12, "y": 10}],
 				"points": [{"x": 0, "y": 0}, {"x": 0, "y": 60}],

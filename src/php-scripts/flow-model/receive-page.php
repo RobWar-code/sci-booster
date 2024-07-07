@@ -11,19 +11,7 @@ include_once __DIR__ . "/../test/clear-tables.php";
 
 // $inputData = json_decode(file_get_contents('php://input'), true);
 
-// Debug Script
-$inputData = json_decode(file_get_contents(__DIR__ . '/../test/test-model1.json'), true);
-clearTables();
-
-handlePageData($inputData);
-
-// Debug Script
-$inputData = json_decode(file_get_contents(__DIR__ . "/../test/test-model2.json"), true);
-echo "<br>";
-echo "Update record: " . $inputData['flow_model_title'] . "<br>";
-if ($inputData) {
-    handlePageData($inputData);
-}
+// handlePageData($inputData);
 
 function handlePageData($inputData) {
     // Check whether this is a model that does not already exist

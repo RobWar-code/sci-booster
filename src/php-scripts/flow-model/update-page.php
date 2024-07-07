@@ -129,7 +129,7 @@
                 $sql = "SELECT id FROM user WHERE username = '$username'";
                 $result = $dbConn->query($sql);
                 if (!$result) {
-                    error_log("updateUserAuthors: could not get id for user - " . $username . " " . $dbConn->error, 0);
+                    error_log("updateUserAuthors: could not get id for user - $username - {$dbConn->error}", 0);
                 }
                 else {
                     $row = $result->fetch_assoc();
@@ -146,7 +146,7 @@
                 $sql = "SELECT id FROM user WHERE username = '$username'";
                 $result = $dbConn->query($sql);
                 if (!$result) {
-                    error_log("updateUserAuthors: could not get id for old user - " . $username . " " . $dbConn->error, 0);
+                    error_log("updateUserAuthors: could not get id for old user - $username - {$dbConn->error}", 0);
                 }
                 else {
                     $row = $result->fetch_assoc();
@@ -165,10 +165,10 @@
             // The author given is not a user, so update the author name
             $result = findExternalAuthor($oldAuthor, $authorId);
             if ($result === FALSE) {
-                error_log("updateAuthors: Problem doing external author search - " . $oldAuthor, 0);
+                error_log("updateAuthors: Problem doing external author search - $oldAuthor", 0);
             }
             elseif ($result->num_rows > 1) {
-                error_log("updateAuthors: Duplicate matches for name - " . $oldAuthor, 0);
+                error_log("updateAuthors: Duplicate matches for name - $oldAuthor", 0);
             }
             elseif ($row = $result->fetch_assoc()) {
                 $authorId = $row['id'];
@@ -181,13 +181,13 @@
             $sql = "UPDATE external_author SET first_name = ?, last_name = ? WHERE id = ?";
             $stmt = $dbConn->prepare($sql);
             if ($stmt === FALSE) {
-                error_log("updateExternalAuthor: could not update author preparing sql" . $dbConn->error, 0);
+                error_log("updateExternalAuthor: could not update author preparing sql - {$dbConn->error}", 0);
             }
             else {
                 $stmt->bind_param("ssi", $firstName, $lastName, $authorId);
                 if (!$stmt->execute()) {
-                    error_log("updateExternalAuthor: could not update external author record - " . 
-                        $lastName . " " . $dbConn->error, 0);
+                    error_log("updateExternalAuthor: could not update external author record - $lastName - {$dbConn->error}", 
+                        0);
                 }
             }
         }
@@ -391,18 +391,8 @@
             if ($oldFlowData != null) {
                 // Match found so do update
                 // Check for void source/destination
-                if ($flow['source_node_num'] === "") {
-                    $flow['source_void'] = 1;
-                }
-                else {
-                    $flow['source_void'] = 0;
-                }
-                if ($flow['destination_node_num'] === "") {
-                    $flow['destination_void'] = 1;
-                }
-                else {
-                    $flow['destination_void'] = 0;
-                }
+                $flow['source_void'] = $flow['source_node_num'] === "" ? 1 : 0;
+                $flow['destination_void'] = $flow['destination_node_num'] === "" ? 1 : 0;
 
                 $oldFlow = $oldFlowData['oldFlow'];
                 $oldMatch[$oldFlowData['index']] = true;
@@ -420,6 +410,13 @@
                 replaceFlowPoints($id, $flow['points']);
                 // Update the conversion formulas
                 updateConversionFormulas($id, $flow['conversion_formulas'], $oldFlow['conversion_formulas']);
+            }
+        }
+        // Delete unmatched old flows
+        for ($i = 0; $i < count($oldMatch); $i++) {
+            if (!$oldMatch[$i]) {
+                $oldFlowId = $oldFlows[$i]['id'];
+                deleteFlow($oldFlowId);
             }
         }
     }
@@ -520,7 +517,7 @@
         }
         else {
             if ($result->num_rows != 1) {
-                error_log("updateConversionFormula: missing record or extra records id - $formulaId - " . $dbConn->error, 0);
+                error_log("updateConversionFormula: missing record or extra records id - $formulaId - {$dbConn->error}", 0);
             }
             else {
                 $row = $result->fetch_assoc();
@@ -541,7 +538,7 @@
         $sql = "DELETE FROM flow_arrow_point WHERE flow_id = $flowId";
         $result = $dbConn->query($sql);
         if (!$result) {
-            error_log("replaceFlowArrowPoints: delete query failed - " . $dbConn->error, 0);
+            error_log("replaceFlowArrowPoints: delete query failed - {$dbConn->error}", 0);
         }
         else {
             // Add the new points
@@ -554,7 +551,7 @@
         $sql = "DELETE FROM flow_point WHERE flow_id = $flowId";
         $result = $dbConn->query($sql);
         if (!$result) {
-            error_log('replaceFlowPoints: delete query failed - ' . $dbConn->error, 0);
+            error_log("replaceFlowPoints: delete query failed - {$dbConn->error}", 0);
         }
         else {
             // Add the new points
@@ -623,12 +620,12 @@
             $sql = "UPDATE $table SET " . $changeFields . " WHERE id = $id";
             $stmt = $dbConn->prepare($sql);
             if ($stmt === FALSE) {
-                error_log("updateFields: table - $table - could not prepare: " . $dbConn->error, 0);
+                error_log("updateFields: table - $table - could not prepare: {$dbConn->error}", 0);
             }
             else {
                 $stmt->bind_param($bindParam, ...$fieldValues);
                 if (!$stmt->execute()) {
-                    error_log("updateFields: could not update record: " . $dbConn->error, 0);
+                    error_log("updateFields: could not update record: {$dbConn->error}", 0);
                 }
             }
         }

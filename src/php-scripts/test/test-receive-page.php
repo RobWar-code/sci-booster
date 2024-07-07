@@ -9,7 +9,22 @@
     <h1>Test Model Load/Update</h1>
     <div>
 <?php
-    include_once __DIR__ . '/../flow-model/receive-page.php';    
+    include_once __DIR__ . '/../flow-model/receive-page.php';
+    
+    // Debug Script
+    $inputData = json_decode(file_get_contents(__DIR__ . '/../test/test-model1.json'), true);
+    clearTables();
+
+    handlePageData($inputData);
+
+    // Debug Script
+    $inputData = json_decode(file_get_contents(__DIR__ . "/../test/test-model2.json"), true);
+    echo "<br>";
+    echo "Update record: " . $inputData['flow_model_title'] . "<br>";
+    if ($inputData) {
+        handlePageData($inputData);
+    }
+
 ?>
     </div>
 </body>
