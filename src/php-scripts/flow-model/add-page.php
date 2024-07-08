@@ -4,7 +4,47 @@ include_once __DIR__ . '/misc-funcs.php';
 
 function addPage($flowModelId, $pageData) {
     $pageId = addPageDetails($flowModelId, $pageData);
+
+    // If the hierarchical id is greater than 01, flag the parent page
+    $hierarchicalId = $pageData['page']['hierarchical_id'];
+    if ($hierarchicalId !== "01") {
+        flagParentPage($flowModelId, $hierarchicalId, true);
+    }
     return $pageId;
+}
+
+function flagParentPage($flowModelId, $hierarchicalId, $flag) {
+    global $dbConn;
+
+    $sl = strlen($hierarchicalId);
+    $parentHierarchicalId = substr($hierarchicalId, 0, $sl - 2);
+    $nodeNum = substr($hierarchicalId, -2);
+    $parentPageId = null;
+
+    // Get the parent page id
+    $sql = "SELECT id FROM page WHERE flow_model_id = $flowModelId AND hierarchical_id = $parentHierarchicalId";
+    $result = $dbConn->query($sql);
+    if (!$result) {
+        error_log("flagParentPage: Search for parent failed - $hierarchicalId - {$dbConn->error}", 0);
+    }
+    else {
+        if ($result->num_rows === 1) {
+            $row = $result->fetch_assoc();
+            $parentPageId = $row['id'];
+        }
+        else {
+            error_log("flagParentPage: Multiple or no match for parent page from $hierarchicalId");
+        }
+    }
+    if ($parentPageId != null) {
+        // Update the node
+        $flagVal = $flag ? 1 : 0;
+        $sql = "UPDATE node SET has_child_page = $flagVal WHERE page_id = $parentPageId AND node_num = $nodeNum";
+        $result = $dbConn->query($sql);
+        if (!$result) {
+            error_log("flagParentPage: Could not update parent of $hierarchicalId - {$dbConn->error}");
+        }
+    }
 }
 
 function addPageDetails($flowModelId, $pageData) {

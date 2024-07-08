@@ -404,10 +404,12 @@
             if ($oldFlowData != null) {
                 // Match found so do update
                 // Check for void source/destination
+                $oldFlow = $oldFlowData['oldFlow'];
                 $flow['source_void'] = $flow['source_node_num'] === "" ? 1 : 0;
                 $flow['destination_void'] = $flow['destination_node_num'] === "" ? 1 : 0;
+                $oldFlow['source_void'] = $oldFlow['source_node_num'] === "" ? 1 : 0;
+                $oldFlow['destination_void'] = $oldFlow['destination_node_num'] === "" ? 1 : 0;
 
-                $oldFlow = $oldFlowData['oldFlow'];
                 $oldMatch[$oldFlowData['index']] = true;
                 $table = "flow";
                 $id = $oldFlow['id'];

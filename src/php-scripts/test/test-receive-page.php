@@ -17,13 +17,23 @@
 
     handlePageData($inputData);
 
+    // Add child record to check-out child page deletion
+    $inputData = json_decode(file_get_contents(__DIR__ . "/../test/test-model3.json"), true);
+    echo "<br>";
+    echo "Child record: " . $inputData['flow_model_title'] . "<br>";
+    if ($inputData) {
+        handlePageData($inputData);
+    }
+
     // Debug Script
+    // Update Record
     $inputData = json_decode(file_get_contents(__DIR__ . "/../test/test-model2.json"), true);
     echo "<br>";
     echo "Update record: " . $inputData['flow_model_title'] . "<br>";
     if ($inputData) {
         handlePageData($inputData);
     }
+
 
 ?>
     </div>
