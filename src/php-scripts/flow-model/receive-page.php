@@ -3,6 +3,7 @@ include_once __DIR__  . "/../db-connect.php";
 include_once __DIR__ . "/add-page.php";
 include_once __DIR__ . "/update-page.php";
 include_once __DIR__ . "/extract-page.php";
+include_once __DIR__ . "/search-db.php";
 // Debug Script
 include_once __DIR__ . "/../test/clear-tables.php";
 
@@ -15,8 +16,15 @@ include_once __DIR__ . "/../test/clear-tables.php";
 
 function handlePageData($inputData) {
     // Check whether this is a model that does not already exist
-    if (!$inputData['update'] && $inputData['flow_model_id'] === NULL) {
-        $flowModelId = addFlowModel($inputData['page']['title']);
+    if (!$inputData['update']) {
+        // Search for the flow model title
+        $flowModelId = findFlowModel($inputData['flow_model_title']);
+        // Debug
+        echo "handlePageData: flowModelId - $flowModelId <br>";
+
+        if ($flowModelId === null) {
+            $flowModelId = addFlowModel($inputData['flow_model_title']);
+        }
 
         if ($flowModelId != NULL) {
             $pageId = addPage($flowModelId, $inputData);

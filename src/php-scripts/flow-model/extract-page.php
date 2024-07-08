@@ -5,9 +5,25 @@
         global $dbConn;
 
         $pageData['flow_model_id'] = $flowModelId;
+        $modelTitle = "";
+        // Get model title
+        $sql = "SELECT title FROM flow_model WHERE id = $flowModelId";
+        $result = $dbConn->query($sql);
+        if (!$result) {
+            error_log("extractPage: problem extracting flow model $flowModelId {$dbConn->error}", 0);
+        }
+        else {
+            if ($result->num_rows != 1) {
+                error_log("extractPage: mismatch on model num_rows - {$result->num_rows} ", 0);
+            }
+            else {
+                $row = $result->fetch_assoc();
+                $modelTitle = $row['title'];
+            }
+        }
 
         $page = fetchPage($pageId);
-        $pageData['flow_model_title'] = $page['title'];
+        $pageData['flow_model_title'] = $modelTitle;
         $userAuthors = fetchUserAuthors($pageId);
         $page['user_authors'] = $userAuthors;
         $externalAuthors = fetchExternalAuthors($pageId);

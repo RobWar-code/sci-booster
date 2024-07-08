@@ -7,7 +7,7 @@ function addPage($flowModelId, $pageData) {
 
     // If the hierarchical id is greater than 01, flag the parent page
     $hierarchicalId = $pageData['page']['hierarchical_id'];
-    if ($hierarchicalId !== "01") {
+    if ($hierarchicalId != "01") {
         flagParentPage($flowModelId, $hierarchicalId, true);
     }
     return $pageId;
@@ -33,7 +33,7 @@ function flagParentPage($flowModelId, $hierarchicalId, $flag) {
             $parentPageId = $row['id'];
         }
         else {
-            error_log("flagParentPage: Multiple or no match for parent page from $hierarchicalId");
+            error_log("flagParentPage: Multiple ({$result->num_rows}) or no match for parent page from $hierarchicalId");
         }
     }
     if ($parentPageId != null) {

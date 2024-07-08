@@ -34,6 +34,22 @@
         handlePageData($inputData);
     }
 
+    // Check that the child record has been deleted
+    echo "<br>";
+    $hierarchicalId = "0102";
+    $sql = "SELECT * FROM page WHERE hierarchical_id = $hierarchicalId";
+    $result = $dbConn->query($sql);
+    if (!$result) {
+        echo "Problem executing request for page <br>";
+    }
+    else {
+        if ($result->num_rows === 0) {
+            echo "Page 0102 deleted successfully<br>";
+        }
+        else {
+            echo "Page 0102 NOT deleted<br>";
+        }
+    }
 
 ?>
     </div>
