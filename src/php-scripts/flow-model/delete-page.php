@@ -8,7 +8,7 @@ function deletePage($flowModelId, $hierarchicalPageId, $pageId) {
 
     // Get PageId etc. as necessary
     $gotPage = false;
-    if ($pageId = null) {
+    if ($pageId === null) {
         $sql = "SELECT id FROM page WHERE flow_model_id = ? AND hierarchical_id = ?";
         $stmt = $dbConn->prepare($sql);
         if ($stmt === FALSE) {
@@ -33,7 +33,7 @@ function deletePage($flowModelId, $hierarchicalPageId, $pageId) {
         }
     }
     else {
-        $sql = "SELECT flow_model_id, hierarchical_id FROM page WHERE page_id = $pageId";
+        $sql = "SELECT flow_model_id, hierarchical_id FROM page WHERE id = $pageId";
         $result = $dbConn->query($sql);
         if (!$result) {
             error_log("deletePage: Could not read database page {$dbConn->error}", 0);
@@ -53,16 +53,28 @@ function deletePage($flowModelId, $hierarchicalPageId, $pageId) {
     if ($gotPage) {
         // Delete nodes and child pages
         deletePageNodes($pageId, $flowModelId, $hierarchicalPageId);
+        deletePageFlows($pageId);
         deleteUserAuthorPageLinks($pageId);
         deleteExternalAuthorPageLinks($pageId);
         deletePageReferences($pageId);
+        deletePageEntry($pageId);
     } 
+}
+
+function deletePageEntry($pageId){
+    global $dbConn;
+
+    $sql = "DELETE FROM page WHERE id = $pageId";
+    $result = $dbConn->query($sql);
+    if (!$result) {
+        error_log("deletePageEntry: Problem with sql, pageId - $pageId - {$dbConn->error}", 0);
+    }
 }
 
 function deleteUserAuthorPageLinks($pageId) {
     global $dbConn;
 
-    $sql = "DELETE FROM page_user_link WHERE pageId = $pageId";
+    $sql = "DELETE FROM page_user_link WHERE page_id = $pageId";
     $result = $dbConn->query($sql);
     if (!$result) {
         error_log("deleteUserAuthorLink: failed to delete user authors for page $pageId - {$dbConn->error}", 0);
@@ -221,7 +233,7 @@ function deleteNodeAndChildPages($nodeId, $flowModelId, $pageHierarchicalId) {
         }
     }
     if ($foundNode) {
-        if ($hasChildPage === 1) {
+        if ($hasChildPage == 1) {
             $pageId = null;
             $deletionPageHierarchicalId = $pageHierarchicalId . $nodeNum;
             deletePage($flowModelId, $deletionPageHierarchicalId, $pageId);
@@ -251,11 +263,12 @@ function deletePageFlows($pageId) {
     else {
         while ($row = $result->fetch_assoc()) {
             $flowId = $row['id'];
+            deleteFlowArrowPoints($flowId);
+            deleteFlowPoints($flowId);
             deleteConversionFormulas($flowId);
             deleteFlow($flowId);
         }
     }
-
 }
 
 function deleteFlow($flowId) {
@@ -264,6 +277,26 @@ function deleteFlow($flowId) {
     $result = $dbConn->query($sql);
     if (!$result) {
         error_log("deleteFlow: Could not delete flow - $flowId - {$dbConn->error}", 0);
+    }
+}
+
+function deleteFlowArrowPoints($flowId) {
+    global $dbConn;
+
+    $sql = "DELETE FROM flow_arrow_point WHERE flow_id = $flowId";
+    $result = $dbConn->query($sql);
+    if (!$result) {
+        error_log("deleteFlowArrowPoints: delete query failed - {$dbConn->error}", 0);
+    }
+}
+
+function deleteFlowPoints($flowId) {
+    global $dbConn;
+
+    $sql = "DELETE FROM flow_point WHERE flow_id = $flowId";
+    $result = $dbConn->query($sql);
+    if (!$result) {
+        error_log("replaceFlowPoints: delete query failed - {$dbConn->error}", 0);
     }
 }
 

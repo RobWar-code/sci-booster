@@ -10,6 +10,8 @@
     <div>
 <?php
     include_once __DIR__ . '/../flow-model/receive-page.php';
+    include_once __DIR__ . '/dump-tables.php';
+    include_once __DIR__ . "/../test/clear-tables.php";
     
     // Debug Script
     $inputData = json_decode(file_get_contents(__DIR__ . '/../test/test-model1.json'), true);
@@ -50,6 +52,9 @@
             echo "Page 0102 NOT deleted<br>";
         }
     }
+
+    echo "<br>Dump Of Tables<br>";
+    dumpTables();
 
 ?>
     </div>

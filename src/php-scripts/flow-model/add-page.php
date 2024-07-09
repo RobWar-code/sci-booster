@@ -63,7 +63,7 @@ function addPageDetails($flowModelId, $pageData) {
         $sql = "INSERT INTO page (flow_model_id, hierarchical_id, title, keywords, description) VALUES (?, ?, ?, ?, ?)";
         $stmt = $dbConn->prepare($sql);
         if ($stmt === FALSE) {
-            error_log("addPageDetails: problem with prepare" . $dbConn->error, 0);
+            error_log("addPageDetails: problem with prepare {$dbConn->error}", 0);
         }
         $stmt->bind_param('issss', $flowModelId, $pageData['page']['hierarchical_id'], 
             $title, $pageData['page']['keywords'], $pageData['page']['description']);
@@ -107,12 +107,12 @@ function addPageUserAuthor($userAuthor, $pageId) {
     $sql = "SELECT id FROM user WHERE username = ?";
     $stmt = $dbConn->prepare($sql);
     if ($stmt === FALSE) {
-        error_log("addPageUserAuthor: selection sql incorrect - " . $dbConn->error, 0);
+        error_log("addPageUserAuthor: selection sql incorrect - {$dbConn->error}", 0);
     }
     else {
         $stmt->bind_param("s", $username);
         if (!$stmt->execute()){
-            error_log("addPageUserAuthor: problem searching for $username - " . $dbConn->error, 0);
+            error_log("addPageUserAuthor: problem searching for $username - {$dbConn->error}", 0);
         }
         else {
             $stmt->store_result();
@@ -124,12 +124,12 @@ function addPageUserAuthor($userAuthor, $pageId) {
                     $sql = "INSERT INTO page_user_link (user_id, page_id) VALUES (?, ?)";
                     $stmt = $dbConn->prepare($sql);
                     if ($stmt === FALSE) {
-                        error_log("addPageUserAuthor: problem with insert sql - " . $dbConn->error, 0);
+                        error_log("addPageUserAuthor: problem with insert sql - {$dbConn->error}", 0);
                     }
                     else {
                         $stmt->bind_param("ii", $userId, $pageId);
                         if (!$stmt->execute()) {
-                            error_log("addPageUserAuthor: problem inserting user_page_link - " . $dbConn->error, 0);
+                            error_log("addPageUserAuthor: problem inserting user_page_link - {$dbConn->error}", 0);
                         }
                     }
                 }
@@ -151,8 +151,6 @@ function addPageExternalAuthor($externalAuthor, $pageId) {
     $gotUser = false;
     // Extract the first (names) and last name
     $author = $externalAuthor['author']; 
-    // Debug
-    echo "<br>Author: $author<br>";
     $nameParts = extractFirstAndLastNames($author);
     $firstName = $nameParts['firstName'];
     $lastName = $nameParts['lastName'];
@@ -176,12 +174,12 @@ function addPageExternalAuthor($externalAuthor, $pageId) {
         $sql = "INSERT INTO external_author_page_link (page_id, external_author_id) VALUES (?, ?)";
         $stmt = $dbConn->prepare($sql);
         if ($stmt === FALSE) {
-            error_log("addPageExternalAuthor: sql to insert author link failed" . $dbConn->error, 0);
+            error_log("addPageExternalAuthor: sql to insert author link failed {$dbConn->error}", 0);
         }
         else {
             $stmt->bind_param("ii", $pageId, $authorId);
             if ($stmt->execute() === FALSE) {
-                error_log("addPageExternalAuthor: failed to insert page author link" . $dbConn->error, 0);
+                error_log("addPageExternalAuthor: failed to insert page author link {$dbConn->error}", 0);
             }
         }
     }
@@ -193,8 +191,6 @@ function addExternalAuthor($author) {
     $authorId = null;
     $insertedAuthor = false;
 
-    // Debug
-    echo "<br>addExternalAuthor: author - $author<br>";
     $nameParts = extractFirstAndLastNames($author);
     $firstName = $nameParts['firstName'];
     $lastName = $nameParts['lastName'];
@@ -202,7 +198,7 @@ function addExternalAuthor($author) {
     $sql = "INSERT INTO external_author (first_name, last_name) VALUES (?, ?)";
     $stmt = $dbConn->prepare($sql);
     if ($stmt === FALSE) {
-        error_log("addExternalAuthor: error attempting to add author (sql)" . $dbConn->error, 0);
+        error_log("addExternalAuthor: error attempting to add author (sql) {$dbConn->error}", 0);
     }
     else {
         $stmt->bind_param("ss", $firstName, $lastName);
@@ -210,7 +206,7 @@ function addExternalAuthor($author) {
             $insertedAuthor = true;
         }
         else {
-            error_log("addExternalAuthor: problem inserting author" . $dbConn->error, 0);
+            error_log("addExternalAuthor: problem inserting author {$dbConn->error}", 0);
         }
     }
     if ($insertedAuthor) {
@@ -230,12 +226,12 @@ function addUserPageLink($pageId, $userId) {
     $sql = "INSERT INTO page_user_link (page_id, user_id) VALUES (?, ?)";
     $stmt = $dbConn->prepare($sql);
     if ($stmt === FALSE) {
-        error_log("addUserPageLink: sql to insert user link failed" . $dbConn->error, 0);
+        error_log("addUserPageLink: sql to insert user link failed {$dbConn->error}", 0);
     }
     else {
         $stmt->bind_param("ii", $pageId, $userId);
         if ($stmt->execute() === FALSE) {
-            error_log("addUserPageLink: failed to insert page user link" . $dbConn->error, 0);
+            error_log("addUserPageLink: failed to insert page user link {$dbConn->error}", 0);
         }
     }
 }
@@ -255,8 +251,6 @@ function addPageReference($pageId, $reference) {
     $gotAuthor = false;
 
     // Process the author name
-    // Debug
-    echo "<br>addPageReference: $author<br>";
     $nameParts = extractFirstAndLastNames($author);
     $firstName = $nameParts['firstName'];
     $lastName = $nameParts['lastName'];
@@ -274,7 +268,7 @@ function addPageReference($pageId, $reference) {
         $sql = "INSERT INTO external_author (first_name, last_name) VALUES (?, ?)";
         $stmt = $dbConn->prepare($sql);
         if ($stmt === FALSE) {
-            error_log("addPageReferences: error attempting to add author" . $dbConn->error, 0);
+            error_log("addPageReferences: error attempting to add author {$dbConn->error}", 0);
         }
         else {
             $stmt->bind_param("ss", $firstName, $lastName);
@@ -282,7 +276,7 @@ function addPageReference($pageId, $reference) {
                 $insertedAuthor = true;
             }
             else {
-                error_log("addPageReferences: problem inserting author" . $dbConn->error, 0);
+                error_log("addPageReferences: problem inserting author {$dbConn->error}", 0);
             }
         }
         if ($insertedAuthor) {
@@ -301,12 +295,12 @@ function addPageReference($pageId, $reference) {
         $sql = "INSERT INTO reference (page_id, source, title, external_author_id) VALUES (?, ?, ?, ?)";
         $stmt = $dbConn->prepare($sql);
         if ($stmt === FALSE) {
-            error_log("addPageReferences: insert, sql failed to prepare" . $dbConn->error, 0);
+            error_log("addPageReferences: insert, sql failed to prepare {$dbConn->error}", 0);
         }
         else {
             $stmt->bind_param("issi", $pageId, $source, $title, $authorId);
             if (!$stmt->execute()) {
-                error_log("addPageReferences: insert reference failed" . $dbConn->error, 0);
+                error_log("addPageReferences: insert reference failed {$dbConn->error}", 0);
             }
         }
     }
@@ -324,24 +318,19 @@ function addNode($node, $pageId) {
     global $dbConn;
 
     $insertedNode = false;
-    if ($node['has_child_page']) {
-        $hasChildPage = 1;
-    }
-    else {
-        $hasChildPage = 0;
-    }
+    $hasChildPage = $node['has_child_page'] ? 1 : 0;
     $sql = "INSERT INTO node (page_id, node_num, label, x_coord, y_coord, 
         type, definition, keywords, hyperlink, has_child_page) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $dbConn->prepare($sql);
     if ($stmt === FALSE) {
-        error_log("addNodes: problem with sql:" . $dbConn->error, 0);
+        error_log("addNodes: problem with sql: {$dbConn->error}", 0);
     }
     else {
         $stmt->bind_param("issiissssi", $pageId, $node['node_num'], $node['label'], $node['x'],
             $node['y'], $node['type'], $node['definition'], $node['keywords'],
             $node['hyperlink'], $hasChildPage);
         if (!$stmt->execute()) {
-            error_log("addNodes: failed to save node:" . $node['node_num'] . " " . $dbConn->error);
+            error_log("addNodes: failed to save node: {$node['node_num']} {$dbConn->error}", 0);
         }
         else {
             $insertedNode = true;
@@ -357,7 +346,7 @@ function addNode($node, $pageId) {
             $gotNodeId = true;
         }
         else {
-            error_log("addNodes: could not find inserted node: $nodeNum" . $dbConn->error);
+            error_log("addNodes: could not find inserted node: $nodeNum {$dbConn->error}", 0);
         }
     }
 }
@@ -384,7 +373,7 @@ function addFlows($pageId, $flows) {
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $dbConn->prepare($sql);
         if ($stmt === FALSE) {
-            error_log("addFlows: Failed to prepare flow sql:" . $dbConn->error, 0);
+            error_log("addFlows: Failed to prepare flow sql: {$dbConn->error}", 0);
         }
         else {
             $stmt->bind_param("issiiiiisssssii",
@@ -405,7 +394,7 @@ function addFlows($pageId, $flows) {
                 $destinationVoid
             );
             if (!$stmt->execute()) {
-                error_log("addFlows: flow not inserted" . $dbConn->error, 0);
+                error_log("addFlows: flow not inserted {$dbConn->error}", 0);
             }
             else {
                 $flowInserted = true;
@@ -421,7 +410,7 @@ function addFlows($pageId, $flows) {
                 $gotFlowId = true;
             }
             else {
-                error_log("addFlows: could not get flow id " . $dbConn->error, 0);
+                error_log("addFlows: could not get flow id {$dbConn->error}", 0);
             }
         }
         if ($gotFlowId) {
@@ -443,12 +432,12 @@ function addArrowPoints($flowId, $arrowPoints) {
         $sql = "INSERT INTO flow_arrow_point (flow_id, x, y) VALUES (?, ?, ?)";
         $stmt = $dbConn->prepare($sql);
         if ($stmt === FALSE) {
-            error_log("addArrowPoints: Problem preparing sql" . $dbConn->error, 0);
+            error_log("addArrowPoints: Problem preparing sql {$dbConn->error}", 0);
         }
         else {
             $stmt->bind_param("iii", $flowId, $point['x'], $point['y']);
             if (!$stmt->execute()) {
-                error_log("addArrowPoints: Problem inserting coords " . $dbConn->error, 0);
+                error_log("addArrowPoints: Problem inserting coords {$dbConn->error}", 0);
             }
         }
     }
@@ -461,12 +450,12 @@ function addFlowPoints($flowId, $flowPoints){
         $sql = "INSERT INTO flow_point (flow_id, x, y) VALUES (?, ?, ?)";
         $stmt = $dbConn->prepare($sql);
         if ($stmt === FALSE) {
-            error_log("addFlowPoints: Problem preparing sql" . $dbConn->error, 0);
+            error_log("addFlowPoints: Problem preparing sql {$dbConn->error}", 0);
         }
         else {
             $stmt->bind_param("iii", $flowId, $point['x'], $point['y']);
             if (!$stmt->execute()) {
-                error_log("addFlowPoints: Problem inserting coords " . $dbConn->error, 0);
+                error_log("addFlowPoints: Problem inserting coords {$dbConn->error}", 0);
             }
         }
     }
@@ -485,12 +474,12 @@ function addConversionFormula($flowId, $conversionFormula) {
     $sql = "INSERT INTO conversion_formula (flow_id, formula, description) VALUES (?, ?, ?)";
     $stmt = $dbConn->prepare($sql);
     if ($stmt === FALSE) {
-        error_log("addConversionFormula: problem with sql:" . $dbConn->error, 0);
+        error_log("addConversionFormula: problem with sql: {$dbConn->error}", 0);
     }
     else {
         $stmt->bind_param("iss", $flowId, $conversionFormula['formula'], $conversionFormula['description']);
         if (!$stmt->execute()) {
-            error_log("addConversionFormula: problem insert formula:" . $dbConn->error, 0);
+            error_log("addConversionFormula: problem insert formula: {$dbConn->error}", 0);
         }
     }
 

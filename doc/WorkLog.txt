@@ -6,18 +6,6 @@ Contents
 
 <h1>Work Due
 
-    Add the php update page save procedures
-
-        Do update save page analysis
-
-        * Do update page details
-        * Do update authors
-        * Do update references
-        Do update nodes
-            Do analysis of update node details
-            Prevent duplicate node labels in user interface
-        Do update flows
-
     Do the Page Details button operation
 
     Do Model Page Details edit option
@@ -35,6 +23,26 @@ Contents
     Update the README with user features changes
 
 <h1>Work Done
+
+    09/07/2024
+
+    * Add the php update page save procedures
+
+        * Do update save page analysis
+
+        * Do update page details
+        * Do update authors
+        * Do update references
+        * Do update nodes
+            * Do analysis of update node details
+            * Prevent duplicate node labels in user interface
+        * Do update flows
+
+    * Add PHP Page Delete operations
+
+        * Allow for page child delete
+
+    * Test and Debug the php
 
     29/06/2024
     

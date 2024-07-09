@@ -4,8 +4,6 @@ include_once __DIR__ . "/add-page.php";
 include_once __DIR__ . "/update-page.php";
 include_once __DIR__ . "/extract-page.php";
 include_once __DIR__ . "/search-db.php";
-// Debug Script
-include_once __DIR__ . "/../test/clear-tables.php";
 
 // Collect the JSON data
 // header('Content-Type: application/json');
@@ -19,9 +17,6 @@ function handlePageData($inputData) {
     if (!$inputData['update']) {
         // Search for the flow model title
         $flowModelId = findFlowModel($inputData['flow_model_title']);
-        // Debug
-        echo "handlePageData: flowModelId - $flowModelId <br>";
-
         if ($flowModelId === null) {
             $flowModelId = addFlowModel($inputData['flow_model_title']);
         }
@@ -136,79 +131,4 @@ function getSetModelAndPageIds($inputData) {
         }
     }
     return false;
-}
-
-function testGetSetUserAuthorIds($pageData) {
-    global $dbConn;
-
-    $pageId = $pageData['id'];
-    $authors = $pageData['user_authors'];
-    $count = 0;
-    foreach($authors as $userAuthor) {
-        $userAuthorLinkId = $userAuthor['id'];
-        if ($userAuthorLinkId === null) {
-            $username = $userAuthor['username'];
-            $sql = "SELECT * FROM user WHERE username = '$username'";
-            $result = $dbConn->query($sql);
-            if (!$result) {
-                echo "Problem searching for user: $username - " . $dbConn->error;
-            }
-            elseif ($result->num_rows > 0) {
-                $row = $result->fetch_assoc();
-                $userId = $row['id'];
-                // Search for the user_page link
-                $sql = "SELECT * FROM user_page_link WHERE user_id = $userId AND page_id = $pageId";
-                $result = $dbConn->query($sql);
-                if (!$result) {
-                    echo "Problem searching for user_page_link - " . $dbConn->error;
-                }
-                elseif ($result->num_rows > 0) {
-                    $row = $result->fetch_assoc();
-                    $linkId = $row['id'];
-                    $pageData['user_authors'][$count]['id'] = $linkId;
-                }
-            }
-        }
-        ++$count;
-    }
-    return $pageData;
-}
-
-function testGetSetExternalAuthorIds($pageData) {
-    global $dbConn;
-
-    $pageId = $pageData['id'];
-    $authors = $pageData['external_authors'];
-    $count = 0;
-    foreach($authors as $externalAuthor) {
-        $externalAuthorLinkId = $externalAuthor['id'];
-        if ($externalAuthorLinkId === null) {
-            $author = $externalAuthor['author'];
-            $nameParts = extractFirstAndLastNames($author);
-            $firstName = $nameParts['firstName'];
-            $lastName = $nameParts['lastName'];
-            $sql = "SELECT * FROM external_author WHERE first_name = '$firstName' AND last_name = '$lastName'";
-            $result = $dbConn->query($sql);
-            if (!$result) {
-                echo "Problem searching for user: $author - " . $dbConn->error;
-            }
-            elseif ($result->num_rows > 0) {
-                $row = $result->fetch_assoc();
-                $externalAuthorId = $row['id'];
-                // Search for the user_page link
-                $sql = "SELECT * FROM user_page_link WHERE user_id = $externalAuthorId AND page_id = $pageId";
-                $result = $dbConn->query($sql);
-                if (!$result) {
-                    echo "Problem searching for user_page_link - " . $dbConn->error;
-                }
-                elseif ($result->num_rows > 0) {
-                    $row = $result->fetch_assoc();
-                    $linkId = $row['id'];
-                    $pageData['external_authors'][$count]['id'] = $linkId;
-                }
-            }
-        }
-        ++$count;
-    }
-    return $pageData;
 }

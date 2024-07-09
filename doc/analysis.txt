@@ -890,11 +890,11 @@ Contents
 
 	Nodes may be deleted and their hierarchical id's repeated, so this cannot be used
 	for update identification. Instead the id is used to match the records as updates. 
-	If the id is not available, an exact match by label is used.
+	If the id is not available, an exact match by label and node number is used.
 
 	Id Mismatch Considerations
 
-		If the labels, but not the id's of the nodes match and the id is present, 
+		If the labels and nodenums, but not the id's of the nodes match and the id is present, 
 		then this might have arisen for the following reasons:
 
 			1. The label may have been duplicated on that page (this should be

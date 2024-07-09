@@ -60,7 +60,6 @@
             foreach($aOnly as $index) {
                 // Debug 
                 $author = $authors[$index]['author'];
-                echo "<br>updatePageExternalAuthors - $author<br>";
                 // Check whether the id is present
                 if (isset($authors[$index]['id'])) {
                     $authorId = $authors[$index]['id'];
@@ -116,15 +115,11 @@
         $useSimilar = false;
         $arrayDiffs = compareArrays($authorList, $oldAuthorList, $key, $useSimilar);
         $newNamesOnly = $arrayDiffs['aOnly'];
-        // Debug
-        echo "<br>updateUserAuthors: " . count($arrayDiffs['aOnly']) . " " . count($arrayDiffs['bOnly']) . "<br>";
         $oldNamesOnly = $arrayDiffs['bOnly'];
         if (count($newNamesOnly) > 0) {
             // Add the user page links
             foreach ($newNamesOnly as $index) {
                 $username = $authorList[$index]['username'];
-                // Debug
-                echo "<br>updateUserAuthors: $username<br>";
                 // Get the user id
                 $sql = "SELECT id FROM user WHERE username = '$username'";
                 $result = $dbConn->query($sql);
@@ -291,79 +286,95 @@
     function updateNodes($pageData, $oldPageData) {
         // compare the old and new node lists by label
         $pageId = $oldPageData['id'];
+        $flowModelId = $oldPageData['flow_model_id'];
+        $pageHierarchicalId = $oldPageData['hierarchical_id'];
         $nodes = $pageData['nodes'];
         $oldNodes = $oldPageData['nodes'];
-        $useSimilar = false;
-        $arrayDiffs = compareArrays($nodes, $oldNodes, 'label', $useSimilar);
-        $same = $arrayDiffs['same'];
-        $aOnly = $arrayDiffs['aOnly'];
-        $bOnly = $arrayDiffs['bOnly'];
-        if (count($same) > 0) {
-            for ($i = 0; $i < count($same); $i += 2) {
-                $index = $same[$i];
-                $oldIndex = $same[$i + 1];
-                $node = $nodes[$index];
-                $oldNode = $oldNodes[$oldIndex];
-                if (isset($node['id'])) {
-                    $nodeId = $node['id'];
-                    $oldNodeId = $oldNode['id'];
-                    if ($nodeId != $oldNodeId) {
-                        $label = $node['label'];
-                        error_log("UpdateNodes: mismatched id with title the same $label", 0);
-                        $invalid = true;
-                    }
-                    else {
-                        updateNode($node, $oldNode, $nodeId);
-                    }
+
+
+        // Loop through the nodes
+        // Set-up the deletions list flags
+        $oldMatches = [];
+        for ($i = 0; $i < count($oldNodes); $i++) {
+            array_push($oldMatches, false);
+        }
+
+        foreach($nodes as $node) {
+            $nodeId = null;
+            if (isset($node['id'])) {
+                $nodeId = $node['id'];
+            }
+            if ($nodeId != null) {
+                // Check for the corresponding old node is
+                $oldIndex = searchNodeListById($oldNodes, $nodeId);
+                if ($oldIndex === -1) {
+                    error_log("updateNodes: Unmatched nodeId - $nodeId", 0);
                 }
                 else {
-                    $nodeId = $oldNode['id'];
-                    updateNode($node, $oldNode, $nodeId);
+                    updateNode($flowModelId, $pageHierarchicalId, $node, $oldNodes[$oldIndex], $nodeId);
+                    $oldMatches[$oldIndex] = true;
                 }
             }
-        }
-        if (count($aOnly) > 0) {
-            foreach ($aOnly as $index) {
-                $node = $nodes[$index];
-                // Check whether a matched id exists
-                if (isset($node['id'])) {
-                    // Search for corresponding
-                    $nodeId = $node['id'];
-                    $found = false;
-                    foreach ($oldNodes as $oldNode) {
-                        if ($oldNode['id'] === $nodeId) {
-                            $found = true;
-                            break;
-                        }
-                    }
-                    if ($found) {
-                        updateNode($node, $oldNode, $nodeId);
-                    }
-                    else {
-                        // The labels are not matched and neither are the id's
-                        $label = $node['label'];
-                        error_log("updateNodes: - potential new entry already has id - $label");
-                        $invalid = true;
-                    }
-                }
-                else {
-                    // Assume New Node
+            else {
+                // Search for matching node_num and title
+                $label = $node['label'];
+                $nodeNum = $node['node_num'];
+                $oldIndex = searchNodeListByNumAndLabel($oldNodes, $nodeNum, $label);
+                if ($oldIndex === -1) {
                     addNode($node, $pageId);
                 }
+                else {
+                    $oldNodeId = $oldNodes[$oldIndex]['id'];
+                    updateNode($flowModelId, $pageHierarchicalId, $node, $oldNodes[$oldIndex], $oldNodeId);
+                    $oldMatches[$oldIndex] = true;
+                }
             }
         }
-        if (count($bOnly) > 0) {
-            foreach ($bOnly as $index) {
+
+        // Delete unmatched old nodes
+        for ($index = 0; $index < count($oldMatches); $index++) {
+            if (!$oldMatches[$index]) {
                 $oldNode = $oldNodes[$index];
                 $oldNodeId = $oldNode['id'];
                 $flowModelId = $oldPageData['flow_model_id'];
-                $pageHierarchicalId = $oldPageData['hierarchical_id'];
                 deleteNodeAndChildPages($oldNodeId, $flowModelId, $pageHierarchicalId);
             }
         }
     }
 
-    function updateNode($node, $oldNode, $nodeId) {
+    function searchNodeListById($nodes, $id) {
+        $index = -1;
+        $count = 0;
+        foreach($nodes as $node) {
+            if ($node['id'] === $id) {
+                $index = $count;
+                break;
+            }
+            ++$count;
+        }
+        return $index;
+    } 
+
+    function searchNodeListByNumAndLabel($nodes, $nodeNum, $label) {
+        $index = -1;
+        $count = 0;
+        foreach($nodes as $node) {
+            if ($node['label'] === $label && $node['node_num'] === $nodeNum) {
+                $index = $count;
+                break;
+            }
+            ++$count;
+        }
+        return $index;
+    }
+
+    function updateNode($flowModelId, $pageHierarchicalId, $node, $oldNode, $nodeId) {
+        if (!$node['has_child_page'] && $oldNode['has_child_page']) {
+            // If the new page is not marked for a child page, but the old one was
+            // then delete the child pages
+            $deletionHierarchicalId = $pageHierarchicalId . $oldNode['node_num'];
+            deletePage($flowModelId, $deletionHierarchicalId, $oldNode['page_id']);
+        }
         // Check whether the node id is present in the node data
         if (isset($nodeId)) {
             // Identify the fields that are different and update
