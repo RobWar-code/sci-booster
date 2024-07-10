@@ -95,7 +95,7 @@ const nodeDetails = {
         }
         else {
             // Check whether this label already appears on the page
-            if (isDuplicateLabel(this.editMode, label)) {
+            if (this.isDuplicateLabel(this.editMode, label)) {
                 return;
             }
         }
@@ -140,9 +140,8 @@ const nodeDetails = {
     },
 
     isDuplicateLabel: function (editMode, label) {
-        let nodes = this.currentPage.nodes;
+        let nodes = dfm.currentPage.page.nodes;
         let found = false;
-        let index = 0;
         let count = 0;
         for (let node of nodes) {
             if (node.label === label) {

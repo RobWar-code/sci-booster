@@ -1,11 +1,59 @@
 const modelDetails = {
+  editMode: "new",
 
   newModel: function() {
     e = document.getElementById("modelDetails");
     e.style.display = "block";
     document.getElementById("additionalModelDetailsDiv").style.display = "none";
+    document.getElementById("modelEditOption").style.display = "none";
     dfm.currentPageSet = false;
     dfm.topPage = true;
+    this.editMode = "new";
+  },
+
+  loadModelDetails: function() {
+    this.editMode = "read-only";
+    this.loadDisplayValues();
+    this.setReadonlyDisplay();
+  },
+
+  loadDisplayValues: function() {
+    document.getElementById("modelTitle").value = dfm.currentPage.page.title;
+    document.getElementById("modelDescription").value = dfm.currentPage.page.description;
+    document.getElementById("modelKeywords").value = dfm.currentPage.page.description;
+    this.displayAuthorsList();
+    this.displayExtAuthorsList();
+    this.displayReferencesList();
+  },
+
+  setReadOnlyDisplay: function () {
+    document.getElementById("additionalModelDetailsDiv").style.display = "block";
+    document.getElementById("modelDetailsSubmit").style.display = "none";
+    document.getElementById("authorSubmit").style.display = "none";
+    document.getElementById("authorInputForm").style.display = "none";
+    document.getElementById("extAuthorSubmit").style.display = "none";
+    document.getElementById("extAuthorInputForm").style.display = "none";
+    document.getElementById("referenceSubmit").style.display = "none";
+    document.getElementById("referenceInputForm").style.display = "none";
+    if (dfm.currentPage.isUserAuthor() || dfm.userStatus === "owner" || dfm.userStatus === "editor") {
+      document.getElementById("modelEditOption").style.display = "inline";
+    }
+    else {
+      document.getElementById("modelEditOption").style.display = "none";
+    }
+  },
+
+  setModelEditMode: function() {
+    this.editMode = true;
+    document.getElementById("modelEditOption").style.display = "none";
+
+    document.getElementById("modelDetailsSubmit").style.display = "none";
+    document.getElementById("authorSubmit").style.display = "none";
+    document.getElementById("authorInputForm").style.display = "none";
+    document.getElementById("extAuthorSubmit").style.display = "none";
+    document.getElementById("extAuthorInputForm").style.display = "none";
+    document.getElementById("referenceSubmit").style.display = "none";
+    document.getElementById("referenceInputForm").style.display = "none";
   },
 
   setModelFormDefaults: function () {
@@ -38,6 +86,9 @@ const modelDetails = {
       }
       else {
         document.getElementById("modelTitleTick").style.display = "none";
+      }
+      if (dfm.currentPage.page.hierarchical_id === "01") {
+        dfm.currentPage.flow_model_title = title;
       }
       dfm.currentPage.page.description = description;
       if (description != "") {

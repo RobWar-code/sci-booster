@@ -187,11 +187,25 @@ dfm.FlowPage = class {
 
 }
 
+
 dfm.FlowPageData = class {
     constructor() {
         this.id = null; // If known
+        this.flow_model_title = "";
+        this.update = false;
         this.page = new dfm.FlowPage();
         this.nodeEditMode = "new"; // "new" or "update"
+    }
+
+    isUserAuthor() {
+        let userIsAuthor = false;
+        for (i = 0; i < this.page.user_authors.length; i++) {
+            if (dfm.username === this.page.user_authors[i]) {
+                userIsAuthor = true;
+                break;
+            }
+        }
+        return userIsAuthor;
     }
 
     addPage(pageObj) {
@@ -275,6 +289,7 @@ dfm.FlowPageData = class {
         let pageData = await this.sendPage(pageJSON);
         if (pageData.result) {
             this.setPageData(pageData);
+            this.update = true;
             dfm.currentVisual.redoPage();
         }
     }
@@ -303,13 +318,16 @@ dfm.FlowPageData = class {
     prepareJSONObject() {
         let pageJSONObj = {
             flow_model_id: this.id,
+            flow_model_title: this.flow_model_title,
+            update: false,
             page: {
                 id: this.page.id,
                 hierarchical_id: this.page.hierarchical_id,
                 title: this.page.title,
                 keywords: this.page.keywords,
                 description: this.page.description,
-                authors: [],
+                user_authors: [],
+                external_authors: [],
                 references: [],
                 nodes: [],
                 flows: []

@@ -136,7 +136,15 @@ body {
     display: none;
 }
 
+#extAuthorsDiv {
+    display: none;
+}
+
 #modelReferencesDiv {
+    display: none;
+}
+
+#modelEditOption {
     display: none;
 }
 

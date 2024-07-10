@@ -6,11 +6,11 @@ include_once __DIR__ . "/extract-page.php";
 include_once __DIR__ . "/search-db.php";
 
 // Collect the JSON data
-// header('Content-Type: application/json');
+header('Content-Type: application/json');
 
-// $inputData = json_decode(file_get_contents('php://input'), true);
+$inputData = json_decode(file_get_contents('php://input'), true);
 
-// handlePageData($inputData);
+handlePageData($inputData);
 
 function handlePageData($inputData) {
     // Check whether this is a model that does not already exist

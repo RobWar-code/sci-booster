@@ -22,6 +22,8 @@ Contents
 			Flows
 				Flow Details Form
 			Layout Considerations
+		Save Option
+		Model Details Option
 	Javascript Coding Structure
 		Flow Diagram Data Structures
 		Flow Drawing Logic
@@ -501,6 +503,26 @@ Contents
 	the corner point circles.
 
 	The data for the visual flow is stored in page data as well as the visual data.
+
+<h3>Save Option
+	This Save option saves the current drawing and associated data to the database.
+
+	Its mode of saving the data depends upon whether it is a new model page or whether it
+	is a loaded model. Once saved for the first time, a model page is always "loaded" and
+	the current page data for model has the update flag set to true.
+
+<h3>Model Details Option
+
+	When this button is clicked, the modal model-details is presented. This has three
+	modes of operation "new", "edit" and "read-only". Unless the edit mode is "new"
+	then the modal page is set in read-only, edit mode being available only to the page
+	author or an editor. To move from read-only to edit, the edit button is clicked. This
+	is only visible to authorised users.
+
+	When the form is in read-only mode, the submit buttons and entry fields are not 
+	displayed. Details for the form are fetched from the current page data.
+	
+
 
 <h3>Layout Considerations
 

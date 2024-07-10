@@ -6,17 +6,20 @@ Contents
 
 <h1>Work Due
 
+    * Test Page Save from Javascript
+        Once saved, mark the current page data as update = true
+
     Do the Page Details button operation
 
     Do Model Page Details edit option
+        Do analysis
+        Allow for different classes of user in the various edit options of the modal model form
 
-    Allow for different classes of user in the various edit options of the modal model form
-
-    Use formatted rather than concatenated strings {$dbConn->error}
-
-    Make an object for the hover text code
+    In page load operations detect whether the page is authored by the user etc.
 
     Add the Zoom In page functionality
+
+    Make an object for the hover text code
       
     Add Zoom Back button to page options
 
@@ -43,6 +46,8 @@ Contents
         * Allow for page child delete
 
     * Test and Debug the php
+
+    * Use formatted rather than concatenated strings {$dbConn->error}
 
     29/06/2024
     

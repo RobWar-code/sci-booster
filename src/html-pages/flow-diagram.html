@@ -47,10 +47,12 @@
           <label for="modelKeywords" class="modalFormLabel">Keywords:</label>
           <input type="text" class="modalFormItem" name="modelKeywords" id="modelKeywords">
           <span class="modalFormCheckmark" id="modelKeywordsTick">&#x2713;</span>
-          <button type="submit" class="textButton">Submit Details</button>
+          <button type="submit" class="textButton" id="modelDetailsSubmit">Submit Details</button>
         </form>
         <div id="additionalModelDetailsDiv">
-          <button class="textButton" onclick="modelDetails.toggleAuthors()">User Authors</button>
+          <div>
+            <button class="textButton" onclick="modelDetails.toggleAuthors()">User Authors</button>
+          </div>
           <div id="authorsDiv">
               <div id="authorsListDiv">
                 <ul id="authorsList">
@@ -60,22 +62,24 @@
               <form id="authorInputForm" onsubmit="modelDetails.submitAuthor(event)">
                 <label for="modelAuthor" class="modalFormLabel">Author:</label>
                 <input type="text" class="modalFormItem" name="modelAuthor" id="modelAuthor">
-                <button type="submit" class="textButton">Submit Author</button>
+                <button type="submit" class="textButton" id="authorSubmit">Submit Author</button>
                 <span class="modalFormCheckmark" id="modelAuthorTick">&#x2713;</span>
               </form>
           </div>
-          <button class="textButton" onclick="modelDetails.toggleExtAuthors()">External Authors</button>
+          <div>
+            <button class="textButton" onclick="modelDetails.toggleExtAuthors()">External Authors</button>
+          </div>
           <div id="extAuthorsDiv">
               <div id="extAuthorsListDiv">
                 <ul id="extAuthorsList">
                 </ul>
               </div>
               <p class="modalFormAdvisory">Click on an author to remove it</p>
-              <form id="extAuthorInputForm" onsubmit="modelDetails.submitAuthor(event)">
-                <label for="extModelAuthor" class="modalFormLabel">Author:</label>
-                <input type="text" class="modalFormItem" name="extModelAuthor" id="extModelAuthor">
-                <button type="submit" class="textButton">Submit Author</button>
-                <span class="modalFormCheckmark" id="extModelAuthorTick">&#x2713;</span>
+              <form id="extAuthorInputForm" onsubmit="modelDetails.submitExtAuthor(event)">
+                <label for="modelExtAuthor" class="modalFormLabel">Author:</label>
+                <input type="text" class="modalFormItem" name="modelExtAuthor" id="modelExtAuthor">
+                <button type="submit" class="textButton" id="extAuthorSubmit">Submit Author</button>
+                <span class="modalFormCheckmark" id="modelExtAuthorTick">&#x2713;</span>
               </form>
           </div>
           <p><button class="textButton" onclick="modelDetails.toggleReferences()">References</button></p>
@@ -92,12 +96,13 @@
               <input type="text" class="modalFormItem" name="modelReferenceAuthor" id="modelReferenceAuthor">
               <label for="modelReferenceTitle" class="modalFormLabel">Title:</label>
               <input type="text" class="modalFormItem" name="modelReferenceTitle" id="modelReferenceTitle">
-              <button type="submit" class="textButton">Submit Reference</button>
+              <button type="submit" class="textButton" id="referenceSubmit">Submit Reference</button>
               <span class="modalFormCheckmark" id="modelReferenceTick">&#x2713;</span>
             </form>
           </div>
         </div>
         <div class="modalFormCancelDiv">
+          <button class="textButton" id="modelEditOption" onClick="modelDetails.setModelEditMode()">Edit Mode</button>
           <button class="textButton" id="modalDismissButton" onclick="modelDetails.dismissModelDetailsForm()">Dismiss</button>
         </div>
       </div>
@@ -250,7 +255,7 @@
             <p>Model Title: <span id="flowModelTitle">My Flow Title</span></p>
             <p>Hierarchical Id: <span id="pageHierarchicalId"></span></p>
             <p>Page Title: <span id="pageTitle">My Page Title</span></p>
-            <p><button class="textButton" onclick="modelDetails.loadPageDetails()">Page Details</button></p>
+            <p><button class="textButton" onclick="modelDetails.loadModelDetails()">Page Details</button></p>
           </div>
           <!-- Model Options-->
           <div class="col-md-5 optionButtons optionsSection">
