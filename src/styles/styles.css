@@ -43,6 +43,10 @@ body {
     width: 70%;
 }
 
+#modelSelector {
+    width: 64%;
+}
+
 /* Modal Dialogs */
 .genModal {
     display: none;

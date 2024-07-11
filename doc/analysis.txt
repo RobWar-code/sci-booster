@@ -12,6 +12,7 @@ Contents
 		Login
 		User Type Privileges
 	Flow Diagram Page
+		Model Select Element
 		Model Edit Options
 		Page Information
 		Page Options Buttons
@@ -212,7 +213,25 @@ Contents
 	performed dynamically and produces a scrollable dropdown list. It
 	is activated by the search button or by pressing the <return> key.
 
-	If	nothing is found, this is reported by the user. 
+	If	nothing is found, this is reported by the user.
+
+<h2>Model Select Element 
+	The model selection element appears beneath the search element on
+	the flow diagram page. The options list is reloaded when the page
+	is loaded. This operation being initiated in flow-main.js by the 
+	function fetchModelSelections(). Note that this operation is repeated
+	each time that a model is saved or deleted.
+
+	The fetchModelSelections routine prepares a call to receive-page.php 
+	with the JSON request:
+		{"request": "model titles list"}
+
+	Which when identified by the receive-page script returns the JSON
+	object -
+	{
+		"response" : "true/false",
+		"titles" : ["", ..]
+	}
 
 <h2>Model Edit Options
 

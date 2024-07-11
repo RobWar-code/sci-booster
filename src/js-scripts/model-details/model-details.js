@@ -6,27 +6,35 @@ const modelDetails = {
     e.style.display = "block";
     document.getElementById("additionalModelDetailsDiv").style.display = "none";
     document.getElementById("modelEditOption").style.display = "none";
+    this.clearSubmissionTicks();
+
     dfm.currentPageSet = false;
     dfm.topPage = true;
     this.editMode = "new";
   },
 
   loadModelDetails: function() {
+    e = document.getElementById("modelDetails");
+    e.style.display = "block";
     this.editMode = "read-only";
     this.loadDisplayValues();
-    this.setReadonlyDisplay();
+    this.setReadOnlyDisplay();
+    this.clearSubmissionTicks();
   },
 
   loadDisplayValues: function() {
     document.getElementById("modelTitle").value = dfm.currentPage.page.title;
     document.getElementById("modelDescription").value = dfm.currentPage.page.description;
-    document.getElementById("modelKeywords").value = dfm.currentPage.page.description;
+    document.getElementById("modelKeywords").value = dfm.currentPage.page.keywords;
     this.displayAuthorsList();
     this.displayExtAuthorsList();
     this.displayReferencesList();
   },
 
   setReadOnlyDisplay: function () {
+    document.getElementById("modelTitle").disabled = true;
+    document.getElementById("modelDescription").disabled = true;
+    document.getElementById("modelKeywords").disabled = true;
     document.getElementById("additionalModelDetailsDiv").style.display = "block";
     document.getElementById("modelDetailsSubmit").style.display = "none";
     document.getElementById("authorSubmit").style.display = "none";
@@ -47,13 +55,26 @@ const modelDetails = {
     this.editMode = true;
     document.getElementById("modelEditOption").style.display = "none";
 
-    document.getElementById("modelDetailsSubmit").style.display = "none";
-    document.getElementById("authorSubmit").style.display = "none";
-    document.getElementById("authorInputForm").style.display = "none";
-    document.getElementById("extAuthorSubmit").style.display = "none";
-    document.getElementById("extAuthorInputForm").style.display = "none";
-    document.getElementById("referenceSubmit").style.display = "none";
-    document.getElementById("referenceInputForm").style.display = "none";
+    document.getElementById("modelTitle").disabled = false;
+    document.getElementById("modelDescription").disabled = false;
+    document.getElementById("modelKeywords").disabled = false;
+
+    document.getElementById("modelDetailsSubmit").style.display = "inline";
+    document.getElementById("authorSubmit").style.display = "inline";
+    document.getElementById("authorInputForm").style.display = "block";
+    document.getElementById("extAuthorSubmit").style.display = "inline";
+    document.getElementById("extAuthorInputForm").style.display = "block";
+    document.getElementById("referenceSubmit").style.display = "inline";
+    document.getElementById("referenceInputForm").style.display = "block";
+  },
+
+  clearSubmissionTicks() {
+    document.getElementById("modelTitleTick").style.display = "none";
+    document.getElementById("modelDescriptionTick").style.display = "none";
+    document.getElementById("modelKeywordsTick").style.display = "none";
+    document.getElementById("modelAuthorTick").style.display = "none";
+    document.getElementById("modelExtAuthorTick").style.display = "none";
+    document.getElementById("modelReferenceTick").style.display = "none";
   },
 
   setModelFormDefaults: function () {
@@ -167,6 +188,7 @@ const modelDetails = {
   },
 
   deleteAuthor: function (event) {
+    if (this.editMode === "read-only") return;
     let listItem = event.target;
     let itemNum = parseInt(listItem.dataset.item);
     if (dfm.currentPage.page.user_authors.length === 1) {
@@ -229,6 +251,7 @@ const modelDetails = {
   },
 
   deleteExtAuthor: function (event) {
+    if (this.editMode === "read-only") return;
     let listItem = event.target;
     let itemNum = parseInt(listItem.dataset.item);
     if (dfm.currentPage.page.external_authors.length === 1) {
@@ -294,6 +317,7 @@ const modelDetails = {
   },
 
   deleteReference: function (event) {
+    if (this.editMode === "read-only") return;
     let itemNum = parseInt(event.target.dataset.item);
     if (dfm.currentPage.page.references.length === 1) {
       dfm.currentPage.page.references = [];

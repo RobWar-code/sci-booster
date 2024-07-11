@@ -6,14 +6,7 @@ Contents
 
 <h1>Work Due
 
-    * Test Page Save from Javascript
-        Once saved, mark the current page data as update = true
-
-    Do the Page Details button operation
-
-    Do Model Page Details edit option
-        Do analysis
-        Allow for different classes of user in the various edit options of the modal model form
+    Load Page from alphabetical selection list
 
     In page load operations detect whether the page is authored by the user etc.
 
@@ -26,6 +19,17 @@ Contents
     Update the README with user features changes
 
 <h1>Work Done
+
+    11/07/2024
+    
+    * Test Page Save from Javascript
+        * Once saved, mark the current page data as update = true
+
+    * Do the Page Details button operation
+
+    * Do Model Page Details edit option
+        * Do analysis
+        * Allow for different classes of user in the various edit options of the modal model form
 
     09/07/2024
 

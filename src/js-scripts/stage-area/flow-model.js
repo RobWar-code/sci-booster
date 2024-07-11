@@ -199,7 +199,7 @@ dfm.FlowPageData = class {
 
     isUserAuthor() {
         let userIsAuthor = false;
-        for (i = 0; i < this.page.user_authors.length; i++) {
+        for (let i = 0; i < this.page.user_authors.length; i++) {
             if (dfm.username === this.page.user_authors[i]) {
                 userIsAuthor = true;
                 break;
