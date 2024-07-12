@@ -49,11 +49,57 @@ const flowModelPage = {
         this.displayModelEditOptions();
     },
 
-    displayFlowModelEditMessage() {
+    displayFlowModelEditMessage: function () {
         let s = "Click the stage to add flow component nodes.";
         s += " Click the option buttons on a node to choose more actions.";
         s += " Click a flow label to edit the flow";
         document.getElementById("instructionsText").innerText = s;
         document.getElementById("instructionsText").style.display = "block";
+    },
+
+    getModelSelectionList: async function () {
+        let modelTitles = [];
+        modelTitles = await fetchModelList();
+        console.log("modelTitles", modelTitles);
+        if (modelTitles.length > 0) {
+            modelTitles.sort();
+            let modelSelector = document.getElementById("modelSelector");
+            modelSelector.innerHTML = "";
+            for (let title of modelTitles) {
+                let opt = document.createElement('option');
+                opt.value = title;
+                opt.text = title;
+                modelSelector.appendChild(opt);
+            }
+        }
+    },
+    
+    fetchModelList: async function() {
+        let modelTitles = [];
+        let request = {request: "model title list"};
+        try {
+            response = await fetch(dfm.phpPath + 'flow-model/receive-page.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(request)
+            });
+    
+            let responseData = await response.json();
+    
+            if (responseData.result) {
+                if (responseData.result) {
+                    modelTitles = responseData.modelTitles;
+                    console.log("Got model titles:", modelTitles);
+                }
+            }
+            return modelTitles;
+        }
+        catch(error) {
+            console.error(`fetchModelList: Could not fetch model titles ${error}`);
+            return modelTitles;
+        }
     }
+    
 }

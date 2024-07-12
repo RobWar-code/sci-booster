@@ -5,6 +5,11 @@ Contents
     Work Done
 
 <h1>Work Due
+    Set a page edited flag id any alteration is made to a page.
+    
+    Check for save on model search or select
+
+    Hide Page Details button until a page is loaded
 
     Load Page from alphabetical selection list
 

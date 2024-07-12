@@ -282,7 +282,45 @@ dfm.FlowPageData = class {
         }
     }
 
+
     // Server Interface
+    async selectModel(e) {
+        let modelTitle = e.target.value;
+
+        if (modelTitle != "") {
+            let pageData = this.fetchModelByTitle(modelTitle);
+            if (pageData.result) {
+                this.setPageData(pageData);
+                this.update = true;
+                this.currentVisual.redoPage();
+            }
+        }
+
+    }
+
+    async fetchModelByTitle(title) {
+        let request = {request: "fetch model by title", title: title};
+        let requestJSON = JSON.stringify(request);
+        try {
+            let response = await fetch(dfm.phpPath + 'flow-model/receive-page.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: requestJSON
+            })
+
+            let responseData = await response.json();
+
+            return responseData;
+        }
+        catch {(error) => {
+            console.error("Problem with fetch by title receive-page script call", error);
+            return {result: false, error: "addUser Systems Error"};
+        }};
+
+    }
+
     async saveModel() {
         let pageJSONObject = this.prepareJSONObject();
         let pageJSON = JSON.stringify(pageJSONObject);

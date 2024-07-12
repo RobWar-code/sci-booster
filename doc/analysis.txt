@@ -224,7 +224,7 @@ Contents
 
 	The fetchModelSelections routine prepares a call to receive-page.php 
 	with the JSON request:
-		{"request": "model titles list"}
+		{"request": "model title list"}
 
 	Which when identified by the receive-page script returns the JSON
 	object -
@@ -232,6 +232,9 @@ Contents
 		"response" : "true/false",
 		"titles" : ["", ..]
 	}
+
+	This is then processed into the selector options by the corresponding
+	javascript.
 
 <h2>Model Edit Options
 

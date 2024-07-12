@@ -10,7 +10,24 @@ header('Content-Type: application/json');
 
 $inputData = json_decode(file_get_contents('php://input'), true);
 
-handlePageData($inputData);
+scanInput($inputData);
+
+function scanInput($inputData) {
+    // Debug
+    if(array_key_exists("request", $inputData)) {
+        error_log("Got to scanInput {$inputData['request']}", 0);
+        $requestType = $inputData['request'];
+        if ($requestType === 'model title list') {
+            getModelTitlesList();
+        }
+        elseif($requestType == "fetch model by title") {
+            fetchPageByTitle($inputData['title']);
+        }
+    }
+    else {
+        handlePageData($inputData);
+    }
+}
 
 function handlePageData($inputData) {
     // Check whether this is a model that does not already exist
@@ -77,13 +94,13 @@ function addFlowModel($title) {
 
     $stmt = $dbConn->prepare($sql);
     if ($stmt === FALSE) {
-        error_log("addFlowModel: problem with $stmt prepare" . $dbConn->error, 0);
+        error_log("addFlowModel: problem with $stmt prepare {$dbConn->error}", 0);
         return FALSE;
     }
 
     $stmt->bind_param('s', $title);
     if (!$stmt->execute()) {
-        error_log("addFlowModel: could not add flow model" . $dbConn->error, 0);
+        error_log("addFlowModel: could not add flow model {$dbConn->error}", 0);
     }
     else {
         // Get the id
@@ -131,4 +148,13 @@ function getSetModelAndPageIds($inputData) {
         }
     }
     return false;
+}
+
+function getModelTitlesList() {
+    $modelsList = fetchModelTitlesList();
+    // Debug
+    error_log("getModelTitlesList: {$modelsList[0]}", 0);
+    $listObj = count($modelsList) > 0 ? $listObj = ["result"=>true, "modelTitles"=>$modelsList] :
+        $listObj = ["result"=>false];
+    echo json_encode($listObj);
 }

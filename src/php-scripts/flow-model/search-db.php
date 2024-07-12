@@ -42,3 +42,20 @@
         $result = $dbConn->query($sql);
         return $result;
     }
+
+    function fetchModelTitlesList() {
+        global $dbConn;
+
+        $modelTitles = [];
+        $sql = "SELECT title FROM flow_model";
+        $result = $dbConn->query($sql);
+        if ($result === FALSE) {
+            error_log("fetchModelTitlesList: could not fetch list {$dbConn->error}", 0);
+        }
+        else {
+            while ($row = $result->fetch_assoc()) {
+                array_push($modelTitles, $row['title']);
+            }
+        }
+        return $modelTitles;
+    }

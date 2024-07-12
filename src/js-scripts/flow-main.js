@@ -60,6 +60,7 @@ document.addEventListener("graphicsLoaded", (e) => {
 });
 
 function flowMain() {
+    flowModelPage.getModelSelectionList();
     stageApp.startStageApp();
 };
 
