@@ -21,7 +21,7 @@ function scanInput($inputData) {
             getModelTitlesList();
         }
         elseif($requestType == "fetch model by title") {
-            fetchPageByTitle($inputData['title']);
+            fetchModelPageByTitle($inputData['title']);
         }
     }
     else {
@@ -157,4 +157,18 @@ function getModelTitlesList() {
     $listObj = count($modelsList) > 0 ? $listObj = ["result"=>true, "modelTitles"=>$modelsList] :
         $listObj = ["result"=>false];
     echo json_encode($listObj);
+}
+
+function fetchModelPageByTitle($title) {
+    $pageRef = findModelPageByTitle($title);
+    if ($pageRef === null) {
+        $result = ['result'=>false];
+    }
+    else {
+        $pageId = $pageRef['page_id'];
+        $flowModelId = $pageRef['flow_model_id'];
+        $result = extractPage($flowModelId, $pageId);
+        $result['result'] = true;
+        echo json_encode($result);
+    }
 }

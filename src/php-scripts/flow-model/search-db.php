@@ -59,3 +59,42 @@
         }
         return $modelTitles;
     }
+
+    function findModelPageByTitle($title) {
+        global $dbConn;
+
+        // Get the flow model id
+        $pageId = null;
+        $flowModelId = null;
+        $sql = "SELECT id FROM flow_model WHERE title = ?";
+        $stmt = $dbConn->prepare($sql);
+        if ($stmt === FALSE) {
+            error_log("findModelPageByTitle: Could not prepare flow_model search {$dbConn->error}", 0);
+        }
+        else {
+            $stmt->bind_param("s", $title);
+            if (!$stmt->execute()) {
+                error_log("findModelPageByTitle: Could not execute flow_model search {$dbConn->error}", 0);
+            }
+            else {
+                $stmt->store_result();
+                $stmt->bind_result($flowModelId);
+                $stmt->fetch();
+            }
+        }
+        if ($flowModelId != null) {
+            // Search for pageId
+            $sql = "SELECT id FROM page WHERE flow_model_id = $flowModelId AND hierarchical_id = '01'";
+            $result = $dbConn->query($sql);
+            if (!$result) {
+                error_log("findModelPageByTitle: Could not execute page search {$dbConn->error}", 0);
+            }
+            else {
+                if ($result->num_rows > 0) {
+                    $row = $result->fetch_assoc();
+                    $pageId = $row['id'];
+                }
+            }
+        }
+        return ['page_id'=>$pageId, 'flow_model_id'=>$flowModelId];
+    }

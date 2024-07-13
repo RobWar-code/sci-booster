@@ -11,7 +11,10 @@ Contents
 
     Hide Page Details button until a page is loaded
 
+    Hide model edit prompts text unless in model edit mode
+
     Load Page from alphabetical selection list
+        Check why model details not displayed, but visual is.
 
     In page load operations detect whether the page is authored by the user etc.
 

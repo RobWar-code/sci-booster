@@ -28,6 +28,7 @@ dfm.FlowPage = class {
     }
 
     setPageData(page) {
+        console.log("setPageData- page:", page);
         this.set(page);
         this.nodes = page.nodes;
         this.flows = page.flows;
@@ -282,20 +283,21 @@ dfm.FlowPageData = class {
         }
     }
 
-
     // Server Interface
     async selectModel(e) {
         let modelTitle = e.target.value;
 
         if (modelTitle != "") {
-            let pageData = this.fetchModelByTitle(modelTitle);
+            let pageData = await this.fetchModelByTitle(modelTitle);
             if (pageData.result) {
                 this.setPageData(pageData);
                 this.update = true;
-                this.currentVisual.redoPage();
+                dfm.currentVisual.redoPage();
+            }
+            else {
+                console.error(`selectModel: could not fetch selected model ${modelTitle}`);
             }
         }
-
     }
 
     async fetchModelByTitle(title) {

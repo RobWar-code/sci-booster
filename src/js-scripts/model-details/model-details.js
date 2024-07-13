@@ -13,6 +13,18 @@ const modelDetails = {
     this.editMode = "new";
   },
 
+  /**
+   * Load the relevant page data from the database when a title selection is made
+   * @param {*} event 
+   */
+  selectPage: async function(event) {
+    dfm.currentPage = new dfm.FlowPageData();
+    dfm.currentVisual = new dfm.FlowVisuals();
+    await dfm.currentPage.selectModel(event);
+    dfm.currentPageSet = true;
+    this.loadModelDetails();
+  },
+
   loadModelDetails: function() {
     e = document.getElementById("modelDetails");
     e.style.display = "block";
@@ -23,6 +35,7 @@ const modelDetails = {
   },
 
   loadDisplayValues: function() {
+    console.log(dfm.currentPage.page.user_authors);
     document.getElementById("modelTitle").value = dfm.currentPage.page.title;
     document.getElementById("modelDescription").value = dfm.currentPage.page.description;
     document.getElementById("modelKeywords").value = dfm.currentPage.page.keywords;

@@ -60,6 +60,7 @@ document.addEventListener("graphicsLoaded", (e) => {
 });
 
 function flowMain() {
+    console.log("Are you there?", flowModelPage.iAmHere);
     flowModelPage.getModelSelectionList();
     stageApp.startStageApp();
 };

@@ -1,5 +1,7 @@
 const flowModelPage = {
 
+    iAmHere: "hello",
+
     displayModelEditOptions: function () {
         if (dfm.userStatus === "unregistered") {
             document.getElementById("modelEditOptionsDiv").style.display = "none";
@@ -59,7 +61,7 @@ const flowModelPage = {
 
     getModelSelectionList: async function () {
         let modelTitles = [];
-        modelTitles = await fetchModelList();
+        modelTitles = await this.fetchModelList();
         console.log("modelTitles", modelTitles);
         if (modelTitles.length > 0) {
             modelTitles.sort();

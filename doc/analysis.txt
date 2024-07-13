@@ -222,6 +222,9 @@ Contents
 	function fetchModelSelections(). Note that this operation is repeated
 	each time that a model is saved or deleted.
 
+	The model details modal is presented when the selected model has been
+	fetched.
+
 	The fetchModelSelections routine prepares a call to receive-page.php 
 	with the JSON request:
 		{"request": "model title list"}
