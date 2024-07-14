@@ -18,6 +18,14 @@ Contents
     Load Page from alphabetical selection list
         * Check why model details not displayed, but visual is.
 
+    Handle Drawing edit after a model reload
+        Add an edit option directly to flow drawing options
+        Make the save button visible after the start of an edit
+        * flows
+        nodes
+        * model
+        Check resave after updates
+        
     In page load operations detect whether the page is authored by the user etc.
 
     Add the Zoom In page functionality

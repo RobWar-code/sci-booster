@@ -71,9 +71,14 @@ dfm.FlowVisuals = class {
     }
 
     redoFlows() {
+        this.flows = [];
         for (let flow of dfm.currentPage.page.flows) {
-            this.makeVisualFlow(flow);           
+            console.log("redoFlows - flow:", flow);
+            let visualFlowDrawing = this.makeVisualFlow(flow);           
+            // Add the flow line drawing to the visual data
+            this.flows.push(visualFlowDrawing);
         }
+        console.log ("redoFlows, flows:", this.flows);
     }
 
     destroyCurrentPage() {
@@ -497,7 +502,7 @@ dfm.FlowVisuals = class {
 
     makeVisualFlow(flowDetailsItem) {
         let visualFlowItem = Misc.copyObject(this.flowTemplate);
-        visualFlowItem.flowNum = this.currentFlow.flow_num;
+        visualFlowItem.flowNum = flowDetailsItem.flow_num;
         visualFlowItem.active = false;
         // Create the group
         let x = flowDetailsItem.drawing_group_x;
