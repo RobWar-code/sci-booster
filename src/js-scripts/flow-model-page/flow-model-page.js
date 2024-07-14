@@ -102,6 +102,22 @@ const flowModelPage = {
             console.error(`fetchModelList: Could not fetch model titles ${error}`);
             return modelTitles;
         }
+    },
+
+    issueNotice: function (message) {
+        let noticeDiv = document.getElementById("noticeRow");
+        noticeDiv.style.display = "block";
+        let noticeElem = document.getElementById("noticeText");
+        noticeElem.innerText = message;
+        let noticeTimer = setTimeout(() => {
+            noticeElem.innerText = "";
+            noticeDiv.style.display = "none";
+        }, 3000);
+    },
+
+    dismissWarning: function() {
+        document.getElementById("warningRow").style.display = "none";
     }
+
     
 }

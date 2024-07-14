@@ -209,6 +209,10 @@ body {
     display: none;
 }
 
+#noticeRow {
+    display: none;
+}
+
 #warningRow {
     display: none;
     border: red solid 2px;

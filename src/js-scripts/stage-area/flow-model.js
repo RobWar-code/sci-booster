@@ -331,6 +331,8 @@ dfm.FlowPageData = class {
             this.setPageData(pageData);
             this.update = true;
             dfm.currentVisual.redoPage();
+            // Inform user
+            flowModelPage.issueNotice("Saved Successfully");
         }
     }
 
