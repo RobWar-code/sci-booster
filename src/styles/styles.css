@@ -30,6 +30,12 @@ body {
     background-color: #00c000;
 }
 
+.buttonRowItem {
+    margin-right: 4px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
 /* Flow Model Page */
 .pageHead {
     font-size: 20px;
@@ -72,6 +78,10 @@ body {
     padding-bottom: 5px;
     border: 1px solid #604060;
     border-radius: 8px;
+}
+
+.centeredModal {
+    text-align: center;
 }
 
 .modalFormTitle {
@@ -189,6 +199,11 @@ body {
 
 /* Flow Details Modal */
 #flowFormulasDiv {
+    display: none;
+}
+
+/* Yes/No Modal */
+#yesNoModal {
     display: none;
 }
 

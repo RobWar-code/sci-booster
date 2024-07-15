@@ -10,6 +10,7 @@ const modelDetails = {
 
     dfm.currentPageSet = false;
     dfm.topPage = true;
+    flowModelPage.showSaveOnPageEdit(true);
     this.editMode = "new";
   },
 
@@ -18,10 +19,22 @@ const modelDetails = {
    * @param {*} event 
    */
   selectPage: async function(event) {
+    if (dfm.currentPageSet && dfm.modelChanged) {
+      // Present the option to save the existing model
+      let doSave = await flowModelPage.saveModelRequired(`Save the current model - ${dfm.currentPage.page.title}?`);
+      if (doSave === "cancel") return;
+      if (doSave === "yes") {
+        dfm.currentPage.saveModel();
+      }
+    }
+    if (dfm.currentVisualSet) {
+      dfm.currentVisual.destroyCurrentPage();
+    }
     dfm.currentPage = new dfm.FlowPageData();
     dfm.currentVisual = new dfm.FlowVisuals();
     await dfm.currentPage.selectModel(event);
     dfm.currentPageSet = true;
+    flowModelPage.showSaveOnPageEdit(true);
     this.loadModelDetails();
   },
 
@@ -114,7 +127,6 @@ const modelDetails = {
       }
       dfm.currentPage.page.hierarchical_id = "01";
       document.getElementById("pageHierarchicalId").innerText = dfm.currentPage.page.hierarchical_id;
-      dfm.currentPage.page.title = title;
       if (title != "") {
         document.getElementById("modelTitleTick").style.display = "inline";
       }
@@ -124,19 +136,22 @@ const modelDetails = {
       if (dfm.currentPage.page.hierarchical_id === "01") {
         dfm.currentPage.flow_model_title = title;
       }
-      dfm.currentPage.page.description = description;
       if (description != "") {
         document.getElementById("modelDescriptionTick").style.display = "inline";
       }
       else {
         document.getElementById("modelDescriptionTick").style.display = "none";
       }
-      dfm.currentPage.page.keywords = keywords;
       if (keywords != "") {
         document.getElementById("modelKeywordsTick").style.display = "inline";
       }
       else {
         document.getElementById("modelKeywordsTick").style.display = "none";
+      }
+      let change = dfm.currentPage.setModelDetails(title, description, keywords);
+      if (change) {
+        let start = false;
+        flowModelPage.showSaveOnPageEdit(start);
       }
       dfm.currentPageSet = true;
       dfm.modelEditMode = true;
@@ -172,6 +187,8 @@ const modelDetails = {
       let author = Misc.stripHTML(document.getElementById("modelAuthor").value).trim();
       if (author != "") {
         dfm.currentPage.page.user_authors.push({id: null, username: author});
+        let start = false;
+        flowModelPage.showSaveOnPageEdit(start);
         this.displayAuthorsList();
         document.getElementById("modelAuthor").value="";
         if (author != "") {
@@ -235,8 +252,10 @@ const modelDetails = {
       author = Misc.stripRedundantNameChars(author);
       if (author != "") {
         dfm.currentPage.page.external_authors.push({id: null, author: author});
+        let start = false;
+        flowModelPage.showSaveOnPageEdit(start);
         this.displayExtAuthorsList();
-        document.getElementById("modelExtAuthor").value="";
+        document.getElementById("modelExtAuthor").value = "";
         if (author != "") {
           document.getElementById("modelExtAuthorTick").style.display = "inline";
         }
@@ -305,6 +324,8 @@ const modelDetails = {
         document.getElementById("modelReferenceAuthor").value = "";
         document.getElementById("modelReferenceTitle").value = "";
         dfm.currentPage.page.references.push(refObj);
+        let start = false;
+        flowModelPage.showSaveOnPageEdit(start);
         this.displayReferencesList();
       }
     }

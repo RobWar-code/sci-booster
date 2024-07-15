@@ -13,12 +13,14 @@ dfm.currentVisual = {};
 
 // Model Definition Vars
 dfm.currentPageSet = false;
+dfm.currentVisualsSet = false;
 dfm.modelEditMode = false;
 dfm.topPage = false;
 dfm.modelAuthorsVisible = false;
 dfm.modelExtAuthorsVisible = false;
 dfm.modelReferencesVisible = false;
 dfm.flowDrawMode = false;
+dfm.modelChanged = false;
 
 // The drawing stage
 dfm.stageWidth = GLOBALS.minStageWidth;

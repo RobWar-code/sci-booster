@@ -218,7 +218,13 @@ Contents
 <h2>Model Select Element 
 	The model selection element appears beneath the search element on
 	the flow diagram page. The options list is reloaded when the page
-	is loaded. This operation being initiated in flow-main.js by the 
+	is loaded. 
+	
+	Before the selected page is loaded any existing page causes the app 
+	to ask to save the existing page if it has been edited. If the opts 
+	to save then this operation is performed first.
+
+	This operation is initiated in flow-main.js by the 
 	function fetchModelSelections(). Note that this operation is repeated
 	each time that a model is saved or deleted.
 
@@ -333,7 +339,10 @@ Contents
 
 	Save:
 	This saves the page/model and performs all necessary database
-	updates.
+	updates. 
+
+	When a page is first loaded, the save button is not visible, but
+	once a page has been edited, the save button is displayed.
 
 	Cancel:
 	This option is visible whilst page edit mode is in effect. It causes

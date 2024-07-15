@@ -117,7 +117,59 @@ const flowModelPage = {
 
     dismissWarning: function() {
         document.getElementById("warningRow").style.display = "none";
+    },
+
+    /**
+     * Set the model changed flag and display save button as required.
+     * If the start parameter is true, the save button is hidden and the
+     * model changed flag set to false.
+     * @param {*} start 
+     */
+    showSaveOnPageEdit: function(start) {
+        if (start) {
+            dfm.modelChanged = false;
+            document.getElementById("saveModelButton").style.display = "none";
+        }
+        else {
+            if (!dfm.modelChanged) {
+                dfm.modelChanged = true;
+                document.getElementById("saveModelButton").style.display = "inline";
+            }
+        }
+    },
+
+    showYesNoModal: function(message) {
+        return new Promise((resolve, reject) => {
+            document.getElementById("yesNoModal").style.display = "block";
+            document.getElementById("yesNoText").innerText = message;
+            
+            // Set-up event listeners for buttons
+            document.getElementById("modalYes").addEventListener('click', () => {
+                resolve('yes');
+                document.getElementById("yesNoModal").style.display = "none";
+            });
+
+            document.getElementById("modalNo").addEventListener('click', () => {
+                resolve('no');
+                document.getElementById("yesNoModal").style.display = "none";
+            });
+
+            document.getElementById("modalCancel").addEventListener('click', () => {
+                resolve('cancel');
+                document.getElementById("yesNoModal").style.display = "none";
+            });
+        });
+    },
+
+    saveModelRequired: async function(message) {
+        try {
+            let response = await this.showYesNoModal(message);
+            return response;
+        }
+        catch(error) {
+            console.error("saveModelRequired: could not collect response ", error);
+            return "cancel";
+        }
     }
 
-    
 }

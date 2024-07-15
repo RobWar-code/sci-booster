@@ -213,6 +213,17 @@ dfm.FlowPageData = class {
         this.page.set(pageObj);
     }
 
+    setModelDetails(title, description, keywords) {
+        let change = false;
+        if (this.page.title != title) change = true;
+        this.page.title = true;
+        if (this.page.description != description) change = true;
+        this.page.description = description;
+        if (this.page.keywords != keywords) change = true;
+        this.page.keywords = keywords;
+        return change;
+    }
+    
     addNode (node) {
         this.page.addNode(node);
     }
