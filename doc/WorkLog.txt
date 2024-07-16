@@ -5,6 +5,8 @@ Contents
     Work Done
 
 <h1>Work Due
+    Database corruption possible with save single node/title entry - Fix 
+
     Allow for the deletion of all elements in a model drawing
     
     Calculation of flow label width dubious
@@ -15,17 +17,17 @@ Contents
 
     Hide Page Details button until a page is loaded
 
-    Hide model edit prompts text unless in model edit mode
-
     Prevent saving of a page without title
 
     Load Page from alphabetical selection list
         * Check why model details not displayed, but visual is.
         * Allow for an existing current model
-        Clear the stage before model loaded
+        * Clear the stage before model loaded
 
-    Handle Drawing edit after a model reload
+    Handle Drawing edit options etc.
+        Do the analysis for edit mode
         Add an edit option directly to flow drawing options
+        Hide model edit prompts text unless in model edit mode
         Make the save button visible after the start of an edit
             Model
             Node

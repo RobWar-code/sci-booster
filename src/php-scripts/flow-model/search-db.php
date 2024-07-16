@@ -83,16 +83,23 @@
             }
         }
         if ($flowModelId != null) {
+            // Debug
+            error_log("findModelPageByTitle: flowModelId: {$flowModelId}", 0);
             // Search for pageId
             $sql = "SELECT id FROM page WHERE flow_model_id = $flowModelId AND hierarchical_id = '01'";
             $result = $dbConn->query($sql);
             if (!$result) {
                 error_log("findModelPageByTitle: Could not execute page search {$dbConn->error}", 0);
+                return null;
             }
             else {
-                if ($result->num_rows > 0) {
+                if ($result->num_rows === 1) {
                     $row = $result->fetch_assoc();
                     $pageId = $row['id'];
+                }
+                else {
+                    error_log("findModelPageByTitle: duplicate or missing entry - {$flowModelId} - {$result->num_rows}", 0);
+                    return null;
                 }
             }
         }

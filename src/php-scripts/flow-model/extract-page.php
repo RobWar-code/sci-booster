@@ -46,17 +46,20 @@
 
         $page = [];
         $sql = "SELECT * FROM page WHERE id = $pageId";
-        $stmt = $dbConn->prepare($sql);
-        if ($result = $stmt->execute()) {
-            $stmt->store_result();
-            $stmt->bind_result($pageId, $flowModelId, $hierarchicalId, $title, $description, $keywords);
-            $stmt->fetch();
-            $page['id'] = $pageId;
-            $page['flow_model_id'] = $flowModelId;
-            $page['hierarchical_id'] = $hierarchicalId;
-            $page['title'] = $title;
-            $page['description'] = $description;
-            $page['keywords'] = $keywords;
+        $result = $dbConn->query($sql);
+        if (!$result) {
+            error_log("fetchPage: Could not select page record - {$pageId}", 0);
+        }
+        else {
+            if ($result->num_rows === 1) {
+                $row = $result->fetch_assoc();
+                $page['id'] = $row['id'];
+                $page['flow_model_id'] = $row['flow_model_id'];
+                $page['hierarchical_id'] = $row['hierarchical_id'];
+                $page['title'] = $row['title'];
+                $page['description'] = $row['description'];
+                $page['keywords'] = $row['keywords'];
+            }
         }
 
         return $page;

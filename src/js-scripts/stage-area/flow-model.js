@@ -216,7 +216,7 @@ dfm.FlowPageData = class {
     setModelDetails(title, description, keywords) {
         let change = false;
         if (this.page.title != title) change = true;
-        this.page.title = true;
+        this.page.title = title;
         if (this.page.description != description) change = true;
         this.page.description = description;
         if (this.page.keywords != keywords) change = true;
@@ -300,6 +300,10 @@ dfm.FlowPageData = class {
 
         if (modelTitle != "") {
             let pageData = await this.fetchModelByTitle(modelTitle);
+            if (!pageData) {
+                console.error(`could not fetch model - ${modelTitle}`);
+                return;
+            }
             if (pageData.result) {
                 this.setPageData(pageData);
                 this.update = true;
@@ -334,14 +338,24 @@ dfm.FlowPageData = class {
 
     }
 
-    async saveModel() {
+    /**
+     * Save the current model to the database. If the reload option is true
+     * then the page is reloaded
+     * @param {*} reload 
+     */
+    async saveModel(reload) {
         let pageJSONObject = this.prepareJSONObject();
+        // Debug
+        console.log("pageJSONObject:", pageJSONObject);
         let pageJSON = JSON.stringify(pageJSONObject);
         let pageData = await this.sendPage(pageJSON);
         if (pageData.result) {
-            this.setPageData(pageData);
-            this.update = true;
-            dfm.currentVisual.redoPage();
+            if (reload) {
+                dfm.currentVisual.destroyCurrentPage();
+                this.setPageData(pageData);
+                this.update = true;
+                dfm.currentVisual.redoPage();
+            }
             // Inform user
             flowModelPage.issueNotice("Saved Successfully");
         }
@@ -372,7 +386,7 @@ dfm.FlowPageData = class {
         let pageJSONObj = {
             flow_model_id: this.id,
             flow_model_title: this.flow_model_title,
-            update: false,
+            update: this.update,
             page: {
                 id: this.page.id,
                 hierarchical_id: this.page.hierarchical_id,

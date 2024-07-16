@@ -13,9 +13,7 @@ $inputData = json_decode(file_get_contents('php://input'), true);
 scanInput($inputData);
 
 function scanInput($inputData) {
-    // Debug
     if(array_key_exists("request", $inputData)) {
-        error_log("Got to scanInput {$inputData['request']}", 0);
         $requestType = $inputData['request'];
         if ($requestType === 'model title list') {
             getModelTitlesList();
@@ -152,8 +150,6 @@ function getSetModelAndPageIds($inputData) {
 
 function getModelTitlesList() {
     $modelsList = fetchModelTitlesList();
-    // Debug
-    error_log("getModelTitlesList: {$modelsList[0]}", 0);
     $listObj = count($modelsList) > 0 ? $listObj = ["result"=>true, "modelTitles"=>$modelsList] :
         $listObj = ["result"=>false];
     echo json_encode($listObj);
@@ -163,6 +159,7 @@ function fetchModelPageByTitle($title) {
     $pageRef = findModelPageByTitle($title);
     if ($pageRef === null) {
         $result = ['result'=>false];
+        echo json_encode($result);
     }
     else {
         $pageId = $pageRef['page_id'];

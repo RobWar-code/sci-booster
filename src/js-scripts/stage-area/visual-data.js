@@ -55,7 +55,6 @@ dfm.FlowVisuals = class {
     }
 
     redoPage() {
-        this.destroyCurrentPage();
         this.redoNodes();
         this.redoFlows();
         this.currentVisualsSet = true;
@@ -83,12 +82,13 @@ dfm.FlowVisuals = class {
     }
 
     destroyCurrentPage() {
-        console.log("Got to destroyCurrentPage()");
+        console.log("Got to destroyCurrentPage()", this.nodeLayer);
         this.nodeLayer.destroy();
         dfm.stageApp.draw();
         this.setStageDetails();
         this.nodes = [];
         this.flows = [];
+        dfm.currentVisualsSet = false;
     }
 
     addNode(label, nodeNum, x, y) {

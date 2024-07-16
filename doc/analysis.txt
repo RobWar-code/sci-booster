@@ -328,9 +328,26 @@ Contents
 	modal to be entered.
 
 	Edit:
-	The update button only appears when the Flow Diagram Page already
+	The Edit button only appears when the Flow Diagram Page already
 	contains content. It enables the editing of the drawing. Only the
-	author and the editors can use this feature.
+	author and the editors can use this feature. 
+	
+	The edit button appears when the user is an authorised user and a 
+	model has been successfully selected. Once clicked, it is cleared.
+
+	Selecting a model or starting a new model automatically cancels
+	Model Edit Mode. The cancelModelEditMode() function sets the Model Edit
+	Mode to false, the model editing instructions are cleared from the
+	instruction text.
+
+	Model Edit mode can be started by using this button or by clicking on
+	the Edit Mode button in the modelDetails modal. The new model also
+	initiates Model Edit Mode, once details have been submitted. 
+
+	In all these cases the dfm.modelEditMode is set to true by the 
+	setModelEditMode() function. In addition Flow Draw Mode is set to 
+	false and the Edit button hidden. The model editing instructions 
+	are displayed on the instruction text line.
 
 	Delete:
 	This enables the deletion of the Flow Model or Flow Page with all
@@ -343,6 +360,9 @@ Contents
 
 	When a page is first loaded, the save button is not visible, but
 	once a page has been edited, the save button is displayed.
+
+	The model is reloaded from the database once it has been saved,
+	to ensure consistency.
 
 	Cancel:
 	This option is visible whilst page edit mode is in effect. It causes

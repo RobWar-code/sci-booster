@@ -57,7 +57,7 @@ function addPageDetails($flowModelId, $pageData) {
     $sql = "SELECT title FROM page WHERE title = '$title'";
     $result = $dbConn->query($sql);
     if ($result && $result->num_rows > 0) {
-        error_log("addPageDetails: trying to add a page that already exists", 0);
+        error_log("addPageDetails: trying to add a page that already exists - $title", 0);
     }
     else {
         $sql = "INSERT INTO page (flow_model_id, hierarchical_id, title, keywords, description) VALUES (?, ?, ?, ?, ?)";

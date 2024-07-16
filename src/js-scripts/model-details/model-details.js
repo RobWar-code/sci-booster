@@ -24,10 +24,11 @@ const modelDetails = {
       let doSave = await flowModelPage.saveModelRequired(`Save the current model - ${dfm.currentPage.page.title}?`);
       if (doSave === "cancel") return;
       if (doSave === "yes") {
-        dfm.currentPage.saveModel();
+        let reload = false;
+        dfm.currentPage.saveModel(reload);
       }
     }
-    if (dfm.currentVisualSet) {
+    if (dfm.currentVisualsSet) {
       dfm.currentVisual.destroyCurrentPage();
     }
     dfm.currentPage = new dfm.FlowPageData();
@@ -120,7 +121,7 @@ const modelDetails = {
     let description = Misc.stripHTML(document.getElementById("modelDescription").value).trim();
     let keywords = Misc.stripHTML(document.getElementById("modelKeywords").value).trim();
 
-    if (!(title === "" && description === "" && keywords === "")) {
+    if (title != "") {
       if (!dfm.currentPageSet) {
         dfm.currentPage = new dfm.FlowPageData();
         dfm.currentVisual = new dfm.FlowVisuals();
