@@ -14,7 +14,7 @@ dfm.currentVisual = {};
 // Model Definition Vars
 dfm.currentPageSet = false;
 dfm.currentVisualsSet = false;
-dfm.modelEditMode = false;
+dfm.modelEditMode = "read-only";
 dfm.topPage = false;
 dfm.modelAuthorsVisible = false;
 dfm.modelExtAuthorsVisible = false;

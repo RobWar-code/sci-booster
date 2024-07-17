@@ -102,7 +102,7 @@
           </div>
         </div>
         <div class="modalFormCancelDiv">
-          <button class="textButton" id="modelEditOption" onClick="modelDetails.setModelEditMode()">Edit Mode</button>
+          <button class="textButton" id="modelEditOption" onclick="modelDetails.setEditModel()">Edit Mode</button>
           <button class="textButton" id="modalDismissButton" onclick="modelDetails.dismissModelDetailsForm()">Dismiss</button>
         </div>
       </div>
@@ -273,7 +273,7 @@
             <p>Model Title: <span id="flowModelTitle">My Flow Title</span></p>
             <p>Hierarchical Id: <span id="pageHierarchicalId"></span></p>
             <p>Page Title: <span id="pageTitle">My Page Title</span></p>
-            <p><button class="textButton" onclick="modelDetails.loadModelDetails()">Page Details</button></p>
+            <p><button class="textButton" id="pageDetailsButton" onclick="modelDetails.pageDetailsAction()">Page Details</button></p>
           </div>
           <!-- Model Options-->
           <div class="col-md-5 optionButtons optionsSection">

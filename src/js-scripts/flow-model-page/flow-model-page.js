@@ -54,9 +54,14 @@ const flowModelPage = {
     displayFlowModelEditMessage: function () {
         let s = "Click the stage to add flow component nodes.";
         s += " Click the option buttons on a node to choose more actions.";
-        s += " Click a flow label to edit the flow";
+        s += " Double click a flow label to edit the flow";
         document.getElementById("instructionsText").innerText = s;
         document.getElementById("instructionsText").style.display = "block";
+    },
+
+    clearFlowModelEditMessage: function () {
+        document.getElementById("instructionsText").innerText = "";
+        document.getElementById("instructionsText").style.display = "none";
     },
 
     getModelSelectionList: async function () {

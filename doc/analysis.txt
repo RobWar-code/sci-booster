@@ -335,19 +335,20 @@ Contents
 	The edit button appears when the user is an authorised user and a 
 	model has been successfully selected. Once clicked, it is cleared.
 
-	Selecting a model or starting a new model automatically cancels
-	Model Edit Mode. The cancelModelEditMode() function sets the Model Edit
-	Mode to false, the model editing instructions are cleared from the
-	instruction text.
+	Selecting a model causes the Model Edit Mode to be set to "read-only".
+	Starting a "new" model initially sets the flag to "new", but to "edit"
+	once  the details have been submitted. The cancelModelEditMode() 
+	function sets the Model Edit Mode to "read-only", 
+	the model editing instructions are cleared from the instruction text.
 
-	Model Edit mode can be started by using this button or by clicking on
-	the Edit Mode button in the modelDetails modal. The new model also
+	Model Edit mode can be started by using the Edit button or by clicking on
+	the Edit Mode button in the modelDetails modal.Note that clicking the 
+	button also loads the model details modal. The new model also
 	initiates Model Edit Mode, once details have been submitted. 
 
-	In all these cases the dfm.modelEditMode is set to true by the 
-	setModelEditMode() function. In addition Flow Draw Mode is set to 
-	false and the Edit button hidden. The model editing instructions 
-	are displayed on the instruction text line.
+	In all these cases the dfm.modelEditMode is set to "edit" by the 
+	setModelEditMode() function. In addition the Edit button is hidden. 
+	The model editing instructions are displayed on the instruction text line.
 
 	Delete:
 	This enables the deletion of the Flow Model or Flow Page with all

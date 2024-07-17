@@ -37,6 +37,8 @@ Contents
         * model
         Check resave after updates
         
+    When new model is selected and there is a current model, allow for save operation
+    
     In page load operations detect whether the page is authored by the user etc.
 
     Add the Zoom In page functionality

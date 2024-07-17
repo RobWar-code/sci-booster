@@ -1,17 +1,38 @@
 const modelDetails = {
-  editMode: "new",
 
   newModel: function() {
+    this.displayModelDetails();
+    dfm.currentPageSet = false;
+    dfm.topPage = true;
+    this.cancelModelEditMode();
+    dfm.modelEditMode = "new";
+  },
+
+  editModel: function() {
+    this.setModelEditMode();
+    this.loadDisplayValues();
+    this.setModelEditDisplay();
+    this.displayModelDetails();
+  },
+
+  setModelEditMode: function () {
+    dfm.modelEditMode = "edit";
+    document.getElementById("modelEditButton").style.display = "none";
+    flowModelPage.displayFlowModelEditMessage();
+  },
+
+  cancelModelEditMode: function() {
+    dfm.modelEditMode = "read-only";
+    flowModelPage.clearFlowModelEditMessage();
+  },
+
+  displayModelDetails: function() {
     e = document.getElementById("modelDetails");
     e.style.display = "block";
     document.getElementById("additionalModelDetailsDiv").style.display = "none";
     document.getElementById("modelEditOption").style.display = "none";
     this.clearSubmissionTicks();
-
-    dfm.currentPageSet = false;
-    dfm.topPage = true;
     flowModelPage.showSaveOnPageEdit(true);
-    this.editMode = "new";
   },
 
   /**
@@ -35,16 +56,25 @@ const modelDetails = {
     dfm.currentVisual = new dfm.FlowVisuals();
     await dfm.currentPage.selectModel(event);
     dfm.currentPageSet = true;
+    document.getElementById("pageDetailsButton").style.display = "inline";
     flowModelPage.showSaveOnPageEdit(true);
+    this.setReadOnlyDisplay();
+    this.loadModelDetails();
+  },
+
+  pageDetailsAction: function () {
+    if (dfm.modelEditMode === "edit") {
+      document.getElementById("modelEditOption").style.display = "none";
+    }
+    this.displayModelDetails();
     this.loadModelDetails();
   },
 
   loadModelDetails: function() {
     e = document.getElementById("modelDetails");
     e.style.display = "block";
-    this.editMode = "read-only";
+    this.cancelModelEditMode();
     this.loadDisplayValues();
-    this.setReadOnlyDisplay();
     this.clearSubmissionTicks();
   },
 
@@ -78,7 +108,12 @@ const modelDetails = {
     }
   },
 
-  setModelEditMode: function() {
+  setEditModel() {
+    this.setModelEditMode();
+    this.setModelEditDisplay();
+  },
+
+  setModelEditDisplay: function() {
     this.editMode = true;
     document.getElementById("modelEditOption").style.display = "none";
 
@@ -155,9 +190,11 @@ const modelDetails = {
         flowModelPage.showSaveOnPageEdit(start);
       }
       dfm.currentPageSet = true;
-      dfm.modelEditMode = true;
+      dfm.modelEditMode = "edit";
       document.getElementById("additionalModelDetailsDiv").style.display = "block";
+      document.getElementById("pageDetailsButton").style.display = "inline";
       flowModelPage.displayModelEditOptions();
+      flowModelPage.displayFlowModelEditMessage();
       document.getElementById("modalDismissButton").innerHTML = "Leave";
       // If the top page of the hierarchy
       if (dfm.topPage) {
@@ -313,7 +350,6 @@ const modelDetails = {
 
   submitReference: function (event) {
     event.preventDefault();
-    console.log("Got to submit references");
     if (dfm.currentPageSet) {
       let refObj = {};
       refObj.id = null;

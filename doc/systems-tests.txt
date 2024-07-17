@@ -1,7 +1,22 @@
 Systems Tests
 
 Contents
+    Edit, New and Read-only Modes
     Model Save and Load
+
+<h1>Edit, New and Read-only Modes
+    Check the editing modes and operation when the "New" button
+    is clicked
+
+    Test New model
+        * Does the save button appear after the first edit.
+        Is the edit mode set after details submission effective?
+
+    Load a page using the selector and check whether the appropriate
+    editing mode applies test:
+        Edit Button
+        Edit Mode Button
+        Make a change to the current model
 
 <h1>Model Save and Load
     Save a model
