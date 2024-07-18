@@ -17,7 +17,7 @@ const modelDetails = {
 
   setModelEditMode: function () {
     dfm.modelEditMode = "edit";
-    document.getElementById("modelEditButton").style.display = "none";
+    document.getElementById("modelEditOption").style.display = "none";
     flowModelPage.displayFlowModelEditMessage();
   },
 
@@ -57,17 +57,26 @@ const modelDetails = {
     await dfm.currentPage.selectModel(event);
     dfm.currentPageSet = true;
     document.getElementById("pageDetailsButton").style.display = "inline";
+    if (dfm.userStatus === "editor" || dfm.userStatus === "owner" || dfm.currentPage.isUserAuthor()) {
+      document.getElementById("editModelButton").style.display = "inline";
+    }
     flowModelPage.showSaveOnPageEdit(true);
     this.setReadOnlyDisplay();
     this.loadModelDetails();
   },
 
   pageDetailsAction: function () {
-    if (dfm.modelEditMode === "edit") {
+    console.log("model edit mode:", dfm.modelEditMode)
+    this.loadDisplayValues();
+    this.clearSubmissionTicks();
+    document.getElementById("modelDetails").style.display = "block";
+    document.getElementById("additionalModelDetailsDiv").style.display = "block";
+    if (dfm.modelEditMode === "read-only") {
+      this.setReadOnlyDisplay();
+    }
+    else {
       document.getElementById("modelEditOption").style.display = "none";
     }
-    this.displayModelDetails();
-    this.loadModelDetails();
   },
 
   loadModelDetails: function() {
@@ -109,6 +118,7 @@ const modelDetails = {
   },
 
   setEditModel() {
+    document.getElementById("editModelButton").style.display = "none";
     this.setModelEditMode();
     this.setModelEditDisplay();
   },
@@ -147,7 +157,6 @@ const modelDetails = {
   dismissModelDetailsForm: function () {
     let e = document.getElementById("modelDetails");
     e.style.display = "none";
-    flowModelPage.displayFlowModelEditMessage();
   },
 
   submitModelDetails: function (event) {
@@ -364,6 +373,7 @@ const modelDetails = {
         let start = false;
         flowModelPage.showSaveOnPageEdit(start);
         this.displayReferencesList();
+        document.getElementById("modelReferenceTick").style.display = "inline";
       }
     }
   },

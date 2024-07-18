@@ -18,6 +18,79 @@ Contents
         Edit Mode Button
         Make a change to the current model
 
+    Model Edit Effects:
+        Initial / Empty Display
+            The model edit mode is "read-only"
+            The edit button is absent
+            The page details button is absent
+
+        New Button clicked: (Modal Loads)
+            New Model Start
+                Only the model details are displayed
+                Submission Ticks Cleared 
+                The model edit mode is new
+                Edit Button Absent
+                Edit Mode Button Absent
+                Enable Editing
+
+            New Model Details submit (valid)
+                Fields Editable
+                Author etc have visible input forms
+                Model Edit Mode - Edit
+                User Author Toggle visible
+                External Author Toggle visible
+                Reference Toggle visible
+                Edit Button Absent
+                Edit Mode Button Absent
+
+            Cancel/Leave Button Clicked
+                Hide the Modal
+                If model edit mode is "new"
+                    set the Model Edit Mode to "read-only"
+                Else if the model edit mode is "read-only"
+                    No Further Action
+                Else
+                    No Further Action
+
+        Model Selected
+            If model already present
+                Prompt (modal) for save
+                    Yes
+                        Save before loading
+                    No
+                        Continue with loading
+                    Cancel
+                        Clear the modal 
+                        No further Action
+            Model Load
+            Set model edit mode to "read-only"
+            If the user is qualified
+                Display edit mode option
+                Display Edit button
+            Display all model details with editing disabled
+            Clear all submission ticks
+
+        Edit Mode Selected (on the modal)
+            Enable field editing
+            Set the Model Edit mode to "edit"
+            Hide the Edit options
+
+        Edit Option Selected
+            Set the Model Edit Mode to "edit"
+            Clear the submission ticks
+            Load the Model Details Modal with all details visible and editing enabled
+            Hide the Edit Mode button
+            Hide the Edit Button
+
+        Page Details option
+            If the edit mode is "read-only"
+                Display the model details as for Model Selected
+            Otherwise
+                Display the full details of the model as for Edit Option
+                
+
+
+
 <h1>Model Save and Load
     Save a model
         * Check the validity of data combinations, save and restore

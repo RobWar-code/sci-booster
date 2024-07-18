@@ -39,7 +39,11 @@ Contents
         
     When new model is selected and there is a current model, allow for save operation
     
+    Add current user automatically to authors for a new model (when model details submitted).
+
     In page load operations detect whether the page is authored by the user etc.
+
+    Allow for change of login
 
     Add the Zoom In page functionality
 

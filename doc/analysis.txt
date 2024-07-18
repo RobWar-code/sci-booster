@@ -370,6 +370,16 @@ Contents
 	edit mode to be cancelled and the current drawing to be cleared
 	from the stage.
 
+	Page Details:
+		This button is displayed once a model is loaded or when a new model
+		is begun. The page may be in Model Edit Mode or in Read-only Mode.
+
+		In either mode, all model page details are displayed. But if the
+		mode is read-only then the Edit Mode button is displayed and the
+		display is in read-only mode.
+
+		For more details on edit mode see Edit: above
+
 <h3>New Model / New Page Operations
 
 	When the New model button is clicked:
