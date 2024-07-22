@@ -18,8 +18,11 @@ function scanInput($inputData) {
         if ($requestType === 'model title list') {
             getModelTitlesList();
         }
-        elseif($requestType == "fetch model by title") {
+        elseif($requestType === "fetch model by title") {
             fetchModelPageByTitle($inputData['title']);
+        }
+        elseif($requestType === "delete page by id") {
+            deleteModelPage($inputData['page_id']);
         }
     }
     else {
@@ -166,6 +169,20 @@ function fetchModelPageByTitle($title) {
         $flowModelId = $pageRef['flow_model_id'];
         $result = extractPage($flowModelId, $pageId);
         $result['result'] = true;
+        echo json_encode($result);
+    }
+}
+
+function deleteModelPage($pageId) {
+    if ($pageId != null) {
+        $hierarchicalId = "";
+        $flowModelId = null;
+        deletePage($flowModelId, $hierarchicalId, $pageId);
+        $result['result'] = true;
+        echo json_encode($result);
+    }
+    else {
+        $result['result'] = false;
         echo json_encode($result);
     }
 }

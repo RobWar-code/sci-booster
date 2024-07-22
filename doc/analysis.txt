@@ -14,6 +14,7 @@ Contents
 	Flow Diagram Page
 		Model Select Element
 		Model Edit Options
+			Effect of Logout on User Edit Options
 		Page Information
 		Page Options Buttons
 			New Model / New Page Operations
@@ -282,6 +283,12 @@ Contents
 		If there is a current page and the page is not at the top Level
 		then the Zoomback button is displayed.
 
+<h3>Effect of Logout on User Edit Options
+
+	When the logout option is chosen from the login menu the
+	edit mode is set to "read-only", the New, Save and Edit options are
+	hidden.
+
 <h2>Page Information
 
 	The page information appears toward the top of the page on the left.
@@ -335,25 +342,101 @@ Contents
 	The edit button appears when the user is an authorised user and a 
 	model has been successfully selected. Once clicked, it is cleared.
 
-	Selecting a model causes the Model Edit Mode to be set to "read-only".
-	Starting a "new" model initially sets the flag to "new", but to "edit"
-	once  the details have been submitted. The cancelModelEditMode() 
-	function sets the Model Edit Mode to "read-only", 
-	the model editing instructions are cleared from the instruction text.
+	Edit Events and Interactions:
 
-	Model Edit mode can be started by using the Edit button or by clicking on
-	the Edit Mode button in the modelDetails modal.Note that clicking the 
-	button also loads the model details modal. The new model also
-	initiates Model Edit Mode, once details have been submitted. 
+        Initial / Empty Display
+            The model edit mode is "read-only"
+            The edit button is absent
+            The page details button is absent
+            The New button is present if the user is authorised
 
-	In all these cases the dfm.modelEditMode is set to "edit" by the 
-	setModelEditMode() function. In addition the Edit button is hidden. 
-	The model editing instructions are displayed on the instruction text line.
+        New Button clicked: (Modal Loads)
+            New Model Start
+                If an existing model is loaded and edit mode is "edit" and changes made
+                    Show Save Modal
+                        Yes
+                            Save the current model
+                            Clear the model details etc.
+                        No
+                        Cancel
+                Only the model details are displayed
+                All data cleared
+                Submission Ticks Cleared 
+                The model edit mode is new
+                Edit Button Absent
+                Edit Mode Button Absent
+                Enable Editing
+
+            New Model Details submit (valid)
+                Author etc have visible input forms
+                Model Edit Mode - Edit
+                User Author Toggle visible
+                External Author Toggle visible
+                Reference Toggle visible
+                Edit Button Absent
+                Edit Mode Button Absent
+
+            Dismiss/Leave Button Clicked
+                Hide the Modal
+                If model edit mode is "new"
+                    set the Model Edit Mode to "read-only"
+                Else if the model edit mode is "read-only"
+                    No Further Action
+                Else
+                    No Further Action
+
+        Model Selected
+            If model already present
+                Prompt (modal) for save
+                    Yes
+                       * Save before loading
+                    No
+                        * Continue with loading
+                    Cancel
+                        * Clear the modal 
+                        * No further Action
+            * Model Load
+            * Set model edit mode to "read-only"
+            * If the user is qualified
+                * Display edit mode option
+                * Display Edit button
+            * Display all model details with editing disabled
+            * Clear all submission ticks
+
+        Edit Mode Selected (on the modal)
+            * Enable field editing
+            * Set the Model Edit mode to "edit"
+            * Hide the Edit options
+
+        Edit Option Selected
+            * Set the Model Edit Mode to "edit"
+            * Clear the submission ticks
+            * Load the Model Details Modal with all details visible and editing enabled
+			Make the page Delete option visible.
+            * Hide the Edit Mode button
+            * Hide the Edit Button
+
+        Page Details option
+            * If the edit mode is "read-only"
+                * Display the model details as for Model Selected
+            * Otherwise
+                * Display the full details of the model as for Edit Option
+                
+
 
 	Delete:
 	This enables the deletion of the Flow Model or Flow Page with all
 	its children. It is accompanied by a warning on a modal screen.
-	This feature is only available to the editors/authors.
+	This feature is only available to the editors/authors. The image
+	of the page is also removed from the display.
+
+	If the page is a child, then the parent of the child is loaded
+	instead of the page.
+
+	Causes the selection list to be updated.
+
+	If the page has not been saved to the database, then the deletion of
+	the display data only is performed.
 
 	Save:
 	This saves the page/model and performs all necessary database

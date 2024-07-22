@@ -58,7 +58,26 @@ function deletePage($flowModelId, $hierarchicalPageId, $pageId) {
         deleteExternalAuthorPageLinks($pageId);
         deletePageReferences($pageId);
         deletePageEntry($pageId);
+
+        // If the hierarchical id is 01, then delete the flow-model entry
+        if ($hierarchicalPageId === "01") {
+            deleteFlowModel($flowModelId);
+        }
     } 
+}
+
+function deleteFlowModel($flowModelId) {
+    global $dbConn;
+
+    $sql = "DELETE FROM flow_model WHERE id = $flowModelId";
+    $result = $dbConn->query($sql);
+    if (!$result) {
+        error_log("deleteFlowModel: problem deleting, flowmodelId - $flowModelId - {$dbConn->error}", 0);
+        return false;
+    }
+    else {
+        return true;
+    }
 }
 
 function deletePageEntry($pageId){

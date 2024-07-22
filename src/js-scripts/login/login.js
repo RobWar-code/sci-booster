@@ -53,7 +53,9 @@ const login = {
             document.getElementById("loginDetails").style.display = "none";
             dfm.username = "";
             dfm.userStatus = "unregistered";
+            if (dfm.modelEditMode = "edit") dfm.modelEditMode = "read-only";
             dfm.loginOption = "";
+            flowModelPage.displayModelEditOptions();
             return;
         }
 

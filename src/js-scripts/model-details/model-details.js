@@ -1,6 +1,25 @@
 const modelDetails = {
 
-  newModel: function() {
+  newModel: async function() {
+    // Check whether an existing model is present
+    if (dfm.currentPageSet && dfm.modelEditMode === "edit" && dfm.modelChanged) {
+      // Present the option to save the existing model
+      let doSave = await flowModelPage.saveModelRequired(`Save the current model - ${dfm.currentPage.page.title}?`);
+      if (doSave === "cancel") return;
+      if (doSave === "yes") {
+        let reload = false;
+        dfm.currentPage.saveModel(reload);
+      }
+    }
+    if (dfm.currentPageSet) {
+      if (dfm.currentVisualsSet) {
+        dfm.currentVisual.destroyCurrentPage();
+      }
+      dfm.currentPage = new dfm.FlowPageData();
+      dfm.currentVisual = new dfm.FlowVisuals();
+    }
+    this.clearDisplayData();
+    this.setModelEditDisplay();
     this.displayModelDetails();
     dfm.currentPageSet = false;
     dfm.topPage = true;
@@ -10,20 +29,39 @@ const modelDetails = {
 
   editModel: function() {
     this.setModelEditMode();
+    document.getElementById("modelDetails").style.display = "block";
+    document.getElementById("deleteModelButton").style.display = "inline";
     this.loadDisplayValues();
     this.setModelEditDisplay();
-    this.displayModelDetails();
   },
 
   setModelEditMode: function () {
     dfm.modelEditMode = "edit";
     document.getElementById("modelEditOption").style.display = "none";
+    document.getElementById("editModelButton").style.display = "none";
+    document.getElementById("deleteModelButton").style.display = "inline";
     flowModelPage.displayFlowModelEditMessage();
   },
 
   cancelModelEditMode: function() {
     dfm.modelEditMode = "read-only";
     flowModelPage.clearFlowModelEditMessage();
+  },
+
+  clearDisplayData: function () {
+    document.getElementById("modelTitle").value = "";
+    document.getElementById("modelDescription").value = "";
+    document.getElementById("modelKeywords").value = "";
+    // Remove the old lists
+    if (document.getElementById("authorsList")) {
+      document.getElementById("authorsList").remove();
+    }
+    if (document.getElementById("extAuthorsList")) {
+      document.getElementById("extAuthorsList").remove();
+    }
+    if (document.getElementById("modelReferencesList")) {
+      document.getElementById("modelReferencesList").remove();
+    }
   },
 
   displayModelDetails: function() {
@@ -60,13 +98,13 @@ const modelDetails = {
     if (dfm.userStatus === "editor" || dfm.userStatus === "owner" || dfm.currentPage.isUserAuthor()) {
       document.getElementById("editModelButton").style.display = "inline";
     }
+    document.getElementById("cancelModelButton").style.display = "inline";
     flowModelPage.showSaveOnPageEdit(true);
     this.setReadOnlyDisplay();
     this.loadModelDetails();
   },
 
   pageDetailsAction: function () {
-    console.log("model edit mode:", dfm.modelEditMode)
     this.loadDisplayValues();
     this.clearSubmissionTicks();
     document.getElementById("modelDetails").style.display = "block";
@@ -88,7 +126,6 @@ const modelDetails = {
   },
 
   loadDisplayValues: function() {
-    console.log(dfm.currentPage.page.user_authors);
     document.getElementById("modelTitle").value = dfm.currentPage.page.title;
     document.getElementById("modelDescription").value = dfm.currentPage.page.description;
     document.getElementById("modelKeywords").value = dfm.currentPage.page.keywords;
@@ -157,6 +194,9 @@ const modelDetails = {
   dismissModelDetailsForm: function () {
     let e = document.getElementById("modelDetails");
     e.style.display = "none";
+    if (dfm.modelEditMode === "new") {
+      dfm.modelEditMode = "read-only";
+    }
   },
 
   submitModelDetails: function (event) {
@@ -202,6 +242,7 @@ const modelDetails = {
       dfm.modelEditMode = "edit";
       document.getElementById("additionalModelDetailsDiv").style.display = "block";
       document.getElementById("pageDetailsButton").style.display = "inline";
+      document.getElementById("cancelModelButton").style.display = "inline";
       flowModelPage.displayModelEditOptions();
       flowModelPage.displayFlowModelEditMessage();
       document.getElementById("modalDismissButton").innerHTML = "Leave";
@@ -250,7 +291,9 @@ const modelDetails = {
 
   displayAuthorsList: function () {
     // Remove the old list
-    document.getElementById("authorsList").remove();
+    if (document.getElementById("authorsList")) {
+      document.getElementById("authorsList").remove();
+    }
     // Build the replacement html
     let listDiv = document.getElementById("authorsListDiv");
     let listHtml = "<ul id=\"authorsList\">";
@@ -315,7 +358,9 @@ const modelDetails = {
 
   displayExtAuthorsList: function () {
     // Remove the old list
-    document.getElementById("extAuthorsList").remove();
+    if (document.getElementById("extAuthorsList")) {
+      document.getElementById("extAuthorsList").remove();
+    }
     // Build the replacement html
     let listDiv = document.getElementById("extAuthorsListDiv");
     let listHtml = "<ul id=\"extAuthorsList\">";
@@ -379,7 +424,9 @@ const modelDetails = {
   },
   
   displayReferencesList: function () {
-    document.getElementById("modelReferencesList").remove();
+    if (document.getElementById("modelReferencesList")) {
+      document.getElementById("modelReferencesList").remove();
+    }
     let referencesListElem = document.getElementById("modelReferencesListDiv");
     let listHtml = '<ul class="modalFormList" id="modelReferencesList">';
     let count = 0;

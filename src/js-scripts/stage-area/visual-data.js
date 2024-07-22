@@ -73,16 +73,13 @@ dfm.FlowVisuals = class {
     redoFlows() {
         this.flows = [];
         for (let flow of dfm.currentPage.page.flows) {
-            console.log("redoFlows - flow:", flow);
             let visualFlowDrawing = this.makeVisualFlow(flow);           
             // Add the flow line drawing to the visual data
             this.flows.push(visualFlowDrawing);
         }
-        console.log ("redoFlows, flows:", this.flows);
     }
 
     destroyCurrentPage() {
-        console.log("Got to destroyCurrentPage()", this.nodeLayer);
         this.nodeLayer.destroy();
         dfm.stageApp.draw();
         this.setStageDetails();
@@ -261,13 +258,11 @@ dfm.FlowVisuals = class {
 
     initialiseFlowEdit(flowDetails) {
         this.currentFlow = flowDetails;
-        console.log("CurrentFlow in initialiseFlowEdit:", this.currentFlow);
         // Remove the non-editable version of the flow line
         let flowNum = flowDetails.flow_num;
         let flow = this.getFlow(flowNum);
         if (flow === null) {
             console.error("Visual flow details for flow not found:", flowNum);
-            console.log(this.flows)
             return;
         }
         flow.flowGroup.remove();
@@ -735,7 +730,6 @@ dfm.FlowVisuals = class {
     flowNodeClicked(e) {
         e.cancelBubble = true;
         let flowNodeNum = e.target.getAttr("nodeNum");
-        console.log("got to flowNodeClicked", flowNodeNum);
         if (flowNodeNum === this.lastFlowNodeClicked && Date.now() - this.flowNodeClickTime < 500) {
             this.deleteFlowNode(flowNodeNum);
             this.flowNodeClickTime = 0;
@@ -754,9 +748,8 @@ dfm.FlowVisuals = class {
 
         let pointsLen = this.currentFlowDrawing.points.length;
         let {itemNum, flowNodeItem} = this.findCurrentFlowDrawingFlowNode(flowNodeNum);
-        console.log("itemNum, flowNodeNum", itemNum, flowNodeNum);
         if (itemNum === -1) {
-            console.log("Could not find flow node to delete");
+            console.error("Could not find flow node to delete");
             return;
         }
         if (itemNum === 0) {
@@ -837,7 +830,7 @@ dfm.FlowVisuals = class {
             }
         }
         else {
-            console.log("Drag end - could not find flowNodeItem")
+            console.error("Drag end - could not find flowNodeItem")
         }
     }
 
@@ -855,7 +848,6 @@ dfm.FlowVisuals = class {
             this.lastFlowLineClicked = flowNodeNum;
             this.flowLineClickedTime = Date.now();
             this.flowLineClickTimer = setTimeout(() => {
-                console.log("timeOut, flowNodeNum:", flowNodeNum);
                 this.insertFlowNode(flowNodeNum, x, y);
                 this.flowLineClickedTime = 0;
                 this.lastFlowLineClicked = -1;
@@ -871,7 +863,7 @@ dfm.FlowVisuals = class {
         // Determine the vector of the line
         let {itemNum, flowNodeItem} = this.findCurrentFlowDrawingFlowNode(flowNodeNum);
         if (itemNum === -1) {
-            console.log("addFlowArrow could find flowNodeNum:", flowNodeNum);
+            console.error("addFlowArrow could find flowNodeNum:", flowNodeNum);
             return;
         }
         let points = flowNodeItem.line.getAttr("points");
@@ -885,7 +877,7 @@ dfm.FlowVisuals = class {
             let sourceNodeNum = this.currentFlow.source_node_num;
             let {found, node, index} = this.getNode(sourceNodeNum);
             if (!found) {
-                console.log("addFlowArrow could not find source node:", sourceNodeNum);
+                console.error("addFlowArrow could not find source node:", sourceNodeNum);
                 return;
             }
             sourceNodeX = node.rect.getAttr('x');
@@ -895,7 +887,7 @@ dfm.FlowVisuals = class {
             let destNodeNum = this.currentFlow.destination_node_num;
             let {found, node, index} = this.getNode(destNodeNum);
             if (!found) {
-                console.log("addFlowArrow could not find source node:", destNodeNum);
+                console.error("addFlowArrow could not find source node:", destNodeNum);
                 return;
             }
             destNodeX = node.rect.getAttr('x');
@@ -969,7 +961,6 @@ dfm.FlowVisuals = class {
     }
 
     insertFlowNode(flowNodeNum, x, y) {
-        console.log("got to insertFlowNode");
         x = x / dfm.scaleX - this.currentFlowDrawing.flowGroup.getAttr('x');
         y = y - this.currentFlowDrawing.flowGroup.getAttr('y');
         let newFlowNodeNum = this.getNextFlowNodeNum(); 
@@ -989,7 +980,6 @@ dfm.FlowVisuals = class {
         marker.on("dragend", (e) => this.flowNodeDragEnd(e));
 
         let {itemNum, flowNodeItem} = this.findCurrentFlowDrawingFlowNode(flowNodeNum);
-        console.log("insertFlowNode, item:", flowNodeNum, itemNum, flowNodeItem);
         let x1 = flowNodeItem.marker.getAttr("x");
         let y1 = flowNodeItem.marker.getAttr("y");
         flowNodeItem.line.setAttr("points", [x, y, x1, y1]);

@@ -25,19 +25,27 @@ Contents
         * Clear the stage before model loaded
 
     Handle Drawing edit options etc.
-        Do the analysis for edit mode
-        Add an edit option directly to flow drawing options
-        Hide model edit prompts text unless in model edit mode
-        Make the save button visible after the start of an edit
-            Model
-            Node
-            Flow
+        * Do the analysis for edit mode
+        * Add an edit option directly to flow drawing options
+        * Hide model edit prompts text unless in model edit mode
+        * Make the save button visible after the start of an edit
+            * Model
+            * Node
+            * Flow
         * flows
         nodes
         * model
-        Check resave after updates
+        * Check resave after updates
         
-    When new model is selected and there is a current model, allow for save operation
+    Check the display and usage of the page edit options
+        * New
+        * Edit
+        * Save
+            * Redraft selection titles list after save, if a new model (no id).
+        * Delete
+        * Cancel
+
+    * When new model is selected and there is a current model, allow for save operation
     
     Add current user automatically to authors for a new model (when model details submitted).
 

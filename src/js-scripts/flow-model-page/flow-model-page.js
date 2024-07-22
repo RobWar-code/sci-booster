@@ -4,8 +4,18 @@ const flowModelPage = {
 
     displayModelEditOptions: function () {
         if (dfm.userStatus === "unregistered") {
-            document.getElementById("modelEditOptionsDiv").style.display = "none";
+            if (dfm.currentPageSet) {
+                document.getElementById("cancelModelButton").style.display = "inline";
+                this.clearFlowModelEditMessage();
+            }
+            else {
+                document.getElementById("cancelModelButton").style.display = "none";
+            }
             document.getElementById("modelEditInfo").style.display = "block";
+            document.getElementById("newModelButton").style.display = "none";
+            document.getElementById("editModelButton").style.display = "none";
+            document.getElementById("deleteModelButton").style.display = "none";
+            document.getElementById("saveModelButton").style.display = "none";
         }
         else if (dfm.userStatus === "user") {
             document.getElementById("modelEditOptionsDiv").style.display = "block";
@@ -16,6 +26,7 @@ const flowModelPage = {
                 document.getElementById("editModelButton").style.display = "none";
                 document.getElementById("deleteModelButton").style.display = "none";
                 document.getElementById("saveModelButton").style.display = "none";
+                document.getElementById("cancelModelButton").style.display = "inline";
             }
         }
         else if (dfm.userStatus === "editor" || dfm.userStatus === "owner") {
@@ -30,9 +41,14 @@ const flowModelPage = {
             }
             else {
                 // Display options for current model
+                document.getElementById("newModelButton").style.display = "inline";
+                document.getElementById("editModelButton").style.display = "inline";
+                document.getElementById("deleteModelButton").style.display = "none";
+                document.getElementById("saveModelButton").style.display = "none";
+                document.getElementById("cancelModelButton").style.display = "inline";
             }
         }
-        if (dfm.modelEditMode) {
+        if (dfm.currentPageSet) {
             document.getElementById("cancelModelButton").style.display = "inline";
         }
         else {
@@ -42,12 +58,14 @@ const flowModelPage = {
 
     cancelModel: function () {
         dfm.stageApp.destroyChildren();
+        dfm.currentVisualsSet = false;
         dfm.currentVisual = {};
         dfm.currentPage = {};
         dfm.currentPageSet = false;
-        dfm.modelEditMode = false;
+        dfm.modelEditMode = "read-only";
         document.getElementById("flowModelTitle").innerText = "NONE";
         document.getElementById("pageTitle").innerText = "NONE";
+        this.clearFlowModelEditMessage();
         this.displayModelEditOptions();
     },
 
@@ -67,7 +85,6 @@ const flowModelPage = {
     getModelSelectionList: async function () {
         let modelTitles = [];
         modelTitles = await this.fetchModelList();
-        console.log("modelTitles", modelTitles);
         if (modelTitles.length > 0) {
             modelTitles.sort();
             let modelSelector = document.getElementById("modelSelector");
@@ -98,7 +115,6 @@ const flowModelPage = {
             if (responseData.result) {
                 if (responseData.result) {
                     modelTitles = responseData.modelTitles;
-                    console.log("Got model titles:", modelTitles);
                 }
             }
             return modelTitles;
@@ -175,6 +191,18 @@ const flowModelPage = {
             console.error("saveModelRequired: could not collect response ", error);
             return "cancel";
         }
+    },
+
+    deletePageRequired: async function(message) {
+        try {
+            let response = await this.showYesNoModal(message);
+            return response;
+        }
+        catch(error) {
+            console.error("deletePageRequired: could not collect response ", error);
+            return "cancel";
+        }
     }
+
 
 }

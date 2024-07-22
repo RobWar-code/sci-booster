@@ -28,7 +28,6 @@ dfm.FlowPage = class {
     }
 
     setPageData(page) {
-        console.log("setPageData- page:", page);
         this.set(page);
         this.nodes = page.nodes;
         this.flows = page.flows;
@@ -213,6 +212,7 @@ dfm.FlowPageData = class {
         this.page.set(pageObj);
     }
 
+
     setModelDetails(title, description, keywords) {
         let change = false;
         if (this.page.title != title) change = true;
@@ -345,8 +345,6 @@ dfm.FlowPageData = class {
      */
     async saveModel(reload) {
         let pageJSONObject = this.prepareJSONObject();
-        // Debug
-        console.log("pageJSONObject:", pageJSONObject);
         let pageJSON = JSON.stringify(pageJSONObject);
         let pageData = await this.sendPage(pageJSON);
         if (pageData.result) {
@@ -355,6 +353,10 @@ dfm.FlowPageData = class {
                 this.setPageData(pageData);
                 this.update = true;
                 dfm.currentVisual.redoPage();
+            }
+            // Re-do the titles list
+            if (dfm.currentPage.page.hierarchical_id === '01') {
+                flowModelPage.getModelSelectionList();
             }
             // Inform user
             flowModelPage.issueNotice("Saved Successfully");
@@ -420,7 +422,40 @@ dfm.FlowPageData = class {
 
     setPageData(pageData) {
         this.flow_model_id = pageData.flow_model_id;
+        this.flow_model_title = pageData.flow_model_title;
         let page = pageData.page;
         this.page.setPageData(page);
+    }
+
+    async deletePage() {
+        // Check with the user
+        let result = await flowModelPage.deletePageRequired("Are sure you want to delete the page and its children?");
+        if (result === "yes") {
+            await this.doDeletePage();
+            flowModelPage.getModelSelectionList();
+            flowModelPage.cancelModel();
+        }
+    }
+
+    async doDeletePage() {
+        let pageId = this.page.id;
+        let message = {request: "delete page by id", page_id: pageId};
+        let messageJSON = JSON.stringify(message);
+        try {
+            let response = await fetch(dfm.phpPath + 'flow-model/receive-page.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: messageJSON
+            })
+
+            let responseData = await response.json();
+
+            return responseData;
+        }
+        catch {(error) => {
+            console.error("Problem with receive-page script call", error);
+        }};
     }
 }
