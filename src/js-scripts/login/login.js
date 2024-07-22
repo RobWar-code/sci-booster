@@ -14,7 +14,7 @@ const login = {
                 ownerSet = await this.isOwnerSet();
             }
             catch (e) {
-                console.log("Problem with ownerSet call", e);
+                console.error("Problem with ownerSet call", e);
                 return;
             }
             if (!ownerSet) {
@@ -79,6 +79,7 @@ const login = {
     },
 
     submitSignup: async function (event) {
+        console.log("dfm.loginOption", dfm.loginOption);
         event.preventDefault();
 
         if (dfm.loginOption === "") {
@@ -123,20 +124,16 @@ const login = {
                 editor_key: editorKey
             }
 
+            console.log("signupObj:", signupObj);
             let userAdded = false;
-            try {
-                let responseObj = await addUser(signupObj);
-                if ("error" in responseObj) {
-                    errElem.innerText = "addUser Problem: " + responseObj.error;
-                    errElem.style.display = "block";
-                }
-                else {
-                    userAdded = true;
-                }
+            let responseObj = await this.addUser(signupObj);   
+            if ("error" in responseObj) {
+                errElem.innerText = "addUser Problem: " + responseObj.error;
+                errElem.style.display = "block";
             }
-            catch { (error) => {
-                console.error("submitSignup() error with addUser(): ", error);
-            }}
+            else {
+                userAdded = true;
+            }
 
             if (userAdded) {
                 let messageElem = document.getElementById("loginDonePara");
@@ -194,6 +191,8 @@ const login = {
             })
 
             let responseData = await response.json();
+
+            console.log("addUser:", responseData);
 
             return responseData;
         }

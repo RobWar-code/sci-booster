@@ -12,7 +12,6 @@
     // Create the sci-booster tables
     include_once './db-connect.php';
 
-    /*
     $sql = "CREATE TABLE user (
         id INT AUTO_INCREMENT PRIMARY KEY,
         username VARCHAR(64) NOT NULL UNIQUE,
@@ -26,8 +25,7 @@
     else {
         echo "Problem adding user table: " . $dbConn->error . "<br>";
     }
-    */
-    /*
+    
     $sql = "DROP TABLE IF EXISTS editor_key";
 
     if ($dbConn->query($sql) === TRUE) {
@@ -65,9 +63,7 @@
     else {
         echo "problem setting editor key<br>";
     }
-    */
 
-    /*
     // flow_model Table
     $sql = "CREATE TABLE flow_model (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -121,7 +117,7 @@
     else {
         echo "Problem adding node table: " . $dbConn->error . "<br>";
     }
-*/
+
     $sql = "DROP TABLE IF EXISTS flow_point";
     if ($dbConn->query($sql) === TRUE) {
         echo "Dropped flow_point table successfully<br>";
@@ -215,7 +211,7 @@
     else {
         echo "Problem adding flow_arrow_point table: " . $dbConn->error . "<br>";
     }
-/*    
+    
     // external_author Table
     $sql = "CREATE TABLE external_author (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -280,7 +276,7 @@
     else {
         echo "Problem adding page_user_link table: " . $dbConn->error . "<br>";
     }
-*/    
+    
     // conversion_formula Table
     $sql = "CREATE TABLE conversion_formula (
         id INT AUTO_INCREMENT PRIMARY KEY,
