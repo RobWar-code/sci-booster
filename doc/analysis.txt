@@ -510,6 +510,36 @@ Contents
 	The flow diagram consists of nodes (as boxes) and flows as arrowed
 	lines connecting them.
 
+	The flow diagrams are created by having the user interact with the
+	stage. Events and images arising here are controlled by the Konva
+	graphics application.
+
+<h3>Summary of Flow Diagram Events
+	If no model is loaded then the stage gives rise to no events (or they
+	are rejected).
+
+	Read-Only Mode
+		In read-only mode, the following message appears above the stage:
+			Click the component node details button for it's description etc. 
+			Click the flow label for details of the flow.
+
+		If a model is loaded and the Model Edit Mode is read-only then the
+		then the actions are as follows:
+			Stage
+				Stage click - no effect
+			Node
+				Details Button - read-only mode
+				Zoom-in Button - read-only mode
+				Flow Link Button - disabled
+				Web Link Button - Active
+				Node drag - disabled
+			Flow
+				Line click - disabled
+				Arrow click - disabled
+				Label drag - disabled
+				Label double click - flow details in read only mode
+	
+
 <h3>Nodes
 
 	When the stage is clicked the Node Details modal panel appears. This
