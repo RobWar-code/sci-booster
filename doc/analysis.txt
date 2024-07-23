@@ -19,6 +19,7 @@ Contents
 		Page Options Buttons
 			New Model / New Page Operations
 		Flow Diagram
+			Summary of Flow Diagram Events
 			Nodes
 				Node Option Buttons
 			Flows
@@ -518,27 +519,35 @@ Contents
 	If no model is loaded then the stage gives rise to no events (or they
 	are rejected).
 
-	Read-Only Mode
-		In read-only mode, the following message appears above the stage:
-			Click the component node details button for it's description etc. 
-			Click the flow label for details of the flow.
-
-		If a model is loaded and the Model Edit Mode is read-only then the
-		then the actions are as follows:
-			Stage
-				Stage click - no effect
-			Node
-				Details Button - read-only mode
-				Zoom-in Button - read-only mode
-				Flow Link Button - disabled
-				Web Link Button - Active
-				Node drag - disabled
-			Flow
-				Line click - disabled
-				Arrow click - disabled
-				Label drag - disabled
-				Label double click - flow details in read only mode
+	Note that flows are always in read-only mode, unless it is the current flow
+	in flow draw mode. When using dfm.currentVisual.drawFlowMode, all other flows
+	are disabled.
 	
+	Event 	                   | Read Only Mode                          | Edit Mode
+	---------------------------|-----------------------------------------|-----------------------------------------------
+	Stage Click                | No Effect                               | Bring-up new Node Details Modal new node mode
+	---------------------------| ----------------------------------------|-----------------------------------------------
+	Node Details Button        | Bring-up node details modal - read-only | Bring-up Node Details Modal edit Mode 
+	Node Zoom-in Button        | If page available load in read-only mode| If no page bring-up page details for new page
+							   |                                         | Otherwise bring-up page details and load page
+	Node Flow-Link Button      | No Effect                               | Bring-up the flow details modal
+	Node Web-Link Button       | Browser Load tab to remote site         | Browser Load tab to remote site
+	Node Drag Drop             | No Effect                               | Drag the node component on the drawing
+	---------------------------|-----------------------------------------|-----------------------------------------------
+	Flow - No Draw Format      |                                         |
+	Flow Label                 | Present the details in read only mode   | Present the details in read-only mode with an
+	                           |                                         | edit option.
+	---------------------------|-----------------------------------------|-----------------------------------------------
+	Flow - Current Draw Item   |                                         |
+	Flow Label                 | N/A                                     | Present the details in edit mode.
+	Flow Label Drag Start/Move | N/A                                     | Move the label on the diagram
+	Flow node double click     | N/A                                     | Delete flow node
+	Flow node Drag             | N/A                                     | Move the flow node and line
+	Line double click          | N/A                                     | Add the flow arrow
+	Stage Double Click         | N/A                                     | Add the flow label
+	___________________________|_________________________________________|_______________________________________________
+
+
 
 <h3>Nodes
 

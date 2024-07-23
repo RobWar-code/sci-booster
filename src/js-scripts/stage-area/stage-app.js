@@ -36,7 +36,9 @@ const stageApp = {
 
         dfm.stageApp.on('click', (e) => {
             if (!dfm.flowDrawMode) {
-                nodeDetails.doNodeDetails(e);
+                if (dfm.currentPageSet && dfm.modelEditMode === "edit") {
+                    nodeDetails.doNodeDetails(e);
+                }
             }
             else {
                 dfm.currentVisual.drawFlowClick(e);

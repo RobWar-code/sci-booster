@@ -1,10 +1,10 @@
 const nodeDetails = {
     doNodeDetails: function (e) {
-        if (!dfm.modelEditMode) return;
+        if (dfm.modelEditMode != "edit") return;
 
         let editMode="new";
         let stageCursorPos = dfm.stageApp.getPointerPosition();
-        dfm.newNodeX = stageCursorPos.x;
+        dfm.newNodeX = stageCursorPos.x / dfm.scaleX;
         dfm.newNodeY = stageCursorPos.y;
         dfm.currentPage.nodeEditMode = "new";
         this.displayNodeDetailsModal(editMode);
@@ -15,7 +15,7 @@ const nodeDetails = {
             event.cancelBubble = true;
             return;
         }
-        if (dfm.modelEditMode) {
+        if (dfm.modelEditMode === "edit") {
             this.setInputDisabledStatus(false);
             dfm.currentPage.nodeEditMode = "update";
         }
@@ -31,7 +31,6 @@ const nodeDetails = {
 
     setNodeForm(nodeNum) {
         let node = dfm.currentPage.getNode(nodeNum);
-        console.log("setNodeForm, nodeNum, node:", nodeNum, node);
         if (node) {
             document.getElementById("nodeNum").innerText = nodeNum;
             document.getElementById("nodeLabel").value = node.label;
@@ -177,10 +176,16 @@ const nodeDetails = {
     },
 
     doHoverText: function (event) {
+        event.cancelBubble = true;
         let graphic = event.target;
         let text = graphic.getAttr("hoverText");
-        let x = graphic.getAttr("x") + 25;
-        let y = graphic.getAttr("y") - 10;
+        let x = graphic.getAttr("x") + 10;
+        let y = graphic.getAttr("y") - 25;
+        let nodeNum = graphic.getAttr("nodeNum");
+        let node = dfm.currentPage.getNode(nodeNum);
+        console.log("doHoverText: x, y, node.x, node.y", x, y, node.x, node.y);
+        x += node.x;
+        y += node.y;
         displayHoverText(text, x, y);
     }
 }

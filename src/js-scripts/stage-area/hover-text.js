@@ -3,8 +3,8 @@ function setupHoverText() {
 	dfm.hoverLayer = new Konva.Layer();
 
 	dfm.hoverGroup = new Konva.Group({
-		x: 70,
-		y: 70
+		x: 0,
+		y: 0
 	});
 
 	dfm.hoverBox = new Konva.Rect({
@@ -12,7 +12,7 @@ function setupHoverText() {
 		y: 0,
 		width: 100,
 		height: 30,
-		fill: '#d0d060',
+		fill: 'rgba(200, 200, 100, 0.5)',
 		stroke: 'black'
 	});
 
@@ -34,7 +34,7 @@ function setupHoverText() {
 }
 
 function displayHoverText(message, x, y) {
-    dfm.hoverGroup.absolutePosition({x: x, y: y});
+    dfm.hoverGroup.position({x, y});
     dfm.hoverText.setAttr('text', message);
 	activateHover();
 	setTimeout(() => {

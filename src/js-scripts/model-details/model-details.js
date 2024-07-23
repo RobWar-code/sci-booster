@@ -78,6 +78,7 @@ const modelDetails = {
    * @param {*} event 
    */
   selectPage: async function(event) {
+    if (event.target.value === "NONE SELECTED") return;
     if (dfm.currentPageSet && dfm.modelChanged) {
       // Present the option to save the existing model
       let doSave = await flowModelPage.saveModelRequired(`Save the current model - ${dfm.currentPage.page.title}?`);

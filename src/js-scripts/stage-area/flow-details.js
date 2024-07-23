@@ -5,7 +5,7 @@ flowDetails = {
     currentFlow: null,
 
     addNewFlow: function (event) {
-        if (dfm.currentVisual.flowDrawMode) {
+        if (dfm.currentVisual.flowDrawMode || dfm.modelEditMode != "edit") {
             event.cancelBubble = true;
             return;
         }

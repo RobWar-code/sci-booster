@@ -9,6 +9,8 @@ Contents
 
     Allow for the deletion of all elements in a model drawing
     
+    Insert a dummy blank/no select line at the start of the selector list
+
     Calculation of flow label width dubious
 
     Set a page edited flag id any alteration is made to a page.
@@ -18,6 +20,8 @@ Contents
     Hide Page Details button until a page is loaded
 
     Prevent saving of a page without title
+
+    What if a user author does not exist?
 
     Load Page from alphabetical selection list
         * Check why model details not displayed, but visual is.

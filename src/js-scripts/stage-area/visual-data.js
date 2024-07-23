@@ -66,7 +66,7 @@ dfm.FlowVisuals = class {
             let label = node.label;
             let x = node.x;
             let y = node.y;
-            this.addNode(nodeNum, label, x, y);
+            this.addNode(label, nodeNum, x, y);
         }
     }
 
@@ -94,7 +94,7 @@ dfm.FlowVisuals = class {
         node.nodeNum = nodeNum;
         node.label = label;
         node.nodeGroup = new Konva.Group({
-            x: x / dfm.scaleX,
+            x: x,
             y: y,
             nodeNum: nodeNum
         });

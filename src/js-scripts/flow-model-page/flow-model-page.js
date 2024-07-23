@@ -1,7 +1,5 @@
 const flowModelPage = {
 
-    iAmHere: "hello",
-
     displayModelEditOptions: function () {
         if (dfm.userStatus === "unregistered") {
             if (dfm.currentPageSet) {
@@ -87,6 +85,8 @@ const flowModelPage = {
         modelTitles = await this.fetchModelList();
         if (modelTitles.length > 0) {
             modelTitles.sort();
+            // Insert the none selected item at the start of the array
+            modelTitles.unshift("NONE SELECTED");
             let modelSelector = document.getElementById("modelSelector");
             modelSelector.innerHTML = "";
             for (let title of modelTitles) {
