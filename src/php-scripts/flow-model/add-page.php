@@ -352,75 +352,80 @@ function addNode($node, $pageId) {
 }
 
 function addFlows($pageId, $flows) {
-    global $dbConn;
 
     foreach($flows as $flow) {
-        $flowInserted = false;
-        $gotFlowId = false;
+        addFlow($flow, $pageId);
+    }
+}
 
-        $sourceVoid = 0;
-        if ($flow['source_node_num'] === "") {
-            $sourceVoid = 1;
-        }
-        $destinationVoid = 0;
-        if ($flow['destination_node_num'] === "") {
-            $destinationVoid = 1;
-        }
-        // Save the individual details
-        $sql = "INSERT INTO flow (page_id, flow_num, label, drawing_group_x, drawing_group_y, 
-            label_x, label_y, label_width, keywords, definition, hyperlink, 
-            source_node_num, destination_node_num, source_void, destination_void)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        $stmt = $dbConn->prepare($sql);
-        if ($stmt === FALSE) {
-            error_log("addFlows: Failed to prepare flow sql: {$dbConn->error}", 0);
+function addFlow($flow, $pageId) {
+    global $dbConn;
+
+    $flowInserted = false;
+    $gotFlowId = false;
+
+    $sourceVoid = 0;
+    if ($flow['source_node_num'] === "") {
+        $sourceVoid = 1;
+    }
+    $destinationVoid = 0;
+    if ($flow['destination_node_num'] === "") {
+        $destinationVoid = 1;
+    }
+    // Save the individual details
+    $sql = "INSERT INTO flow (page_id, flow_num, label, drawing_group_x, drawing_group_y, 
+        label_x, label_y, label_width, keywords, definition, hyperlink, 
+        source_node_num, destination_node_num, source_void, destination_void)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $dbConn->prepare($sql);
+    if ($stmt === FALSE) {
+        error_log("addFlows: Failed to prepare flow sql: {$dbConn->error}", 0);
+    }
+    else {
+        $stmt->bind_param("issiiiiisssssii",
+            $pageId,
+            $flow['flow_num'],
+            $flow['label'],
+            $flow['drawing_group_x'],
+            $flow['drawing_group_y'],
+            $flow['label_x'],
+            $flow['label_y'],
+            $flow['label_width'],
+            $flow['keywords'],
+            $flow['definition'],
+            $flow['hyperlink'],
+            $flow['source_node_num'],
+            $flow['destination_node_num'],
+            $sourceVoid,
+            $destinationVoid
+        );
+        if (!$stmt->execute()) {
+            error_log("addFlows: flow not inserted {$dbConn->error}", 0);
         }
         else {
-            $stmt->bind_param("issiiiiisssssii",
-                $pageId,
-                $flow['flow_num'],
-                $flow['label'],
-                $flow['drawing_group_x'],
-                $flow['drawing_group_y'],
-                $flow['label_x'],
-                $flow['label_y'],
-                $flow['label_width'],
-                $flow['keywords'],
-                $flow['definition'],
-                $flow['hyperlink'],
-                $flow['source_node_num'],
-                $flow['destination_node_num'],
-                $sourceVoid,
-                $destinationVoid
-            );
-            if (!$stmt->execute()) {
-                error_log("addFlows: flow not inserted {$dbConn->error}", 0);
-            }
-            else {
-                $flowInserted = true;
-            }
+            $flowInserted = true;
         }
-        if ($flowInserted) {
-            // Get the flow_id
-            $flowNum = $flow['flow_num'];
-            $sql = "SELECT id FROM flow WHERE page_id = '$pageId' AND flow_num = '$flowNum'";
-            $result = $dbConn->query($sql);
-            if ($result && $row = $result->fetch_assoc()){
-                $flowId = $row['id'];
-                $gotFlowId = true;
-            }
-            else {
-                error_log("addFlows: could not get flow id {$dbConn->error}", 0);
-            }
+    }
+    if ($flowInserted) {
+        // Get the flow_id
+        $flowNum = $flow['flow_num'];
+        $sql = "SELECT id FROM flow WHERE page_id = '$pageId' AND flow_num = '$flowNum'";
+        $result = $dbConn->query($sql);
+        if ($result && $row = $result->fetch_assoc()){
+            $flowId = $row['id'];
+            $gotFlowId = true;
         }
-        if ($gotFlowId) {
-            // Do Arrow Points
-            addArrowPoints($flowId, $flow['arrow_points']);
-            // Do flow points
-            addFlowPoints($flowId, $flow['points']);
-            // Do conversion formulas
-            addConversionFormulas($flowId, $flow['conversion_formulas']);
+        else {
+            error_log("addFlows: could not get flow id {$dbConn->error}", 0);
         }
+    }
+    if ($gotFlowId) {
+        // Do Arrow Points
+        addArrowPoints($flowId, $flow['arrow_points']);
+        // Do flow points
+        addFlowPoints($flowId, $flow['points']);
+        // Do conversion formulas
+        addConversionFormulas($flowId, $flow['conversion_formulas']);
     }
 
 }

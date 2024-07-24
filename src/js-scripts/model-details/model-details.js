@@ -95,6 +95,7 @@ const modelDetails = {
     dfm.currentVisual = new dfm.FlowVisuals();
     await dfm.currentPage.selectModel(event);
     dfm.currentPageSet = true;
+    dfm.modelChanged = false;
     document.getElementById("pageDetailsButton").style.display = "inline";
     if (dfm.userStatus === "editor" || dfm.userStatus === "owner" || dfm.currentPage.isUserAuthor()) {
       document.getElementById("editModelButton").style.display = "inline";

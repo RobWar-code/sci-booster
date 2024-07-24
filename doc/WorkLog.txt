@@ -36,8 +36,10 @@ Contents
             * Model
             * Node
             * Flow
-        * flows
+        flows
+            flow done should set drawing changed flag
         nodes
+            drag node should set drawing changed flag
         * model
         * Check resave after updates
         
@@ -46,6 +48,7 @@ Contents
         * Edit
         * Save
             * Redraft selection titles list after save, if a new model (no id).
+            Leave edit mode on after a save operation
         * Delete
         * Cancel
 

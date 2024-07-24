@@ -345,6 +345,7 @@ dfm.FlowPageData = class {
      */
     async saveModel(reload) {
         let pageJSONObject = this.prepareJSONObject();
+        console.log("saveModel:", pageJSONObject);
         let pageJSON = JSON.stringify(pageJSONObject);
         let pageData = await this.sendPage(pageJSON);
         if (pageData.result) {

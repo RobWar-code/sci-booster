@@ -35,6 +35,9 @@ const stageApp = {
         dfm.stageApp.scale({x: dfm.scaleX, y: 1});
 
         dfm.stageApp.on('click', (e) => {
+            console.log("stage click: dfm.flowDrawMode, dfm.modelEditMode, dfm.currentPageSet", dfm.flowDrawMode,
+                dfm.modelEditMode, dfm.currentPageSet
+            );
             if (!dfm.flowDrawMode) {
                 if (dfm.currentPageSet && dfm.modelEditMode === "edit") {
                     nodeDetails.doNodeDetails(e);

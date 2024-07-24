@@ -381,7 +381,7 @@
             $table = "node";
             $fieldNames = ['node_num', 'x', 'y', 'label', 'type', 'definition', 
                 'keywords', 'hyperlink', 'has_child_page'];
-            $destFieldNames = ['node_num', 'coord_x', 'coord_y', 'label', 
+            $destFieldNames = ['node_num', 'x_coord', 'y_coord', 'label', 
                 'type', 'definition', 'keywords', 'hyperlink', 'has_child_page'];
             $fieldValues = $node;
             $oldFieldValues = $oldNode;
@@ -436,6 +436,10 @@
                 replaceFlowPoints($id, $flow['points']);
                 // Update the conversion formulas
                 updateConversionFormulas($id, $flow['conversion_formulas'], $oldFlow['conversion_formulas']);
+            }
+            else {
+                // Add the flow
+                addFlow($flow, $pageId);
             }
         }
         // Delete unmatched old flows

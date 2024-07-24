@@ -5,7 +5,7 @@ flowDetails = {
     currentFlow: null,
 
     addNewFlow: function (event) {
-        if (dfm.currentVisual.flowDrawMode || dfm.modelEditMode != "edit") {
+        if (dfm.flowDrawMode || dfm.modelEditMode != "edit") {
             event.cancelBubble = true;
             return;
         }
@@ -25,19 +25,19 @@ flowDetails = {
         }
         // Fetch the flow details
         let flowNum = event.target.getAttr("flowNum");
-        console.log("flowNum:", flowNum);
         this.currentFlow = dfm.currentPage.getFlow(flowNum);
-        console.log("currentFlow:", this.currentFlow);
         this.loadDisplayFields(this.currentFlow);
         let editMode = "";
-        if (dfm.modelEditMode) {
+        if (dfm.modelEditMode === "edit" && !dfm.flowDrawMode) {
             editMode = "edit";
             this.editMode = "edit";
             document.getElementById("drawFlowButton").style.display = "block";
+            document.getElementById("flowDeleteButton").style.display = "inline";
             this.setDisableFlowDetailsEdit(false);
         }
         else {
             document.getElementById("drawFlowButton").style.display = "none";
+            document.getElementById("flowDeleteButton").style.display = "none"
             this.setDisableFlowDetailsEdit(true);
         }
         this.displayFlowModal(editMode);
@@ -50,7 +50,7 @@ flowDetails = {
         document.getElementById("flowSourceNodeNum").value = flow.source_node_num;
         document.getElementById("flowDestinationNodeNum").value = flow.destination_node_num;
         document.getElementById("flowDefinition").value = flow.definition;
-        document.getElementById("flowHypertext").value = flow.hypertext;
+        document.getElementById("flowHypertext").value = flow.hyperlink;
     },
 
     displayFlowModal: function(editMode) {
@@ -58,6 +58,7 @@ flowDetails = {
             this.clearValues();
             this.setDisableFlowDetailsEdit(false);
             document.getElementById("drawFlowButton").style.display = "none";
+            document.getElementById("flowDeleteButton").style.display = "none";
         }
         document.getElementById("flowDetails").style.display = "block";
         document.getElementById("flowDetailsError").style.display = "none";

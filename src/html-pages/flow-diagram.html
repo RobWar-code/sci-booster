@@ -273,7 +273,8 @@
             <p>Model Title: <span id="flowModelTitle">My Flow Title</span></p>
             <p>Hierarchical Id: <span id="pageHierarchicalId"></span></p>
             <p>Page Title: <span id="pageTitle">My Page Title</span></p>
-            <p><button class="textButton" id="pageDetailsButton" onclick="modelDetails.pageDetailsAction()">Page Details</button></p>
+            <p><button class="textButton" id="pageDetailsButton" onclick="modelDetails.pageDetailsAction()">
+              Page Details</button></p>
           </div>
           <!-- Model Options-->
           <div class="col-md-5 optionButtons optionsSection">
@@ -282,11 +283,13 @@
                 title="Click to finish flow drawing">Flow Done</button>
               <button class="textButton" id="cancelFlowDrawButton" onclick="dfm.currentVisual.cancelFlowDraw()"
                 title="Cancel the flow drawing">Cancel Draw</button>
-              <button class="textButton" id="newModelButton" onclick="modelDetails.newModel()" title="Create New Model">New</button> 
+              <button class="textButton" id="newModelButton" onclick="modelDetails.newModel()" title="Create New Model">
+                New</button> 
               <button class="textButton" id="editModelButton" onclick="modelDetails.editModel()">Edit</button> 
               <button class="textButton" id="deleteModelButton" onclick="dfm.currentPage.deletePage()">Delete</button> 
               <button class="textButton" id="saveModelButton" onclick="dfm.currentPage.saveModel(true)">Save</button>
-              <button class="textButton" id="cancelModelButton" title="Cancel this session" onclick="flowModelPage.cancelModel()">Cancel</button>
+              <button class="textButton" id="cancelModelButton" title="Cancel this session" 
+                onclick="flowModelPage.cancelModel()">Cancel</button>
             </div>
             <p id="modelEditInfo">
               To be able to create or modify your own flow models see menu: login/register and signup

@@ -11,11 +11,8 @@ const nodeDetails = {
     },
 
     viewNodeDetails: function (event) {
-        if (dfm.currentVisual.flowDrawMode) {
-            event.cancelBubble = true;
-            return;
-        }
-        if (dfm.modelEditMode === "edit") {
+        console.log("viewNodeDetails: dfm.currentVisual.flowDrawMode - ", dfm.currentVisual.flowDrawMode);
+        if (dfm.modelEditMode === "edit" && !dfm.currentVisual.flowDrawMode) {
             this.setInputDisabledStatus(false);
             dfm.currentPage.nodeEditMode = "update";
         }
@@ -169,9 +166,13 @@ const nodeDetails = {
         let nodeNum = document.getElementById("nodeNum").innerText;
         dfm.currentPage.deleteNode(nodeNum);
         dfm.currentVisual.deleteNode(nodeNum);
+        dfm.modelChanged = true;
         document.getElementById("nodeDetails").style.display = "none";
         if (dfm.currentPage.nodes.length === 0) {
             document.getElementById("saveModelButton").style.display = "none";
+        }
+        else {
+            document.getElementById("saveModelButton").style.display = "inline";
         }
     },
 
@@ -183,7 +184,6 @@ const nodeDetails = {
         let y = graphic.getAttr("y") - 25;
         let nodeNum = graphic.getAttr("nodeNum");
         let node = dfm.currentPage.getNode(nodeNum);
-        console.log("doHoverText: x, y, node.x, node.y", x, y, node.x, node.y);
         x += node.x;
         y += node.y;
         displayHoverText(text, x, y);

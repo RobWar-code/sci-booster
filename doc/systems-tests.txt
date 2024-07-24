@@ -2,6 +2,7 @@ Systems Tests
 
 Contents
     Edit, New and Read-only Modes
+        Drawing - Edit Modes
     Model Save and Load
 
 <h1>Edit, New and Read-only Modes
@@ -14,9 +15,9 @@ Contents
 
     Load a page using the selector and check whether the appropriate
     editing mode applies test:
-        Edit Button
-        Edit Mode Button
-        Make a change to the current model
+        * Edit Button
+        * Edit Mode Button
+        * Make a change to the current model
 
     Model Edit Effects:
         Initial / Empty Display
@@ -96,8 +97,13 @@ Contents
             * Otherwise
                 * Display the full details of the model as for Edit Option
                 
+<h2>Drawing - Edit Modes
 
-
+    When Draw Flow is selected the dfm.currentVisuals.flowDrawMode is set.
+    In this case check the following:
+        Other flow labels - read only mode
+        Node details - read only mode
+        Stage - add flow label only
 
 <h1>Model Save and Load
     Save a model
@@ -113,5 +119,3 @@ Contents
             * Yes - Save
             * Don't Save
             * Cancel
-
-    Bug: Edit-Modes are confused. Analyse and simplify.

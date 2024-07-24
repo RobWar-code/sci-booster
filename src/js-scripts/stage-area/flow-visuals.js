@@ -2,7 +2,6 @@
 dfm.FlowVisuals = class {
     constructor() {
         this.active = false;
-        this.flowDrawMode = false;
         this.drawFlowNum = "";
         this.flowNodeCount = 0;
         this.drawFlowClickTime = 0;
@@ -58,6 +57,7 @@ dfm.FlowVisuals = class {
         this.redoNodes();
         this.redoFlows();
         this.currentVisualsSet = true;
+        dfm.currentPageSet = true;
     }
 
     redoNodes() {
@@ -184,9 +184,20 @@ dfm.FlowVisuals = class {
 
     nodeDragMove(event) {
         event.cancelBubble = true;
+        if (dfm.modelEditMode != "edit" || dfm.flowDrawMode) {
+            let nodeNum = event.target.getAttr("nodeNum");
+            let node = dfm.currentPage.getNode(nodeNum);
+            event.target.position({x: node.x, y: node.y});
+            this.nodeLayer.draw();
+            return;
+        }
     }
 
     nodeDragEnd(event) {
+        if (dfm.modelEditMode != "edit" || dfm.flowDrawMode) {
+            event.cancelBubble = true;
+            return
+        }
         let nodeNum = event.target.getAttr("nodeNum");
         let x = event.target.getAttr("x");
         let y = event.target.getAttr("y");
@@ -195,6 +206,8 @@ dfm.FlowVisuals = class {
         if (node != null) {
             node.x = x;
             node.y = y;
+            dfm.modelChanged = true;
+            document.getElementById("saveModelButton").style.display = 'inline';
         }
     }
 
@@ -323,6 +336,7 @@ dfm.FlowVisuals = class {
         dfm.flowDrawMode = false;
         document.getElementById("flowDoneButton").style.display = "none";
         document.getElementById("cancelFlowDrawButton").style.display = "none";
+        document.getElementById("saveModelButton").style.display = "inline";
         flowModelPage.displayFlowModelEditMessage();
     }
 
@@ -487,10 +501,12 @@ dfm.FlowVisuals = class {
         this.currentFlow = {};
 
         dfm.flowDrawMode = false;
-        dfm.modelEditMode = true;
+        dfm.modelEditMode = "edit";
+        dfm.modelChanged = true;
 
         document.getElementById("flowDoneButton").style.display = "none";
         document.getElementById("cancelFlowDrawButton").style.display = "none";
+        document.getElementById("saveModelButton").style.display = "inline";
         flowModelPage.displayFlowModelEditMessage();
     }
 
@@ -703,8 +719,8 @@ dfm.FlowVisuals = class {
         rect.setZIndex(0.5);
         text.setZIndex(1);
         this.currentFlowDrawing.flowGroup.draw();
-        this.currentFlow.labelX = x - leftXOffset;
-        this.currentFlow.labelY = y - 3;
+        this.currentFlow.label_x = x - leftXOffset;
+        this.currentFlow.label_y = y - 3;
         this.flowLabelSet = true;
     }
 

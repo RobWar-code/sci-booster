@@ -83,8 +83,6 @@
             }
         }
         if ($flowModelId != null) {
-            // Debug
-            error_log("findModelPageByTitle: flowModelId: {$flowModelId}", 0);
             // Search for pageId
             $sql = "SELECT id FROM page WHERE flow_model_id = $flowModelId AND hierarchical_id = '01'";
             $result = $dbConn->query($sql);
