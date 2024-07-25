@@ -220,6 +220,8 @@ flowDetails = {
         dfm.currentPage.deleteFlow(flowNum);
         dfm.currentVisual.deleteFlow(flowNum);
         document.getElementById("flowDetails").style.display = "none";
+        dfm.modelChanged = true;
+        document.getElementById("saveModelButton").style.display = "inline";
     },
 
     dismissFlowDetails: function() {

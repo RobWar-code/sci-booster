@@ -282,15 +282,19 @@ function deletePageFlows($pageId) {
     else {
         while ($row = $result->fetch_assoc()) {
             $flowId = $row['id'];
-            deleteFlowArrowPoints($flowId);
-            deleteFlowPoints($flowId);
-            deleteConversionFormulas($flowId);
             deleteFlow($flowId);
         }
     }
 }
 
 function deleteFlow($flowId) {
+    deleteFlowArrowPoints($flowId);
+    deleteFlowPoints($flowId);
+    deleteConversionFormulas($flowId);
+    deleteFlowItem($flowId);
+}
+
+function deleteFlowItem($flowId) {
     global $dbConn;
     $sql = "DELETE FROM flow WHERE id = $flowId";
     $result = $dbConn->query($sql);
