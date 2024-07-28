@@ -68,6 +68,7 @@ const nodeDetails = {
             document.getElementById("nodeNum").innerText = nodeNum;
         }
 
+        window.scrollTo(0,0);
         document.getElementById("nodeDetails").style.display = "block";
         document.getElementById("nodeErrors").style.display = "none";
 

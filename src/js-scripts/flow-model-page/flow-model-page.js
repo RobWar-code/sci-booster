@@ -1,7 +1,15 @@
 const flowModelPage = {
 
     displayModelEditOptions: function () {
-        if (dfm.userStatus === "unregistered") {
+        if (dfm.flowDrawMode) {
+            document.getElementById("flowDoneButton").style.display = "inline";
+            document.getElementById("cancelFlowDrawButton").style.display = "inline";
+            document.getElementById("saveModelButton").style.display = "none";
+            document.getElementById("newModelButton").style.display = "none";
+            document.getElementById("editModelButton").style.display = "none";
+            document.getElementById("deleteModelButton").style.display = "none";
+        }
+        else if (dfm.userStatus === "unregistered") {
             if (dfm.currentPageSet) {
                 document.getElementById("cancelModelButton").style.display = "inline";
                 this.clearFlowModelEditMessage();
@@ -24,7 +32,6 @@ const flowModelPage = {
                 document.getElementById("editModelButton").style.display = "none";
                 document.getElementById("deleteModelButton").style.display = "none";
                 document.getElementById("saveModelButton").style.display = "none";
-                document.getElementById("cancelModelButton").style.display = "inline";
             }
         }
         else if (dfm.userStatus === "editor" || dfm.userStatus === "owner") {
@@ -40,10 +47,19 @@ const flowModelPage = {
             else {
                 // Display options for current model
                 document.getElementById("newModelButton").style.display = "inline";
-                document.getElementById("editModelButton").style.display = "inline";
-                document.getElementById("deleteModelButton").style.display = "none";
-                document.getElementById("saveModelButton").style.display = "none";
-                document.getElementById("cancelModelButton").style.display = "inline";
+                if (dfm.modelEditMode === "edit") {
+                    document.getElementById("editModelButton").style.display = "none";
+                }
+                else {
+                    document.getElementById("editModelButton").style.display = "inline";
+                }
+                if (dfm.currentPage.page.id === null) {
+                    document.getElementById("deleteModelButton").style.display = "none";
+                }
+                else {
+                    document.getElementById("deleteModelButton").style.display = "inline";
+                }
+                document.getElementById("saveModelButton").style.display = "inline";
             }
         }
         if (dfm.currentPageSet) {
@@ -161,6 +177,7 @@ const flowModelPage = {
 
     showYesNoModal: function(message) {
         return new Promise((resolve, reject) => {
+            window.scrollTo(0, 0);
             document.getElementById("yesNoModal").style.display = "block";
             document.getElementById("yesNoText").innerText = message;
             
@@ -202,7 +219,105 @@ const flowModelPage = {
             console.error("deletePageRequired: could not collect response ", error);
             return "cancel";
         }
+    },
+
+    zoomPage: async function(event) {
+        event.cancelBubble = true;
+        // Check whether the current page should be saved
+        if (dfm.modelEditMode && dfm.modelChanged) {
+            let response = await this.saveModelRequired(`Save Page - ${dfm.currentPage.page.title}`);
+            if (response === "yes") {
+                let reload = true;
+                dfm.currentPage.saveModel(reload);             
+            }
+            else if (response != "no") {
+                return;
+            }
+        }
+
+        // Get the hierarchical id, flow model id and flow model title
+        // To construct the search
+        let nodeNum = event.target.getAttr("nodeNum");
+        let hierarchicalId = dfm.currentPage.page.hierarchical_id + nodeNum;
+        let flowModelId = dfm.currentPage.flow_model_id;
+        let flowModelTitle = dfm.currentPage.flow_model_title;
+        let node = dfm.currentPage.getNode(nodeNum);
+        let nodeLabel = node.label;
+        let response = await this.fetchZoomPage(flowModelId, flowModelTitle, hierarchicalId);
+        if (!("error" in response)) {
+            if (response.got_page) {
+                dfm.currentVisual.destroyCurrentPage();
+                dfm.currentPage = new dfm.FlowPageData();
+                dfm.currentVisual = new dfm.FlowVisuals();
+                dfm.currentPage.setPageData(response);
+                dfm.currentPage.update = true;
+                dfm.currentVisual.redoPage();
+                dfm.currentPageSet = true;
+                dfm.modelChanged = false;
+                dfm.modelEditMode = "read-only";
+                // Set main page details
+                document.getElementById("flowModelTitle").innerText = dfm.currentPage.flow_model_title;
+                document.getElementById("pageHierarchicalId").innerText = dfm.currentPage.page.hierarchical_id;
+                document.getElementById("pageTitle").innerText = dfm.currentPage.page.title;
+
+                document.getElementById("modelDetails").style.display = "block";
+                document.getElementById("pageDetailsButton").style.display = "inline";
+                if (dfm.userStatus === "editor" || dfm.userStatus === "owner" || dfm.currentPage.isUserAuthor()) {
+                  document.getElementById("editModelButton").style.display = "inline";
+                }
+                document.getElementById("cancelModelButton").style.display = "inline";
+                flowModelPage.showSaveOnPageEdit(true);
+                modelDetails.setReadOnlyDisplay();
+                modelDetails.loadModelDetails();
+            }
+            else {
+                // Check whether the use has edit permissions
+                console.log("ZoomPage: dfm.modelEditMode - ", dfm.modelEditMode)
+                if (dfm.modelEditMode === "edit") {
+                    // New page to start
+                    dfm.currentVisual.destroyCurrentPage();
+                    dfm.currentPageSet = false;
+                    dfm.modelChanged = false;
+                    dfm.currentPage = new dfm.FlowPageData();
+                    dfm.currentPage.flow_model_title = flowModelTitle;
+                    dfm.currentPage.flow_model_id = flowModelId;
+                    dfm.currentPage.page.title = nodeLabel;
+                    dfm.currentPage.page.hierarchical_id = hierarchicalId;
+                    dfm.currentVisual = new dfm.FlowVisuals();
+                    // Set main page details
+                    document.getElementById("flowModelTitle").innerText = flowModelTitle;
+                    document.getElementById("pageHierarchicalId").innerText = hierarchicalId;
+                    document.getElementById("pageTitle").innerText = "Not Defined";
+                    modelDetails.newModel();
+                }
+            }
+        }
+    },
+
+    fetchZoomPage: async function(flowModelId, flowModelTitle, hierarchicalId) {
+        let requestObj = {
+            request: "zoom page",
+            flow_model_id: flowModelId,
+            flow_model_title: flowModelTitle,
+            hierarchical_id: hierarchicalId
+        };
+        let requestJSON = JSON.stringify(requestObj);
+        try {
+            let response = await fetch(dfm.phpPath + 'flow-model/receive-page.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: requestJSON
+            })
+
+            let responseData = await response.json();
+
+            return responseData;
+        }
+        catch {(error) => {
+            console.error("Problem with receive-page script call", error);
+            return {result: false, error: "Zoom Page - server error"};
+        }};
     }
-
-
 }

@@ -5,55 +5,35 @@ Contents
     Work Done
 
 <h1>Work Due
-    Database corruption possible with save single node/title entry - Fix 
 
+    Zoom-in Button
+
+        * Save current edit (if applicable)
+        * Search for page by hierarchicalId, flowModelId
+        * If found
+            * Load and display (as per select)
+        * Otherwise, If edit mode
+            Page Modal
+            Flow Modal
+            Node Modal
+            Yes/No Modal
+            Login Modal
+
+    For modals, scroll to top of screen
+
+    Set the hierarchical Id for a new model in the newModel display function.
+
+    Flow arrow direction, allow for originate in void in calculation of direction
+    
     Allow for the deletion of all elements in a model drawing
     
-    Insert a dummy blank/no select line at the start of the selector list
-
     Calculation of flow label width dubious
-
-    Set a page edited flag id any alteration is made to a page.
-    
-    Check with user for save on model search or select
-
-    Hide Page Details button until a page is loaded
 
     Prevent saving of a page without title
 
     What if a user author does not exist?
+        Always list the user author when new or edit mode entered.
 
-    Load Page from alphabetical selection list
-        * Check why model details not displayed, but visual is.
-        * Allow for an existing current model
-        * Clear the stage before model loaded
-
-    Handle Drawing edit options etc.
-        * Do the analysis for edit mode
-        * Add an edit option directly to flow drawing options
-        * Hide model edit prompts text unless in model edit mode
-        * Make the save button visible after the start of an edit
-            * Model
-            * Node
-            * Flow
-        flows
-            flow done should set drawing changed flag
-        nodes
-            drag node should set drawing changed flag
-        * model
-        * Check resave after updates
-        
-    Check the display and usage of the page edit options
-        * New
-        * Edit
-        * Save
-            * Redraft selection titles list after save, if a new model (no id).
-            Leave edit mode on after a save operation
-        * Delete
-        * Cancel
-
-    * When new model is selected and there is a current model, allow for save operation
-    
     Add current user automatically to authors for a new model (when model details submitted).
 
     In page load operations detect whether the page is authored by the user etc.
@@ -69,6 +49,49 @@ Contents
     Update the README with user features changes
 
 <h1>Work Done
+
+    26/07/2024
+
+    * Set a page edited flag id when any alteration is made to a page.
+    
+    * Check with user for save on model search or select
+
+    * Hide Page Details button until a page is loaded
+
+    * Database corruption possible with save single node/title entry - Fix 
+
+    * Insert a dummy blank/no select line at the start of the selector list
+
+    Load Page from alphabetical selection list
+        * Check why model details not displayed, but visual is.
+        * Allow for an existing current model
+        * Clear the stage before model loaded
+
+    Handle Drawing edit options etc.
+        * Do the analysis for edit mode
+        * Add an edit option directly to flow drawing options
+        * Hide model edit prompts text unless in model edit mode
+        * Make the save button visible after the start of an edit
+            * Model
+            * Node
+            * Flow
+        * flows
+            * flow done should set drawing changed flag
+        * nodes
+            drag node should set drawing changed flag
+        * model
+        * Check resave after updates
+        
+    Check the display and usage of the page edit options
+        * New
+        * Edit
+        * Save
+            * Redraft selection titles list after save, if a new model (no id).
+            Leave edit mode on after a save operation
+        * Delete
+        * Cancel
+
+    * When new model is selected and there is a current model, allow for save operation
 
     11/07/2024
     

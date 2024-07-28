@@ -19,6 +19,12 @@ const modelDetails = {
       dfm.currentVisual = new dfm.FlowVisuals();
     }
     this.clearDisplayData();
+    if ("page" in dfm.currentPage) {
+      if (dfm.currentPage.page.title != "") {
+        document.getElementById("modelTitle").value = dfm.currentPage.page.title;
+        document.getElementById("modelHierarchicalId").innerText = dfm.currentPage.page.hierarchical_id;
+      }
+    }
     this.setModelEditDisplay();
     this.displayModelDetails();
     dfm.currentPageSet = false;
@@ -29,6 +35,7 @@ const modelDetails = {
 
   editModel: function() {
     this.setModelEditMode();
+    window.scrollTo(0,0);
     document.getElementById("modelDetails").style.display = "block";
     document.getElementById("deleteModelButton").style.display = "inline";
     this.loadDisplayValues();
@@ -65,8 +72,12 @@ const modelDetails = {
   },
 
   displayModelDetails: function() {
+    window.scrollTo(0, 0);
     e = document.getElementById("modelDetails");
     e.style.display = "block";
+    if ("page" in dfm.currentPage) {
+      document.getElementById("modelHierarchicalId").innerText = dfm.currentPage.page.hierarchical_id;
+    }
     document.getElementById("additionalModelDetailsDiv").style.display = "none";
     document.getElementById("modelEditOption").style.display = "none";
     this.clearSubmissionTicks();
@@ -96,6 +107,12 @@ const modelDetails = {
     await dfm.currentPage.selectModel(event);
     dfm.currentPageSet = true;
     dfm.modelChanged = false;
+
+    // Set main page details
+    document.getElementById("flowModelTitle").innerText = dfm.currentPage.flow_model_title;
+    document.getElementById("pageHierarchicalId").innerText = dfm.currentPage.page.hierarchical_id;
+    document.getElementById("pageTitle").innerText = dfm.currentPage.page.title;
+
     document.getElementById("pageDetailsButton").style.display = "inline";
     if (dfm.userStatus === "editor" || dfm.userStatus === "owner" || dfm.currentPage.isUserAuthor()) {
       document.getElementById("editModelButton").style.display = "inline";
@@ -109,6 +126,7 @@ const modelDetails = {
   pageDetailsAction: function () {
     this.loadDisplayValues();
     this.clearSubmissionTicks();
+    window.scrollTo(0, 0);
     document.getElementById("modelDetails").style.display = "block";
     document.getElementById("additionalModelDetailsDiv").style.display = "block";
     if (dfm.modelEditMode === "read-only") {
@@ -120,6 +138,7 @@ const modelDetails = {
   },
 
   loadModelDetails: function() {
+    window.scrollTo(0, 0);
     e = document.getElementById("modelDetails");
     e.style.display = "block";
     this.cancelModelEditMode();
@@ -128,6 +147,7 @@ const modelDetails = {
   },
 
   loadDisplayValues: function() {
+    document.getElementById("modelHierarchicalId").innerText = dfm.currentPage.page.hierarchical_id;
     document.getElementById("modelTitle").value = dfm.currentPage.page.title;
     document.getElementById("modelDescription").value = dfm.currentPage.page.description;
     document.getElementById("modelKeywords").value = dfm.currentPage.page.keywords;
@@ -208,11 +228,14 @@ const modelDetails = {
     let keywords = Misc.stripHTML(document.getElementById("modelKeywords").value).trim();
 
     if (title != "") {
-      if (!dfm.currentPageSet) {
+      if (!("page" in dfm.currentPage)) {
         dfm.currentPage = new dfm.FlowPageData();
         dfm.currentVisual = new dfm.FlowVisuals();
+        dfm.currentPage.page.hierarchical_id = "01";
       }
-      dfm.currentPage.page.hierarchical_id = "01";
+      else if (dfm.currentPage.page.hierarchical_id === "") {
+        dfm.currentPage.page.hierarchical_id = "01";
+      }
       document.getElementById("pageHierarchicalId").innerText = dfm.currentPage.page.hierarchical_id;
       if (title != "") {
         document.getElementById("modelTitleTick").style.display = "inline";
@@ -222,6 +245,7 @@ const modelDetails = {
       }
       if (dfm.currentPage.page.hierarchical_id === "01") {
         dfm.currentPage.flow_model_title = title;
+        document.getElementById("flowModelTitle").innerText = title;
       }
       if (description != "") {
         document.getElementById("modelDescriptionTick").style.display = "inline";
@@ -242,16 +266,12 @@ const modelDetails = {
       }
       dfm.currentPageSet = true;
       dfm.modelEditMode = "edit";
+      // Display the Author and reference inputs
       document.getElementById("additionalModelDetailsDiv").style.display = "block";
-      document.getElementById("pageDetailsButton").style.display = "inline";
-      document.getElementById("cancelModelButton").style.display = "inline";
+      
       flowModelPage.displayModelEditOptions();
       flowModelPage.displayFlowModelEditMessage();
       document.getElementById("modalDismissButton").innerHTML = "Leave";
-      // If the top page of the hierarchy
-      if (dfm.topPage) {
-        document.getElementById("flowModelTitle").innerText = title;
-      }
       document.getElementById("pageTitle").innerText = title;
     }
   },

@@ -35,6 +35,7 @@
     <div class="genModal" id="modelDetails">
       <div class="genModalForm">
         <h1 class="modalFormTitle">Model Details</h1>
+        <p>Hierarchical Id: <span id="modelHierarchicalId"></span></p>
         <form id="modelDetailsForm" onsubmit="modelDetails.submitModelDetails(event)">
           <label for="modelTitle" class="modalFormLabel">Title:</label>
           <input type="text" class="modalFormItem" name="modelTitle" id="modelTitle">
@@ -344,26 +345,6 @@
     <script src="../js-scripts/flow-main.js"></script>
     <script>
       flowModelPage.displayModelEditOptions();
-
-      function doModelSearch() {
-
-      }
-
-      function loadPageDetails() {
-
-      }
-
-      function editModel() {
-
-      }
-
-      function deleteModel() {
-
-      }
-
-      function saveModel() {
-
-      }
 
       function test() {
         console.log("Test Passed");

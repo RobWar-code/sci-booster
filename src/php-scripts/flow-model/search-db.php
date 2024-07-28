@@ -103,3 +103,46 @@
         }
         return ['page_id'=>$pageId, 'flow_model_id'=>$flowModelId];
     }
+
+    function findModelPageByHierarchicalId($hierarchicalId, $flowModelId, $flowModelTitle) {
+        global $dbConn;
+
+        $pageId = null;
+        if ($flowModelId === null) {
+            // Search for the title
+            $sql = "SELECT id FROM flow_model WHERE title = ?";
+            $stmt = $dbConn->prepare($sql);
+            if ($stmt === FALSE) {
+                error_log("findModelPageByHierarchicalId: problem with sql {$dbConn->error}", 0);
+            }
+            $stmt->bind_param("s", $flowModelTitle);
+            if (!$stmt->execute()) {
+                error_log("findModelPageByHierarchicalId: problem with db execution {$dbConn->error}", 0);
+            }
+            else {
+                $stmt->store_result();
+                $stmt->bind_result($flowModelId);
+                if ($stmt->num_rows != 1) {
+                    error_log("findModelPageByHierarchicalId: Problem with matches for $flowModelTitle", 0);
+                }
+                else {
+                    $stmt->fetch();
+                }
+            }
+        }
+        if ($flowModelId != null) {
+            $sql = "SELECT id FROM page WHERE hierarchical_id = '$hierarchicalId' AND flow_model_id = $flowModelId";
+            $result = $dbConn->query($sql);
+            if (!$result) {
+                error_log("findModelPageByHierarchicalId: Problem with search for page $hierarchicalId - {$dbConn->error}", 0);
+            }
+            elseif ($result->num_rows > 1) {
+                error_log("findModelPageByHierarchicalId: Problem with number of matches $hierarchicalId - {$result->num_rows}", 0);
+            }
+            elseif ($result->num_rows === 1) {
+                $row = $result->fetch_assoc();
+                $pageId = $row['id'];
+            }
+        }
+        return $pageId;
+    }

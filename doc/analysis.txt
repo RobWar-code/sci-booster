@@ -16,7 +16,7 @@ Contents
 		Model Edit Options
 			Effect of Logout on User Edit Options
 		Page Information
-		Page Options Buttons
+		Page OptionButtons
 			New Model / New Page Operations
 		Flow Diagram
 			Summary of Flow Diagram Events
@@ -323,7 +323,7 @@ Contents
 		Submit Button
 		Leave Button
 
-<h2>Page Options Buttons
+<h2>Page OptiButtons
 	The page options buttons are New, Edit, Delete, Save
 	for the logic See Above: Model Edit Options
 
@@ -569,7 +569,7 @@ Contents
 	Each node is displayed with the following:
 	Node Number
 	Label 
-	Option Buttons
+	OptiButtons
 		Details
 		Hierarchical Definition Page
 		Add Flow Link
@@ -737,7 +737,7 @@ Contents
 		Node Min: 100 x 70px
 		Node Max: 200 x 70px
 		Flow Min Length: 60px
-		Buttons: 20px x 20px
+Buttons: 20px x 20px
 
 <h1>Javascript Coding Structure
 	The code for the flow model diagrams stage is separated from

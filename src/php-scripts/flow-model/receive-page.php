@@ -24,6 +24,9 @@ function scanInput($inputData) {
         elseif($requestType === "delete page by id") {
             deleteModelPage($inputData['page_id']);
         }
+        elseif($requestType === "zoom page") {
+            fetchModelPageByHierarchicalId($inputData);
+        }
     }
     else {
         handlePageData($inputData);
@@ -184,5 +187,29 @@ function deleteModelPage($pageId) {
     else {
         $result['result'] = false;
         echo json_encode($result);
+    }
+}
+
+function fetchModelPageByHierarchicalId($inputData) {
+    $hierarchicalId = $inputData['hierarchical_id'];
+    $flowModelTitle = $inputData['flow_model_title'];
+    $flowModelId = $inputData['flow_model_id'];
+ 
+    if ($flowModelId === null && $flowModelTitle === "") {
+        $result = ['result'=>false, 'error'=>"Missing at least flow model title"];
+        echo json_encode($result);
+    }
+    else {
+        $pageId = findModelPageByHierarchicalId($hierarchicalId, $flowModelId, $flowModelTitle);
+        if ($pageId === null) {
+            $result = json_encode(['result'=>true, 'got_page'=>false]);
+            echo $result;
+        }
+        else {
+            $result = extractPage($flowModelId, $pageId);
+            $result['result'] = true;
+            $result['got_page'] =true;
+            echo json_encode($result);    
+        }
     }
 }

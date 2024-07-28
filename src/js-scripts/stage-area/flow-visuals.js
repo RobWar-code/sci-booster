@@ -336,7 +336,7 @@ dfm.FlowVisuals = class {
         dfm.flowDrawMode = false;
         document.getElementById("flowDoneButton").style.display = "none";
         document.getElementById("cancelFlowDrawButton").style.display = "none";
-        document.getElementById("saveModelButton").style.display = "inline";
+        flowModelPage.displayModelEditOptions();
         flowModelPage.displayFlowModelEditMessage();
     }
 
@@ -506,7 +506,7 @@ dfm.FlowVisuals = class {
 
         document.getElementById("flowDoneButton").style.display = "none";
         document.getElementById("cancelFlowDrawButton").style.display = "none";
-        document.getElementById("saveModelButton").style.display = "inline";
+        flowModelPage.displayModelEditOptions();
         flowModelPage.displayFlowModelEditMessage();
     }
 
@@ -927,7 +927,7 @@ dfm.FlowVisuals = class {
         else if (destNodeX != -1) {
             let d1 = Math.sqrt((destNodeX - lineStartX)**2 + (destNodeY - lineStartY)**2);
             let d2 = Math.sqrt((destNodeX - lineEndX)**2 + (destNodeY - lineEndY)**2);
-            if (d1 < d2) flowDirection = -1;
+            if (d1 > d2) flowDirection = -1;
         }
 
         // Get the line direction

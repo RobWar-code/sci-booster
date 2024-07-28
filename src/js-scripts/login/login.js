@@ -1,5 +1,6 @@
 const login = {
     loadLoginModal: async function () {
+        window.scrollTo(0, 0);
         document.getElementById("loginDetails").style.display = "block";
         document.getElementById("loginOptionsDiv").style.display = "block";
         

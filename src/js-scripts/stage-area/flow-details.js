@@ -60,6 +60,7 @@ flowDetails = {
             document.getElementById("drawFlowButton").style.display = "none";
             document.getElementById("flowDeleteButton").style.display = "none";
         }
+        window.scrollTo(0,0);
         document.getElementById("flowDetails").style.display = "block";
         document.getElementById("flowDetailsError").style.display = "none";
         document.getElementById("formulaToggleWarning").style.display = "none";
@@ -244,8 +245,8 @@ flowDetails = {
             dfm.currentVisual.initialiseFlowEdit(this.currentFlow);
         }
         document.getElementById("flowDetails").style.display = "none";
-        document.getElementById("flowDoneButton").style.display = "inline";
-        document.getElementById("cancelFlowDrawButton").style.display = "inline";
+        flowModelPage.displayModelEditOptions();
+
         let instructElem = document.getElementById("instructionsText");
         let s = "Click the stage to draw the flow corner node by corner node."; 
         s += " Double-click the stage to add the flow label.";

@@ -1,9 +1,26 @@
 Systems Tests
 
 Contents
+    General Use Tests
     Edit, New and Read-only Modes
         Drawing - Edit Modes
     Model Save and Load
+
+<h1>General Use Test
+    Login as an Editor
+    Use the New button to start a new model
+    Add a node with all details set
+    Add a second node with all details set
+    Add a flow node with all details set
+    Save the model
+    Edit the model
+    Draw a source flow from void to the second node
+    Save the model
+    Use the zoom button to start a further model definition
+    Enter all details for the page
+    Add a node
+    Add a flow from the void to the node
+    Save the page
 
 <h1>Edit, New and Read-only Modes
     Check the editing modes and operation when the "New" button
