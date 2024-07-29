@@ -21,7 +21,6 @@ dfm.FlowVisuals = class {
         this.addingFlowLabel = false;
         this.lastX = 0;
         this.lastY = 0;
-        this.flowLabelSet = false;
         this.nodeTemplate = {
             active: false,
             nodeNum: "00",
@@ -114,6 +113,7 @@ dfm.FlowVisuals = class {
             x: dfm.nodeTemplate.textLeft,
             y: dfm.nodeTemplate.textTop,
             text: nodeNum + " " + label,
+            width: dfm.nodeTemplate.width - 6,
             fontSize: dfm.nodeTemplate.fontSize,
             fontFamily: dfm.nodeTemplate.fontFamily,
             fill: 'black'
@@ -557,14 +557,18 @@ dfm.FlowVisuals = class {
             visualFlowItem.flowGroup.add(flowArrow);
         }
         // Add the label
-        let label = flowDetailsItem.label;
+        // Determine text width
+        let textItem = flowDetailsItem.label;
+        let fontSize = dfm.nodeTemplate.fontSize;
+        let fontFamily = dfm.nodeTemplate.fontFamily; 
+        let labelWidth = this.calculateTextWidth(textItem, fontSize, fontFamily) + 13;
+
         x = flowDetailsItem.label_x;
         y = flowDetailsItem.label_y;
-        let width = flowDetailsItem.label_width;
         let rect = new Konva.Rect({
             x: x,
             y: y,
-            width: width,
+            width: labelWidth,
             height: dfm.nodeTemplate.fontSize + 6,
             stroke: 'black',
             strokeWidth: 1,
@@ -576,14 +580,30 @@ dfm.FlowVisuals = class {
         let text = new Konva.Text({
             x: x + 3,
             y: y + 3,
-            text: flowDetailsItem.label,
-            fontFamily: dfm.nodeTemplate.fontFamily,
-            fontSize: dfm.nodeTemplate.fontSize,
+            text: textItem,
+            fontFamily: fontFamily,
+            fontSize: fontSize,
             fill: 'black'
         });
         visualFlowItem.flowGroup.add(text);
         this.nodeLayer.add(visualFlowItem.flowGroup);
         return visualFlowItem;
+    }
+
+    calculateTextWidth(text, fontSize, fontFamily) {
+        // Create a temporary Konva.Text object
+        var tempText = new Konva.Text({
+            text: text,
+            fontSize: fontSize,
+            fontFamily: fontFamily,
+            visible: false // Hide the text object
+        });
+
+        // Get the width of the text
+        var textWidth = tempText.width();
+
+        // Return the width
+        return textWidth;
     }
 
     checkFlowDrawing() {
@@ -677,13 +697,18 @@ dfm.FlowVisuals = class {
     addFlowLabel() {
         if (this.flowLabelSet) return;
 
+        // Claculate text width
+        let textItem = this.currentFlow.label;
+        let fontSize = dfm.nodeTemplate.fontSize;
+        let fontFamily = dfm.nodeTemplate.fontFamily; 
+        let labelWidth = this.calculateTextWidth(textItem, fontSize, fontFamily) + 13;
+
         let x = this.flowClickX / dfm.scaleX;
         let y = this.flowClickY;
         x = x - this.currentFlowDrawing.flowGroup.getAttr('x');
         y = y - this.currentFlowDrawing.flowGroup.getAttr('y');
 
         let label = this.currentFlow.label;
-        let labelWidth = label.length * 9 + 6;
         this.currentFlow.label_width = labelWidth;
         let leftXOffset = label.length / 2 * 9 + 3;
         let rect = new Konva.Rect({
@@ -699,9 +724,9 @@ dfm.FlowVisuals = class {
         let text = new Konva.Text({
             x: x - leftXOffset + 3,
             y: y,
-            text: label,
-            fontFamily: dfm.nodeTemplate.fontFamily,
-            fontSize: dfm.nodeTemplate.fontSize,
+            text: textItem,
+            fontFamily: fontFamily,
+            fontSize: fontSize,
             fill: 'black',
             flowNum: this.currentFlow.flow_num
         });

@@ -66,6 +66,10 @@ const nodeDetails = {
             // Get the default node num
             let nodeNum = dfm.currentPage.getNextNodeNum();
             document.getElementById("nodeNum").innerText = nodeNum;
+            document.getElementById("nodeDeleteButton").style.display = "none";
+        }
+        else {
+            document.getElementById("nodeDeleteButton").style.display = "inline";
         }
 
         window.scrollTo(0,0);
@@ -169,7 +173,7 @@ const nodeDetails = {
         dfm.currentVisual.deleteNode(nodeNum);
         dfm.modelChanged = true;
         document.getElementById("nodeDetails").style.display = "none";
-        if (dfm.currentPage.nodes.length === 0) {
+        if (dfm.currentPage.page.nodes.length === 0) {
             document.getElementById("saveModelButton").style.display = "none";
         }
         else {

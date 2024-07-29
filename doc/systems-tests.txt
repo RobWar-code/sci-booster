@@ -1,10 +1,26 @@
 Systems Tests
 
 Contents
+    Bugs
+        Due
+        Fixed
     General Use Tests
     Edit, New and Read-only Modes
         Drawing - Edit Modes
     Model Save and Load
+
+<h1>Bugs
+
+<h2>Due
+    * Width of flow labels
+
+    * Problem with delete Node
+
+    Delete button shown on undefined node
+
+    Word-wrap for node label
+
+<h2>Fixed
 
 <h1>General Use Test
     Login as an Editor
