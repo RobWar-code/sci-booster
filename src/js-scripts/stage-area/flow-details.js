@@ -107,6 +107,11 @@ flowDetails = {
             errElem.style.display = "block";
             return;
         }
+        else if (label.length > dfm.maxFlowLabelLen) {
+            errElem.innerText = `Label too long for display - > ${dfm.maxFlowLabelLen}`;
+            errElem.style.display = "block";
+            return;
+        }
         this.currentFlow.flow_num = document.getElementById("flowNum").innerText;
         this.currentFlow.label = label;
         let sourceNodeNum = Misc.stripHTML(document.getElementById("flowSourceNodeNum").value).trim();

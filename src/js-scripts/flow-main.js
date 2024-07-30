@@ -22,6 +22,11 @@ dfm.modelReferencesVisible = false;
 dfm.flowDrawMode = false;
 dfm.modelChanged = false;
 
+// Node and Flow details
+dfm.maxNodeLabelLen = 42;
+dfm.maxFlowLabelLen = 42;
+dfm.maxFlowLabelWidth = 90; 
+
 // The drawing stage
 dfm.stageWidth = GLOBALS.minStageWidth;
 dfm.stageHeight = GLOBALS.stageHeight;

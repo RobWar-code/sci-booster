@@ -85,12 +85,16 @@ const nodeDetails = {
     submitNodeDetails: function (event) {
         event.preventDefault();
 
-
         // Check the field contents
         let label = document.getElementById("nodeLabel").value;
         label = Misc.stripHTML(label).trim();
         if (label === "") {
             document.getElementById("nodeErrors").value = "Bad node label submitted";
+            document.getElementById("nodeErrors").style.display = "block";
+            return;
+        }
+        else if (label.length > dfm.maxNodeLabelLen) {
+            document.getElementById("nodeErrors").value = `Label too long for display - > ${dfm.maxNodeLabelLen}`;
             document.getElementById("nodeErrors").style.display = "block";
             return;
         }
