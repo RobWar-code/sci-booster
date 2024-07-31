@@ -12,22 +12,39 @@ Contents
 <h1>Bugs
 
 <h2>Due
+
+    Adjust flow line width for editing to 3
+
+    Amend
+        DrawFlow
+        InsertFlowNode
+        DeleteFlowNode
+        
+
+    Sort-out flow arrow direction
+
+<h2>Fixed
+
     * Width of flow labels
 
     * Problem with delete Node
 
-    Delete button shown on undefined node
+    * Delete button shown on undefined node
 
-    Word-wrap for node label
+    * Word-wrap for node label
 
-<h2>Fixed
+    * Word-wrap for flow label
 
-<h1>General Use Test
-    Login as an Editor
-    Use the New button to start a new model
+    * Maximum length for labels
+
+<h1>General Use Tests
+
+    * Login as an Editor
+    * Use the New button to start a new model
     Add a node with all details set
     Add a second node with all details set
-    Add a flow node with all details set
+    Add a flow with all details set
+        Test Click line to insert a node.
     Save the model
     Edit the model
     Draw a source flow from void to the second node

@@ -6,16 +6,18 @@ Contents
 
 <h1>Work Due
 
+    Block robot logins/register
+
     In analysis catalog the locations in which events originate
         in order to ease debugging and comprehension.
 
     Set maximum length of text for labels
         Model Title
         Page Title
-        Node
-        Flow
+        * Node
+        * Flow
 
-    Consider allowing two lines of text for flow label.
+    * Consider allowing two lines of text for flow label.
 
     Zoom-in Button
 

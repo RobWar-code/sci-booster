@@ -19,6 +19,7 @@ dfm.FlowVisuals = class {
         this.flowClickX = 0;
         this.flowClickY = 0;
         this.addingFlowLabel = false;
+        this.terminatingFlowNodeNum = 0;
         this.lastX = 0;
         this.lastY = 0;
         this.nodeTemplate = {
@@ -598,6 +599,15 @@ dfm.FlowVisuals = class {
         return visualFlowItem;
     }
 
+    // Function to calculate the angle between two points
+    calculateLineAngle(x1, y1, x2, y2) {
+        var deltaX = x1 - x2;
+        var deltaY = y2 - y1;
+        var angleRadians = Math.atan2(deltaX, deltaY);
+        var angleDegrees = angleRadians * (180 / Math.PI);
+        return angleDegrees;
+    }
+    
     calculateTextWidth(text, fontSize, fontFamily) {
         // Create a temporary Konva.Text object
         var tempText = new Konva.Text({
@@ -696,7 +706,7 @@ dfm.FlowVisuals = class {
         flowNode.marker = new Konva.Circle({
             x: x,
             y: y,
-            radius: 4,
+            radius: dfm.flowMarkerWidth / 2,
             fill: 'white',
             stroke: 'black',
             strokeWidth: 1,
@@ -708,10 +718,24 @@ dfm.FlowVisuals = class {
         flowNode.marker.on("dragmove", (e) => this.flowNodeDragged(e));
         flowNode.marker.on("dragend", (e) => this.flowNodeDragEnd(e));
         if (this.currentFlowDrawing.points.length > 0) {
-            flowNode.line = new Konva.Line({
-                points: [this.lastX, this.lastY, x, y],
+            let x1 = x;
+            let y1 = y;
+            let x2 = this.lastX;
+            let y2 = this.lastY;
+            // Calculate angle of the line
+            let lineAngle = this.calculateLineAngle(x1, y1, x2, y2);
+            flowNode.line = new Konva.Rect({
+                x: x1,
+                y: y1,
+                width: dfm.flowLineWidth,
+                height: Math.sqrt((x1 - x2)**2 + (y1 - y2)**2),
                 stroke: 'black',
-                strokeWidth: 2,
+                strokeWidth: 1,
+                fill: '#a0a0a0',
+                offsetX: dfm.flowLineWidth / 2,
+                offsetY: 0,
+                rotation: lineAngle,
+                points: [x1, y1, x2, y2],
                 nodeNum: flowNodeNum
             })
             flowNode.line.on("click", (e) => this.flowLineClicked(e));
@@ -1048,7 +1072,7 @@ dfm.FlowVisuals = class {
         let marker = new Konva.Circle({
             x: x,
             y: y,
-            radius: 4,
+            radius: dfm.flowMarkerWidth / 2,
             fill: 'white',
             stroke: 'black',
             strokeWidth: 1,
@@ -1060,19 +1084,37 @@ dfm.FlowVisuals = class {
         marker.on("dragmove", (e) => this.flowNodeDragged(e));
         marker.on("dragend", (e) => this.flowNodeDragEnd(e));
 
+        // **
         let {itemNum, flowNodeItem} = this.findCurrentFlowDrawingFlowNode(flowNodeNum);
+        console.log("insertFlowNode: flowNodeNum, itemNum, flowNodeItem - ", flowNodeNum, itemNum, flowNodeItem);
         let x1 = flowNodeItem.marker.getAttr("x");
         let y1 = flowNodeItem.marker.getAttr("y");
+        let [prevX, prevY] = flowNodeItem.line.points;
+        let {prevItemNum, prevNode} = this.findFlowNodeAtXY(prevX, prevY);
         flowNodeItem.line.setAttr("points", [x, y, x1, y1]);
+        flowNodeItem.line.setAttr("x", x);
+        flowNodeItem.line.setAttr("y", y);
         let prevFlowItem = this.currentFlowDrawing.points[itemNum - 1];
-        x1 = prevFlowItem.marker.getAttr("x");
-        y1 = prevFlowItem.marker.getAttr("y");
-        let line = new Konva.Line({
-                points: [x1, y1, x, y],
-                stroke: 'black',
-                strokeWidth: 2,
-                nodeNum: newFlowNodeNum
-            })
+        x1 = prevX;
+        y1 = prevY;
+        let x2 = x;
+        let y2 = y;
+        // Calculate angle of the line
+        let lineAngle = this.calculateLineAngle(x1, y1, x2, y2);
+        let line = new Konva.Rect({
+            x: x1,
+            y: y1,
+            width: dfm.flowLineWidth,
+            height: Math.sqrt((x1 - x2)**2 + (y1 - y2)**2),
+            stroke: 'black',
+            strokeWidth: 1,
+            fill: '#a0a0a0',
+            offsetX: dfm.flowLineWidth / 2,
+            offsetY: 0,
+            rotation: lineAngle,
+            points: [x1, y1, x2, y2],
+            nodeNum: flowNodeNum
+        });
         line.on("click", (e) => this.flowLineClicked(e));
         this.currentFlowDrawing.flowGroup.add(marker);
         this.currentFlowDrawing.flowGroup.add(line);
@@ -1143,6 +1185,27 @@ dfm.FlowVisuals = class {
         let itemNum = -1;
         for (flowNodeItem of this.currentFlowDrawing.points) {
             if (flowNodeItem.marker.getAttr("nodeNum") === flowNodeNum) {
+                found = true;
+                break;
+            }
+            ++count;
+        }
+        if (!found) {
+            flowNodeItem = null;
+        }
+        else {
+            itemNum = count;
+        }
+        return {itemNum: itemNum, flowNodeItem: flowNodeItem};
+    }
+
+    findFlowNodeAtXY(x, y) {
+        let flowNodeItem = null;
+        let found = false;
+        let count = 0;
+        let itemNum = -1;
+        for (flowNodeItem of this.currentFlowDrawing.points) {
+            if (flowNodeItem.marker.getAttr("x") === x && flowNodeItem.marker.getAttr("y") === y) {
                 found = true;
                 break;
             }
