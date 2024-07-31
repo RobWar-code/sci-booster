@@ -30,6 +30,7 @@ Contents
 	Javascript Coding Structure
 		Flow Diagram Data Structures
 		Flow Drawing Logic
+			Editing Flow Marker Nodes and Lines
 	Flow Model Database Transactions
 		Save Operation Preparations
 		Adding a New Page
@@ -929,6 +930,37 @@ Buttons: 20px x 20px
 
 	Once the user has finished editing the flow, he can click the Flow Done button
 	in the flow editing panel.
+
+<h3>Editing Flow Marker Nodes and Lines
+
+	Flow drawing is handled in the flow-visuals class.
+	The flow details of the flow being edited are maintained in the currentFlow object,
+	and the drawing object the currentFlowDrawing object.
+
+	The Konva flowGroup item of the currentFlow drawing object binds the items of the flow
+	line drawing together.
+
+	The flow line consists of lines and nodes and the konva object representations of
+	these are stored in the points array of the currentFlowDrawing. Each node has an
+	associated nodeNum, prevNodeNum and nextNodeNum attribute that relates to the 
+	lines which connect the nodes. The node numbers themselves are arbitrary, 
+	but maintained by getNextFlowNodeNum().
+
+	When the stage is clicked a new flow node is added, and by default this is joined
+	by a line to the previous node addition. The last flow nodeNum is tracked by 
+	the terminatingFlowNodeNum, along with the lastX and lastY coordinates of the stage
+	position clicked.
+
+	When a node is added, it is automatically joined by a line to the 
+	terminatingFlowNodeNum and the nextNodeNum of this node updated. The prevNodeNum
+	of the new node is set to the terminatingFlowNodeNum.
+
+	These procedures are necessary to take account of node deletions and insertions.
+
+	When a node is deleted, the prev and next nodes are updated accordingly.
+
+
+
 
 <h1>Flow Model Database Transactions
 

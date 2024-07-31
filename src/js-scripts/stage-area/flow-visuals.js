@@ -688,6 +688,7 @@ dfm.FlowVisuals = class {
 
     drawFlow(e) {
         let flowNodeNum = this.getNextFlowNodeNum();
+        let prevNodeNum = null;
         let x = this.flowClickX / dfm.scaleX;
         let y = this.flowClickY;
         if (!this.flowDrawStarted) {
@@ -699,7 +700,13 @@ dfm.FlowVisuals = class {
             this.flowDrawStarted = true;
             this.currentFlow.drawing_group_x = x;
             this.currentFlow.drawing_group_y = y;
-        };
+            this.terminatingFlowNodeNum = flowNodeNum;
+        }
+        else if (this.currentFlowDrawing.points.length > 0) {
+            prevNodeNum = this.terminatingFlowNodeNum;
+            let flowNodeItem = this.findFlowNode(this.terminatingFlowNodeNum).flowNodeItem;
+            flowNodeItem.marker.setAttr("nextNodeNum", this.terminatingFlowNodeNum);
+        }
         let flowNode = {};
         x = x - this.currentFlowDrawing.flowGroup.getAttr('x');
         y = y - this.currentFlowDrawing.flowGroup.getAttr('y');
@@ -710,7 +717,9 @@ dfm.FlowVisuals = class {
             fill: 'white',
             stroke: 'black',
             strokeWidth: 1,
-            nodeNum: flowNodeNum
+            nodeNum: flowNodeNum,
+            prevNodeNum: prevNodeNum,
+            nextNodeNum: null
         });
         flowNode.marker.setAttr("draggable", true);
         flowNode.marker.on("click", (e) => this.flowNodeClicked(e));
@@ -718,10 +727,10 @@ dfm.FlowVisuals = class {
         flowNode.marker.on("dragmove", (e) => this.flowNodeDragged(e));
         flowNode.marker.on("dragend", (e) => this.flowNodeDragEnd(e));
         if (this.currentFlowDrawing.points.length > 0) {
-            let x1 = x;
-            let y1 = y;
-            let x2 = this.lastX;
-            let y2 = this.lastY;
+            let x1 = this.lastX;
+            let y1 = this.lastY;
+            let x2 = x;
+            let y2 = y;
             // Calculate angle of the line
             let lineAngle = this.calculateLineAngle(x1, y1, x2, y2);
             flowNode.line = new Konva.Rect({
@@ -749,6 +758,7 @@ dfm.FlowVisuals = class {
         ++this.flowNodeCount;
         this.lastX = x;
         this.lastY = y;
+        this.terminatingFlowNodeNum = flowNodeNum;
     }
 
     addFlowLabel() {
@@ -1178,7 +1188,7 @@ dfm.FlowVisuals = class {
         return flowNodeNum;
     }
 
-    findCurrentFlowDrawingFlowNode(flowNodeNum) {
+    findFlowNode(flowNodeNum) {
         let flowNodeItem = null;
         let found = false;
         let count = 0;
