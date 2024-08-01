@@ -13,13 +13,20 @@ Contents
 
 <h2>Due
 
-    Adjust flow line width for editing to 3
+    Check-out Dismiss on flow-link, remove all details
 
-    Amend
-        DrawFlow
-        InsertFlowNode
-        DeleteFlowNode
-        
+    Adjust length of flow line segment to fit between markers (not 
+    overlapping marker)
+
+    * Adjust flow line width for editing to 3
+
+        Amend
+            * DrawFlow
+            * InsertFlowNode
+            * DeleteFlowNode
+            Drag Marker
+            Display as editable flow
+            Flow Done
 
     Sort-out flow arrow direction
 

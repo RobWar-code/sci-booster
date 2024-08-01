@@ -705,11 +705,12 @@ dfm.FlowVisuals = class {
         else if (this.currentFlowDrawing.points.length > 0) {
             prevNodeNum = this.terminatingFlowNodeNum;
             let flowNodeItem = this.findFlowNode(this.terminatingFlowNodeNum).flowNodeItem;
-            flowNodeItem.marker.setAttr("nextNodeNum", this.terminatingFlowNodeNum);
+            flowNodeItem.nextNodeNum = flowNodeNum;
         }
         let flowNode = {};
         x = x - this.currentFlowDrawing.flowGroup.getAttr('x');
         y = y - this.currentFlowDrawing.flowGroup.getAttr('y');
+        let empty = null;
         flowNode.marker = new Konva.Circle({
             x: x,
             y: y,
@@ -717,9 +718,7 @@ dfm.FlowVisuals = class {
             fill: 'white',
             stroke: 'black',
             strokeWidth: 1,
-            nodeNum: flowNodeNum,
-            prevNodeNum: prevNodeNum,
-            nextNodeNum: null
+            nodeNum: flowNodeNum
         });
         flowNode.marker.setAttr("draggable", true);
         flowNode.marker.on("click", (e) => this.flowNodeClicked(e));
@@ -733,6 +732,8 @@ dfm.FlowVisuals = class {
             let y2 = y;
             flowNode.line = this.drawFlowLine(x1, y1, x2, y2, flowNodeNum);
         }
+        flowNode.prevNodeNum = prevNodeNum;
+        flowNode.nextNodeNum = null;
         this.currentFlowDrawing.points.push(flowNode);
         this.currentFlowDrawing.flowGroup.add(flowNode.marker);
         flowNode.marker.setZIndex(0.2);
@@ -761,13 +762,13 @@ dfm.FlowVisuals = class {
             nodeNum: flowNodeNum
         })
         line.on("click", (e) => this.flowLineClicked(e));
-        this.currentFlowDrawing.flowGroup.add(flowNode.line);
+        this.currentFlowDrawing.flowGroup.add(line);
         line.setZIndex(0.1);
         return line;
     }
 
     addFlowLabel() {
-        if (this.flowLabelSet) return;
+        if (this.flowLabelSet || !this.flowDrawStarted) return;
 
         // Calculate text width / height
         let textItem = this.currentFlow.label;
@@ -882,37 +883,44 @@ dfm.FlowVisuals = class {
         }
         else {
             // If the start node
-            if (flowNodeItem.marker.getAttr("prevNodeNum") === null) {
-                let nextNodeNum = flowNodeItem.marker.getAttr("nextNodeNum");
+            if (flowNodeItem.prevNodeNum === null) {
+                let nextNodeNum = flowNodeItem.nextNodeNum;
                 let flowNodeObj = this.findFlowNode(nextNodeNum);
                 flowNodeObj.flowNodeItem.line.destroy();
-                flowNodeObj.flowNodeItem.marker.setAttr("prevNodeNum", null);
+                flowNodeObj.flowNodeItem.prevNodeNum = null;
                 flowNodeItem.marker.destroy();
                 this.currentFlowDrawing.points.splice(itemNum, 1);
             }
-            else if (flowNodeItem.marker.getAttr("nextNodeNum") === null) {
-                let prevNodeNum = flowNodeItem.marker.getAttr("prevNodeNum");
+            // End Node
+            else if (flowNodeItem.nextNodeNum === null) {
+                let prevNodeNum = flowNodeItem.prevNodeNum;
                 let flowNodeObj = this.findFlowNode(prevNodeNum);
-                flowNodeObj.flowNodeItem.marker.setAttr("nextNodeNum", null);
+                flowNodeObj.flowNodeItem.nextNodeNum = null;
                 flowNodeItem.marker.destroy();
                 flowNodeItem.line.destroy();
                 this.currentFlowDrawing.points.splice(itemNum, 1);
+                this.terminatingFlowNodeNum = prevNodeNum;
+                this.lastX = flowNodeObj.flowNodeItem.marker.getAttr("x");
+                this.lastY = flowNodeObj.flowNodeItem.marker.getAttr("y");
             }
             else {
-                let prevNodeNum = flowNodeItem.marker.getAttr("prevNodeNum");
-                let nextNodeNum = flowNodeItem.marker.getAttr("nextNodeNum");
+                // Intermediate node
+                let prevNodeNum = flowNodeItem.prevNodeNum;
+                let nextNodeNum = flowNodeItem.nextNodeNum;
                 let prevNodeObj = this.findFlowNode(prevNodeNum);
-                prevNodeObj.flowNodeItem.marker.setAttr("nextNodeNum", nextNodeNum);
+                prevNodeObj.flowNodeItem.nextNodeNum = nextNodeNum;
                 let nextNodeObj = this.findFlowNode(nextNodeNum);
-                nextNodeObj.flowNodeItem.marker.setAttr("prevNodeNum", prevNodeNum);
+                nextNodeObj.flowNodeItem.prevNodeNum = prevNodeNum;
+                flowNodeItem.marker.destroy();
+                flowNodeItem.line.destroy();
                 nextNodeObj.flowNodeItem.line.destroy();
                 let x1 = prevNodeObj.flowNodeItem.marker.getAttr("x");
                 let y1 = prevNodeObj.flowNodeItem.marker.getAttr("y");
                 let x2 = nextNodeObj.flowNodeItem.marker.getAttr("x");
                 let y2 = nextNodeObj.flowNodeItem.marker.getAttr("y");
-                let line = this.drawFlowLine(x1, y1, x2, y2);
+                let line = this.drawFlowLine(x1, y1, x2, y2, nextNodeNum);
                 nextNodeObj.flowNodeItem.line = line;
-                this.currentFlowDrawing.nodeGroup.add(line);
+                this.currentFlowDrawing.flowGroup.draw();
                 this.currentFlowDrawing.points.splice(itemNum, 1);
             }
         }
@@ -930,26 +938,40 @@ dfm.FlowVisuals = class {
         let flowNodeNum = e.target.getAttr("nodeNum");
         let x = e.target.getAttr("x");
         let y = e.target.getAttr("y");
-        let {itemNum, flowNodeItem} = this.findCurrentFlowDrawingFlowNode(flowNodeNum);
+        let {itemNum, flowNodeItem} = this.findFlowNode(flowNodeNum);
+        let prevNodeNum = flowNodeItem.prevNodeNum;
+        let nextNodeNum = flowNodeItem.nextNodeNum;
         if (flowNodeItem != null) {
-            if (itemNum > 0) {
-                let x1 = this.currentFlowDrawing.points[itemNum - 1].marker.getAttr("x");
-                let y1 = this.currentFlowDrawing.points[itemNum - 1].marker.getAttr("y");
-                this.currentFlowDrawing.points[itemNum].line.setAttr("points", [x1, y1, x, y]);
-                if (itemNum === this.currentFlowDrawing.points.length - 1) {
+            if (prevNodeNum != null) {
+                let x1 = flowNodeItem.line.getAttr("points")[0];
+                let y1 = flowNodeItem.line.getAttr("points")[1];
+                let x2 = x;
+                let y2 = y;
+                flowNodeItem.line.destroy();
+                let line = this.drawFlowLine(x1, y1, x2, y2, flowNodeNum);
+                flowNodeItem.line = line;
+            }
+            if (nextNodeNum != null) {
+                let nextNodeObj = this.findFlowNode(nextNodeNum);
+                nextNodeObj.flowNodeItem.line.destroy();
+                let x1 = x;
+                let y1 = y;
+                let x2 = nextNodeObj.flowNodeItem.marker.getAttr("x");
+                let y2 = nextNodeObj.flowNodeItem.marker.getAttr("y");
+                let line = this.drawFlowLine(x1, y1, x2, y2, nextNodeNum);
+                nextNodeObj.flowNodeItem.line = line;
+            }
+
+            if (flowNodeNum === this.terminatingFlowNodeNum) {
                     this.lastX = x;
                     this.lastY = y;
-                }
             }
-            if (itemNum < this.currentFlowDrawing.points.length - 1) {
-                let x1 = this.currentFlowDrawing.points[itemNum + 1].marker.getAttr("x");
-                let y1 = this.currentFlowDrawing.points[itemNum + 1].marker.getAttr("y");
-                this.currentFlowDrawing.points[itemNum + 1].line.setAttr("points", [x, y, x1, y1]);
-            }
+            
         }
         else {
             console.error("Drag end - could not find flowNodeItem")
         }
+        e.cancelBubble = true;
     }
 
     flowLineClicked(e) {
@@ -979,7 +1001,7 @@ dfm.FlowVisuals = class {
         y = y - this.currentFlowDrawing.flowGroup.getAttr('y');
 
         // Determine the vector of the line
-        let {itemNum, flowNodeItem} = this.findCurrentFlowDrawingFlowNode(flowNodeNum);
+        let {itemNum, flowNodeItem} = this.findFlowNode(flowNodeNum);
         if (itemNum === -1) {
             console.error("addFlowArrow could find flowNodeNum:", flowNodeNum);
             return;
@@ -1098,51 +1120,36 @@ dfm.FlowVisuals = class {
         marker.on("dragend", (e) => this.flowNodeDragEnd(e));
 
         // **
-        let {itemNum, flowNodeItem} = this.findCurrentFlowDrawingFlowNode(flowNodeNum);
-        console.log("insertFlowNode: flowNodeNum, itemNum, flowNodeItem - ", flowNodeNum, itemNum, flowNodeItem);
-        let x1 = flowNodeItem.marker.getAttr("x");
-        let y1 = flowNodeItem.marker.getAttr("y");
-        let [prevX, prevY] = flowNodeItem.line.points;
-        let {prevItemNum, prevNode} = this.findFlowNodeAtXY(prevX, prevY);
-        flowNodeItem.line.setAttr("points", [x, y, x1, y1]);
-        flowNodeItem.line.setAttr("x", x);
-        flowNodeItem.line.setAttr("y", y);
-        let prevFlowItem = this.currentFlowDrawing.points[itemNum - 1];
-        x1 = prevX;
-        y1 = prevY;
-        let x2 = x;
-        let y2 = y;
-        // Calculate angle of the line
-        let lineAngle = this.calculateLineAngle(x1, y1, x2, y2);
-        let line = new Konva.Rect({
-            x: x1,
-            y: y1,
-            width: dfm.flowLineWidth,
-            height: Math.sqrt((x1 - x2)**2 + (y1 - y2)**2),
-            stroke: 'black',
-            strokeWidth: 1,
-            fill: '#a0a0a0',
-            offsetX: dfm.flowLineWidth / 2,
-            offsetY: 0,
-            rotation: lineAngle,
-            points: [x1, y1, x2, y2],
-            nodeNum: flowNodeNum
-        });
-        line.on("click", (e) => this.flowLineClicked(e));
+        // Add the new line to the next node
+        let nextNodeObj = this.findFlowNode(flowNodeNum);
+        let x1 = x;
+        let y1 = y;
+        let x2 = nextNodeObj.flowNodeItem.marker.getAttr("x");
+        let y2 = nextNodeObj.flowNodeItem.marker.getAttr("y");
+        nextNodeObj.flowNodeItem.line.destroy();
+        let line = this.drawFlowLine(x1, y1, x2, y2, flowNodeNum);
+        nextNodeObj.flowNodeItem.line = line;
+        let prevNodeNum = nextNodeObj.flowNodeItem.prevNodeNum;
+        nextNodeObj.flowNodeItem.prevNodeNum = newFlowNodeNum;
+
+        // Get the line to the previous node
+        let prevNodeObj = this.findFlowNode(prevNodeNum);
+        prevNodeObj.flowNodeItem.nextNodeNum = newFlowNodeNum;
+        x1 = prevNodeObj.flowNodeItem.marker.getAttr("x");
+        y1 = prevNodeObj.flowNodeItem.marker.getAttr("y");
+        x2 = x;
+        y2 = y;
+        line = this.drawFlowLine(x1, y1, x2, y2, newFlowNodeNum);
+        // Insert into points list
+        let flowNodeItem = {};
         this.currentFlowDrawing.flowGroup.add(marker);
-        this.currentFlowDrawing.flowGroup.add(line);
         marker.setZIndex(0.2);
-        line.setZIndex(0.1);
-        let points = [];
-        let count = 0;
-        for (let item of this.currentFlowDrawing.points) {
-            if (count === itemNum) {
-                points.push({marker: marker, line: line})
-            }
-            points.push(item);
-            ++count;
-        }
-        this.currentFlowDrawing.points = points;
+        flowNodeItem.prevNodeNum = prevNodeNum;
+        flowNodeItem.nextNodeNum = flowNodeNum;
+        flowNodeItem.marker = marker;
+        flowNodeItem.line = line;
+        this.currentFlowDrawing.points.push(flowNodeItem);
+        this.currentFlowDrawing.flowGroup.draw();
     }
 
     getFlow(flowNum) {
