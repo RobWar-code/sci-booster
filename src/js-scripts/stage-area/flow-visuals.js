@@ -745,13 +745,15 @@ dfm.FlowVisuals = class {
     }
 
     drawFlowLine(x1, y1, x2, y2, flowNodeNum) {
+        // Adjust the length of the line, to allow for markers
+        let {ax1, ay1, ax2, ay2} = this.adjustFlowLine(x1, y1, x2, y2);
         // Calculate angle of the line
-        let lineAngle = this.calculateLineAngle(x1, y1, x2, y2);
+        let lineAngle = this.calculateLineAngle(ax1, ay1, ax2, ay2);
         let line = new Konva.Rect({
-            x: x1,
-            y: y1,
+            x: ax1,
+            y: ay1,
             width: dfm.flowLineWidth,
-            height: Math.sqrt((x1 - x2)**2 + (y1 - y2)**2),
+            height: Math.sqrt((ax1 - ax2)**2 + (ay1 - ay2)**2),
             stroke: '#c0c0c0',
             strokeWidth: 1,
             fill: '#404040',
@@ -765,6 +767,21 @@ dfm.FlowVisuals = class {
         this.currentFlowDrawing.flowGroup.add(line);
         line.setZIndex(0.1);
         return line;
+    }
+
+    /** Adjust the start and end points of the line to allow for the marker */
+    adjustFlowLine(x1, y1, x2, y2) {
+        let dx = x2 - x1;
+        let dy = y2 - y1;
+        let dr = dfm.flowMarkerWidth / 2;
+        let t = Math.atan(dy/dx);
+        let dx1 = dr * Math.cos(t);
+        let dy1 = dr * Math.sin(t);
+        let ax1 = dx1 + x1;
+        let ay1 = dy1 + y1;
+        let ax2 = x1 < x2 ? x2 - dx1 : x2 + dx1;
+        let ay2 = y1 < y2 ? y2 - dy1 : y2 + dy1;
+        return {ax1, ay1, ax2, ay2};
     }
 
     addFlowLabel() {
