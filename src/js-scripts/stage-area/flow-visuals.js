@@ -774,13 +774,13 @@ dfm.FlowVisuals = class {
         let dx = x2 - x1;
         let dy = y2 - y1;
         let dr = dfm.flowMarkerWidth / 2;
-        let t = Math.atan(dy/dx);
-        let dx1 = dr * Math.cos(t);
-        let dy1 = dr * Math.sin(t);
+        let t = Math.atan2(dx, dy);
+        let dx1 = dr * Math.sin(t);
+        let dy1 = dr * Math.cos(t);
         let ax1 = dx1 + x1;
         let ay1 = dy1 + y1;
-        let ax2 = x1 < x2 ? x2 - dx1 : x2 + dx1;
-        let ay2 = y1 < y2 ? y2 - dy1 : y2 + dy1;
+        let ax2 = x2 - dx1;
+        let ay2 = y2 - dy1;
         return {ax1, ay1, ax2, ay2};
     }
 
@@ -1052,11 +1052,13 @@ dfm.FlowVisuals = class {
         }
 
         // Get the flow lines start and end nodes
-        let lineStartX = this.currentFlowDrawing.points[0].marker.getAttr('x');
-        let lineStartY = this.currentFlowDrawing.points[0].marker.getAttr('y');
-        let finalFlowNode = this.currentFlowDrawing.points.length - 1;
-        let lineEndX = this.currentFlowDrawing.points[finalFlowNode].marker.getAttr('x');
-        let lineEndY = this.currentFlowDrawing.points[finalFlowNode].marker.getAttr('y');
+        let prevNodeNum = this.currentFlowDrawing.points[itemNum].prevNodeNum;
+        let prevNodeObj = this.findFlowNode(prevNodeNum);
+
+        let lineStartX = this.currentFlowDrawing.points[prevNodeObj.itemNum].marker.getAttr('x');
+        let lineStartY = this.currentFlowDrawing.points[prevNodeObj.itemNum].marker.getAttr('y');
+        let lineEndX = this.currentFlowDrawing.points[itemNum].marker.getAttr('x');
+        let lineEndY = this.currentFlowDrawing.points[itemNum].marker.getAttr('y');
 
         // Determine the start and end points of the flow direction
         let flowDirection = 1;
@@ -1071,33 +1073,34 @@ dfm.FlowVisuals = class {
             if (d1 > d2) flowDirection = -1;
         }
 
-        // Get the line direction
-        let l1 = {}
-        let d2 = 0;
-        if (flowDirection === 1) {
-            l1 = new patternArt.Geo.Line({x: x1, y: y1}, {x: x2, y: y2});
-            d2 = Math.sqrt((x - x1)**2 + (y - y1)**2);
+        // Get the points of the triangle
+        let dx, dy;
+        if (flowDirection === -1) {
+            dx = lineStartX - lineEndX;
+            dy = lineStartY - lineEndY;
         }
         else {
-            l1 = new patternArt.Geo.Line({x: x2, y: y2}, {x: x1, y: y1});
-            d2 = Math.sqrt((x - x2)**2 + (y - y2)**2);
+            dx = lineEndX - lineStartX;
+            dy = lineEndY - lineStartY;
         }
-        let d = Math.sqrt((x2 - x1)**2 + (y2 - y1)**2);
-        let pointOffset = (d2 - 15) / d;
-        let l2 = patternArt.Geo.perpendicularLine(l1, pointOffset, 10, patternArt.Geo.LEFT);
-        let l3 = patternArt.Geo.perpendicularLine(l1, pointOffset, 10, patternArt.Geo.RIGHT);
-        
-        // Determine the arrow points
-        let p1x = l2.b.x;
-        let p1y = l2.b.y;
-        let p2x = l3.b.x;
-        let p2y = l3.b.y;
+        let a = Math.atan2(dx, dy);
+        let arrowPoints = [];
+        arrowPoints.push(dfm.flowArrowRadius * Math.sin(a) + x);
+        arrowPoints.push(dfm.flowArrowRadius * Math.cos(a) + y);
+        arrowPoints.push(dfm.flowArrowRadius * Math.sin(a + (2 * Math.PI / 3)) + x);
+        arrowPoints.push(dfm.flowArrowRadius * Math.cos(a + (2 * Math.PI / 3)) + y);
+        arrowPoints.push(x);
+        arrowPoints.push(y);
+        arrowPoints.push(dfm.flowArrowRadius * Math.sin(a + (4 * Math.PI / 3)) + x);
+        arrowPoints.push(dfm.flowArrowRadius * Math.cos(a + (4 * Math.PI / 3)) + y);
 
         // Add the arrow to the line
         let line = new Konva.Line({
-            points: [p1x, p1y, x, y, p2x, p2y],
+            points: arrowPoints,
             stroke: 'red',
-            strokeWidth: 2
+            strokeWidth: 2,
+            fill: 'white',
+            closed: true
         });
         line.on("click", (e) => this.flowArrowClicked(e));
         this.currentFlowDrawing.flowArrow = line;

@@ -28,6 +28,7 @@ dfm.maxFlowLabelLen = 42;
 dfm.maxFlowLabelWidth = 100;
 dfm.flowLineWidth = 3;
 dfm.flowMarkerWidth = 10;
+dfm.flowArrowRadius = 8;
 
 // The drawing stage
 dfm.stageWidth = GLOBALS.minStageWidth;
