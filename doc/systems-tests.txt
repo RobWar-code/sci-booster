@@ -15,7 +15,7 @@ Contents
 
     Check-out Dismiss on flow-link, remove all details
 
-    Adjust length of flow line segment to fit between markers (not 
+    * Adjust length of flow line segment to fit between markers (not 
     overlapping marker)
 
     * Adjust flow line width for editing to 3
@@ -24,11 +24,11 @@ Contents
             * DrawFlow
             * InsertFlowNode
             * DeleteFlowNode
-            Drag Marker
-            Display as editable flow
-            Flow Done
+            * Drag Marker
+            * Display as editable flow
+            * Flow Done
 
-    Sort-out flow arrow direction
+    * Sort-out flow arrow direction
 
 <h2>Fixed
 
@@ -47,7 +47,17 @@ Contents
 <h1>General Use Tests
 
     * Login as an Editor
+    Use the new button to start a model
+        Add a node
+        Add a second node
+        create a flow from the first node to the second
+        create a flow from the second node to the first
+        Add flow to the left side of the first node from void
+        Add flow to the right side of the first node to void
+        Add flow to the top side of the first node from void
+
     * Use the New button to start a new model
+    Save the current model
     Add a node with all details set
     Add a second node with all details set
     Add a flow with all details set

@@ -553,7 +553,9 @@ dfm.FlowVisuals = class {
             let flowArrow = new Konva.Line({
                 points: points,
                 stroke: 'red',
-                strokeWidth: 2
+                strokeWidth: 2,
+                fill: 'white',
+                closed: true
             });
             visualFlowItem.flowGroup.add(flowArrow);
         }
@@ -1016,7 +1018,6 @@ dfm.FlowVisuals = class {
         if (this.flowArrowAdded) return;
         x = x/dfm.scaleX - this.currentFlowDrawing.flowGroup.getAttr('x');
         y = y - this.currentFlowDrawing.flowGroup.getAttr('y');
-
         // Determine the vector of the line
         let {itemNum, flowNodeItem} = this.findFlowNode(flowNodeNum);
         if (itemNum === -1) {
@@ -1037,8 +1038,8 @@ dfm.FlowVisuals = class {
                 console.error("addFlowArrow could not find source node:", sourceNodeNum);
                 return;
             }
-            sourceNodeX = node.rect.getAttr('x');
-            sourceNodeY = node.rect.getAttr('y');
+            sourceNodeX = node.nodeGroup.getAttr('x') + dfm.nodeTemplate.width / 2;
+            sourceNodeY = node.nodeGroup.getAttr('y') + dfm.nodeTemplate.height / 2;
         }
         if (this.currentFlow.destination_node_num != "") {
             let destNodeNum = this.currentFlow.destination_node_num;
@@ -1047,30 +1048,37 @@ dfm.FlowVisuals = class {
                 console.error("addFlowArrow could not find source node:", destNodeNum);
                 return;
             }
-            destNodeX = node.rect.getAttr('x');
-            destNodeY = node.rect.getAttr('y');
+            destNodeX = node.nodeGroup.getAttr('x') + dfm.nodeTemplate.width / 2;
+            destNodeY = node.nodeGroup.getAttr('y') + dfm.nodeTemplate.height / 2;
         }
 
         // Get the flow lines start and end nodes
         let prevNodeNum = this.currentFlowDrawing.points[itemNum].prevNodeNum;
         let prevNodeObj = this.findFlowNode(prevNodeNum);
 
+        let groupX = this.currentFlowDrawing.flowGroup.getAttr("x");
+        let groupY = this.currentFlowDrawing.flowGroup.getAttr("y");
         let lineStartX = this.currentFlowDrawing.points[prevNodeObj.itemNum].marker.getAttr('x');
+        let lineStartXAbs = lineStartX + groupX; 
         let lineStartY = this.currentFlowDrawing.points[prevNodeObj.itemNum].marker.getAttr('y');
+        let lineStartYAbs = lineStartY + groupY; 
         let lineEndX = this.currentFlowDrawing.points[itemNum].marker.getAttr('x');
-        let lineEndY = this.currentFlowDrawing.points[itemNum].marker.getAttr('y');
+        let lineEndXAbs = lineEndX + groupX;
+        let lineEndY = this.currentFlowDrawing.points[itemNum].marker.getAttr("y");
+        let lineEndYAbs = lineEndY + groupY;
 
         // Determine the start and end points of the flow direction
         let flowDirection = 1;
         if (sourceNodeX != -1) {
-            let d1 = Math.sqrt((sourceNodeX - lineStartX)**2 + (sourceNodeY - lineStartY)**2);
-            let d2 = Math.sqrt((sourceNodeX - lineEndX)**2 + (sourceNodeY - lineEndY)**2);
+            let d1 = Math.sqrt((sourceNodeX - lineStartXAbs)**2 + (sourceNodeY - lineStartYAbs)**2);
+            let d2 = Math.sqrt((sourceNodeX - lineEndXAbs)**2 + (sourceNodeY - lineEndYAbs)**2);
             if (d1 > d2) flowDirection = -1;
         }
         else if (destNodeX != -1) {
-            let d1 = Math.sqrt((destNodeX - lineStartX)**2 + (destNodeY - lineStartY)**2);
-            let d2 = Math.sqrt((destNodeX - lineEndX)**2 + (destNodeY - lineEndY)**2);
-            if (d1 > d2) flowDirection = -1;
+            flowDirection = -1;
+            let d1 = Math.sqrt((destNodeX - lineStartXAbs)**2 + (destNodeY - lineStartYAbs)**2);
+            let d2 = Math.sqrt((destNodeX - lineEndXAbs)**2 + (destNodeY - lineEndYAbs)**2);
+            if (d1 > d2) flowDirection = 1;
         }
 
         // Get the points of the triangle
