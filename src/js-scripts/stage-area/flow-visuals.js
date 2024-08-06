@@ -1016,21 +1016,34 @@ dfm.FlowVisuals = class {
 
     addFlowArrow(flowNodeNum, x, y) {
         if (this.flowArrowAdded) return;
-        x = x/dfm.scaleX - this.currentFlowDrawing.flowGroup.getAttr('x');
-        y = y - this.currentFlowDrawing.flowGroup.getAttr('y');
-        // Determine the vector of the line
+
+        let groupX = this.currentFlowDrawing.flowGroup.getAttr("x");
+        let groupY = this.currentFlowDrawing.flowGroup.getAttr("y");
+        x = x/dfm.scaleX - groupX;
+        y = y - groupY;
+
+        // Adjust x, y to sit exactly on the line
         let {itemNum, flowNodeItem} = this.findFlowNode(flowNodeNum);
         if (itemNum === -1) {
             console.error("addFlowArrow could find flowNodeNum:", flowNodeNum);
             return;
         }
-        let points = flowNodeItem.line.getAttr("points");
-        let [x1, y1, x2, y2] = points;
+        let prevNodeObj = this.findFlowNode(flowNodeItem.prevNodeNum);
+        let prevNodeItem = prevNodeObj.flowNodeItem;
+        let l1 = new patternArt.Geo.Line(); 
+        l1.a.x = flowNodeItem.marker.getAttr("x");
+        l1.a.y = flowNodeItem.marker.getAttr("y");
+        l1.b.x = prevNodeItem.marker.getAttr("x");
+        l1.b.y = prevNodeItem.marker.getAttr("y");
+        let intersectObj = patternArt.Geo.perpendicular(l1, x, y, 0.001);
+        x = intersectObj.p.x;
+        y = intersectObj.p.y;
+    
         let sourceNodeX = -1;
         let sourceNodeY = -1;
         let destNodeX = -1;
         let destNodeY = -1;
-        // Determine vector of source to node
+        // Get Source/Destination Component Node Positions
         if (this.currentFlow.source_node_num != "") {
             let sourceNodeNum = this.currentFlow.source_node_num;
             let {found, node, index} = this.getNode(sourceNodeNum);
@@ -1052,45 +1065,21 @@ dfm.FlowVisuals = class {
             destNodeY = node.nodeGroup.getAttr('y') + dfm.nodeTemplate.height / 2;
         }
 
-        // Get the flow lines start and end nodes
-        let prevNodeNum = this.currentFlowDrawing.points[itemNum].prevNodeNum;
-        let prevNodeObj = this.findFlowNode(prevNodeNum);
+        // Get the start and end nodes of the complete flow
+        let {startIndex, startNode, endIndex, endNode} = this.findFlowTerminators();
 
-        let groupX = this.currentFlowDrawing.flowGroup.getAttr("x");
-        let groupY = this.currentFlowDrawing.flowGroup.getAttr("y");
-        let lineStartX = this.currentFlowDrawing.points[prevNodeObj.itemNum].marker.getAttr('x');
-        let lineStartXAbs = lineStartX + groupX; 
-        let lineStartY = this.currentFlowDrawing.points[prevNodeObj.itemNum].marker.getAttr('y');
-        let lineStartYAbs = lineStartY + groupY; 
-        let lineEndX = this.currentFlowDrawing.points[itemNum].marker.getAttr('x');
-        let lineEndXAbs = lineEndX + groupX;
-        let lineEndY = this.currentFlowDrawing.points[itemNum].marker.getAttr("y");
-        let lineEndYAbs = lineEndY + groupY;
+        // Determine which end of the complete flow line is nearest to source component 
+        // and destination component respectively
+        let {sourceFlowNode, destFlowNode} = this.getSourceAndDestinationFlowNodes(startNode, 
+            endNode, sourceNodeX, sourceNodeY, destNodeX, destNodeY);
 
-        // Determine the start and end points of the flow direction
-        let flowDirection = 1;
-        if (sourceNodeX != -1) {
-            let d1 = Math.sqrt((sourceNodeX - lineStartXAbs)**2 + (sourceNodeY - lineStartYAbs)**2);
-            let d2 = Math.sqrt((sourceNodeX - lineEndXAbs)**2 + (sourceNodeY - lineEndYAbs)**2);
-            if (d1 > d2) flowDirection = -1;
-        }
-        else if (destNodeX != -1) {
-            flowDirection = -1;
-            let d1 = Math.sqrt((destNodeX - lineStartXAbs)**2 + (destNodeY - lineStartYAbs)**2);
-            let d2 = Math.sqrt((destNodeX - lineEndXAbs)**2 + (destNodeY - lineEndYAbs)**2);
-            if (d1 > d2) flowDirection = 1;
-        }
+        // Determine which ends of the line clicked is nearest (by connection) to the
+        // sourceFlowNode
+        let {sourceEndX, sourceEndY, destEndX, destEndY} = this.getSourceFlowLineEnds(flowNodeItem, sourceFlowNode); 
 
         // Get the points of the triangle
-        let dx, dy;
-        if (flowDirection === -1) {
-            dx = lineStartX - lineEndX;
-            dy = lineStartY - lineEndY;
-        }
-        else {
-            dx = lineEndX - lineStartX;
-            dy = lineEndY - lineStartY;
-        }
+        let dx = destEndX - sourceEndX;
+        let dy = destEndY - sourceEndY;
         let a = Math.atan2(dx, dy);
         let arrowPoints = [];
         arrowPoints.push(dfm.flowArrowRadius * Math.sin(a) + x);
@@ -1114,6 +1103,111 @@ dfm.FlowVisuals = class {
         this.currentFlowDrawing.flowArrow = line;
         this.currentFlowDrawing.flowGroup.add(line);
         this.flowArrowAdded = true;
+    }
+
+    /**
+     * Identify which of the startNode and endNode flow nodes is nearest to the
+     * source or destination component nodes respectively
+     * @param {*} startNode 
+     * @param {*} endNode 
+     * @param {*} sourceNodeX 
+     * @param {*} sourceNodeY 
+     * @param {*} destNodeX 
+     * @param {*} destNodeY 
+     */
+    getSourceAndDestinationFlowNodes(startNode, endNode, sourceNodeX, sourceNodeY, destNodeX, destNodeY) {
+        let destFlowNode = null;
+        let sourceFlowNode = null;
+
+        // Get the coordinates of the start and end nodes
+        let groupX = this.currentFlowDrawing.flowGroup.getAttr("x");
+        let groupY = this.currentFlowDrawing.flowGroup.getAttr("y");
+
+        let startX = startNode.marker.getAttr("x") + groupX;
+        let startY = startNode.marker.getAttr("y") + groupY;
+        let endX = endNode.marker.getAttr("x") + groupX;
+        let endY = endNode.marker.getAttr("y") + groupY;
+
+        if (sourceNodeX != -1) {
+            let d1 = Math.sqrt((sourceNodeX - startX) ** 2 + (sourceNodeY - startY) ** 2);
+            let d2 = Math.sqrt((sourceNodeX - endX) ** 2 + (sourceNodeY - endY) ** 2);
+            if (d1 < d2) {
+                sourceFlowNode = startNode;
+                destFlowNode = endNode;
+            }
+            else {
+                sourceFlowNode = endNode;
+                destFlowNode = startNode;
+            }
+        }
+        else if (destNodeX != -1) {
+            let d1 = Math.sqrt((destNodeX - startX) ** 2 + (destNodeY - startY) ** 2);
+            let d2 = Math.sqrt((destNodeX - endX) ** 2 + (destNodeY - endY) ** 2);
+            if (d1 < d2) {
+                destFlowNode = startNode;
+                sourceFlowNode = endNode;
+            }
+            else {
+                destFlowNode = endNode;
+                sourceFlowNode = startNode;
+            }
+        }
+        return {sourceFlowNode, destFlowNode};
+    }
+
+    /** Get the coordinates of the line ends defined in node which are most
+     * closely linked to the source or destination nodes
+     * 
+     * @param {*} flowNode 
+     * @param {*} sourceFlowNode 
+     * @param {*} destFlowNode 
+     */
+    getSourceFlowLineEnds(flowNode, sourceFlowNode) {
+        let sourceEndX = -1;
+        let sourceEndY = -1;
+        let destEndX = -1;
+        let destEndY = -1;
+
+        // Get the node prior to flowNode
+        // let {itemNum, flowNodeItem} = findFlowNode(node.prevNodeNum);
+
+        // From the flow node, track to the sourceFlowNode and count the number of nodes
+        let sourceNodeNum = sourceFlowNode.marker.getAttr("nodeNum");
+        let count = 0;
+        let done = false;
+        let found = false;
+        let currentNode = flowNode;
+        while (!done) {
+            if (currentNode.marker.getAttr("nodeNum") === sourceNodeNum) {
+                found = true;
+                break;
+            }
+            if (currentNode.nextNodeNum === null) {
+                done = true;
+                break;
+            }
+            let nextNodeNum = currentNode.nextNodeNum;
+            let nextNodeObj = this.findFlowNode(nextNodeNum);
+            currentNode = nextNodeObj.flowNodeItem;
+            ++count;
+        }
+        
+        let prevNodeObj = this.findFlowNode(flowNode.prevNodeNum);
+        let prevNode = prevNodeObj.flowNodeItem;
+        if (found && (count <= this.currentFlowDrawing.points.length / 2)) {
+            sourceEndX = flowNode.marker.getAttr("x");
+            sourceEndY = flowNode.marker.getAttr("y");
+            destEndX = prevNode.marker.getAttr("x");
+            destEndY = prevNode.marker.getAttr("y");
+        }
+        else {
+            destEndX = flowNode.marker.getAttr("x");
+            destEndY = flowNode.marker.getAttr("y");
+            sourceEndX = prevNode.marker.getAttr("x");
+            sourceEndY = prevNode.marker.getAttr("y");
+        }
+
+        return {sourceEndX, sourceEndY, destEndX, destEndY};
     }
 
     flowArrowClicked(e) {
@@ -1245,6 +1339,29 @@ dfm.FlowVisuals = class {
             itemNum = count;
         }
         return {itemNum: itemNum, flowNodeItem: flowNodeItem};
+    }
+
+    findFlowTerminators() {
+        let startIndex = -1;
+        let endIndex = -1;
+        let startNode = null;
+        let endNode = null;
+        let count = 0;
+        for (let node of this.currentFlowDrawing.points) {
+            if (node.prevNodeNum === null) {
+                startIndex = count;
+                startNode = node;
+            }
+            else if(node.nextNodeNum === null) {
+                endIndex = count;
+                endNode = node;
+            }
+            if (endNode != null && startNode != null) {
+                break;
+            }
+            ++count;
+        }
+        return {startIndex, startNode, endIndex, endNode};
     }
 
     findFlowNodeAtXY(x, y) {
