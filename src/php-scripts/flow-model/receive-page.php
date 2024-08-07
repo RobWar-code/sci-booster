@@ -4,6 +4,7 @@ include_once __DIR__ . "/add-page.php";
 include_once __DIR__ . "/update-page.php";
 include_once __DIR__ . "/extract-page.php";
 include_once __DIR__ . "/search-db.php";
+include_once __DIR__ . "/../users/find-user.php";
 
 // Collect the JSON data
 header('Content-Type: application/json');
@@ -26,6 +27,9 @@ function scanInput($inputData) {
         }
         elseif($requestType === "zoom page") {
             fetchModelPageByHierarchicalId($inputData);
+        }
+        elseif($requestType === "find user") {
+            findUserRequest($inputData);
         }
     }
     else {
@@ -212,4 +216,16 @@ function fetchModelPageByHierarchicalId($inputData) {
             echo json_encode($result);    
         }
     }
+}
+
+function findUserRequest($inputData) {
+    $username = $inputData["username"];
+    $foundAry = findUser($username);
+    $result = [];
+    $result['result'] = $foundAry['result'];
+    if ($result['result']) {
+        $result['id'] = $foundAry['user']['id'];
+        $result['username'] = $foundAry['user']['username'];
+    }
+    echo json_encode($result);
 }

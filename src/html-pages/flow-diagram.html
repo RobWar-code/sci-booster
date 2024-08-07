@@ -50,6 +50,7 @@
           <span class="modalFormCheckmark" id="modelKeywordsTick">&#x2713;</span>
           <button type="submit" class="textButton" id="modelDetailsSubmit">Submit Details</button>
         </form>
+        <p class="modalFormAdvisory" id="modelDetailsError"></p>
         <div id="additionalModelDetailsDiv">
           <div>
             <button class="textButton" onclick="modelDetails.toggleAuthors()">User Authors</button>
@@ -284,6 +285,8 @@
                 title="Click to finish flow drawing">Flow Done</button>
               <button class="textButton" id="cancelFlowDrawButton" onclick="dfm.currentVisual.cancelFlowDraw()"
                 title="Cancel the flow drawing">Cancel Draw</button>
+              <button class="textButton" id="zoomBackButton" onclick="flowModelPage.zoomBack()" 
+                title="Zoom Back to higher level page">Zoom Back</button>
               <button class="textButton" id="newModelButton" onclick="modelDetails.newModel()" title="Create New Model">
                 New</button> 
               <button class="textButton" id="editModelButton" onclick="modelDetails.editModel()">Edit</button> 

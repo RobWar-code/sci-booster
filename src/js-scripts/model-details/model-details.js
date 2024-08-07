@@ -264,6 +264,11 @@ const modelDetails = {
         let start = false;
         flowModelPage.showSaveOnPageEdit(start);
       }
+      // If this is a new model, automatically add the user author
+      if (dfm.modelEditMode === "new") {
+        dfm.currentPage.page.user_authors.push({id: null, username: dfm.username});
+      }      
+
       dfm.currentPageSet = true;
       dfm.modelEditMode = "edit";
       // Display the Author and reference inputs
@@ -291,18 +296,27 @@ const modelDetails = {
     }
   },
 
-  submitAuthor: function (event) {
+  submitAuthor: async function (event) {
     event.preventDefault();
     if (dfm.currentPageSet) {
       let author = Misc.stripHTML(document.getElementById("modelAuthor").value).trim();
       if (author != "") {
-        dfm.currentPage.page.user_authors.push({id: null, username: author});
-        let start = false;
-        flowModelPage.showSaveOnPageEdit(start);
-        this.displayAuthorsList();
-        document.getElementById("modelAuthor").value="";
-        if (author != "") {
-          document.getElementById("modelAuthorTick").style.display = "inline";
+        // Check Whether user-author exists
+        let elem = document.getElementById("modelDetailsError");
+        if (!(await dfm.currentPage.userExists(author))) {
+          elem.style.display = "block";
+          elem.innerText = "Author Username Not Found";
+        }
+        else {
+          elem.style.display = "none";
+          dfm.currentPage.page.user_authors.push({id: null, username: author});
+          let start = false;
+          flowModelPage.showSaveOnPageEdit(start);
+          this.displayAuthorsList();
+          document.getElementById("modelAuthor").value="";
+          if (author != "") {
+            document.getElementById("modelAuthorTick").style.display = "inline";
+          }
         }
       }
       else {

@@ -143,6 +143,10 @@ body {
 }
 
 /* Model Details */
+#modelDetailsError {
+    display: none;
+}
+
 #additionalModelDetailsDiv {
     display: none;
 }
@@ -213,6 +217,10 @@ body {
 }
 
 #flowDoneButton {
+    display: none;
+}
+
+#zoomBackButton {
     display: none;
 }
 

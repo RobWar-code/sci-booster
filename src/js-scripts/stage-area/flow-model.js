@@ -459,4 +459,32 @@ dfm.FlowPageData = class {
             console.error("Problem with receive-page script call", error);
         }};
     }
+
+    async userExists(username) {
+        let message = {request: "find user", username: username};
+        let messageJSON = JSON.stringify(message);
+        try {
+            let response = await fetch(dfm.phpPath + 'flow-model/receive-page.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: messageJSON
+            })
+
+            let responseData = await response.json();
+
+            if (responseData.result === true) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        catch {(error) => {
+            console.error("Problem with receive-page script call - userExists()", error);
+        }};
+
+
+    }
 }
