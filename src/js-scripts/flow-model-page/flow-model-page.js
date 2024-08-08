@@ -251,7 +251,7 @@ const flowModelPage = {
         let node = dfm.currentPage.getNode(nodeNum);
         let nodeLabel = node.label;
         let response = await this.fetchZoomPage(flowModelId, flowModelTitle, hierarchicalId);
-        this.doZoomPage("in", response);
+        this.doZoomPage("in", response, hierarchicalId, flowModelId, flowModelTitle, nodeLabel);
     },
 
     fetchZoomPage: async function(flowModelId, flowModelTitle, hierarchicalId) {
@@ -299,15 +299,15 @@ const flowModelPage = {
         }
 
         // Get the hierarchical id for the parent page
-        let hierarchicalId = dfm.currentPage.page.hierarchicalId;
+        let hierarchicalId = dfm.currentPage.page.hierarchical_id;
         hierarchicalId = hierarchicalId.substring(0, hierarchicalId.length - 2);
         let modelTitle = dfm.currentPage.flow_model_title;
         let modelId = dfm.currentPage.flow_model_id;
         let response = await this.fetchZoomPage(modelId, modelTitle, hierarchicalId);
-        doZoomPage("back", response);
+        doZoomPage("back", response, hierarchicalId, modelId, modelTitle, "");
     },
 
-    doZoomPage: function(direction, response) {
+    doZoomPage: function(direction, response, hierarchicalId, flowModelId, flowModelTitle, nodeLabel) {
         if (!("error" in response)) {
             if (response.got_page) {
                 dfm.currentVisual.destroyCurrentPage();
@@ -320,10 +320,17 @@ const flowModelPage = {
                 dfm.modelChanged = false;
                 dfm.modelEditMode = "read-only";
                 // Set main page details
+                hierarchicalId = dfm.currentPage.page.hierarchical_id;
                 document.getElementById("flowModelTitle").innerText = dfm.currentPage.flow_model_title;
-                document.getElementById("pageHierarchicalId").innerText = dfm.currentPage.page.hierarchical_id;
+                document.getElementById("pageHierarchicalId").innerText = hierarchicalId;
                 document.getElementById("pageTitle").innerText = dfm.currentPage.page.title;
 
+                if (hierarchicalId.length > 2) {
+                    document.getElementById("zoomBackButton").style.display = "inline";
+                }
+                else {
+                    document.getElementById("zoomBackButton").style.display = "none";
+                }
                 document.getElementById("modelDetails").style.display = "block";
                 document.getElementById("pageDetailsButton").style.display = "inline";
                 if (dfm.userStatus === "editor" || dfm.userStatus === "owner" || dfm.currentPage.isUserAuthor()) {
