@@ -344,8 +344,10 @@ dfm.FlowPageData = class {
      * @param {*} reload 
      */
     async saveModel(reload) {
+        // Check that the page data is valid
+        if (!this.validateModel()) return;
+
         let pageJSONObject = this.prepareJSONObject();
-        console.log("saveModel:", pageJSONObject);
         let pageJSON = JSON.stringify(pageJSONObject);
         let pageData = await this.sendPage(pageJSON);
         if (pageData.result) {
@@ -356,12 +358,21 @@ dfm.FlowPageData = class {
                 dfm.currentVisual.redoPage();
             }
             // Re-do the titles list
-            if (dfm.currentPage.page.hierarchical_id === '01') {
+            if (this.page.hierarchical_id === '01') {
                 flowModelPage.getModelSelectionList();
             }
             // Inform user
             flowModelPage.issueNotice("Saved Successfully");
         }
+    }
+
+    validateModel() {
+        if (this.page.title === "") {
+            let message = "Model Page Title Not Set - re-submit then Save";
+            modelDetails.editModel(message);
+            return false;
+        }
+        return true;
     }
 
     async sendPage(pageJSON) {
@@ -422,7 +433,7 @@ dfm.FlowPageData = class {
     }
 
     setPageData(pageData) {
-        this.flow_model_id = pageData.flow_model_id;
+        this.id = pageData.flow_model_id;
         this.flow_model_title = pageData.flow_model_title;
         let page = pageData.page;
         this.page.setPageData(page);

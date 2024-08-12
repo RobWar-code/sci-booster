@@ -3,7 +3,6 @@ const stageApp = {
      * Adjust the stage following a resize event
      */
     adjustStage: function () {
-        console.log("Resizing");
         this.getStageScaling();
         this.redoStage();
     },
@@ -35,9 +34,6 @@ const stageApp = {
         dfm.stageApp.scale({x: dfm.scaleX, y: 1});
 
         dfm.stageApp.on('click', (e) => {
-            console.log("stage click: dfm.flowDrawMode, dfm.modelEditMode, dfm.currentPageSet", dfm.flowDrawMode,
-                dfm.modelEditMode, dfm.currentPageSet
-            );
             if (!dfm.flowDrawMode) {
                 if (dfm.currentPageSet && dfm.modelEditMode === "edit") {
                     nodeDetails.doNodeDetails(e);

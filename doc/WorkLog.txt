@@ -8,40 +8,69 @@ Contents
 
     Block robot logins/register
 
-    In analysis catalog the locations in which events originate
-        in order to ease debugging and comprehension.
+    Model Search Operation
 
-    Set maximum length of text for labels
-        Model Title
-        Page Title
-        * Node
-        * Flow
-
-
-    For modals, scroll to top of screen
-
-    Set the hierarchical Id for a new model in the newModel display function.
-
-    Allow for the deletion of all elements in a model drawing
-    
-    Prevent saving of a page without title
-
-    What if a user author does not exist?
-        Always list the user author when new or edit mode entered.
-
-        Add current user automatically to authors for a new model (when model details submitted).
-
-    In page load operations detect whether the page is authored by the user etc.
-
-    Allow for change of login
+    Drag and Flow Details on Flow Label - get to work anywhere on label.
+        Possibly make a group and attach the click to that.
 
     Make an object for the hover text code
       
-    Add Zoom Back button to page options
+    Allow for the upload of JSON flow model data
 
+    Set-up Systems Tests
+
+    Perform Systems Tests/Debugging
+
+    Do the introductory page
+    
     Update the README with user features changes
 
+    Graphics
+
 <h1>Work Done
+    11/08/2024
+
+    * In page load operations detect whether the page is authored by the user etc.
+
+    * Check Cancel Flow Draw
+
+        * Consider cancel at various stages of completion and replacement
+        * ie:
+            If a flow draw is cancelled and there are no points established
+            in the drawing, or in the currentPage - delete the flow completely
+            if there are points established in the currentPage, re-establish them.
+            ie: restore flow.
+
+    * Allow for change of login
+        * During Edit Mode 
+        * During Draw Mode
+
+    10/08/2024
+
+    * In analysis catalog the locations in which events originate
+        in order to ease debugging and comprehension.
+
+    * Set maximum length of text for labels
+        * Model Title
+        * Page Title
+        * Node
+        * Flow
+
+    * For modals, scroll to top of screen
+
+    * Set the hierarchical Id for a new model in the newModel display function.
+
+    * Allow for the deletion of all elements in a model drawing
+    
+    * Prevent saving of a page without title
+
+    * What if a user author does not exist?
+
+        * Always list the user author when new or edit mode entered.
+
+        * Add current user automatically to authors for a new model (when model details submitted).
+
+    * Add Zoom Back button to page options
 
     07/08/2024
 

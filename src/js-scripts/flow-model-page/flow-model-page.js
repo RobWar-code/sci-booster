@@ -148,6 +148,63 @@ const flowModelPage = {
         }
     },
 
+    getSearchList: async function () {
+        let searchString = document.getElementById("searchInput");
+        searchString = Misc.stripHTML(searchString);
+        if (searchString === null) return;
+        let selectionResponse = await this.fetchSearchSelection(searchString);
+        if (selectionResponse.result === true) {
+            if (selectionResponse.list.length > 0) {
+                document.getElementById("searchSelectorCol").style.display = "block";
+                let elem = document.getElementById("searchSelector");
+                elem.innerHTML = "";
+                // A null item
+                let opt = document.createElement('option');
+                opt.value = null;
+                opt.text = "None Selected";
+                elem.appendChild(opt);
+                for (listItem in selectionResponse.list) {
+                    let opt = document.createElement('option');
+                    let value = listItem.page_id;
+                    let text = listItem.page_title;
+                    text += "; Matched Field: " + listItem.matched_field_name;
+                    if (listItem.matched_field_name != "page title") {
+                        text += "; " + listItem.matched_field;
+                    }
+                    opt.value = value;
+                    opt.text = text;
+                    elem.appendChild(opt);  
+                }
+            }
+        }
+    },
+
+    fetchSearchSelection: async function (searchItem) {
+        let requestObj = {
+            request: "general search",
+            search_item: searchItem
+        }
+        let requestJSONObj = JSON.stringify(requestObj);
+        try {
+            response = await fetch(dfm.phpPath + 'flow-model/receive-page.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: requestJSONObj
+            });
+    
+            let responseData = await response.json();
+
+            return responseData;
+        }
+        catch(error) {
+            console.error(`fetchSearchSelection: Could not fetch selection ${error}`);
+            return {result: false};
+        }
+
+    },
+
     issueNotice: function (message) {
         let noticeDiv = document.getElementById("noticeRow");
         noticeDiv.style.display = "block";
@@ -284,7 +341,7 @@ const flowModelPage = {
     zoomBack: async function() {
         // Check whether the current page is deeper than level 1
         if (!dfm.currentPageSet) return;
-        if (dfm.currentPage.page.hierarchicalId.length === 2) return;
+        if (dfm.currentPage.page.hierarchical_id.length === 2) return;
 
         // Check whether the current page should be saved
         if (dfm.modelEditMode && dfm.modelChanged) {
@@ -304,7 +361,7 @@ const flowModelPage = {
         let modelTitle = dfm.currentPage.flow_model_title;
         let modelId = dfm.currentPage.flow_model_id;
         let response = await this.fetchZoomPage(modelId, modelTitle, hierarchicalId);
-        doZoomPage("back", response, hierarchicalId, modelId, modelTitle, "");
+        this.doZoomPage("back", response, hierarchicalId, modelId, modelTitle, "");
     },
 
     doZoomPage: function(direction, response, hierarchicalId, flowModelId, flowModelTitle, nodeLabel) {

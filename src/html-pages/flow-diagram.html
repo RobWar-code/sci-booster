@@ -256,11 +256,19 @@
         <!-- Search -->
         <div class="row searchRow">
           <div class="col text-center">
-            <span>Search: </span>
-            <input type="text" id="searchInput"/>
-            <button class="iconButton" onClick="doFlowModelSearch()">
-              <img src="../images/search.png" alt="search" title="Do Search" width="25" height="25"/>
-            </button>
+            <form onsubmit="flowModelPage.getSearchList()">
+              <span>Search: </span>
+              <input type="text" id="searchInput"/>
+              <button type="submit" class="iconButton">
+                <img src="../images/search.png" alt="search" title="Do Search" width="25" height="25"/>
+              </button>
+            </form>
+          </div>
+          <div class="row">
+            <div class="col" id="searchSelectorCol">
+              <span>Search Selector: </span>
+              <select id="searchSelector" onchange="modelDetails.selectSearchPage(event)"></select>
+            </div>
           </div>
         </div>
         <div class="row">
@@ -289,7 +297,7 @@
                 title="Zoom Back to higher level page">Zoom Back</button>
               <button class="textButton" id="newModelButton" onclick="modelDetails.newModel()" title="Create New Model">
                 New</button> 
-              <button class="textButton" id="editModelButton" onclick="modelDetails.editModel()">Edit</button> 
+              <button class="textButton" id="editModelButton" onclick="modelDetails.editModel('')">Edit</button> 
               <button class="textButton" id="deleteModelButton" onclick="dfm.currentPage.deletePage()">Delete</button> 
               <button class="textButton" id="saveModelButton" onclick="dfm.currentPage.saveModel(true)">Save</button>
               <button class="textButton" id="cancelModelButton" title="Cancel this session" 

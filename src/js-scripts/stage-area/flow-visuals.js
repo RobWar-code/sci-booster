@@ -279,14 +279,15 @@ dfm.FlowVisuals = class {
             console.error("Visual flow details for flow not found:", flowNum);
             return;
         }
-        flow.flowGroup.remove();
+        flow.flowGroup.destroy();
         // Create the editable flow group
+        this.flowLabelSet = false;
+        this.flowDrawStarted = true;
         this.makeEditFlowGraphic(this.currentFlow);
         // Set the initial edit states
         this.flowNodeCount = flowDetails.points.length;
         this.flowLabelSet = true;
         this.currentFlowDrawing.flowNum = flowDetails.flow_num;
-        this.flowDrawStarted = true;
         this.flowNodeClickTime = 0;
         this.lastFlowNodeClicked = -1;
         this.drawFlowClickTime = 0;
@@ -319,12 +320,13 @@ dfm.FlowVisuals = class {
         if (this.flowDrawStarted) {
             this.currentFlowDrawing.flowGroup.destroy();
             this.currentFlowDrawing = {};
+            this.flowDrawStarted = false;
         }
         let flowNum = this.currentFlow.flow_num;
         // Check whether a flow line has already been defined
         let flow = dfm.currentPage.getFlow(flowNum);
         if (flow != null) {
-            if (flow.points.length != 0) {
+            if (flow.points.length > 1) {
                 // Reconstruct the original flow line drawing.
                 this.currentFlow = flow;
                 this.makeVisualFlow(this.currentFlow);
@@ -361,6 +363,7 @@ dfm.FlowVisuals = class {
             x: flowDetails.drawing_group_x,
             y: flowDetails.drawing_group_y
         });
+        this.nodeLayer.add(this.currentFlowDrawing.flowGroup);
         // Add the lines and markers
         let lastX = flowDetails.drawing_group_x;
         let lastY = flowDetails.drawing_group_y;
@@ -382,26 +385,19 @@ dfm.FlowVisuals = class {
             marker.on("dragstart", (e) => this.flowNodeDragStart(e));
             marker.on("dragmove", (e) => this.flowNodeDragged(e));
             marker.on("dragend", (e) => this.flowNodeDragEnd(e));
-            let line = {};
-            if (count > 0) {
-                line = new Konva.Line({
-                    points: [lastX, lastY, x, y],
-                    stroke: 'black',
-                    strokeWidth: 2,
-                    nodeNum: count
-                })
-                line.on("click", (e) => this.flowLineClicked(e));
-                this.currentFlowDrawing.flowGroup.add(line);
-                line.setZIndex(0.1);
-            }
-            if (count === 0) {
-                this.currentFlowDrawing.points.push({marker: marker});
-            }
-            else {
-                this.currentFlowDrawing.points.push({marker: marker, line: line});
-            }
             this.currentFlowDrawing.flowGroup.add(marker);
             marker.setZIndex(0.2);
+            let line = {};
+            if (count > 0) {
+                line = this.drawFlowLine(lastX, lastY, x, y, count);
+            }
+            if (count === 0) {
+                this.currentFlowDrawing.points.push({marker: marker, nextNodeNum: null, prevNodeNum: null});
+            }
+            else {
+                this.currentFlowDrawing.points.push({marker: marker, line: line, prevNodeNum: count - 1, nextNodeNum: null});
+                this.currentFlowDrawing.points[count - 1].nextNodeNum = count;
+            }
             lastX = x;
             lastY = y;
             ++count;
@@ -415,44 +411,16 @@ dfm.FlowVisuals = class {
         this.currentFlowDrawing.flowArrow = new Konva.Line({
             points: points,
             stroke: 'red',
-            strokeWidth: 2
+            strokeWidth: 2,
+            closed: true,
+            fill: 'white'
         })
         this.currentFlowDrawing.flowArrow.on("click", (e) => this.flowArrowClicked(e));
         this.currentFlowDrawing.flowGroup.add(this.currentFlowDrawing.flowArrow);
+        this.currentFlowDrawing.flowGroup.draw();
         // Add the flow label
-        let rect = new Konva.Rect({
-            x: flowDetails.label_x,
-            y: flowDetails.label_y,
-            width: flowDetails.label_width,
-            height: dfm.nodeTemplate.fontSize + 6,
-            stroke: 'black',
-            strokeWidth: 1,
-            fill: 'white',
-            flowNum: this.currentFlow.flow_num
-        });
-        let text = new Konva.Text({
-            x: flowDetails.label_x + 3,
-            y: flowDetails.label_y + 3,
-            text: flowDetails.label,
-            fontFamily: dfm.nodeTemplate.fontFamily,
-            fontSize: dfm.nodeTemplate.fontSize,
-            fill: 'black',
-            flowNum: flowDetails.flow_num
-        });
-        text.on('click', (e) => flowDetails.viewFlowDetails(e));
-        rect.on('click', (e) => flowDetails.viewFlowDetails(e));
-        rect.setAttr("draggable", true);
-        rect.on('dragstart', (e) => this.flowLabelDragStart(e));
-        rect.on('dragmove', (e) => this.flowLabelDragMove(e));
-        rect.on('dragend', (e) => this.flowLabelDragEnd(e));
-        this.currentFlowDrawing.graphicLabel = {};
-        this.currentFlowDrawing.graphicLabel.rect = rect;
-        this.currentFlowDrawing.graphicLabel.text = text;
-        this.currentFlowDrawing.flowGroup.add(rect);
-        this.currentFlowDrawing.flowGroup.add(text);
-        rect.setZIndex(0.5);
-        text.setZIndex(1);
-        this.nodeLayer.add(this.currentFlowDrawing.flowGroup);
+        let fromClick = false;
+        this.addFlowLabel(fromClick);
     }
 
     // Actions when the user has completed the flow drawing.
@@ -679,7 +647,8 @@ dfm.FlowVisuals = class {
             if (Date.now() - this.drawFlowClickTime < 500 && !this.flowLabelSet) {
                 clearTimeout(this.drawFlowTimeout);
                 this.addingFlowLabel = true; // Flag to prevent activation of other events
-                this.addFlowLabel();
+                let fromClick = true;
+                this.addFlowLabel(fromClick);
                 this.drawFlowClickTime = 0;
                 return;
             }
@@ -786,7 +755,7 @@ dfm.FlowVisuals = class {
         return {ax1, ay1, ax2, ay2};
     }
 
-    addFlowLabel() {
+    addFlowLabel(fromClick) {
         if (this.flowLabelSet || !this.flowDrawStarted) return;
 
         // Calculate text width / height
@@ -801,17 +770,33 @@ dfm.FlowVisuals = class {
         }
         let labelWidth = textWidth + 13;
 
-        let x = this.flowClickX / dfm.scaleX;
-        let y = this.flowClickY;
-        x = x - this.currentFlowDrawing.flowGroup.getAttr('x');
-        y = y - this.currentFlowDrawing.flowGroup.getAttr('y');
-
+        let x, y;
+        if (fromClick) {
+            x = this.flowClickX / dfm.scaleX;
+            y = this.flowClickY;
+            x = x - this.currentFlowDrawing.flowGroup.getAttr('x');
+            y = y - this.currentFlowDrawing.flowGroup.getAttr('y');
+        }
+        else {
+            x = this.currentFlow.label_x;
+            y = this.currentFlow.label_y;
+        }
         let label = this.currentFlow.label;
         this.currentFlow.label_width = labelWidth;
-        let leftXOffset = labelWidth / 2;
+        let leftXOffset = 0;
+        let rectYOffset = 0;
+        let textYOffset = 0;
+        if (fromClick) { 
+            leftXOffset = labelWidth / 2;
+            rectYOffset = -3;
+        }
+        else {
+            rectYOffset = 0;
+            textYOffset = 3
+        }
         let rect = new Konva.Rect({
             x: x - leftXOffset,
-            y: y - 3,
+            y: y + rectYOffset,
             width: labelWidth,
             height: rectHeight,
             stroke: 'black',
@@ -821,7 +806,7 @@ dfm.FlowVisuals = class {
         });
         let text = new Konva.Text({
             x: x - leftXOffset + 3,
-            y: y,
+            y: y + textYOffset,
             text: textItem,
             width: textWidth,
             fontFamily: fontFamily,
@@ -843,8 +828,10 @@ dfm.FlowVisuals = class {
         rect.setZIndex(0.5);
         text.setZIndex(1);
         this.currentFlowDrawing.flowGroup.draw();
-        this.currentFlow.label_x = x - leftXOffset;
-        this.currentFlow.label_y = y - 3;
+        if (fromClick) {
+            this.currentFlow.label_x = x - leftXOffset;
+            this.currentFlow.label_y = y - 3;
+        }
         this.flowLabelSet = true;
     }
 

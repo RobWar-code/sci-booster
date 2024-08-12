@@ -62,6 +62,7 @@ flowDetails = {
         }
         window.scrollTo(0,0);
         document.getElementById("flowDetails").style.display = "block";
+        document.getElementById("flowDetailsSubmit").style.display = "block";
         document.getElementById("flowDetailsError").style.display = "none";
         document.getElementById("formulaToggleWarning").style.display = "none";
     },

@@ -1,5 +1,41 @@
 const login = {
     loadLoginModal: async function () {
+        // Check whether edit mode
+        if (dfm.modelEditMode === "edit" && dfm.modelChanged && !dfm.flowDrawMode) {
+            message = "Edit mode active - save current page?";
+            let response = await flowModelPage.saveModelRequired(message);
+            if (response === "yes") {
+                let reload = true;
+                await dfm.currentPage.saveModel(reload);
+            }
+            else if (response === "cancel") return;
+        }
+        else if (dfm.flowDrawMode) {
+            if (!dfm.currentVisual.checkFlowDrawing()) {
+                document.getElementById("warningRow").style.display = "block";
+                document.getElementById("warningText").innerText = "Please complete the flow (done) before changing login";
+                let timerItem = setTimeout(() => {
+                    document.getElementById("warningRow").style.display = "none";
+                }, 4000);
+                return;
+            }
+            else {
+                message = "Set flow to done and save page?";
+                let response = await flowModelPage.saveModelRequired(message);
+                if (response === "yes") {
+                    dfm.currentVisual.flowDone();
+                    let reload = true;
+                    await dfm.currentPage.saveModel(reload);
+                }
+                else if (response === "no") {
+                    dfm.currentVisual.flowDone();
+                }
+                else if (response === "cancel") return;
+            }
+        }
+        dfm.modelEditMode = "read-only";
+        dfm.modelChanged = false;
+    
         window.scrollTo(0, 0);
         document.getElementById("loginDetails").style.display = "block";
         document.getElementById("loginOptionsDiv").style.display = "block";
@@ -33,7 +69,6 @@ const login = {
             document.getElementById("ownerSignupOpt").style.display = "none";
         }
         else {
-            console.log("Got Here");
             document.getElementById("loginOpt").style.display = "none";
             document.getElementById("logoutOpt").style.display = "block";
             document.getElementById("signupOpt").style.display = "none";
@@ -54,7 +89,7 @@ const login = {
             document.getElementById("loginDetails").style.display = "none";
             dfm.username = "";
             dfm.userStatus = "unregistered";
-            if (dfm.modelEditMode = "edit") dfm.modelEditMode = "read-only";
+            if (dfm.modelEditMode === "edit") dfm.modelEditMode = "read-only";
             dfm.loginOption = "";
             flowModelPage.displayModelEditOptions();
             return;
@@ -80,7 +115,6 @@ const login = {
     },
 
     submitSignup: async function (event) {
-        console.log("dfm.loginOption", dfm.loginOption);
         event.preventDefault();
 
         if (dfm.loginOption === "") {
@@ -125,7 +159,6 @@ const login = {
                 editor_key: editorKey
             }
 
-            console.log("signupObj:", signupObj);
             let userAdded = false;
             let responseObj = await this.addUser(signupObj);   
             if ("error" in responseObj) {
@@ -193,8 +226,6 @@ const login = {
 
             let responseData = await response.json();
 
-            console.log("addUser:", responseData);
-
             return responseData;
         }
         catch {(error) => {
@@ -217,7 +248,6 @@ const login = {
 
             let responseData = await response.json();
 
-            console.log("responseData:", responseData);
             if (!responseData.result) {
                 if (error in responseData) {
                     console.error("isOwnerSet error: ", responseData.error);

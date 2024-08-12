@@ -3,6 +3,10 @@ Detailed Analysis for the sci-booster Project
 
 Contents
 	File Structure/Modularisation
+		Initialisation of constants etc.
+		Primary Data Structures
+		JS Event Function Tracking
+		PHP Database Modules
 	Display Menu
 	Introductory Page
 	Login/Register Modal
@@ -11,7 +15,9 @@ Contents
 		Signup as Owner
 		Login
 		User Type Privileges
+		Login During Edit Modes
 	Flow Diagram Page
+		Model Search Operation
 		Model Select Element
 		Model Edit Options
 			Effect of Logout on User Edit Options
@@ -31,6 +37,8 @@ Contents
 		Flow Diagram Data Structures
 		Flow Drawing Logic
 			Editing Flow Marker Nodes and Lines
+			Flow Done Operation
+			Cancel Flow Draw Operation
 	Flow Model Database Transactions
 		Save Operation Preparations
 		Adding a New Page
@@ -56,8 +64,58 @@ Contents
 			js-scripts
 			php-scripts
 			images
-		sci-booster.html (introductory page)
+			sci-booster.html (introductory page)
 
+<h2>Initialisation of constants etc.
+	This is performed by the files
+		src/js-scripts/global-initialise.js
+		src/js-scripts/flow-main.js
+
+	Both of which load and run in the global workspace on script load.
+
+<h2>Primary Data Structures
+	The majority of code objects are contained within the object dfm {}.
+	Others are containers for functions which have map
+	the file name as
+		model-details.js -> modelDetails {}
+
+	The data for the current model flow page is stored in
+		dfm.currentPage
+	This is an instance of the class dfm.FlowPageData in 
+		src/js-scripts/stage-area/flow-model.js
+
+	The visual data (ie Konva graphic objects) are handled by 
+		dfm.currentVisual
+	which is an instance of the class dfm.flowVisuals in
+		src/js-scripts/stage-area/flow-visuals.js
+
+
+<h2>JS Event Function Tracking
+
+	The main flow page events arise in the file
+		src/html-pages/flow-diagram.html
+
+	Additional, diagram events arise in the file
+		src/js-scripts/flow-visuals.js
+		see functions:
+			addNode()
+			drawFlow()
+			in which visual drawing elements are assigned events.
+
+<h2>PHP Database modules
+	The PHP code is contained in
+		src/php-scripts
+
+	The table creation routines are in 
+		src/php-scripts
+
+	login requests are sent to
+		src/php-scripts/users/login.php
+	registration requests are sent to
+		src/php-scripts/users/add-user.php
+
+	All flow model data requests are handled via 
+		src/php-scripts/flow-model/receive-page.php
 
 <h1>Display Menu
 	The main menu appears on both pages of the sci-booster website.
@@ -199,6 +257,14 @@ Contents
 			Delete any Flow Model
 			Access Admin Page
 
+<h2>Login During Edit Modes
+
+	During edit mode, the user is first asked to save the existing
+	model, before proceeding to the login modal.
+
+	During Flow Draw Mode, the user is asked whether to terminate 
+	the flow drawing and then save it.
+
 <h1>Introductory Page
 	The Introductory page is an HTML text presentation that introduces
 	and summarises the flow model approach to learning and describing
@@ -210,13 +276,43 @@ Contents
 	Title:
 	The page is headed by "Hierarchical Flow Diagrams".
 
-	Search:
-	The next item is the search input. This is search by keyword, flow 
-	model title, page title, node label and flow label. This search is
-	performed dynamically and produces a scrollable dropdown list. It
-	is activated by the search button or by pressing the <return> key.
+<h2>Model Search Operation
+	Search is search by keywords, page title, node label and flow label. This 
+	search is performed dynamically and produces a scrollable dropdown list. 
+	It is activated by the search button or by pressing the <return> key while
+	the search input has focus.
 
-	If	nothing is found, this is reported by the user.
+	If	nothing is found, this is reported to the user.
+
+	A search request is transmitted from the javascript to the php server script
+	receive-page.php, to the routine flow-model/search.db.php wordSearch()
+
+	A running list of upto 20 non-zero scores is maintained in order. This contains
+	the score, page id, page title, matched string, matched field name
+
+	The wordSearch function uses scores to assess matches as follows:
+	1 word exact match - 10 points
+	1 word partial match - 4 points
+
+	Points for location of match
+	Page Title - 5
+	Page Keywords - 4
+	Node Label - 2
+	Node Keywords - 1
+	Flow Label - 2
+	Flow Keywords - 1
+
+	Additional Words
+	Direct Adjacency match * 2
+	Direct Adjacency in same order * 1.5
+
+	The partialMatchWords routine checks words of at least six characters in length
+	to match:
+		the words must begin with the same letter,
+		must be of equal length bar 1 character,
+		must have all bar 1/6 of characters the same
+
+	returns 2 - exact match, 1 - partial match else 0;
 
 <h2>Model Select Element 
 	The model selection element appears beneath the search element on
@@ -324,7 +420,7 @@ Contents
 		Submit Button
 		Leave Button
 
-<h2>Page OptiButtons
+<h2>Page Option Buttons
 	The page options buttons are New, Edit, Delete, Save
 	for the logic See Above: Model Edit Options
 
@@ -840,7 +936,9 @@ Buttons: 20px x 20px
 					flowGroup: {}, // The Konva group images
 					points: [
 						{
-							marker: {},// The Konva point marker circle
+							prevNodeNum: , // null or integer
+							nextNodeNum: , // null or integer
+							marker: {nodeNum:, ..},// The Konva point marker circle
 							line: {},// The Konva line object to the previous flowNode
 						},
 					],
@@ -959,8 +1057,22 @@ Buttons: 20px x 20px
 
 	When a node is deleted, the prev and next nodes are updated accordingly.
 
+<h3>Flow Done Operation
+	The Flow Done button appears along with other option buttons on the page.
 
+	When clicked, the flow drawing is checked to see if it is complete, ie:
+	has more than one point, a label and an arrow.
 
+	If it is complete the flow is redrawn in non-flowDraw format and the data
+	submitted to the current page.
+
+<h3>Cancel Flow Draw Operation
+
+	This option (Cancel Flow) appears along with the other page option buttons.
+
+	When clicked, the current page data is checked to see whether the previous flow
+	is fully defined, if it is then that data is restored and displayed, otherwise
+	the flow is deleted from the current page and visual data.
 
 <h1>Flow Model Database Transactions
 
