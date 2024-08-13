@@ -31,6 +31,9 @@ function scanInput($inputData) {
         elseif($requestType === "find user") {
             findUserRequest($inputData);
         }
+        elseif($requestType === "general search") {
+            conductGeneralSearch($inputData);
+        }
     }
     else {
         handlePageData($inputData);
@@ -227,5 +230,11 @@ function findUserRequest($inputData) {
         $result['id'] = $foundAry['user']['id'];
         $result['username'] = $foundAry['user']['username'];
     }
+    echo json_encode($result);
+}
+
+function conductGeneralSearch($inputData) {
+    $searchText = $inputData['search_item'];
+    $result = generalSearch($searchText);
     echo json_encode($result);
 }

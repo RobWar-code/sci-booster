@@ -282,7 +282,7 @@ Contents
 	It is activated by the search button or by pressing the <return> key while
 	the search input has focus.
 
-	If	nothing is found, this is reported to the user.
+	If nothing is found, this is reported to the user.
 
 	A search request is transmitted from the javascript to the php server script
 	receive-page.php, to the routine flow-model/search.db.php wordSearch()

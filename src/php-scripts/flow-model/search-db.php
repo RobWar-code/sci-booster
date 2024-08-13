@@ -1,6 +1,8 @@
 <?php
     include_once __DIR__ . '/../db-connect.php';
     include_once __DIR__ . "/misc-funcs.php";
+    include_once __DIR__ . "/../lib/makeWordArray.php";
+    include_once __DIR__ . "/../lib/matchWordLists.php";
 
     function findFlowModel($title) {
         global $dbConn;
@@ -145,4 +147,49 @@
             }
         }
         return $pageId;
+    }
+
+    function generalSearch($searchText) {
+        $scoreList = [];
+        // Divide the search text into a word array
+        $w = makeWordArray($searchText, "\'\-");
+        // Set-up the list of places to search
+        $fieldList = [
+            ["table"=>"page", "field"=>"title", "points"=>5],
+            ["table"=>"page", "field"=>"keywords", "points"=>4],
+            ["table"=>"node", "field"=>"label", "points"=>3],
+            ["table"=>"node", "field"=>"keywords", "points"=>2],
+            ["table"=>"flow", "field"=>"label", "points"=>3],
+            ["table"=>"flow", "field"=>"keywords", "points"=>2]
+        ];
+        matchFields($w, $fieldList, $scoreList);
+    }
+
+    function matchFields($w, $fieldList, $scorelist) {
+        global $dbConn;
+
+        $includeChars="\'\-";
+        $maxScore = 0;
+        $minScore = 0;
+        $maxMatches = 20;
+        foreach ($fieldList as $fieldItem) {
+            $sql = "SELECT {$fieldItem['field']} FROM {$fieldItem['table']}";
+            $result = $dbConn->query($sql);
+            if (!$result) {
+                error_log("matchFields: problem with search access - {$dbConn->error}");
+            }
+            else {
+                if ($result->num_rows === 0) {
+                    error_log("matchFields: empty table - {$fieldItem['$table']}");
+                }
+                else {
+                    while ($row = $result->fetchAssoc()) {
+                        $fw = makeWordArray($row[$fieldItem['field']], $includeChars);
+                        $baseScore = $fieldItem['points'];
+                        $score = matchWordLists($w, $fw, $baseScore);
+                    }
+                }
+            }
+
+        }
     }
