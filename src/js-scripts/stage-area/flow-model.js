@@ -315,8 +315,52 @@ dfm.FlowPageData = class {
         }
     }
 
+    async selectPageById(e) {
+        let modelId = e.target.value;
+
+        if (modelId != null) {
+            let pageData = await this.fetchModelById(modelId);
+            if (!pageData) {
+                console.error(`could not fetch model - ${modelId}`);
+                return;
+            }
+            if (pageData.result) {
+                this.setPageData(pageData);
+                this.update = true;
+                dfm.currentVisual.redoPage();
+            }
+            else {
+                console.error(`selectModelById: could not fetch selected model ${modelId}`);
+            }
+        }
+    }
+
+
     async fetchModelByTitle(title) {
         let request = {request: "fetch model by title", title: title};
+        let requestJSON = JSON.stringify(request);
+        try {
+            let response = await fetch(dfm.phpPath + 'flow-model/receive-page.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: requestJSON
+            })
+
+            let responseData = await response.json();
+
+            return responseData;
+        }
+        catch {(error) => {
+            console.error("Problem with fetch by title receive-page script call", error);
+            return {result: false, error: "addUser Systems Error"};
+        }};
+
+    }
+
+    async fetchModelById(id) {
+        let request = {request: "fetch page by id", page_id: id};
         let requestJSON = JSON.stringify(request);
         try {
             let response = await fetch(dfm.phpPath + 'flow-model/receive-page.php', {

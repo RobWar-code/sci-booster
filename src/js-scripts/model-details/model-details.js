@@ -92,8 +92,8 @@ const modelDetails = {
    * Load the relevant page data from the database when a title selection is made
    * @param {*} event 
    */
-  selectPage: async function(event) {
-    if (event.target.value === "NONE SELECTED") return;
+  selectPage: async function(event, byId) {
+    if (event.target.value === "NONE SELECTED" || event.target.value === null) return;
     if (dfm.currentPageSet && dfm.modelChanged) {
       // Present the option to save the existing model
       let doSave = await flowModelPage.saveModelRequired(`Save the current model - ${dfm.currentPage.page.title}?`);
@@ -108,7 +108,12 @@ const modelDetails = {
     }
     dfm.currentPage = new dfm.FlowPageData();
     dfm.currentVisual = new dfm.FlowVisuals();
-    await dfm.currentPage.selectModel(event);
+    if (byId) {
+      await dfm.currentPage.selectPageById(event);
+    }
+    else {
+      await dfm.currentPage.selectModel(event);
+    }
     dfm.currentPageSet = true;
     dfm.modelChanged = false;
 

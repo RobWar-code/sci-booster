@@ -22,6 +22,9 @@ function scanInput($inputData) {
         elseif($requestType === "fetch model by title") {
             fetchModelPageByTitle($inputData['title']);
         }
+        elseif($requestType === "fetch page by id") {
+            fetchModelPageById($inputData['page_id']);
+        }
         elseif($requestType === "delete page by id") {
             deleteModelPage($inputData['page_id']);
         }
@@ -170,6 +173,21 @@ function getModelTitlesList() {
 
 function fetchModelPageByTitle($title) {
     $pageRef = findModelPageByTitle($title);
+    if ($pageRef === null) {
+        $result = ['result'=>false];
+        echo json_encode($result);
+    }
+    else {
+        $pageId = $pageRef['page_id'];
+        $flowModelId = $pageRef['flow_model_id'];
+        $result = extractPage($flowModelId, $pageId);
+        $result['result'] = true;
+        echo json_encode($result);
+    }
+}
+
+function fetchModelPageById($pageId) {
+    $pageRef = findModelPageById($pageId);
     if ($pageRef === null) {
         $result = ['result'=>false];
         echo json_encode($result);

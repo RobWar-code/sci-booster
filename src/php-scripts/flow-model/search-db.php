@@ -106,6 +106,27 @@
         return ['page_id'=>$pageId, 'flow_model_id'=>$flowModelId];
     }
 
+    function findModelPageById($pageId) {
+        global $dbConn;
+
+        $pageRef = null;
+        $sql = "SELECT flow_model_id FROM page WHERE id = $pageId";
+        $result = $dbConn->query($sql);
+        if (!$result) {
+            error_log("findModelPageById: Problem searching for page - $pageId - {$dbConn->error}", 0);
+        }
+        else {
+            if ($result->num_rows === 0) {
+                error_log("findModelPageById: No match for page - $pageId");
+            }
+            else {
+                $row = $result->fetch_assoc();
+                $pageRef = ["page_id"=>$pageId, "flow_model_id"=>$row['flow_model_id']];
+            }
+        }
+        return $pageRef;
+    }
+
     function findModelPageByHierarchicalId($hierarchicalId, $flowModelId, $flowModelTitle) {
         global $dbConn;
 
