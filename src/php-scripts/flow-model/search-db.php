@@ -152,44 +152,136 @@
     function generalSearch($searchText) {
         $scoreList = [];
         // Divide the search text into a word array
-        $w = makeWordArray($searchText, "\'\-");
+        $w = makeWordArray(strtolower($searchText), "\\\'\\\-");
         // Set-up the list of places to search
         $fieldList = [
-            ["table"=>"page", "field"=>"title", "points"=>5],
-            ["table"=>"page", "field"=>"keywords", "points"=>4],
-            ["table"=>"node", "field"=>"label", "points"=>3],
-            ["table"=>"node", "field"=>"keywords", "points"=>2],
-            ["table"=>"flow", "field"=>"label", "points"=>3],
-            ["table"=>"flow", "field"=>"keywords", "points"=>2]
+            ["table"=>"page", "pageIdField"=>"id", "field"=>"title", "points"=>5],
+            ["table"=>"page", "pageIdField"=>"id", "field"=>"keywords", "points"=>4],
+            ["table"=>"node", "pageIdField"=>"page_id", "field"=>"label", "points"=>3],
+            ["table"=>"node", "pageIdField"=>"page_id", "field"=>"keywords", "points"=>2],
+            ["table"=>"flow", "pageIdField"=>"page_id", "field"=>"label", "points"=>3],
+            ["table"=>"flow", "pageIdField"=>"page_id", "field"=>"keywords", "points"=>2]
         ];
         matchFields($w, $fieldList, $scoreList);
+        $result = [
+            'result'=>true,
+            'list'=>$scoreList 
+        ];
+        return $result;
     }
 
-    function matchFields($w, $fieldList, $scorelist) {
+    function matchFields($w, $fieldList, &$scoreList) {
         global $dbConn;
 
-        $includeChars="\'\-";
+        $includeChars="\\\'\\\-";
         $maxScore = 0;
         $minScore = 0;
         $maxMatches = 20;
         foreach ($fieldList as $fieldItem) {
-            $sql = "SELECT {$fieldItem['field']} FROM {$fieldItem['table']}";
+            $sql = "SELECT {$fieldItem['pageIdField']}, {$fieldItem['field']} FROM {$fieldItem['table']}";
             $result = $dbConn->query($sql);
             if (!$result) {
                 error_log("matchFields: problem with search access - {$dbConn->error}");
             }
             else {
                 if ($result->num_rows === 0) {
-                    error_log("matchFields: empty table - {$fieldItem['$table']}");
+                    error_log("matchFields: empty table - {$fieldItem['table']}");
                 }
                 else {
-                    while ($row = $result->fetchAssoc()) {
-                        $fw = makeWordArray($row[$fieldItem['field']], $includeChars);
+                    while ($row = $result->fetch_assoc()) {
+                        $fw = makeWordArray(strtolower($row[$fieldItem['field']]), $includeChars);
                         $baseScore = $fieldItem['points'];
                         $score = matchWordLists($w, $fw, $baseScore);
+                        if ($score > 0) {
+                            insertMatchScore($score, $fieldItem, $row, $scoreList);
+                        }
                     }
                 }
             }
-
         }
+    }
+
+    function insertMatchScore($score, $fieldItem, $matchRow, &$scoreList) {
+        global $dbConn;
+        $maxScores = 20;
+        $position = matchScore($score, $scoreList, $maxScores);
+        if ($position > -1) {
+            // Prepare the entry to be inserted
+            // Find the page title if appropriate
+            $pageTitle = "";
+            if ($fieldItem['table'] === 'page') {
+                $pageTitle = $matchRow['title'];
+            }
+            else {
+                $sql = "SELECT title FROM page WHERE id = {$matchRow['page_id']}";
+                $result = $dbConn->query($sql);
+                if (!$result) {
+                    error_log("insertMatchScore: Problem with search for page - {$dbConn->error}");
+                }
+                elseif ($result->num_rows === 0) {
+                    error_log("insertMatchScore: Could not match page {$matchRow['page_id']}");
+                }
+                else {
+                    $row = $result->fetch_assoc();
+                    $pageTitle = $row['title'];
+                }
+            }
+
+            if ($pageTitle != "") {
+                $scoreItem = [
+                    'page_id'=>$matchRow[$fieldItem['pageIdField']],
+                    'page'=>$pageTitle,
+                    'field'=>"{$fieldItem['table']} {$fieldItem['field']}",
+                    'field_value'=>$matchRow[$fieldItem['field']],
+                    'points'=>$score 
+                ];
+
+                // Insert the score item into the list
+                if ($position >= count($scoreList)) {
+                    array_push($scoreList, $scoreItem);
+                }
+                else {
+                    for ($i = $count($scoreList) - 1; $i <= $position; $i--) {
+                        if ($i < $maxScores - 1) {
+                            if ($i >= $count($scoreList) - 1) {
+                                array_push($scoreList, $scoreList[$i]);
+                            }
+                            else {
+                                $scoreList[$i + 1] = $scoreList[$i];
+                            }
+                        }
+                    }
+                    $scoreList[$position] = $scoreItem;
+                }
+            }
+        }
+    }
+
+    function matchScore($score, $scoreList, $maxScores) {
+        $position = -1;
+        if (count($scoreList) > 0) {
+            if ($score > $scoreList[0]['points']) {
+                $position = 0;
+            }
+            elseif ($score < $scoreList[count($scoreList) - 1]['points']) {
+                if (count($scoreList) < $maxScores) {
+                    $position = count($scoreList);
+                }
+            }
+            else {
+                for ($i = 0; $i < count($scoreList); $i++) {
+                    if ($score > $scoreList[$i]['points']) {
+                        $position = $i;
+                        break;
+                    }
+                }
+                if ($position === -1 && count($scoreList) < $maxScores) {
+                    $position = count($scoreList);
+                }
+            }
+        }
+        else {
+            $position = 0;
+        }
+        return $position;
     }

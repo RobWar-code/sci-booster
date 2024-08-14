@@ -19,11 +19,11 @@
         $lastByOrderIndex = -2;
         foreach ($wordsB as $wordB) {
             $gotScore = -1;
+            $gotByOrderIndex = -1;
             $aIndex = 0;
             $wordMaxScore = 0;
             foreach ($wordsA as $wordA) {
                 $charMatch = similar_text($wordA, $wordB, $wordScore);
-                echo "{$wordB} - {$wordScore} <br>";
                 if ($wordScore > 75) {
                     $gotScore = $aIndex;
                     $foundScore = ($wordScore/100) * $baseScore;
@@ -34,14 +34,12 @@
                         if ($lastByOrderIndex === $aIndex - 1) {
                             $factor = 2;
                             $byOrderScore += $foundScore * $factor;
-                            $lastByOrderIndex = $aIndex;
+                            $gotByOrderIndex = $aIndex;
                             ++$byOrderCount;
-                            echo "Matched byOrder - {$byOrderScore} - {$byOrderCount}<br>";
                         }
-                        else {
+                        elseif ($lastByOrderIndex >= 0 && $aIndex > $lastByOrderIndex + 1) {
                             if ($byOrderScore > $score) $score = $byOrderScore;
                             $byOrderScore = $foundScore;
-                            $lastByOrderIndex = $aIndex;
                             $byOrderCount = 1;
                         }
                         if ($lastAIndex != $aIndex) {
@@ -49,7 +47,6 @@
                             $adjacentScore += $foundScore * $factor;
                             $lastAdjacentMatch = $aIndex;
                             ++$adjacentCount;
-                            echo "Matched adjacent - {$adjacentScore} - {$adjacentCount}<br>";
                         }
                     }
                 }
@@ -70,6 +67,9 @@
                     $byOrderCount = 1;
                     $byOrderScore = $foundScore;
                 }
+                elseif ($gotByOrderIndex > 0)  {
+                    $lastByOrderIndex = $gotByOrderIndex;
+                }
                 if ($adjacentCount >= count($wordsA)) {
                     if ($adjacentScore > $score) {
                         $score = $adjacentScore;
@@ -84,7 +84,7 @@
                     $adjacentScore = $foundScore;
                 }
                 else {
-                    $lastAIndex = $lastAdjacentIndex;
+                    $lastAIndex = $lastAdjacentMatch;
                 }
                 if ($wordMaxScore > $score) $score = $wordMaxScore;
             }

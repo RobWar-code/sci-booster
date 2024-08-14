@@ -256,7 +256,7 @@
         <!-- Search -->
         <div class="row searchRow">
           <div class="col text-center">
-            <form onsubmit="flowModelPage.getSearchList()">
+            <form onsubmit="flowModelPage.getSearchList(event)">
               <span>Search: </span>
               <input type="text" id="searchInput"/>
               <button type="submit" class="iconButton">
@@ -265,7 +265,7 @@
             </form>
           </div>
           <div class="row">
-            <div class="col" id="searchSelectorCol">
+            <div class="col text-center" id="searchSelectorCol">
               <span>Search Selector: </span>
               <select id="searchSelector" onchange="modelDetails.selectSearchPage(event)"></select>
             </div>

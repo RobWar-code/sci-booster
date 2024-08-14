@@ -11,7 +11,7 @@
         $w = "";
         while ($p < strlen($text)) {
             $c = $text[$p];
-            $match = preg_match($c, $regExp);
+            $match = preg_match($regExp, $c);
             if (!$match) {
                 if (strlen($w) > 0) {
                     array_push($a, $w);
@@ -22,6 +22,9 @@
                 $w .= $c;
             }
             ++$p;
+        }
+        if ($w != "") {
+            array_push($a, $w);
         }
         return $a;
     }

@@ -220,6 +220,10 @@ body {
     display: none;
 }
 
+#searchSelector {
+    width: 76%;
+}
+
 #flowDoneButton {
     display: none;
 }

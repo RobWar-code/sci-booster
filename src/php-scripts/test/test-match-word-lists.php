@@ -9,15 +9,30 @@
     <h1>Match Word Lists</h1>
     <div>
     <?php
+        include_once __DIR__ . "/../lib/makeWordArray.php";
         include_once __DIR__ . "/../lib/matchWordLists.php";
-        $wordsB = ["the", "holy", "man", "with", "the", "cow", "nworb", "came", "to", "the", "brown", "cows"];
 
+        $includeChars = "\\\'\\\-";
+
+        $wordsB = ["the", "holy", "man", "with", "the", "cow", "nworb", "came", "to", "the", "brown", "cows"];
         $wordsA = ["the", "brown", "cow"];
+        $baseScore = 1;
+        $score = matchWordLists($wordsA, $wordsB, $baseScore);
+        echo "<p>Score: {$score}</p>";
+
+        $includeChars = "\\\'\\\-";
+        $sentence = "the holy man, o'brians, with the cow nworb came to the brown cows";
+        $wordsB = makeWordArray($sentence, $includeChars);
+        foreach ($wordsB as $word) {
+            echo "&emsp;{$word}<br>";
+        }
+        $searchItem = "the brown cow";
+        $wordsA = makeWordArray($searchItem, $includeChars);
 
         $baseScore = 1;
         $score = matchWordLists($wordsA, $wordsB, $baseScore);
-
         echo "<p>Score: {$score}</p>";
+
     ?>
     </div>
 </body>

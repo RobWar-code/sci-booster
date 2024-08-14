@@ -148,11 +148,14 @@ const flowModelPage = {
         }
     },
 
-    getSearchList: async function () {
-        let searchString = document.getElementById("searchInput");
+    getSearchList: async function (e) {
+        e.preventDefault();
+        let searchString = document.getElementById("searchInput").value;
+        console.log("searchString:", searchString);
         searchString = Misc.stripHTML(searchString);
         if (searchString === null) return;
         let selectionResponse = await this.fetchSearchSelection(searchString);
+        console.log("selectionResponse:", selectionResponse);
         if (selectionResponse.result === true) {
             if (selectionResponse.list.length > 0) {
                 document.getElementById("searchSelectorCol").style.display = "block";
@@ -163,13 +166,13 @@ const flowModelPage = {
                 opt.value = null;
                 opt.text = "None Selected";
                 elem.appendChild(opt);
-                for (listItem in selectionResponse.list) {
+                for (let listItem of selectionResponse.list) {
                     let opt = document.createElement('option');
                     let value = listItem.page_id;
-                    let text = listItem.page_title;
-                    text += "; Matched Field: " + listItem.matched_field_name;
-                    if (listItem.matched_field_name != "page title") {
-                        text += "; " + listItem.matched_field;
+                    let text = listItem.page;
+                    text += "; Matched Field: " + listItem.field;
+                    if (listItem.field != "page title") {
+                        text += "; " + listItem.field_value;
                     }
                     opt.value = value;
                     opt.text = text;

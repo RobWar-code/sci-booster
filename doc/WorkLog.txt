@@ -8,6 +8,8 @@ Contents
 
     Block robot logins/register
 
+    Do php searches with strtolower()
+
     Model Search Operation
 
     Drag and Flow Details on Flow Label - get to work anywhere on label.
