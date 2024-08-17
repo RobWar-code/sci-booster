@@ -15,7 +15,7 @@
     $sql = "CREATE TABLE user (
         id INT AUTO_INCREMENT PRIMARY KEY,
         username VARCHAR(64) NOT NULL UNIQUE,
-        password VARCHAR(255) NOT NULL,
+        password VARCHAR(256) NOT NULL,
         status VARCHAR(16) NOT NULL
     )";
 
@@ -37,7 +37,7 @@
     }
 
     $sql = "CREATE TABLE editor_key (
-        editor_key VARCHAR(255) NOT NULL
+        editor_key VARCHAR(256) NOT NULL
     )";
 
     if ($dbConn->query($sql) === TRUE) {
@@ -84,7 +84,7 @@
         hierarchical_id VARCHAR(64),
         title VARCHAR(128) UNIQUE NOT NULL,
         description VARCHAR(4096),
-        keywords VARCHAR(255),
+        keywords VARCHAR(256),
         FOREIGN KEY (flow_model_id) REFERENCES flow_model(id)
     )";
 
@@ -101,12 +101,14 @@
         page_id INT NOT NULL,
         node_num CHAR(2) NOT NULL,
         label VARCHAR(64) NOT NULL,
+        graphic_file VARCHAR(256),
+        graphic_text VARCHAR(256),
         x_coord SMALLINT NOT NULL,
         y_coord SMALLINT NOT NULL,
         type VARCHAR(16) NOT NULL,
         definition VARCHAR(4096),
-        keywords VARCHAR(255),
-        hyperlink VARCHAR(255),
+        keywords VARCHAR(256),
+        hyperlink VARCHAR(256),
         has_child_page TINYINT NOT NULL,
         FOREIGN KEY (page_id) REFERENCES page(id)
     )";
@@ -162,9 +164,9 @@
         label_x SMALLINT NOT NULL,
         label_y SMALLINT NOT NULL,
         label_width SMALLINT NOT NULL,
-        keywords VARCHAR(255),
+        keywords VARCHAR(256),
         definition VARCHAR(4096),
-        hyperlink VARCHAR(255),
+        hyperlink VARCHAR(256),
         source_void TINYINT NOT NULL,
         source_node_num CHAR(2),
         destination_void TINYINT NOT NULL,
@@ -230,7 +232,7 @@
     $sql = "CREATE TABLE reference (
         id INT AUTO_INCREMENT PRIMARY KEY,
         page_id INT,
-        source VARCHAR(255),
+        source VARCHAR(256),
         title VARCHAR(128),
         external_author_id INT,
         FOREIGN KEY (page_id) REFERENCES page(id),

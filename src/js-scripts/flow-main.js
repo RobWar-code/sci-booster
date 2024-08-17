@@ -54,7 +54,7 @@ dfm.nodeData = {};
 dfm.stageApp = {};
 
 // Load the images
-dfm.numNodeGraphics = 5;
+dfm.numNodeGraphics = 6;
 dfm.nodeGraphics = {};
 dfm.loadedEvent = new CustomEvent('graphicsLoaded', {detail: {graphicsLoaded: true}});
 
@@ -90,6 +90,9 @@ function loadDrawingImages() {
     dfm.nodeGraphics.details = new Image();
     dfm.nodeGraphics.details.onload = loadRegister;
     dfm.nodeGraphics.details.src = '/sci-booster/src/images/details.png';
+    dfm.nodeGraphics.graphic = new Image();
+    dfm.nodeGraphics.graphic.onload = loadRegister;
+    dfm.nodeGraphics.graphic.src = '/sci-booster/src/images/graphic.png';
     dfm.nodeGraphics.flowLink = new Image();
     dfm.nodeGraphics.flowLink.onload = loadRegister;
     dfm.nodeGraphics.flowLink.src = '/sci-booster/src/images/flow-link.png';

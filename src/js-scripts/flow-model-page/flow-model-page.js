@@ -306,7 +306,9 @@ const flowModelPage = {
         // To construct the search
         let nodeNum = event.target.getAttr("nodeNum");
         let hierarchicalId = dfm.currentPage.page.hierarchical_id + nodeNum;
-        let flowModelId = dfm.currentPage.flow_model_id;
+        console.log("zoomPage - hierarchicalId:", hierarchicalId);
+        let flowModelId = dfm.currentPage.id;
+        console.log("flowModelId:", flowModelId);
         let flowModelTitle = dfm.currentPage.flow_model_title;
         let node = dfm.currentPage.getNode(nodeNum);
         let nodeLabel = node.label;

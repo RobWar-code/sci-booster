@@ -119,8 +119,10 @@ dfm.FlowVisuals = class {
             fontFamily: dfm.nodeTemplate.fontFamily,
             fill: 'black'
         });
+        let optionMargin = (dfm.nodeTemplate.width - (GLOBALS.numNodeOptions * dfm.nodeTemplate.optionWidth)) / (GLOBALS.numNodeOptions + 1);
+        console.log("optionMargin:", optionMargin);
         node.detailsOpt = new Konva.Image({
-            x: dfm.nodeTemplate.optionLeft,
+            x: optionMargin,
             y: dfm.nodeTemplate.optionTop,
             image: dfm.nodeGraphics.details,
             width: dfm.nodeTemplate.optionWidth,
@@ -128,8 +130,17 @@ dfm.FlowVisuals = class {
             nodeNum: nodeNum,
             hoverText: "Node Details"
         });
+        node.graphicOpt = new Konva.Image({
+            x: dfm.nodeTemplate.optionWidth + optionMargin * 2,
+            y: dfm.nodeTemplate.optionTop,
+            image: dfm.nodeGraphics.graphic,
+            width: dfm.nodeTemplate.optionWidth,
+            height: dfm.nodeTemplate.optionHeight,
+            nodeNum: nodeNum,
+            hoverText: "Graphic"
+        });
         node.zoomDetailsOpt = new Konva.Image({
-            x: dfm.nodeTemplate.width/2 - dfm.nodeTemplate.optionWidth - dfm.nodeTemplate.optionLeft/2,
+            x: dfm.nodeTemplate.optionWidth * 2 + optionMargin * 3,
             y: dfm.nodeTemplate.optionTop,
             image: dfm.nodeGraphics.zoomDetails,
             width: dfm.nodeTemplate.optionWidth,
@@ -138,7 +149,7 @@ dfm.FlowVisuals = class {
             hoverText: "Zoom Page"
         });
         node.flowLinkOpt = new Konva.Image({
-            x: dfm.nodeTemplate.width/2 + dfm.nodeTemplate.optionLeft/2,
+            x: dfm.nodeTemplate.optionWidth * 3 + optionMargin * 4,
             y: dfm.nodeTemplate.optionTop,
             image: dfm.nodeGraphics.flowLink,
             width: dfm.nodeTemplate.optionWidth,
@@ -147,7 +158,7 @@ dfm.FlowVisuals = class {
             hoverText: "Flow Link"
         });
         node.hyperlinkOpt = new Konva.Image({
-            x: dfm.nodeTemplate.width - dfm.nodeTemplate.optionWidth - dfm.nodeTemplate.optionLeft,
+            x: dfm.nodeTemplate.optionWidth * 4 + optionMargin * 5,
             y: dfm.nodeTemplate.optionTop,
             image: dfm.nodeGraphics.hyperlink,
             width: dfm.nodeTemplate.optionWidth,
@@ -159,6 +170,8 @@ dfm.FlowVisuals = class {
         // Events
         node.detailsOpt.on("click", (event) => nodeDetails.viewNodeDetails(event));
         node.detailsOpt.on("mouseover", (event) => nodeDetails.doHoverText(event));
+        node.graphicOpt.on("click", (event) => dfm.nodeGraphic.viewNodeGraphic(event));
+        node.graphicOpt.on("mouseover", (event) => nodeDetails.doHoverText(event));
         node.zoomDetailsOpt.on("click", (event) => flowModelPage.zoomPage(event));
         node.zoomDetailsOpt.on("mouseover", (event) => nodeDetails.doHoverText(event));
         node.flowLinkOpt.on("click", (event) => flowDetails.addNewFlow(event));
@@ -170,6 +183,7 @@ dfm.FlowVisuals = class {
         node.nodeGroup.add(node.rect);
         node.nodeGroup.add(node.labelText);
         node.nodeGroup.add(node.detailsOpt);
+        node.nodeGroup.add(node.graphicOpt);
         node.nodeGroup.add(node.zoomDetailsOpt);
         node.nodeGroup.add(node.flowLinkOpt);
         node.nodeGroup.add(node.hyperlinkOpt);

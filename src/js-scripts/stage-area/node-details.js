@@ -104,6 +104,10 @@ const nodeDetails = {
                 return;
             }
         }
+        let graphicFile = document.getElementById("nodeGraphicFile").value;
+        graphicFile = Misc.stripHTML(graphicFile);
+        let graphicText = document.getElementById("nodeGraphicText");
+        graphicText = Misc.stripHTML(graphicText);
         let keywords = document.getElementById("nodeKeywords").value;
         keywords = Misc.stripHTML(keywords).trim();
         let definition = document.getElementById("nodeDefinition").value;
@@ -121,6 +125,8 @@ const nodeDetails = {
             node = dfm.currentPage.getNode(nodeNum);
         }
         node.label = label;
+        node.graphic_file = graphicFile;
+        node.graphic_text = graphicText;
         node.type = document.getElementById("nodeType").value;
         node.keywords = keywords;
         node.definition = definition;

@@ -13,6 +13,7 @@ const GLOBALS = {
     nodeHeight: 70,
     nodeButtonTop: 48,
     minFlowLength: 60,
+    numNodeOptions: 5,
     nodeOptionWidth: 20,
     nodeOptionHeight: 20,
     nodePadding: 4

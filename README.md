@@ -113,6 +113,8 @@ A node is associated with the following:
 - page_id - Char 64
 - node_num - Char 2 ie: "01"
 - label - Char 32
+- graphic_file - Char 256
+- graphic_text - Char 256
 - x_coord - Short Int
 - y_coord - Short Int
 - type - Char 16 - "mechanism"/"effect"
@@ -274,6 +276,8 @@ flow_models: [
 						"id": , // May be null
 						"node_num" : "", // (ie: "01")
 						"label": "",
+						"graphic_file": "", // Image associated with the node
+						"graphic_text": "",
 						"type": "", // (Mechanism/Effect)
 						"definition": "", // optional
 						"keywords": "", // optional

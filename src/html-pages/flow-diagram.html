@@ -160,6 +160,10 @@
         <form id="nodeDetailsForm" onsubmit="nodeDetails.submitNodeDetails(event)">
           <label for="nodeLabel" class="modalFormLabel">Label:</label>
           <input type="text" class="modalFormItem" name="nodeLabel" id="nodeLabel">
+          <label for="nodeGraphicFile" class="modalFormLabel">Graphic:</label>
+          <input type="text" class="modalFormItem" name="nodeGraphicFile" id="nodeGraphicFile">
+          <label for="nodeGraphicText" class="modalFormLabel">Graphic Text:</label>
+          <input type="text" class="modalFormItem" name="nodeGraphicText" id="nodeGraphicText">
           <label for="nodeType" class="modalFormLabel">Type:</label>
           <select name="nodeType" id="nodeType" class="modalFormItem">
             <option value="mechanism">Mechanism</option>
@@ -230,6 +234,15 @@
           <button class="textButton" id="flowDeleteButton" onclick="flowDetails.deleteFlow()">Delete</button>
           <button class="textButton" id="modalDismissButton" onclick="flowDetails.dismissFlowDetails()">Dismiss</button>
         </div>  
+      </div>
+    </div>
+
+    <!-- Node Graphic Modal -->
+    <div class="genModal" id="nodeGraphicModal">
+      <img id="nodeGraphic" src="#" title="">
+      <p id="nodeGraphicText"></p>
+      <div>
+        <button onclick="dfm.node-graphic.dismiss()">Dismiss</button>
       </div>
     </div>
 
