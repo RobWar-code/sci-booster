@@ -319,7 +319,7 @@ function addNode($node, $pageId) {
 
     $insertedNode = false;
     $hasChildPage = $node['has_child_page'] ? 1 : 0;
-    $sql = "INSERT INTO node (page_id, node_num, label, x_coord, y_coord, 
+    $sql = "INSERT INTO node (page_id, node_num, label, graphic_file, graphic_text, x_coord, y_coord, 
         type, definition, keywords, hyperlink, has_child_page) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $dbConn->prepare($sql);
     if ($stmt === FALSE) {

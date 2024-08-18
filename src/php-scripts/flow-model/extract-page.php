@@ -160,7 +160,7 @@
         $stmt = $dbConn->prepare($sql);
         if ($result = $stmt->execute()) {
             $stmt->store_result();
-            $stmt->bind_result($id, $pageId, $nodeNum, $label, 
+            $stmt->bind_result($id, $pageId, $nodeNum, $label, $graphic_file, $graphic_text, 
                 $x, $y, $type, $definition, $keywords, $hyperlink, $hasChildPage);
             while ($stmt->fetch()) {
                 $node = [];
@@ -168,6 +168,8 @@
                 $node['page_id'] = $pageId;
                 $node['node_num'] = $nodeNum;
                 $node['label'] = $label;
+                $node['graphic_file'] = $graphic_file;
+                $node['graphic_text'] = $graphic_text;
                 $node['x'] = $x;
                 $node['y'] = $y;
                 $node['type'] = $type;

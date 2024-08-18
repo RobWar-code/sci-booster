@@ -206,6 +206,27 @@ body {
     display: none;
 }
 
+/* Node Graphic Modal */
+#nodeGraphicModal {
+    display: none;
+}
+
+#nodeGraphicDiv {
+    width: 100%;
+}
+
+#nodeGraphic {
+    width: 80%;
+    max-width: 900px;
+    height: auto;
+    margin-left: 4%;
+    margin-top: 4%;
+}
+
+#nodeGraphicText {
+    width: 80%;
+    margin-left: 4%;
+}
 /* Yes/No Modal */
 #yesNoModal {
     display: none;

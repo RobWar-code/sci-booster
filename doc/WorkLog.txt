@@ -16,7 +16,7 @@ Contents
 
     Graphic field in node data
         Update CRUD php for node details
-        update node details form
+        Update node details form
         Graphic button click function
         Graphic dismiss button click function
 

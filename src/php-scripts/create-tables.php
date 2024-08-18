@@ -12,6 +12,7 @@
     // Create the sci-booster tables
     include_once './db-connect.php';
 
+    /*
     $sql = "CREATE TABLE user (
         id INT AUTO_INCREMENT PRIMARY KEY,
         username VARCHAR(64) NOT NULL UNIQUE,
@@ -63,39 +64,15 @@
     else {
         echo "problem setting editor key<br>";
     }
-
-    // flow_model Table
-    $sql = "CREATE TABLE flow_model (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        title VARCHAR(128) NOT NULL UNIQUE
-    )";
-
-    if ($dbConn->query($sql) === TRUE) {
-        echo "Added flow_model table<br>";
-    }
-    else {
-        echo "Problem adding flow_model table: " . $dbConn->error . "<br>";
-    }
-
-    // page Table
-    $sql = "CREATE TABLE page (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        flow_model_id INT,
-        hierarchical_id VARCHAR(64),
-        title VARCHAR(128) UNIQUE NOT NULL,
-        description VARCHAR(4096),
-        keywords VARCHAR(256),
-        FOREIGN KEY (flow_model_id) REFERENCES flow_model(id)
-    )";
-
-    if ($dbConn->query($sql) === TRUE) {
-        echo "Added page table<br>";
-    }
-    else {
-        echo "Problem adding page table: " . $dbConn->error ."<br>";
-    }
+    */
 
     // node Table
+    $sql = "DROP TABLE IF EXISTS node";
+    $result = $dbConn->query($sql);
+    if (!$result) {
+        echo "Problem dropping node table - {$dbConn->error}<br>";
+    }
+
     $sql = "CREATE TABLE node (
         id INT AUTO_INCREMENT PRIMARY KEY,
         page_id INT NOT NULL,
@@ -151,7 +128,6 @@
     else {
         echo "Drop flow table failed<br>" . $dbConn->error . "<br>";
     }
-
 
     // flow Table
     $sql = "CREATE TABLE flow (
@@ -215,6 +191,12 @@
     }
     
     // external_author Table
+    $sql = "DROP TABLE IF EXISTS external_author";
+    $result = $dbConn->query($sql);
+    if (!$result) {
+        echo "Problem dropping external_author table - {$dbConn->error}<br>";
+    }
+
     $sql = "CREATE TABLE external_author (
         id INT AUTO_INCREMENT PRIMARY KEY,
         first_name VARCHAR(64),
@@ -229,6 +211,12 @@
     }
   
     // references Table
+    $sql = "DROP TABLE IF EXISTS reference";
+    $result = $dbConn->query($sql);
+    if (!$result) {
+        echo "Problem dropping reference table - {$dbConn->error}<br>";
+    }
+
     $sql = "CREATE TABLE reference (
         id INT AUTO_INCREMENT PRIMARY KEY,
         page_id INT,
@@ -248,6 +236,12 @@
 
     // external_author_page_link Table
     // references Table
+    $sql = "DROP TABLE IF EXISTS external_author_page_link";
+    $result = $dbConn->query($sql);
+    if (!$result) {
+        echo "Problem dropping external_author_page_link table - {$dbConn->error}<br>";
+    }
+
     $sql = "CREATE TABLE external_author_page_link (
         id INT AUTO_INCREMENT PRIMARY KEY,
         page_id INT,
@@ -264,6 +258,12 @@
     }
 
     // page_user_link Table
+    $sql = "DROP TABLE IF EXISTS page_user_link";
+    $result = $dbConn->query($sql);
+    if (!$result) {
+        echo "Problem dropping page_user_link table - {$dbConn->error}<br>";
+    }
+
     $sql = "CREATE TABLE page_user_link (
         id INT AUTO_INCREMENT PRIMARY KEY,
         page_id INT,
@@ -280,6 +280,12 @@
     }
     
     // conversion_formula Table
+    $sql = "DROP TABLE IF EXISTS conversion_formula";
+    $result = $dbConn->query($sql);
+    if (!$result) {
+        echo "Problem dropping conversion_formula table - {$dbConn->error}<br>";
+    }
+
     $sql = "CREATE TABLE conversion_formula (
         id INT AUTO_INCREMENT PRIMARY KEY,
         flow_id INT,
@@ -294,6 +300,51 @@
     else {
         echo "Problem adding conversion_formula table: " . $dbConn->error . "<br>";
     }
+    
+    // page Table
+    $sql = "DROP TABLE IF EXISTS page";
+    $result = $dbConn->query($sql);
+    if (!$result) {
+        echo "Problem dropping page table - {$dbConn->error}<br>";
+    }
+
+    $dbConn->query($sql);
+    $sql = "CREATE TABLE page (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        flow_model_id INT,
+        hierarchical_id VARCHAR(64),
+        title VARCHAR(128) UNIQUE NOT NULL,
+        description VARCHAR(4096),
+        keywords VARCHAR(256),
+        FOREIGN KEY (flow_model_id) REFERENCES flow_model(id)
+    )";
+
+    if ($dbConn->query($sql) === TRUE) {
+        echo "Added page table<br>";
+    }
+    else {
+        echo "Problem adding page table: " . $dbConn->error ."<br>";
+    }
+    
+    // flow_model Table
+    $sql = "DROP TABLE IF EXISTS flow_model";
+    $result = $dbConn->query($sql);
+    if (!$result) {
+        echo "Problem dropping flow_model table - {$dbConn->error}<br>";
+    }
+
+    $sql = "CREATE TABLE flow_model (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        title VARCHAR(128) NOT NULL UNIQUE
+    )";
+
+    if ($dbConn->query($sql) === TRUE) {
+        echo "Added flow_model table<br>";
+    }
+    else {
+        echo "Problem adding flow_model table: " . $dbConn->error . "<br>";
+    }
+    
     
 ?>
     </div>
