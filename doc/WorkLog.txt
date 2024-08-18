@@ -14,11 +14,14 @@ Contents
 
     Hyperlink button on nodes
 
+    NavBar Collapse not working
+
     Graphic field in node data
-        Update CRUD php for node details
-        Update node details form
-        Graphic button click function
-        Graphic dismiss button click function
+        * Update CRUD php for node details
+        Test PHP
+        * Update node details form
+        * Graphic button click function
+        * Graphic dismiss button click function
 
     Access to graphic via node
 

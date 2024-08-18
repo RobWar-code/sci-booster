@@ -12,7 +12,8 @@
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
           <a class="navbar-brand" href="./flow-diagram.html">Sci-Booster</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" 
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -160,9 +161,9 @@
         <form id="nodeDetailsForm" onsubmit="nodeDetails.submitNodeDetails(event)">
           <label for="nodeLabel" class="modalFormLabel">Label:</label>
           <input type="text" class="modalFormItem" name="nodeLabel" id="nodeLabel">
-          <label for="nodeGraphicFile" class="modalFormLabel">Graphic:</label>
+          <label for="nodeGraphicFile" class="modalFormLabel">Image:</label>
           <input type="text" class="modalFormItem" name="nodeGraphicFile" id="nodeGraphicFile">
-          <label for="nodeGraphicText" class="modalFormLabel">Graphic Text:</label>
+          <label for="nodeGraphicText" class="modalFormLabel">Image Text:</label>
           <input type="text" class="modalFormItem" name="nodeGraphicText" id="nodeGraphicText">
           <label for="nodeType" class="modalFormLabel">Type:</label>
           <select name="nodeType" id="nodeType" class="modalFormItem">
@@ -239,12 +240,12 @@
 
     <!-- Node Graphic Modal -->
     <div class="genModal" id="nodeGraphicModal">
-      <div id="nodeGraphicDiv">
-        <img id="nodeGraphic" src="#" title="" width="800" height="400">
-      </div>
-      <p id="nodeGraphicText"></p>
-      <div>
-        <button onclick="dfm.node-graphic.dismiss()">Dismiss</button>
+      <div class="genModalDiv">
+        <img id="nodeGraphic" src="#" title="" width="800" height="400" />
+        <p id="nodeGraphicPara"></p>
+        <div>
+          <button class="textButton" id="nodeGraphicDismissBtn" onclick="dfm.nodeGraphic.dismissGraphic()">Dismiss</button>
+        </div>
       </div>
     </div>
 
@@ -368,16 +369,10 @@
     <script src="../js-scripts/model-details/model-details.js"></script>
     <script src="../js-scripts/stage-area/node-details.js"></script>
     <script src="../js-scripts/stage-area/flow-details.js"></script>
+    <script src="../js-scripts/stage-area/node-graphic.js"></script>
     <script src="../js-scripts/flow-main.js"></script>
     <script>
       flowModelPage.displayModelEditOptions();
-
-      function test() {
-        console.log("Test Passed");
-        closeFlowPageModal();
-      }
-
-
     </script>
   </body>
 </html>

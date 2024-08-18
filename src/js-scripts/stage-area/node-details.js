@@ -106,7 +106,7 @@ const nodeDetails = {
         }
         let graphicFile = document.getElementById("nodeGraphicFile").value;
         graphicFile = Misc.stripHTML(graphicFile);
-        let graphicText = document.getElementById("nodeGraphicText");
+        let graphicText = document.getElementById("nodeGraphicText").value;
         graphicText = Misc.stripHTML(graphicText);
         let keywords = document.getElementById("nodeKeywords").value;
         keywords = Misc.stripHTML(keywords).trim();

@@ -1,6 +1,7 @@
 dfm.nodeGraphic = {
 
     viewNodeGraphic: function (event) {
+        event.cancelBubble = true;
         let nodeNum = event.target.getAttr("nodeNum");
         let node = dfm.currentPage.getNode(nodeNum);
         let graphicFile = node.graphic_file;
@@ -8,7 +9,7 @@ dfm.nodeGraphic = {
 
         let imageElem = document.getElementById("nodeGraphic");
         imageElem.src = graphicFile;
-        let textElem = document.getElementById("nodeGraphicText");
+        let textElem = document.getElementById("nodeGraphicPara");
         textElem.innerText = node.graphic_text;
         let modalBackgroundElem = document.getElementById("nodeGraphicModal");
         modalBackgroundElem.style.height = document.body.scrollHeight;
@@ -16,6 +17,6 @@ dfm.nodeGraphic = {
     },
 
     dismissGraphic: function () {
-        document.getElementById("nodeGraphicModal").style.display = none;
+        document.getElementById("nodeGraphicModal").style.display = "none";
     }
 }

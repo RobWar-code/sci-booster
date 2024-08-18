@@ -80,6 +80,18 @@ body {
     border-radius: 8px;
 }
 
+.genModalDiv {
+    position: relative;
+    width: 80%;
+    background-color: #f0e0f0;
+    z-index: 10;
+    margin-top: 10px;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
 .centeredModal {
     text-align: center;
 }
@@ -211,22 +223,17 @@ body {
     display: none;
 }
 
-#nodeGraphicDiv {
-    width: 100%;
-}
-
 #nodeGraphic {
-    width: 80%;
+    width: calc(100% - 7px);
     max-width: 900px;
     height: auto;
-    margin-left: 4%;
-    margin-top: 4%;
 }
 
-#nodeGraphicText {
-    width: 80%;
-    margin-left: 4%;
+#nodeGraphicPara {
+    width: calc(100% - 7px);
+    max-width: 900px;
 }
+
 /* Yes/No Modal */
 #yesNoModal {
     display: none;
