@@ -11,8 +11,7 @@ const nodeDetails = {
     },
 
     viewNodeDetails: function (event) {
-        console.log("viewNodeDetails: dfm.currentVisual.flowDrawMode - ", dfm.currentVisual.flowDrawMode);
-        if (dfm.modelEditMode === "edit" && !dfm.currentVisual.flowDrawMode) {
+        if (dfm.modelEditMode === "edit" && !dfm.flowDrawMode) {
             this.setInputDisabledStatus(false);
             dfm.currentPage.nodeEditMode = "update";
         }
@@ -202,5 +201,46 @@ const nodeDetails = {
         x += node.x;
         y += node.y;
         displayHoverText(text, x, y);
+    },
+
+    doHyperlink: function (event) {
+        let nodeNum = event.target.getAttr("nodeNum");
+        let node = dfm.currentPage.getNode(nodeNum);
+        if (node.hyperlink === "") return;
+
+        window.open(node.hyperlink, "_blank");
+    },
+
+    uploadNodeGraphic: function () {
+        const fileInput = document.getElementById("nodeGraphicInput");
+        const file = fileInput.files[0];
+        document.getElementById("nodeGraphicFile").value = "";
+        document.getElementById("nodeErrors").style.display = "none";
+        if (file) {
+            let filename = file.name;
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('username', dfm.username);
+            fetch(dfm.phpPath + 'flow-model/upload-node-graphic.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.result === true) {
+                    document.getElementById("nodeGraphicFile").value = dfm.username + "/" + filename;
+                }
+                else {
+                    document.getElementById("nodeErrors").innerText = `Problem uploading file ${filename}`;
+                    document.getElementById("nodeErrors").style.display = "block";
+                }
+            })
+            .catch (error => {
+                document.getElementById("nodeErrors").innerText = `Problem uploading file ${filename}`;
+                document.getElementById("nodeErrors").style.display = "block";
+                console.log("Problem uploading graphic file " + filename + " " + error);
+            });
+
+        }
     }
 }

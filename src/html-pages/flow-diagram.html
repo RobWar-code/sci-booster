@@ -14,7 +14,7 @@
           <a class="navbar-brand" href="./flow-diagram.html">Sci-Booster</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" 
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon"><img src="/sci-booster/src/images/zoom-details.png" width="20" height="20"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -163,6 +163,10 @@
           <input type="text" class="modalFormItem" name="nodeLabel" id="nodeLabel">
           <label for="nodeGraphicFile" class="modalFormLabel">Image:</label>
           <input type="text" class="modalFormItem" name="nodeGraphicFile" id="nodeGraphicFile">
+          <form id="nodeGraphicForm">
+              <input type="file" id="nodeGraphicInput" />
+              <button type="textButton" onclick="nodeDetails.uploadNodeGraphic()">Upload Graphic File</button>
+          </form>
           <label for="nodeGraphicText" class="modalFormLabel">Image Text:</label>
           <input type="text" class="modalFormItem" name="nodeGraphicText" id="nodeGraphicText">
           <label for="nodeType" class="modalFormLabel">Type:</label>

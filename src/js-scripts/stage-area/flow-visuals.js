@@ -120,7 +120,6 @@ dfm.FlowVisuals = class {
             fill: 'black'
         });
         let optionMargin = (dfm.nodeTemplate.width - (GLOBALS.numNodeOptions * dfm.nodeTemplate.optionWidth)) / (GLOBALS.numNodeOptions + 1);
-        console.log("optionMargin:", optionMargin);
         node.detailsOpt = new Konva.Image({
             x: optionMargin,
             y: dfm.nodeTemplate.optionTop,
@@ -176,7 +175,7 @@ dfm.FlowVisuals = class {
         node.zoomDetailsOpt.on("mouseover", (event) => nodeDetails.doHoverText(event));
         node.flowLinkOpt.on("click", (event) => flowDetails.addNewFlow(event));
         node.flowLinkOpt.on("mouseover", (event) => nodeDetails.doHoverText(event));
-        node.hyperlinkOpt.on("click", (event) => nodeDetails.doHyperLink(event));
+        node.hyperlinkOpt.on("click", (event) => nodeDetails.doHyperlink(event));
         node.hyperlinkOpt.on("mouseover", (event) => nodeDetails.doHoverText(event));
 
         // Assemble items
@@ -463,8 +462,8 @@ dfm.FlowVisuals = class {
         this.currentFlow.arrow_points = flowArrowPoints;
 
         // label
-        let x = this.currentFlowDrawing.graphicLabel.rect.getAttr('x');
-        let y = this.currentFlowDrawing.graphicLabel.rect.getAttr('y');
+        let x = this.currentFlowDrawing.graphicLabel.flowLabelGroup.getAttr('x');
+        let y = this.currentFlowDrawing.graphicLabel.flowLabelGroup.getAttr('y');
         this.currentFlow.label_x = x;
         this.currentFlow.label_y = y;
         
@@ -557,9 +556,10 @@ dfm.FlowVisuals = class {
 
         x = flowDetailsItem.label_x;
         y = flowDetailsItem.label_y;
+        let flowLabelGroup = new Konva.Group({x: x, y: y});
         let rect = new Konva.Rect({
-            x: x,
-            y: y,
+            x: 0,
+            y: 0,
             width: labelWidth,
             height: rectHeight,
             stroke: 'black',
@@ -567,18 +567,19 @@ dfm.FlowVisuals = class {
             fill: 'white',
             flowNum: flowDetailsItem.flow_num
         });
-        rect.on("click", (e) => flowDetails.viewFlowDetails(e));
-        visualFlowItem.flowGroup.add(rect);
         let text = new Konva.Text({
-            x: x + 3,
-            y: y + 3,
+            x: 3,
+            y: 3,
             text: textItem,
             width: textWidth,
             fontFamily: fontFamily,
             fontSize: fontSize,
             fill: 'black'
         });
-        visualFlowItem.flowGroup.add(text);
+        flowLabelGroup.add(rect);
+        flowLabelGroup.add(text);
+        flowLabelGroup.on("click", (e) => flowDetails.viewFlowDetails(e));
+        visualFlowItem.flowGroup.add(flowLabelGroup);
         this.nodeLayer.add(visualFlowItem.flowGroup);
         return visualFlowItem;
     }
@@ -799,18 +800,17 @@ dfm.FlowVisuals = class {
         this.currentFlow.label_width = labelWidth;
         let leftXOffset = 0;
         let rectYOffset = 0;
-        let textYOffset = 0;
+        let textYOffset = 3;
         if (fromClick) { 
             leftXOffset = labelWidth / 2;
-            rectYOffset = -3;
         }
         else {
-            rectYOffset = 0;
             textYOffset = 3
         }
+        x = x - leftXOffset;
         let rect = new Konva.Rect({
-            x: x - leftXOffset,
-            y: y + rectYOffset,
+            x: 0,
+            y: 0,
             width: labelWidth,
             height: rectHeight,
             stroke: 'black',
@@ -819,8 +819,8 @@ dfm.FlowVisuals = class {
             flowNum: this.currentFlow.flow_num
         });
         let text = new Konva.Text({
-            x: x - leftXOffset + 3,
-            y: y + textYOffset,
+            x: 3,
+            y: textYOffset,
             text: textItem,
             width: textWidth,
             fontFamily: fontFamily,
@@ -828,19 +828,19 @@ dfm.FlowVisuals = class {
             fill: 'black',
             flowNum: this.currentFlow.flow_num
         });
-        text.on('click', (e) => flowDetails.viewFlowDetails(e));
-        rect.on('click', (e) => flowDetails.viewFlowDetails(e));
-        rect.setAttr("draggable", true);
-        rect.on('dragstart', (e) => this.flowLabelDragStart(e));
-        rect.on('dragmove', (e) => this.flowLabelDragMove(e));
-        rect.on('dragend', (e) => this.flowLabelDragEnd(e));
+        let flowLabelGroup = new Konva.Group({x: x, y: y});
+        flowLabelGroup.on('click', (e) => flowDetails.viewFlowDetails(e));
+        flowLabelGroup.setAttr("draggable", true);
+        flowLabelGroup.on('dragstart', (e) => this.flowLabelDragStart(e));
+        flowLabelGroup.on('dragmove', (e) => this.flowLabelDragMove(e));
+        flowLabelGroup.on('dragend', (e) => this.flowLabelDragEnd(e));
         this.currentFlowDrawing.graphicLabel = {};
         this.currentFlowDrawing.graphicLabel.rect = rect;
         this.currentFlowDrawing.graphicLabel.text = text;
-        this.currentFlowDrawing.flowGroup.add(rect);
-        this.currentFlowDrawing.flowGroup.add(text);
-        rect.setZIndex(0.5);
-        text.setZIndex(1);
+        this.currentFlowDrawing.graphicLabel.flowLabelGroup = flowLabelGroup;
+        flowLabelGroup.add(rect);
+        flowLabelGroup.add(text);
+        this.currentFlowDrawing.flowGroup.add(flowLabelGroup);
         this.currentFlowDrawing.flowGroup.draw();
         if (fromClick) {
             this.currentFlow.label_x = x - leftXOffset;
@@ -855,17 +855,13 @@ dfm.FlowVisuals = class {
 
     flowLabelDragMove(e) {
         e.cancelBubble = true;
-        let x = this.currentFlowDrawing.graphicLabel.rect.getAttr('x');
-        let y = this.currentFlowDrawing.graphicLabel.rect.getAttr('y');
-        this.currentFlowDrawing.graphicLabel.text.setAttr('x', x + 3);
-        this.currentFlowDrawing.graphicLabel.text.setAttr('y', y + 3);
+        let x = this.currentFlowDrawing.graphicLabel.flowLabelGroup.getAttr('x');
+        let y = this.currentFlowDrawing.graphicLabel.flowLabelGroup.getAttr('y');
     }
 
     flowLabelDragEnd(e) {
-        let x = this.currentFlowDrawing.graphicLabel.rect.getAttr('x');
-        let y = this.currentFlowDrawing.graphicLabel.rect.getAttr('y');
-        this.currentFlowDrawing.graphicLabel.text.setAttr('x', x + 3);
-        this.currentFlowDrawing.graphicLabel.text.setAttr('y', y + 3);
+        e.cancelBubble = true;
+        
     }
 
     flowNodeClicked(e) {

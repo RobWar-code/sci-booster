@@ -320,13 +320,14 @@ function addNode($node, $pageId) {
     $insertedNode = false;
     $hasChildPage = $node['has_child_page'] ? 1 : 0;
     $sql = "INSERT INTO node (page_id, node_num, label, graphic_file, graphic_text, x_coord, y_coord, 
-        type, definition, keywords, hyperlink, has_child_page) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        type, definition, keywords, hyperlink, has_child_page) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $dbConn->prepare($sql);
     if ($stmt === FALSE) {
         error_log("addNodes: problem with sql: {$dbConn->error}", 0);
     }
     else {
-        $stmt->bind_param("issiissssi", $pageId, $node['node_num'], $node['label'], $node['x'],
+        $stmt->bind_param("issssiissssi", $pageId, $node['node_num'], $node['label'], 
+            $node['graphic_file'], $node['graphic_text'], $node['x'],
             $node['y'], $node['type'], $node['definition'], $node['keywords'],
             $node['hyperlink'], $hasChildPage);
         if (!$stmt->execute()) {

@@ -12,20 +12,26 @@ Contents
 
     * Model Search Operation
 
-    Hyperlink button on nodes
+    * Hyperlink button on nodes
 
-    NavBar Collapse not working
+    * Blend-in arrows on node option buttons
+
+    * NavBar Collapse not working
 
     Graphic field in node data
         * Update CRUD php for node details
-        Test PHP
+        * Test PHP
         * Update node details form
+            Add an upload file option
+                nodeDetails.nodeGraphicUpload()
+            Where/how to store uploaded graphic files.
+                /sci-booster/assets/images
         * Graphic button click function
         * Graphic dismiss button click function
 
-    Access to graphic via node
+    * Access to graphic via node
 
-    Drag and Flow Details on Flow Label - get to work anywhere on label.
+    * Drag and Flow Details on Flow Label - get to work anywhere on label.
         Possibly make a group and attach the click to that.
 
     Make an object for the hover text code
