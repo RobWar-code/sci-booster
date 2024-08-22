@@ -2,11 +2,17 @@ dfm.nodeGraphic = {
 
     viewNodeGraphic: function (event) {
         event.cancelBubble = true;
+        console.log("viewNodeGraphic");
         let nodeNum = event.target.getAttr("nodeNum");
         let node = dfm.currentPage.getNode(nodeNum);
         let graphicFile = node.graphic_file;
+        console.log("graphicFile:", graphicFile, nodeNum);
         if (graphicFile === "") return;
 
+        if (graphicFile.substring(0, 6) != "https:") {
+            graphicFile = "/sci-booster/assets/images/" + graphicFile;
+            console.log("Graphic File", graphicFile);
+        }
         let imageElem = document.getElementById("nodeGraphic");
         imageElem.src = graphicFile;
         let textElem = document.getElementById("nodeGraphicPara");

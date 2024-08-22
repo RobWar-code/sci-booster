@@ -84,6 +84,7 @@ const nodeDetails = {
     submitNodeDetails: function (event) {
         event.preventDefault();
 
+        console.log("Node Details Submit");
         // Check the field contents
         let label = document.getElementById("nodeLabel").value;
         label = Misc.stripHTML(label).trim();
@@ -130,6 +131,7 @@ const nodeDetails = {
         node.keywords = keywords;
         node.definition = definition;
         node.hyperlink = hyperlink;
+        console.log("node:", node);
 
         document.getElementById("nodeDetails").style.display = "none";
 
@@ -221,6 +223,7 @@ const nodeDetails = {
             const formData = new FormData();
             formData.append('file', file);
             formData.append('username', dfm.username);
+            console.log("Filename:", filename, username);
             fetch(dfm.phpPath + 'flow-model/upload-node-graphic.php', {
                 method: 'POST',
                 body: formData

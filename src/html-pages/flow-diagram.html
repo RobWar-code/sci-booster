@@ -163,10 +163,6 @@
           <input type="text" class="modalFormItem" name="nodeLabel" id="nodeLabel">
           <label for="nodeGraphicFile" class="modalFormLabel">Image:</label>
           <input type="text" class="modalFormItem" name="nodeGraphicFile" id="nodeGraphicFile">
-          <form id="nodeGraphicForm">
-              <input type="file" id="nodeGraphicInput" />
-              <button type="textButton" onclick="nodeDetails.uploadNodeGraphic()">Upload Graphic File</button>
-          </form>
           <label for="nodeGraphicText" class="modalFormLabel">Image Text:</label>
           <input type="text" class="modalFormItem" name="nodeGraphicText" id="nodeGraphicText">
           <label for="nodeType" class="modalFormLabel">Type:</label>
@@ -184,6 +180,10 @@
           <input type="text" class="modalFormItem" name="nodeHyperlink" id="nodeHyperlink">
           <p class="modalFormAdvisory" id="nodeErrors"></p>
           <button type="submit" class="textButton" id="nodeDetailsSubmit">Submit</button>
+        </form>
+        <form id="nodeGraphicForm">
+          <input type="file" id="nodeGraphicInput" />
+          <button type="textButton" onclick="nodeDetails.uploadNodeGraphic()">Upload Graphic File</button>
         </form>
         <div class="modalFormCancelDiv">
           <button class="textButton" id="nodeDeleteButton" onclick="nodeDetails.deleteNode()">Delete</button>
