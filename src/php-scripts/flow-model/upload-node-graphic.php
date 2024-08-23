@@ -1,6 +1,6 @@
 <?php
 
-header('Content-type: application/json');
+header('Content-Type: application/json');
 
 if (!isset($_POST['username'])) {
     error_log("upload-node-graphics: missing username", 0);
@@ -20,6 +20,8 @@ $fileTempPath = $_FILES['file']['tmp_name'];
 $filename = $_FILES['file']['name'];
 
 $destPath = $_SERVER['DOCUMENT_ROOT'] . "/sci-booster/assets/images/{$username}";
+
+error_log("Got path {$destPath}", 0);
 
 // Check whether the destination directory exists
 if (!file_exists($destPath)) {

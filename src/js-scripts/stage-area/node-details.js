@@ -213,18 +213,22 @@ const nodeDetails = {
         window.open(node.hyperlink, "_blank");
     },
 
-    uploadNodeGraphic: function () {
+    uploadNodeGraphic: async function (event) {
+        event.preventDefault();
         const fileInput = document.getElementById("nodeGraphicInput");
         const file = fileInput.files[0];
         document.getElementById("nodeGraphicFile").value = "";
         document.getElementById("nodeErrors").style.display = "none";
         if (file) {
             let filename = file.name;
-            const formData = new FormData();
+            let formData = new FormData();
             formData.append('file', file);
             formData.append('username', dfm.username);
-            console.log("Filename:", filename, username);
-            fetch(dfm.phpPath + 'flow-model/upload-node-graphic.php', {
+            console.log("Filename:", filename, dfm.username, formData);
+            let progname = `${dfm.phpPath}flow-model/upload-node-graphic.php`;
+            console.log("progname:", progname);
+            let bodyJSON = JSON.stringify({request: "hello"});
+            fetch(progname, {
                 method: 'POST',
                 body: formData
             })
@@ -243,7 +247,26 @@ const nodeDetails = {
                 document.getElementById("nodeErrors").style.display = "block";
                 console.log("Problem uploading graphic file " + filename + " " + error);
             });
-
         }
+    },
+
+    testFetch: async function () {
+        let progname = `${dfm.phpPath}flow-model/test.php`;
+        console.log("progname:", progname);
+        let bodyJSON = JSON.stringify({request: "hello"});
+        try {
+            let response = await fetch(progname, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: bodyJSON
+            });
+            response = await response.json();
+            console.log("No Error", response);
+        }
+        catch {(error) => {
+            console.log("Same Problem", error);
+        }}
     }
 }

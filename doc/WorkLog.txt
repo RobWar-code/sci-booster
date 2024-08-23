@@ -18,6 +18,8 @@ Contents
 
     * NavBar Collapse not working
 
+    Fix null flow in flow details (click event)
+
     Graphic field in node data
         * Update CRUD php for node details
         * Test PHP
