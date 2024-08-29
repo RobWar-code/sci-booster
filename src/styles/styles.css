@@ -106,7 +106,7 @@ body {
 }
 
 .modalFormAdvisory {
-    font-size: 12px;
+    font-size: 14px;
     font-style: italic;
     color: #400000;
     margin-top: 2px;
@@ -233,6 +233,11 @@ body {
 #nodeGraphicPara {
     width: calc(100% - 10px);
     max-width: 900px;
+}
+
+/* Import JSON Modal */
+#importModal {
+    display: none;
 }
 
 /* Yes/No Modal */

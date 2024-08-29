@@ -8,36 +8,8 @@ Contents
 
     Block robot logins/register
 
-    * Fix zoom hierarchicalId
-
-    * Model Search Operation
-
-    * Hyperlink button on nodes
-
-    * Blend-in arrows on node option buttons
-
-    * NavBar Collapse not working
-
-    Fix null flow in flow details (click event)
-
-    Graphic field in node data
-        * Update CRUD php for node details
-        * Test PHP
-        * Update node details form
-            Add an upload file option
-                nodeDetails.nodeGraphicUpload()
-            Where/how to store uploaded graphic files.
-                /sci-booster/assets/images
-        * Graphic button click function
-        * Graphic dismiss button click function
-
-    * Access to graphic via node
-
-    * Drag and Flow Details on Flow Label - get to work anywhere on label.
-        Possibly make a group and attach the click to that.
-
-    Make an object for the hover text code
-      
+    Update README and analysis with the node graphic details
+    
     Allow for the upload of JSON flow model data
 
     Set-up Systems Tests
@@ -51,6 +23,39 @@ Contents
     Graphics
 
 <h1>Work Done
+    25/08/2024
+
+
+    * Make an object for the hover text code
+      
+    * Fix zoom hierarchicalId
+
+    * Model Search Operation
+
+    * Hyperlink button on nodes
+
+    * Blend-in arrows on node option buttons
+
+    * NavBar Collapse not working
+
+    * Fix null flow in flow details (click event)
+
+    * Graphic field in node data
+        * Update CRUD php for node details
+        * Test PHP
+        * Update node details form
+            * Add an upload file option
+                * nodeDetails.nodeGraphicUpload()
+            * Where/how to store uploaded graphic files.
+                * /sci-booster/assets/images
+        * Graphic button click function
+        * Graphic dismiss button click function
+
+    * Access to graphic via node
+
+    * Drag and Flow Details on Flow Label - get to work anywhere on label.
+        Possibly make a group and attach the click to that.
+
     11/08/2024
 
     * In page load operations detect whether the page is authored by the user etc.

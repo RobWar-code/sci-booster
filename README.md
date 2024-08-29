@@ -78,6 +78,7 @@ which has a hierarchicalId of "01"
 The details are as follows:
 
 - id - Auto Unique Long Int
+- title - char 64
 
 Links
 	page_flow_model_link
@@ -276,7 +277,7 @@ flow_models: [
 						"id": , // May be null
 						"node_num" : "", // (ie: "01")
 						"label": "",
-						"graphic_file": "", // Image associated with the node
+						"graphic_file": "", // File name/ web link of the image associated with the node
 						"graphic_text": "",
 						"type": "", // (Mechanism/Effect)
 						"definition": "", // optional

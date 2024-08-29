@@ -183,9 +183,9 @@
         </form>
         <form id="nodeGraphicForm">
           <input type="file" id="nodeGraphicInput" />
-          <button type="textButton" onclick="nodeDetails.uploadNodeGraphic(event)">Upload Graphic File</button>
+          <button class="textButton" onclick="nodeDetails.uploadNodeGraphic(event)">Upload Graphic File</button>
         </form>
-        <p>Click Submit after selecting upload graphic file</p>
+        <p class="modalFormAdvisory">Click Submit after selecting upload graphic file</p>
         <div class="modalFormCancelDiv">
           <button class="textButton" id="nodeDeleteButton" onclick="nodeDetails.deleteNode()">Delete</button>
           <button class="textButton" id="modalDismissButton" onclick="nodeDetails.dismissNodeDetails()">Dismiss</button>
@@ -240,6 +240,22 @@
           <button class="textButton" id="flowDeleteButton" onclick="flowDetails.deleteFlow()">Delete</button>
           <button class="textButton" id="modalDismissButton" onclick="flowDetails.dismissFlowDetails()">Dismiss</button>
         </div>  
+      </div>
+    </div>
+
+    <!-- Flow Model Import Form-->
+    <div class="genModal" id="importModal">
+      <div class="genModalForm">
+        <h1 class="modalFormTitle">Import Flow Model</h1>
+        <form id="flowModelImportForm">
+          <input type="file" id="importFileInput" />
+          <button class="textButton" onclick="modelDetails.importModel(event)">Import Flow Model</button>
+        </form>
+        <p id="importStatus"></p>
+        <div id="importGoodDiv">
+          <button class="textButton" onclick="modelDetails.loadImportedModel()">Display Imported Model</button>
+        </div>
+        <button class="textButton" onclick="modelDetails.dismissImportModal()">Dismiss</button>
       </div>
     </div>
 
@@ -323,6 +339,8 @@
               <button class="textButton" id="saveModelButton" onclick="dfm.currentPage.saveModel(true)">Save</button>
               <button class="textButton" id="cancelModelButton" title="Cancel this session" 
                 onclick="flowModelPage.cancelModel()">Cancel</button>
+              <button class="textButton" id="importModelButton" title="Import JSON flow model"
+                onclick="modelDetails.beginModelImport()">Import</button>
               <button class="textButton" id="testButton" onclick="nodeDetails.testFetch()">TEST</button>
             </div>
             <p id="modelEditInfo">

@@ -9,7 +9,6 @@ dfm.nodeGraphic = {
 
         if (graphicFile.substring(0, 6) != "https:") {
             graphicFile = "/sci-booster/assets/images/" + graphicFile;
-            console.log("Graphic File", graphicFile);
         }
         let imageElem = document.getElementById("nodeGraphic");
         imageElem.src = graphicFile;

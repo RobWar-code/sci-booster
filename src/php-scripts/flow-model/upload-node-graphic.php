@@ -21,8 +21,6 @@ $filename = $_FILES['file']['name'];
 
 $destPath = $_SERVER['DOCUMENT_ROOT'] . "/sci-booster/assets/images/{$username}";
 
-error_log("Got path {$destPath}", 0);
-
 // Check whether the destination directory exists
 if (!file_exists($destPath)) {
     if (!mkdir($destPath, 0777, true)) {

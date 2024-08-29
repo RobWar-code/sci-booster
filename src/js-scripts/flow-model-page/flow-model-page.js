@@ -8,6 +8,7 @@ const flowModelPage = {
             document.getElementById("newModelButton").style.display = "none";
             document.getElementById("editModelButton").style.display = "none";
             document.getElementById("deleteModelButton").style.display = "none";
+            document.getElementById("importModelButton").style.display = "none";
         }
         else if (dfm.userStatus === "unregistered") {
             if (dfm.currentPageSet) {
@@ -22,10 +23,12 @@ const flowModelPage = {
             document.getElementById("editModelButton").style.display = "none";
             document.getElementById("deleteModelButton").style.display = "none";
             document.getElementById("saveModelButton").style.display = "none";
+            document.getElementById("importModelButton").style.display = "none";
         }
         else if (dfm.userStatus === "user") {
             document.getElementById("modelEditOptionsDiv").style.display = "block";
             document.getElementById("modelEditInfo").style.display = "none";
+            document.getElementById("importModelButton").style.display = "inline";
             // Check whether a model is loaded, and if it is, whether the user is the author
             if (!dfm.currentPageSet) {
                 document.getElementById("newModelButton").style.display = "inline";
@@ -37,6 +40,7 @@ const flowModelPage = {
         else if (dfm.userStatus === "editor" || dfm.userStatus === "owner") {
             document.getElementById("modelEditOptionsDiv").style.display = "block";
             document.getElementById("modelEditInfo").style.display = "none";
+            document.getElementById("importModelButton").style.display = "inline";
             // Check whether a model is loaded
             if (!dfm.currentPageSet) {
                 document.getElementById("newModelButton").style.display = "inline";

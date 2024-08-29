@@ -547,10 +547,10 @@ dfm.FlowVisuals = class {
         let fontSize = dfm.nodeTemplate.fontSize;
         let fontFamily = dfm.nodeTemplate.fontFamily; 
         let textWidth = this.calculateTextWidth(textItem, fontSize, fontFamily);
-        let rectHeight = fontSize + 6;
+        let rectHeight = fontSize + dfm.nodeTemplate.optionHeight + 6;
         if (textWidth > dfm.maxFlowLabelWidth) {
             textWidth = dfm.maxFlowLabelWidth;
-            rectHeight = this.calculateTextHeight(textItem, textWidth, fontSize, fontFamily) + 6;
+            rectHeight = this.calculateTextHeight(textItem, textWidth, fontSize, fontFamily) + dfm.nodeTenplate.optionHeight + 6;
         }
         let labelWidth = textWidth + 13;
 
@@ -576,9 +576,21 @@ dfm.FlowVisuals = class {
             fontSize: fontSize,
             fill: 'black'
         });
+        let detailsOpt = new Konva.Image({
+            x: labelWidth/2 - dfm.nodeTemplate.optionWidth / 2,
+            y: rectHeight - dfm.nodeTemplate.optionHeight - 3,
+            image: dfm.nodeGraphics.details,
+            width: dfm.nodeTemplate.optionWidth,
+            height: dfm.nodeTemplate.optionHeight,
+            hoverText: "Flow Details",
+            flowNum: flowDetailsItem.flow_num
+        });
+        detailsOpt.on('click', (e) => flowDetails.viewFlowDetails(e));
+        detailsOpt.on("mouseover", (event) => flowDetails.doHoverText(event));
+
         flowLabelGroup.add(rect);
         flowLabelGroup.add(text);
-        flowLabelGroup.on("click", (e) => flowDetails.viewFlowDetails(e));
+        flowLabelGroup.add(detailsOpt);
         visualFlowItem.flowGroup.add(flowLabelGroup);
         this.nodeLayer.add(visualFlowItem.flowGroup);
         return visualFlowItem;
@@ -778,10 +790,10 @@ dfm.FlowVisuals = class {
         let fontSize = dfm.nodeTemplate.fontSize;
         let fontFamily = dfm.nodeTemplate.fontFamily; 
         let textWidth = this.calculateTextWidth(textItem, fontSize, fontFamily);
-        let rectHeight = fontSize + 6;
+        let rectHeight = fontSize + dfm.nodeTemplate.optionHeight + 6;
         if (textWidth > dfm.maxFlowLabelWidth) {
             textWidth = dfm.maxFlowLabelWidth;
-            rectHeight = this.calculateTextHeight(textItem, textWidth, fontSize, fontFamily) + 6;
+            rectHeight = this.calculateTextHeight(textItem, textWidth, fontSize, fontFamily) + dfm.nodeTemplate.optionHeight + 6;
         }
         let labelWidth = textWidth + 13;
 
@@ -828,8 +840,18 @@ dfm.FlowVisuals = class {
             fill: 'black',
             flowNum: this.currentFlow.flow_num
         });
-        let flowLabelGroup = new Konva.Group({x: x, y: y});
-        flowLabelGroup.on('click', (e) => flowDetails.viewFlowDetails(e));
+        let detailsOpt = new Konva.Image({
+            x: leftXOffset - dfm.nodeTemplate.optionWidth / 2,
+            y: rectHeight - dfm.nodeTemplate.optionHeight - 3,
+            image: dfm.nodeGraphics.details,
+            width: dfm.nodeTemplate.optionWidth,
+            height: dfm.nodeTemplate.optionHeight,
+            hoverText: "Flow Details",
+            flowNum: this.currentFlow.flow_num
+        });
+        detailsOpt.on('click', (e) => flowDetails.viewFlowDetails(e));
+        detailsOpt.on("mouseover", (event) => flowDetails.doHoverText(event));
+        let flowLabelGroup = new Konva.Group({x: x, y: y, flowNum: flowNum});
         flowLabelGroup.setAttr("draggable", true);
         flowLabelGroup.on('dragstart', (e) => this.flowLabelDragStart(e));
         flowLabelGroup.on('dragmove', (e) => this.flowLabelDragMove(e));
@@ -837,9 +859,11 @@ dfm.FlowVisuals = class {
         this.currentFlowDrawing.graphicLabel = {};
         this.currentFlowDrawing.graphicLabel.rect = rect;
         this.currentFlowDrawing.graphicLabel.text = text;
+        this.currentFlowDrawing.graphicLabel.detailsOpt = detailsOpt;
         this.currentFlowDrawing.graphicLabel.flowLabelGroup = flowLabelGroup;
         flowLabelGroup.add(rect);
         flowLabelGroup.add(text);
+        flowLabelGroup.add(detailsOpt);
         this.currentFlowDrawing.flowGroup.add(flowLabelGroup);
         this.currentFlowDrawing.flowGroup.draw();
         if (fromClick) {

@@ -45,7 +45,7 @@ const stageApp = {
         });
 
         // Set-up the hover text
-        setupHoverText();
+        dfm.hoverText.setupHoverText();
     },
 
     redoStage: function () {

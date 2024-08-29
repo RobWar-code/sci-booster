@@ -261,6 +261,19 @@ flowDetails = {
         s += " Double click the flow arrow to delete it."
         instructElem.innerText = s;
         instructElem.style.display = "block";
+    },
+
+    doHoverText: function (event) {
+        event.cancelBubble = true;
+        let graphic = event.target;
+        let text = graphic.getAttr("hoverText");
+        let x = graphic.getAttr("x") + 10;
+        let y = graphic.getAttr("y") - 25;
+        let flowNum = graphic.getAttr("flowNum");
+        let flow = dfm.currentPage.getFlow(flowNum);
+        x += flow.label_x + flow.drawing_group_x;
+        y += flow.label_y + flow.drawing_group_y;
+        dfm.hoverText.displayHoverText(text, x, y);
     }
 
 }

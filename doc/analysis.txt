@@ -33,6 +33,8 @@ Contents
 			Layout Considerations
 		Save Option
 		Model Details Option
+	Import Model JSON Option
+		Imported JSON Validation
 	Javascript Coding Structure
 		Flow Diagram Data Structures
 		Flow Drawing Logic
@@ -652,11 +654,14 @@ Contents
 		Label:
 		Node Number: (auto)
 		Type: - selection ("Mechanism"/"Effect")
+		Graphic File:
+		Graphic Text:
 		Definition: (optional)
 		Keywords: (optional)
 		Hyperlink: (optional)
 		Has Child Page: (auto)
 		Submit Button
+		Graphic File Select/Upload Buttons
 		Delete Button - this only appears when edit mode is set
 		Leave Button
 
@@ -709,6 +714,9 @@ Contents
 	The Node Details button raises the Node Details modal when clicked and
 	this is in edit mode, if edit mode is set, otherwise the Node Details are
 	view only and the inputs are disabled.
+
+	The Node Graphic button loads an image for the node, if one is defined for it.
+	The graphic image is accompanied by the graphic text on the graphic modal.
 
 	The Flow Link button causes the Flow Details modal to be displayed (with
 	the source node, set to the relevant node, but editable). This is defined
@@ -834,7 +842,118 @@ Contents
 		Node Min: 100 x 70px
 		Node Max: 200 x 70px
 		Flow Min Length: 60px
-Buttons: 20px x 20px
+		Buttons: 20px x 20px
+
+<h1>Import Model JSON Option
+
+	The Import Model JSON Option is provided via the Import option the page menu.
+	Clicking this option (if a signed-in user), causes the upload JSON Model File
+	Modal to be displayed. 
+
+	The JSON Model File modal warns the user if they are not logged-in, before
+	presenting the rest of the modal.
+
+	If the user is in edit mode and a model is already on display, the user is first
+	presented with the save page modal.
+
+	The options and fields on the modal are:
+		Select JSON File from list
+
+		Select JSON File from Client
+		Upload JSON File
+
+		File Selected:
+		Import Status Report
+		Display Imported Model
+		Dismiss
+
+	Uploaded json is stored in sci-booster/assets/json/user/myfile.json
+
+<h2>Imported JSON Validation
+
+	Having checked that file in PHP is a valid JSON file. The uploaded
+	file content is validated in php by the function
+	/php-scripts/import/validate-import.php which generates a status report
+	to send back to javascript caller. If the file is valid, it is imported
+	page by page into the flow model database via the function handle-import.php
+	by the functions addPage or updatePage respectively.
+
+	This first checks the general data layout, to ensure that it is provided
+	with a title and pages or a set of pages beginning with page hierarchical
+	Id 01. It also checks that each page has a hierarchical Id.
+	It also checks to see if the model title already exists or whether a model id
+	is present, and if it does or is, asks whether to make a replacement 
+	(note that the replacement can only be done by a user editor or an author of 
+	the original).
+	
+	It then converts the data to an array of page data as used internally.
+	It sorts this by page hierarchical id. It then proceeds to validate 
+	each page according to the criteria below.
+
+	All string fields are stripped of any HTML before processing.
+	Unknown fields are reported as warnings, missing fields are inserted, 
+	unless they are compulsory, in which case they are reported to
+	the user.
+
+	page objects:
+	Field               | Type                    | Instructions
+	id                  | int                     | if present, this is replacement, otherwise set to null
+	hierarchical_id     | string number sets of 2 | set of '01' to '08' Compulsory
+	title               | string maxlen 64        | Compulsory
+	description         | string maxlen 2096      | Can be ""
+	authors             | array of string         | Can be empty, if so, use current user
+	external_authors    | array                   | Can be empty
+	references          | array                   | Can be empty
+	keywords            | string maxlen 256       | Can be empty
+	nodes               | array                   | Can be empty
+	flows               | array                   | Can be empty
+
+	node objects
+	Field               | Type                    | Instructions
+    id                  | int                     | If present, this a replacement, otherwise set to null
+	node_num            | string number 2 chars   | '01' to '08' compulsory 
+    x                   | int 0 to stage width    | Compulsory  
+    y                   | int 0 to stage height   | Compulsory 
+    label               | string maxlen 64        | Compulsory
+    graphic_file        | string maxlen 256       | Can be empty
+    graphic_text        | string maxlen 256       | Can be empty
+    type                | string                  | Must be either "effect" or "mechanism", default "mechanism"
+    definition          | string maxlen 4096      | Can be empty
+	keywords            | string maxlen 256       | Can be empty
+    hyperlink           | string maxlen 256       | Can be empty 
+	has_child_page      | boolean                 | false if absent
+
+	flow objects
+	Field               | Type                      | Instructions
+    id                  | int                       | Replacement if present, otherwise null
+    flow_num            | string number '01' to '99'| Compulsory
+    source_node_num     | string number '01' to '08'| Either this or destination must be set, node must exist
+	destination_node_num| as above                  | As above
+    label               | string maxlen 64          | Compulsory
+	label_x             | int (0 to stage width)    | Compulsory
+	label_y             | int (0 to stage height)   | Compulsory
+    label_width         | int 20 to max label width | re-calculated if not present, optional
+	drawing_group_x     | int (0 to stage width)    | Compulsory
+	drawing_group_y     | int (0 to stage height)   | Compulsory
+	arrow_points		| [4 x {x: int, y: int}]    | Compulsory, within stage area
+	points 		        | [{x: int, y: int}]        | Compulsory, within stage area
+    definition          | string MaxLen 4096        | Optional
+	keywords            | string MaxLen 256         | Optional
+    hyperlink           | string MaxLen 256         | Optional
+    conversion_formulas | [{}]                      | Optional objects, see below
+
+	conversion_formula objects
+	Field               | Type                      | Instructions
+	id                  | int                       | Replacement if present, otherwise null
+	formula             | string Maxlen 1024        | Compulsory
+	description         | string Maxlen 4096        | Optional
+
+	reference objects
+	Field               | Type                      | Instructions
+	id                  | int                       | replacement if present and not null, otherwise null if absent
+	source              | string MaxLen 256         | Optional
+	title               | string Maxlen 128         | Compulsory
+	external_author     | string Maxlen 64          | Optional
 
 <h1>Javascript Coding Structure
 	The code for the flow model diagrams stage is separated from
@@ -872,6 +991,8 @@ Buttons: 20px x 20px
 				this.x = 0;
 				this.y = 0;
 				this.label = "";
+				this.graphic_file = "";
+				this.graphic_text = "";
 				this.type = ""; // (Mechanism/Effect)
 				this.definition = "";
 				this.keywords = "";
@@ -976,9 +1097,9 @@ Buttons: 20px x 20px
 	flow draw mode is active. The user then clicks points on the stage to
 	mark the path of the flow. The line click points can be edited with drag/drop.
 	(note that node events should be suppressed during this process). 
-	The user can double tap in order to insert the flow label. The flow label
-	position is set relative to the position of the double click. The flow label
-	is draggable.
+	The user can double tap on th stage in order to insert the flow label. 
+	The flow label position is set relative to the position of the double click. 
+	The flow label is draggable.
 
 	If a flow line is double-clicked the flow arrow is added to it, in the direction
 	from source node to destination as follows:
@@ -989,6 +1110,9 @@ Buttons: 20px x 20px
 		/patternArt/Geo.js/perpendicularLine() to establish the arrow end points.
 
 	The flow arrow can be deleted by double clicking it.
+
+	When the flow line is clicked once, a node is inserted in the line, making
+	and extra line.
 	
 	Once the user is satisfied, he can click the flow drawing panel Flow Done button. 
 	The flow drawing is then saved in the model and the editing points disappear.
@@ -1011,15 +1135,17 @@ Buttons: 20px x 20px
 
 	Edit Drawing Mode:
 
-	When the user clicks the flow label, if the user has edit permissions,
+	When the user clicks the flow label details button, if the user has edit permissions,
 	the option to edit the drawing is presented in the flow details modal along
 	with the flow details.
+
+	The flow label can be moved by using drag and drop.
 
 	The flow details for the editor are loaded from the corresponding entry in
 	the dfm.currentPage data and the modal form fields are editable.
 
-	If the user clicks draw flow button then the modal is cleared and the flow is
-	presented in it;s editable version with the point marker circles which are
+	If the user clicks the draw flow button then the modal is cleared and the flow is
+	presented in it's editable version with the point marker circles which are
 	visible and active, these can be moved by drag/drop, or activated by click for 
 	deletion. A click on the stage adds a click point and the connecting line at 
 	that point. The features are then same as for a new flow line drawing.
@@ -1125,6 +1251,8 @@ Buttons: 20px x 20px
 					"source_node_num": "", 
 					"destination_node_num": "", // (optional)
 					"label": "",
+					"graphic_file": "",  
+					"graphic_text": "",
 					"keywords": "", // (optional)
 					"definition": "", // (optional)
 					"conversion_formulas": [

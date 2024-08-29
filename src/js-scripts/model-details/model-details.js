@@ -511,6 +511,58 @@ const modelDetails = {
       dfm.currentPage.page.references = dfm.currentPage.page.references.splice(itemNum, 1);
     }
     this.displayReferencesList();
-  }
+  },
 
+  beginModelImport: async function() {
+    if (dfm.userStatus === "unregistered") {
+      return;
+    }
+    // Check whether there is a model already loaded
+    if (dfm.currentModelSet && dfm.modelChanged) {
+      let response = await flowModePage.saveModelRequired();
+      if (response === "yes") {
+          let reload = false;
+          dfm.currentPage.saveModel(reload);
+      }
+      else {
+        return;
+      }
+    }
+    document.getElementById("importModal").style.display = "block";
+    document.getElementById("importGoodDiv").style.display = "none";
+  },
+
+  importModel: async function(event) {
+    event.preventDefault();
+    const fileInput = document.getElementById("importFileInput");
+    const file = fileInput.files[0];
+    document.getElementById("importGoodDiv").style.display = "none";
+    if (file) {
+      let filename = file.name;
+      let formData = new FormData();
+      formData.append('file', file);
+      formData.append('username', dfm.username);
+      let progname = `${dfm.phpPath}flow-model/import.php`;
+      fetch(progname, {
+          method: 'POST',
+          body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+          if (data.result === true) {
+              document.getElementById("importStatus").innerHTML = data.status;
+              document.getElementById("importGoodDiv").style.display = "block";
+          }
+          else {
+              document.getElementById("importStatus").innerHTML = data.status + `<br>Problem uploading file ${filename}`;
+              document.getElementById("importStatus").style.display = "block";
+          }
+      })
+      .catch (error => {
+          document.getElementById("importStatus").innerText = `Problem uploading file ${filename}`;
+          document.getElementById("importStatus").style.display = "block";
+          console.log("Problem uploading graphic file " + filename + " " + error);
+      });
+    }
+  }
 }

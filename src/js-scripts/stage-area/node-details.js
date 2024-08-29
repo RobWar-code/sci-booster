@@ -202,7 +202,7 @@ const nodeDetails = {
         let node = dfm.currentPage.getNode(nodeNum);
         x += node.x;
         y += node.y;
-        displayHoverText(text, x, y);
+        dfm.hoverText.displayHoverText(text, x, y);
     },
 
     doHyperlink: function (event) {
@@ -224,10 +224,7 @@ const nodeDetails = {
             let formData = new FormData();
             formData.append('file', file);
             formData.append('username', dfm.username);
-            console.log("Filename:", filename, dfm.username, formData);
             let progname = `${dfm.phpPath}flow-model/upload-node-graphic.php`;
-            console.log("progname:", progname);
-            let bodyJSON = JSON.stringify({request: "hello"});
             fetch(progname, {
                 method: 'POST',
                 body: formData
