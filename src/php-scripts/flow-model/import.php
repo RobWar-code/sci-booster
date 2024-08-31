@@ -120,7 +120,7 @@ function arrangePageData($filedata) {
     ]
     */
     $newModel = [];
-    $newPageItem = ['flow_model_title'=>"", 'flow_model_id'=>null, 'page'=>[]];
+    $newPageItem = ['flow_model_title'=>"", 'flow_model_id'=>null, 'update'=>false, 'page'=>[]];
     // Check whether json data contains a pages array
     if (array_key_exists("pages", $pageData)) {
         // Check that the model title is present
@@ -148,6 +148,19 @@ function arrangePageData($filedata) {
             echo json_encode($response);
             exit;
         }
+        if ($newPageItem['flow_model_id'] === null) {
+            $flowModelItem = addNewModel($newPageItem['flow_model_title']);
+            if ($flowModelItem === null) {
+                $response = ["result"=>false, "error"=>"Problem with model data"];
+                echo json_encode($response);
+                exit;
+            }
+            $newPageItem['flow_model_id'] = $flowModelItem['id'];
+            $newPageItem['update'] = $flowModelItem['update'];
+        }
+        else {
+            $newPageItem['update'] = true;
+        }
         foreach($pageData['pages'] as $page) {
             $pageItem = $newPageItem;
             $pageItem['page'] = $page;
@@ -168,6 +181,19 @@ function arrangePageData($filedata) {
             echo json_encode($response);
             exit;
         }
+        if ($newPageItem['flow_model_id'] === null) {
+            $flowModelItem = addNewModel($newPageItem['flow_model_title']);
+            if ($flowModelItem === null) {
+                $response = ["result"=>false, "error"=>"Problem with model data"];
+                echo json_encode($response);
+                exit;
+            }
+            $newPageItem['flow_model_id'] = $flowModelItem['id'];
+            $newPageItem['update'] = $flowModelItem['update'];
+        }
+        else {
+            $newPageItem['update'] = true;
+        }
         foreach($pageData as $page) {
             $pageItem = $newPageItem;
             $pageItem['page'] = $page;
@@ -175,4 +201,112 @@ function arrangePageData($filedata) {
         }
     }
     return $newModel();
+}
+
+function validateImportData(&$pageData) {
+    $message = "";
+    $count = 0;
+    foreach ($pageData as &$pageItem) {
+        $page = $pageItem['page'];
+        $message = validatePageDetails($page, $count);
+        if ($message != "") break;
+        ++$count;
+    }
+    unset($pageItem);
+}
+
+function validatePageDetails(&$page, $count) {
+    if (array_key_exists("title", $page)) {
+        $title = htmlspecialchars($page['title']);
+        if ($title === "") {
+            $message = "Missing Title at Page $count<br>";
+            return $message;
+        }
+    }
+    else {
+        $message = "Title omitted from page $count<br>";
+        return $message;
+    }
+    $page['title'] = $title;
+    
+    if (array_key_exists("hierarchical_id", $page)) {
+        $hierarchicalId = $page['hierarchical_id'];
+        $matched = preg_match('/^[0-9]+$/');
+        if (!$matched) {
+            $message = "Faulty hierarchical_id at page $count, $title<br>";
+            return $message;
+        }
+        if (strlen($hierarchicalId) % 2 != 0) {
+            $message = "Uneven number of characters in hierarchical_id at page $count, $title<br>";
+            return $message;
+        }
+    }
+    else {
+        $message = "Missing file hierarchical_id at page $count, $title<br>";
+        return $message;
+    }
+
+    if (array_key_exists("description", $page)) {
+        $description = htmlspecialchars($page['description']);
+        $page['description'] = $description;
+    }
+    else {
+        $page['description'] = "";
+    }
+    return "";
+}
+
+function addNewModel($modelTitle) {
+    global $dbConn;
+
+    $sqlA = "SELECT id FROM flow_model WHERE title = ?";
+    $stmt = $dbConn->prepare($sqlA);
+    if (!$stmt) {
+        error_log("addNewModel - problem with sql: {$dbConn->error}", 0);
+        return null;
+    }
+    $stmt->bind_param("s", $modelTitle);
+    $result = $stmt->execute();
+    if (!$result) {
+        error_log("addNewModel - could not perform search: {$dbConn->error}", 0);
+        return null;
+    }
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        return ['found'=>true, 'id'=>$row['id'], 'update'=>true];
+    }
+
+    $sqlB = "INSERT INTO flow_model(title) VALUES (?)";
+    $stmt = $dbConn->prepare($sqlB);
+    if (!$stmt) {
+        error_log("addNewModel - insert sql failed: {$dbConn->error}", 0);
+        return null;
+    }
+    $stmt->bind_param('s', $modelTitle);
+    if (!$stmt->execute()) {
+        error_log("addNewModel - insert model failed: {$dbConn->error}", 0);
+        return null;
+    }
+
+    // Get Id of new record
+    $stmt = $dbConn->prepare($sqlA);
+    if (!$stmt) {
+        error_log("addNewModel - problem with sql: {$dbConn->error}", 0);
+        return null;
+    }
+    $stmt->bind_param("s", $modelTitle);
+    $result = $stmt->execute();
+    if (!$result) {
+        error_log("addNewModel - could not perform search: {$dbConn->error}", 0);
+        return null;
+    }
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        return ['found'=>false, 'id'=>$row['id'], 'update'=>false];
+    }
+    else {
+        error_log("addNewModel - inserted model not found", 0);
+        return null;
+    }
+
 }
