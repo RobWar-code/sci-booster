@@ -216,6 +216,8 @@ function validateImportData(&$pageData, $username) {
         $message = validateExternalAuthors($page, $count);
         if ($message != "") break;
         $message = validateReferences($page, $count);
+        if ($message != "") break;
+        $message = validateNodes($page, $count);
 
         ++$count;
     }
@@ -401,6 +403,136 @@ function validateReferences(&$page, $count) {
 
     return $message;
 
+}
+
+function validateNodes(&$page, $count) {
+    $message = "";
+    if (!array_key_exists($page, 'nodes')) {
+        $page['nodes'] = [];
+        return;
+    }
+    foreach($page['nodes'] as &$node) {
+        if (!array_key_exists($node, "node_num")) {
+            $message = "ValidateNodes: Missing node_num at page $count<br>";
+            return $message;
+        }
+        $nodeNum = $node['node_num'];
+        if (!preg_match('/^[0][0-9]$/', $nodeNum)){
+            $message = "ValidateNodes: Badly formed node_num at page $count<br>";
+            return $message;
+        }
+        
+        if (!array_key_exists($node, "x")) {
+            $message = "ValidateNodes: x coordinate missing at page $count<br>";
+            return $message;
+        }
+        $x = $node['x'];
+        if ($x < 0 || 390 < $x) {
+            $message = "ValidateNodes: x coordinate out of range at page $count<br>";
+            return $message;
+        }
+        if (!array_key_exists($node, "y")) {
+            $message = "ValidateNodes: y coordinate missing at page $count<br>";
+            return $message;
+        }
+        $y = $node['y'];
+        if ($y < 0 || 580 < $y) {
+            $message = "ValidateNodes: y coordinate out of range at page $count<br>";
+            return $message;
+        }
+
+        if (!array_key_exists($node, 'label')) {
+            $message = "ValidateNodes: label missing at page $count<br>";
+            return $message;
+        }
+        $label = htmlspecialchars($node['label']);
+        if (strlen($label) > 64) {
+            $message = "ValidateNodes: label too long (>64) at page $count<br>";
+            return $message;
+        }
+        $node['label'] = $label;
+
+        if (!array_key_exists($node, 'graphic_file')) {
+            $node['graphic_file'] = "";
+        }
+        else {
+            $graphicFile = $node['graphic_file'];
+            $graphicFile = htmlspecialchars($graphicFile);
+            if (strlen($graphicFile) > 256) {
+                $message = "ValidateNodes: graphic_file too long (>256 chars) at page $count<br>";
+                return $message;
+            }
+            $node['graphic_file'] = $graphicFile;
+        }
+        
+        if (!array_key_exists($node, 'graphic_text')) {
+            $node['graphic_text'] = "";
+        }
+        else {
+            $graphicText = htmlspecialchars($node['graphic_text']);
+            if (strlen($graphicText) > 256) {
+                $message = "ValidateNodes: graphic_text too long (>256 chars) at page $count<br>";
+                return $message;
+            }
+            $node['graphic_text'] = $graphicText;
+        }
+
+        if (!array_key_exists($node, 'type')) {
+            $node['type'] = "mechanism";
+        }
+        else {
+            if ($node['type'] != "effect" && $node['type'] != "mechanism") {
+                $message = "ValidateNodes: node type must be either \"effect\" or \"mechanism\" at page $count<br>";
+                return $message;
+            }
+        }
+
+        if (!array_key_exists($node, "definition")) {
+            $node['definition'] = "";
+        }
+        else {
+            $definition = htmlspecialchars($node['definition']);
+            if (strlen($definition) > 4096) {
+                $message = "ValidateNodes: definition too long (>4096 chars) at page $count<br>";
+                return $message;
+            }
+            $node['definition'] = $definition;
+        }
+
+        if (!array_key_exists($node, "keywords")) {
+            $node['keywords'] = "";
+        }
+        else {
+            $keywords = htmlspecialchars($node['keywords']);
+            if (strlen($keywords) > 256) {
+                $message = "ValidateNodes: keywords too long (>256 chars) at page $count<br>";
+                return $message;
+            }
+            $node['keywords'] = $keywords;
+        }
+
+        if (!array_key_exists($node, "hyperlink")) {
+            $node['hyperlink'] = "";
+        }
+        else {
+            $hyperlink = htmlspecialchars($node['hyperlink']);
+            if (strlen($hyperlink) > 256) {
+                $message = "ValidateNodes: hyperlink greater than 256 chars at page $count<br>";
+                return $message;
+            }
+        }
+
+        if (!array_key_exists($node, "has_child_page")) {
+            $node['has_child_page'] = false;
+        }
+        else {
+            $hasChildPage = $node['has_child_page'];
+            if ($hasChildPage != true && $hasChildPage != false) {
+                $message = "ValidateNodes: has_child_page must be true or false at page $count<br>";
+                return $message;
+            }
+        }
+    }
 }
     
 function addNewModel($modelTitle) {
