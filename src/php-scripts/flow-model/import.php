@@ -218,6 +218,8 @@ function validateImportData(&$pageData, $username) {
         $message = validateReferences($page, $count);
         if ($message != "") break;
         $message = validateNodes($page, $count);
+        if ($message != "") break;
+        $message = validateFlows($page, $count);
 
         ++$count;
     }
@@ -530,6 +532,241 @@ function validateNodes(&$page, $count) {
             if ($hasChildPage != true && $hasChildPage != false) {
                 $message = "ValidateNodes: has_child_page must be true or false at page $count<br>";
                 return $message;
+            }
+        }
+    }
+}
+
+function validateFlows(&$page, $count) {
+    if (!array_key_exists($page, "flows")) {
+        $page['flows'] = [];
+        return;
+    }
+    foreach($page['flows'] as &$flow) {
+        if (!array_key_exists($flow, 'flow_num')) {
+            $message = "validateFlows: flow_num value and field missing at page $count<br>";
+            return $message;
+        }
+        $flowNum = $flow['flow_num'];
+        if (!preg_match("/^[0-9][0-9]$/", $flowNum)) {
+            $message = "validateFlows: badly formed flow_num at page $count<br>";
+            return $message;
+        }
+
+        if (!array_key_exists($flow, 'source_node_num')) {
+            $message = "validateFlows: source_node_num field missing at page $count<br>";
+            return $message;
+        }
+        if (!array_key_exists($flow, 'destination_node_num')) {
+            $message = "validateFlows: destination_node_num field missing at page $count<br>";
+            return $message;
+        }
+        $sourceNodeNum = $flow['source_node_num'];
+        $destNodeNum = $flow['destination_node_num'];
+        if ($sourceNodeNum != "") {
+            if (!preg_match('/^[0-9][0-9]$/', $sourceNodeNum)) {
+                $message = "validateFlows: source_node_num badly formed at page $count<br>";
+                return $message;
+            }
+        }
+        if ($destNodeNum != "") {
+            if (!preg_match('/^[0-9][0-9]$/', $destNodeNum)) {
+                $message = "validateFlows: destination_node_num badly formed at page $count<br>";
+                return $message;
+            }
+        }
+        if ($sourceNodeNum === "" && $destNodeNum === "") {
+            $message = "validateFlows: either the destination or the source node num or both must be set at page $count<br>";
+            return $message;
+        }
+
+        if (!array_key_exists($flow, 'label')) {
+            $message = "validateFlows: missing flow label field at page $count<br>";
+            return $message;
+        }
+        $label = htmlspecialchars($flow['label']);
+        if (strlen($label) > 64) {
+            $message = "validateFlows: flow label is too long (>64 chars) at page $count<br>";
+            return $message;
+        }
+        $flow['label'] = $label;
+
+        if (!array_key_exists($flow, 'label_x')) {
+            $message = "validateFlows: flow label_x field is missing at page $count<br>";
+            return $message;
+        }
+        $labelX = $flow['label_x'];
+        if ($labelX < -390 || 390 < $labelX) {
+            $message = "validateFlows: flow label_x is out of range at page $count<br>";
+            return $message;
+        }
+
+        if (!array_key_exists($flow, 'label_y')) {
+            $message = "validateFlows: flow label_y is missing at page $count<br>";
+            return $message;
+        }
+        $labelY = $flow['label_y'];
+        if ($labelY < -580 || 580 < $labelY) {
+            $message = "validateFlows: flow label_y is out of range at page $count<br>";
+            return $message;
+        }
+
+        if (!array_key_exists($flow, 'label_width')) {
+            $message = "validateFlows: flow label_width is missing at page $count<br>";
+            return $message;
+        }
+        $labelWidth = $flow['label_width'];
+        if ($labelWidth < 50 || 140 < $labelWidth) {
+            $message = "validateFlows: flow label_width is out of range at page $count<br>";
+            return $message;
+        }
+
+        if (!array_key_exists($flow, 'drawing_group_x')) {
+            $message = "validateFlows: flow drawing_group_x field is missing at page $count<br>";
+            return $message;
+        }
+        $drawingGroupX = $flow['drawing_group_x'];
+        if ($drawingGroupX < 0 || 390 < $drawingGroupX) {
+            $message = "validateFlows: flow drawing_group_x value is out of range at page $count<br>";
+            return $message;
+        }
+        if (!array_key_exists($flow, 'drawing_group_y')) {
+            $message = "validateFlows: flow drawing_group_y field omitted at page $count<br>";
+            return $message;
+        }
+        $drawingGroupY = $flow['drawing_group_y'];
+        if ($drawingGroupY < 0 || 580 < $drawingGroupY) {
+            $message = "validateFlows: flow drawing_group_y value is out of range at page $count<br>";
+            return $message;
+        }
+
+        if (!array_key_exists($flow, "flow_arrow_points")) {
+            $message = "validateFlows: flow_arrow_points field missing at page $count<br>";
+            return $message;
+        }
+        $flowArrowPoints = $flow['flow_arrow_points'];
+        if (count($flowArrowPoints) != 4) {
+            $message = "validateFlows: flow_arrow_points data incorrect at page $count<br>";
+            return $message;
+        }
+        for ($i = 0; $i < count($flowArrowPoints); $i++) {
+            $point = $flowArrowPoints[$i];
+            if (!array_key_exists($point, 'x')) {
+                $message = "validateFlows: - flow_arrow_point missing x coordinate at page $count<br>";
+                return $message;
+            }
+            $x = $point['x'];
+            if ($x < -300 || 300 < $x) {
+                $message = "validateFlows: - flow_arrow_point x value out of range at page $count<br>";
+                return $message;
+            }
+            if (!array_key_exists($point, 'y')) {
+                $message = "validateFlows: - flow_arrow_point missing y coordinate at page $count<br>";
+                return $message;
+            }
+            $y = $point['y'];
+            if ($y < -500 || 500 < $y) {
+                $message = "validateFlows: - flow_arrow_point y value out of range at page $count<br>";
+                return $message;
+            }
+        }
+
+        if (!array_key_exists($flow, "points")) {
+            $message = "validateFlows: - flow line points omitted at page $count<br>";
+            return $message;
+        }
+        if (count($flow['points']) < 2) {
+            $message = "validateFlows: - flow line points missing at page $count<br>";
+            return $message;
+        }
+        foreach($flow['points'] as $point) {
+            if (!array_key_exists($point, 'x')){
+                $message = "validateFlows: - flow line point has missing x coordinate at page $count<br>";
+                return $message;
+            }
+            $x = $point['x'];
+            if ($x < -300 || 300 < $x) {
+                $message = "validateFlows: - flow line coordinate x out of range at page $count<br>";
+                return $message;
+            }
+            if (!array_key_exists($point, 'y')) {
+                $message = "validateFlows: - flow line coordinate y is missing at page $count<br>";
+                return $message;
+            }
+            $y = $point['y'];
+            if ($y < -500 || 500 < $y) {
+                $message = "validateFlows: - flow line coordinate y is out of range at page $count<br>";
+                return $message;
+            }
+        }
+
+        if (!array_key_exists($flow, 'definition')) {
+            $flow['definition'] = "";
+        }
+        else {
+            $definition = htmlspecialchars($flow['definition']);
+            if (strlen($definition) > 4096) {
+                $message = "validateFlows: flow definition longer than 4096 chars at page $count<br>";
+                return $message;
+            }
+            $flow['definition'] = $definition;
+        }
+
+        if (!array_key_exists($flow, 'keywords')) {
+            $flow['keywords'] = "";
+        }
+        else {
+            $keywords = htmlspecialchars($flow['keywords']);
+            if (strlen($keywords) > 256) {
+                $message = "validateFlows: flow keywords longer than 256 chars at page $count<br>";
+                return $message;
+            }
+            $flow['keywords'] = $keywords;
+        }
+
+        if (!array_key_exists($flow, 'hyperlink')) {
+            $flow['hyperlink'] = "";
+        }
+        else {
+            $hyperlink = htmlspecialchars($flow['hyperlink']);
+            if (strlen($hyperlink) > 256) {
+                $message = "validateFlows: flow hyperlink longer than 256 characters at page $count<br>";
+                return $message;
+            }
+            $flow['hyperlink'] = $hyperlink;
+        }
+
+        if (!array_key_exists($flow, 'conversion_formulas')) {
+            $flow['conversion_formulas'] = [];
+        }
+        else {
+            foreach($flow['conversion_formulas'] as &$formulaItem) {
+                if (!array_key_exists($formulaItem, 'formula')) {
+                    $message = "validateFlows: conversion formula missing formula field at page $count<br>";
+                    return $message;
+                }
+                $formula = htmlspecialchars($formulaItem['formula']);
+                if ($formula === "") {
+                    $message = "validateFlows: conversion formula missing formula at page $count<br>";
+                    return $message;
+                }
+                if (strlen($formula) > 1024) {
+                    $message = "validateFlows: conversion formula, formula longer than 256 chars at page $count<br>";
+                    return $message;
+                }
+                $formulaItem['formula'] = $formula;
+
+                if (!array_key_exists($formulaItem, 'description')) {
+                    $formulaItem['description'] = "";
+                }
+                else {
+                    $description = htmlspecialchars($formulaItem['description']);
+                    if (strlen($description) > 4096) {
+                        $message = "validateFlows: conversion formula, description longer than 4096 chars at page $count<br";
+                        return $message;
+                    }
+                    $formulaItem['description'] = $description;
+                }
             }
         }
     }
