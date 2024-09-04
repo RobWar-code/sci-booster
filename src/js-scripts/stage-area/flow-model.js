@@ -295,8 +295,7 @@ dfm.FlowPageData = class {
     }
 
     // Server Interface
-    async selectModel(e) {
-        let modelTitle = e.target.value;
+    async selectModel(modelTitle) {
 
         if (modelTitle != "") {
             let pageData = await this.fetchModelByTitle(modelTitle);

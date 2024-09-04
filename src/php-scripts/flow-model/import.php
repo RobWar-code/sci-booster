@@ -1,12 +1,21 @@
 <?php
 include_once __DIR__ . '/../db-connect.php';
+include_once __DIR__ . '/add-page.php';
+include_once __DIR__ . '/update-page.php';
 
 header('Content-Type: application/json');
 
 $filenameItem = saveImportFile();
 $newPageArray = arrangePageData($filenameItem);
 if (validateImportData($newPageArray, $_POST['username'])) {
-    importPageData($newPageArray);
+    if (importPageData($newPageArray)) {
+        $response = ["result"=>true, "status"=>"DATA GOOD<br>", "flow_model_title"=>$newPageArray[0]['flow_model_title']];
+        echo json_encode($response);
+    }
+    else {
+        $response = ["result"=>false, "status"=>"IMPORT PROBLEM<br>"];
+        echo json_encode($response);
+    }
 }
 
 function saveImportFile() {
@@ -29,8 +38,6 @@ function saveImportFile() {
     $filename = $_FILES['file']['name'];
 
     $destPath = $_SERVER['DOCUMENT_ROOT'] . "/sci-booster/assets/imports/{$username}";
-
-    error_log("Got path {$destPath}", 0);
 
     // Check whether the destination directory exists
     if (!file_exists($destPath)) {
@@ -58,7 +65,7 @@ function arrangePageData($filedata) {
     $username = $filedata['username'];
     $sourceFile = $_SERVER['DOCUMENT_ROOT'] . '/sci-booster/assets/imports/' . $username . '/' . $filename;
     $jsonString = file_get_contents($sourceFile);
-    $pageData = json_decode($jsonString);
+    $pageData = json_decode($jsonString, true);
     if ($pageData === null) {
         $response = ["result"=>false];
 
@@ -168,7 +175,38 @@ function arrangePageData($filedata) {
             array_push($newModel, $pageItem);
         }
     }
-    else {
+    // Single page
+    elseif (array_key_exists('flow_model_title', $pageData)) {
+        $doAddNewModel = false;
+        if (array_key_exists("flow_model_id", $pageData)) {
+            if ($pageData["flow_model_id"] != null) {
+                $pageData['update'] = true;
+            }
+            else {
+                $flowModelItem = addNewModel($pageData['flow_model_title']);
+                if ($flowModelItem === null) {
+                    $response = ["result"=>false, "error"=>"Problem with model data"];
+                    echo json_encode($response);
+                    exit;
+                }
+                $pageData['flow_model_id'] = $flowModelItem['id'];
+                $pageData['update'] = $flowModelItem['update'];
+            }
+        }
+        else {
+            $flowModelItem = addNewModel($pageData['flow_model_title']);
+            if ($flowModelItem === null) {
+                $response = ["result"=>false, "error"=>"Problem with model data"];
+                echo json_encode($response);
+                exit;
+            }
+            $pageData['flow_model_id'] = $flowModelItem['id'];
+            $pageData['update'] = $flowModelItem['update'];
+        }
+        array_push($newModel, $pageData);
+    }
+    // Array of pages
+    elseif (count($pageData) >= 1) {
         if (array_key_exists("flow_model_id", $pageData[0])){
             $newPageItem['flow_model_id'] = $pageData[0]['flow_model_id'];
         }
@@ -201,7 +239,67 @@ function arrangePageData($filedata) {
             array_push($newModel, $pageItem);
         }
     }
-    return $newModel();
+    else {
+        // Non-acceptable data
+        $response = ['result'=>false, 'error'=>'Incorrectly formatted json data', 'status'=>'Incorrectly formatted json data<br>'];
+        echo json_encode($response);
+        exit;
+    }
+
+    // Sort by hierarchical id
+    usort($newModel, 'sortByHierarchicalId');
+    
+    return $newModel;
+}
+
+function sortByHierarchicalId($a, $b) {
+    if ($a['page']['hierarchical_id'] === $b['page']['hierarchical_id']) {
+        return 0;
+    }
+    return ($a['page']['hierarchical_id'] < $b['page']['hierarchical_id']) ? -1 : 1;
+}
+
+function importPageData($pageData) {
+    global $dbConn;
+
+    foreach ($pageData as $pageItem) {
+        $flowModelId = $pageItem['flow_model_id'];
+        $page = $pageItem['page'];
+        if ($pageItem['update'] === false) {
+            addPage($flowModelId, $pageItem);
+        }
+        else {
+            $doUpdate = false;
+            // Check whether we have the page id
+            if (array_key_exists('id', $page)) {
+                if ($page['id'] != null) {
+                    $doUpdate = true;
+                }
+            }
+            // Search for the page
+            if (!$doUpdate) {
+                $sql = "SELECT id FROM page WHERE title = '$title'";
+                $result = $dbConn->query($sql);
+                if (!$result) {
+                    error_log("importPageData: could not search for page title {$dbConn->error}", 0);
+                    return false;
+                }
+                if ($result->num_rows >= 1) {
+                    $row = $result->fetch_assoc();
+                    $pageItem['page']['id'] = $row['id'];
+                    $doUpdate = true;
+                }
+            }
+
+            if ($doUpdate) {
+                updatePage($pageItem);
+            }
+            else {
+                addPage($flowModelId, $pageItem);
+            }
+        }
+    }
+    return true;
 }
 
 function validateImportData(&$pageData, $username) {
@@ -225,7 +323,7 @@ function validateImportData(&$pageData, $username) {
     }
     unset($pageItem);
     if ($message != "") {
-        $response = ["result"=>false, "error"=>$message];
+        $response = ["result"=>false, "error"=>$message, "status"=>$message];
         echo json_encode($response);
         exit;
     }
@@ -252,7 +350,7 @@ function validatePageDetails(&$page, $count) {
     
     if (array_key_exists("hierarchical_id", $page)) {
         $hierarchicalId = $page['hierarchical_id'];
-        $matched = preg_match('/^[0-9]+$/');
+        $matched = preg_match('/^[0-9]+$/', $hierarchicalId);
         if (!$matched) {
             $message = "Faulty hierarchical_id at page $count, $title<br>";
             return $message;
@@ -304,7 +402,7 @@ function validateUserAuthors(&$page, $username, $count) {
         $page['user_authors'] = [$username];
         return $message;
     }
-    foreach ($page['user_authors'] as $user) {
+    foreach ($page['user_authors'] as $userItem) {
         $sql = "SELECT id FROM user WHERE username = ?";
         $stmt = $dbConn->prepare($sql);
         if (!$stmt) {
@@ -312,8 +410,9 @@ function validateUserAuthors(&$page, $username, $count) {
             $message = "Database error<br>";
             return $message;
         }
-        $stmt->bind_param("s", $user);
-        $result->execute();
+        $stmt->bind_param("s", $userItem['username']);
+        $stmt->execute();
+        $result = $stmt->get_result();
         if (!$result) {
             error_log("validateUserAuthors: could not execute sql - {$dbConn->error}", 0);
             $message = "Database error<br>";
@@ -323,12 +422,12 @@ function validateUserAuthors(&$page, $username, $count) {
             $message = "Unidentified user in user authors of Page $count<br>";
             return $message;
         }
-        if ($user === $username) {
+        if ($userItem['username'] === $username) {
             $gotUser = true;
         }
     }
     if (!$gotUser) {
-        array_push($page['user_authors'], $username);
+        array_push($page['user_authors'], ['username'=>$username]);
     }
     return $message;
 }
@@ -340,13 +439,13 @@ function validateExternalAuthors(&$page, $count) {
         return $message;
     }
     $index = 0;
-    foreach($page['external_authors'] as $author) {
-        $author = htmlspecialchars($author);
+    foreach($page['external_authors'] as $authorItem) {
+        $author = htmlspecialchars($authorItem['author']);
         if (strlen($author) > 128) {
             $message = "Author name length too long > 128 characters at page $count<br>";
             return $message;
         }
-        $page['external_authors'][$index] = $author;
+        $page['external_authors'][$index]["author"] = $author;
         ++$index;
     }
     return $message;
@@ -354,13 +453,13 @@ function validateExternalAuthors(&$page, $count) {
 
 function validateReferences(&$page, $count) {
     $message = "";
-    if (!array_key_exists($page, 'references')) {
+    if (!array_key_exists('references', $page)) {
         $page['references'] = [];
         return $message;
     }
     $index = 0;
     foreach($page['references'] as $reference) {
-        if (!array_key_exists($reference, 'source')) {
+        if (!array_key_exists('source', $reference)) {
             $reference['source'] = "";
         }
         else {
@@ -372,7 +471,7 @@ function validateReferences(&$page, $count) {
             $reference['source'] = $source;
         }
 
-        if (!array_key_exists($reference, $title)) {
+        if (!array_key_exists('title', $reference)) {
             $message = "Reference missing title at page $count<br>";
             return $message;
         }
@@ -387,16 +486,16 @@ function validateReferences(&$page, $count) {
         }
         $reference['title'] = $title;
 
-        if (!array_key_exists($reference, 'author')) {
+        if (!array_key_exists('author', $reference)) {
             $reference['author'] = "";
         }
         else {
-            $author = htmlspecialchars($reference['author']);
+            $author = htmlspecialchars($reference['author']['author']);
             if (strlen($author) > 128) {
                 $message = "Reference author > 128 characters at page $count<br>";
                 return $message;
             }
-            $reference['author'] = $author;
+            $reference['author']['author'] = $author;
         }
 
         $page['references'][$index] = $reference;
@@ -409,12 +508,12 @@ function validateReferences(&$page, $count) {
 
 function validateNodes(&$page, $count) {
     $message = "";
-    if (!array_key_exists($page, 'nodes')) {
+    if (!array_key_exists('nodes', $page)) {
         $page['nodes'] = [];
         return;
     }
     foreach($page['nodes'] as &$node) {
-        if (!array_key_exists($node, "node_num")) {
+        if (!array_key_exists("node_num", $node)) {
             $message = "ValidateNodes: Missing node_num at page $count<br>";
             return $message;
         }
@@ -424,7 +523,7 @@ function validateNodes(&$page, $count) {
             return $message;
         }
         
-        if (!array_key_exists($node, "x")) {
+        if (!array_key_exists("x", $node)) {
             $message = "ValidateNodes: x coordinate missing at page $count<br>";
             return $message;
         }
@@ -433,7 +532,7 @@ function validateNodes(&$page, $count) {
             $message = "ValidateNodes: x coordinate out of range at page $count<br>";
             return $message;
         }
-        if (!array_key_exists($node, "y")) {
+        if (!array_key_exists("y", $node)) {
             $message = "ValidateNodes: y coordinate missing at page $count<br>";
             return $message;
         }
@@ -443,7 +542,7 @@ function validateNodes(&$page, $count) {
             return $message;
         }
 
-        if (!array_key_exists($node, 'label')) {
+        if (!array_key_exists("label", $node)) {
             $message = "ValidateNodes: label missing at page $count<br>";
             return $message;
         }
@@ -454,7 +553,7 @@ function validateNodes(&$page, $count) {
         }
         $node['label'] = $label;
 
-        if (!array_key_exists($node, 'graphic_file')) {
+        if (!array_key_exists('graphic_file', $node)) {
             $node['graphic_file'] = "";
         }
         else {
@@ -467,7 +566,7 @@ function validateNodes(&$page, $count) {
             $node['graphic_file'] = $graphicFile;
         }
         
-        if (!array_key_exists($node, 'graphic_text')) {
+        if (!array_key_exists('graphic_text', $node)) {
             $node['graphic_text'] = "";
         }
         else {
@@ -479,7 +578,7 @@ function validateNodes(&$page, $count) {
             $node['graphic_text'] = $graphicText;
         }
 
-        if (!array_key_exists($node, 'type')) {
+        if (!array_key_exists('type', $node)) {
             $node['type'] = "mechanism";
         }
         else {
@@ -489,7 +588,7 @@ function validateNodes(&$page, $count) {
             }
         }
 
-        if (!array_key_exists($node, "definition")) {
+        if (!array_key_exists("definition", $node)) {
             $node['definition'] = "";
         }
         else {
@@ -501,7 +600,7 @@ function validateNodes(&$page, $count) {
             $node['definition'] = $definition;
         }
 
-        if (!array_key_exists($node, "keywords")) {
+        if (!array_key_exists("keywords", $node)) {
             $node['keywords'] = "";
         }
         else {
@@ -513,7 +612,7 @@ function validateNodes(&$page, $count) {
             $node['keywords'] = $keywords;
         }
 
-        if (!array_key_exists($node, "hyperlink")) {
+        if (!array_key_exists("hyperlink", $node)) {
             $node['hyperlink'] = "";
         }
         else {
@@ -524,7 +623,7 @@ function validateNodes(&$page, $count) {
             }
         }
 
-        if (!array_key_exists($node, "has_child_page")) {
+        if (!array_key_exists("has_child_page", $node)) {
             $node['has_child_page'] = false;
         }
         else {
@@ -535,15 +634,17 @@ function validateNodes(&$page, $count) {
             }
         }
     }
+    return $message;
 }
 
 function validateFlows(&$page, $count) {
-    if (!array_key_exists($page, "flows")) {
+    $message = "";
+    if (!array_key_exists("flows", $page)) {
         $page['flows'] = [];
-        return;
+        return $message;
     }
     foreach($page['flows'] as &$flow) {
-        if (!array_key_exists($flow, 'flow_num')) {
+        if (!array_key_exists('flow_num', $flow)) {
             $message = "validateFlows: flow_num value and field missing at page $count<br>";
             return $message;
         }
@@ -553,11 +654,11 @@ function validateFlows(&$page, $count) {
             return $message;
         }
 
-        if (!array_key_exists($flow, 'source_node_num')) {
+        if (!array_key_exists('source_node_num', $flow)) {
             $message = "validateFlows: source_node_num field missing at page $count<br>";
             return $message;
         }
-        if (!array_key_exists($flow, 'destination_node_num')) {
+        if (!array_key_exists('destination_node_num', $flow)) {
             $message = "validateFlows: destination_node_num field missing at page $count<br>";
             return $message;
         }
@@ -580,7 +681,7 @@ function validateFlows(&$page, $count) {
             return $message;
         }
 
-        if (!array_key_exists($flow, 'label')) {
+        if (!array_key_exists('label', $flow)) {
             $message = "validateFlows: missing flow label field at page $count<br>";
             return $message;
         }
@@ -591,7 +692,7 @@ function validateFlows(&$page, $count) {
         }
         $flow['label'] = $label;
 
-        if (!array_key_exists($flow, 'label_x')) {
+        if (!array_key_exists('label_x', $flow)) {
             $message = "validateFlows: flow label_x field is missing at page $count<br>";
             return $message;
         }
@@ -601,7 +702,7 @@ function validateFlows(&$page, $count) {
             return $message;
         }
 
-        if (!array_key_exists($flow, 'label_y')) {
+        if (!array_key_exists('label_y', $flow)) {
             $message = "validateFlows: flow label_y is missing at page $count<br>";
             return $message;
         }
@@ -611,7 +712,7 @@ function validateFlows(&$page, $count) {
             return $message;
         }
 
-        if (!array_key_exists($flow, 'label_width')) {
+        if (!array_key_exists('label_width', $flow)) {
             $message = "validateFlows: flow label_width is missing at page $count<br>";
             return $message;
         }
@@ -621,7 +722,7 @@ function validateFlows(&$page, $count) {
             return $message;
         }
 
-        if (!array_key_exists($flow, 'drawing_group_x')) {
+        if (!array_key_exists('drawing_group_x', $flow)) {
             $message = "validateFlows: flow drawing_group_x field is missing at page $count<br>";
             return $message;
         }
@@ -630,7 +731,7 @@ function validateFlows(&$page, $count) {
             $message = "validateFlows: flow drawing_group_x value is out of range at page $count<br>";
             return $message;
         }
-        if (!array_key_exists($flow, 'drawing_group_y')) {
+        if (!array_key_exists('drawing_group_y', $flow)) {
             $message = "validateFlows: flow drawing_group_y field omitted at page $count<br>";
             return $message;
         }
@@ -640,38 +741,38 @@ function validateFlows(&$page, $count) {
             return $message;
         }
 
-        if (!array_key_exists($flow, "flow_arrow_points")) {
-            $message = "validateFlows: flow_arrow_points field missing at page $count<br>";
+        if (!array_key_exists("arrow_points", $flow)) {
+            $message = "validateFlows: arrow_points field missing at page $count<br>";
             return $message;
         }
-        $flowArrowPoints = $flow['flow_arrow_points'];
-        if (count($flowArrowPoints) != 4) {
-            $message = "validateFlows: flow_arrow_points data incorrect at page $count<br>";
+        $arrowPoints = $flow['arrow_points'];
+        if (count($arrowPoints) != 4) {
+            $message = "validateFlows: arrow_points data incorrect at page $count<br>";
             return $message;
         }
-        for ($i = 0; $i < count($flowArrowPoints); $i++) {
-            $point = $flowArrowPoints[$i];
-            if (!array_key_exists($point, 'x')) {
-                $message = "validateFlows: - flow_arrow_point missing x coordinate at page $count<br>";
+        for ($i = 0; $i < count($arrowPoints); $i++) {
+            $point = $arrowPoints[$i];
+            if (!array_key_exists('x', $point)) {
+                $message = "validateFlows: - arrow_point missing x coordinate at page $count<br>";
                 return $message;
             }
             $x = $point['x'];
             if ($x < -300 || 300 < $x) {
-                $message = "validateFlows: - flow_arrow_point x value out of range at page $count<br>";
+                $message = "validateFlows: - arrow_point x value out of range at page $count<br>";
                 return $message;
             }
-            if (!array_key_exists($point, 'y')) {
-                $message = "validateFlows: - flow_arrow_point missing y coordinate at page $count<br>";
+            if (!array_key_exists('y', $point)) {
+                $message = "validateFlows: - arrow_point missing y coordinate at page $count<br>";
                 return $message;
             }
             $y = $point['y'];
             if ($y < -500 || 500 < $y) {
-                $message = "validateFlows: - flow_arrow_point y value out of range at page $count<br>";
+                $message = "validateFlows: - arrow_point y value out of range at page $count<br>";
                 return $message;
             }
         }
 
-        if (!array_key_exists($flow, "points")) {
+        if (!array_key_exists("points", $flow)) {
             $message = "validateFlows: - flow line points omitted at page $count<br>";
             return $message;
         }
@@ -680,7 +781,7 @@ function validateFlows(&$page, $count) {
             return $message;
         }
         foreach($flow['points'] as $point) {
-            if (!array_key_exists($point, 'x')){
+            if (!array_key_exists('x', $point)){
                 $message = "validateFlows: - flow line point has missing x coordinate at page $count<br>";
                 return $message;
             }
@@ -689,7 +790,7 @@ function validateFlows(&$page, $count) {
                 $message = "validateFlows: - flow line coordinate x out of range at page $count<br>";
                 return $message;
             }
-            if (!array_key_exists($point, 'y')) {
+            if (!array_key_exists('y', $point)) {
                 $message = "validateFlows: - flow line coordinate y is missing at page $count<br>";
                 return $message;
             }
@@ -700,7 +801,7 @@ function validateFlows(&$page, $count) {
             }
         }
 
-        if (!array_key_exists($flow, 'definition')) {
+        if (!array_key_exists('definition', $flow)) {
             $flow['definition'] = "";
         }
         else {
@@ -712,7 +813,7 @@ function validateFlows(&$page, $count) {
             $flow['definition'] = $definition;
         }
 
-        if (!array_key_exists($flow, 'keywords')) {
+        if (!array_key_exists('keywords', $flow)) {
             $flow['keywords'] = "";
         }
         else {
@@ -724,7 +825,7 @@ function validateFlows(&$page, $count) {
             $flow['keywords'] = $keywords;
         }
 
-        if (!array_key_exists($flow, 'hyperlink')) {
+        if (!array_key_exists('hyperlink', $flow)) {
             $flow['hyperlink'] = "";
         }
         else {
@@ -736,12 +837,12 @@ function validateFlows(&$page, $count) {
             $flow['hyperlink'] = $hyperlink;
         }
 
-        if (!array_key_exists($flow, 'conversion_formulas')) {
+        if (!array_key_exists('conversion_formulas', $flow)) {
             $flow['conversion_formulas'] = [];
         }
         else {
             foreach($flow['conversion_formulas'] as &$formulaItem) {
-                if (!array_key_exists($formulaItem, 'formula')) {
+                if (!array_key_exists('formula', $formulaItem)) {
                     $message = "validateFlows: conversion formula missing formula field at page $count<br>";
                     return $message;
                 }
@@ -756,7 +857,7 @@ function validateFlows(&$page, $count) {
                 }
                 $formulaItem['formula'] = $formula;
 
-                if (!array_key_exists($formulaItem, 'description')) {
+                if (!array_key_exists('description', $formulaItem)) {
                     $formulaItem['description'] = "";
                 }
                 else {
@@ -770,6 +871,7 @@ function validateFlows(&$page, $count) {
             }
         }
     }
+    return $message;
 }
     
 function addNewModel($modelTitle) {
@@ -782,7 +884,8 @@ function addNewModel($modelTitle) {
         return null;
     }
     $stmt->bind_param("s", $modelTitle);
-    $result = $stmt->execute();
+    $stmt->execute();
+    $result = $stmt->get_result();
     if (!$result) {
         error_log("addNewModel - could not perform search: {$dbConn->error}", 0);
         return null;
@@ -811,7 +914,8 @@ function addNewModel($modelTitle) {
         return null;
     }
     $stmt->bind_param("s", $modelTitle);
-    $result = $stmt->execute();
+    $stmt->execute();
+    $result = $stmt->get_result();
     if (!$result) {
         error_log("addNewModel - could not perform search: {$dbConn->error}", 0);
         return null;

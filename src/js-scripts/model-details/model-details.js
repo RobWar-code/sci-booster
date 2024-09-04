@@ -112,8 +112,12 @@ const modelDetails = {
       await dfm.currentPage.selectPageById(event);
     }
     else {
-      await dfm.currentPage.selectModel(event);
+      await dfm.currentPage.selectModel(event.target.value);
     }
+    this.displaySelectedModel();
+  },
+
+  displaySelectedModel: function () {
     dfm.currentPageSet = true;
     dfm.modelChanged = false;
 
@@ -534,6 +538,7 @@ const modelDetails = {
 
   importModel: async function(event) {
     event.preventDefault();
+    dfm.importTitle = "";
     const fileInput = document.getElementById("importFileInput");
     const file = fileInput.files[0];
     document.getElementById("importGoodDiv").style.display = "none";
@@ -552,17 +557,33 @@ const modelDetails = {
           if (data.result === true) {
               document.getElementById("importStatus").innerHTML = data.status;
               document.getElementById("importGoodDiv").style.display = "block";
+              dfm.importTitle = data.flow_model_title;
+              // Update the select model by title list
+              flowModelPage.getModelSelectionList();
           }
           else {
-              document.getElementById("importStatus").innerHTML = data.status + `<br>Problem uploading file ${filename}`;
+              document.getElementById("importStatus").innerHTML = data.status + `<br>Problem uploading file ${filename}<br>`;
               document.getElementById("importStatus").style.display = "block";
           }
       })
       .catch (error => {
           document.getElementById("importStatus").innerText = `Problem uploading file ${filename}`;
           document.getElementById("importStatus").style.display = "block";
-          console.log("Problem uploading graphic file " + filename + " " + error);
+          console.log("Problem uploading import file " + filename + " " + error);
       });
     }
+  },
+
+  dismissImportModal: function () {
+    document.getElementById("importModal").style.display = "none";
+  },
+
+  loadImportedModel: async function () {
+    if (dfm.importTitle === "") return;
+    document.getElementById("importModal").style.display = "none";
+    dfm.currentPage = new dfm.FlowPageData();
+    dfm.currentVisual = new dfm.FlowVisuals();
+    await dfm.currentPage.selectModel(dfm.importTitle);
+    this.displaySelectedModel();
   }
 }

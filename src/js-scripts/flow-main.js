@@ -22,6 +22,7 @@ dfm.modelReferencesVisible = false;
 dfm.flowDrawMode = false;
 dfm.modelChanged = false;
 dfm.maxPageTitleLength = 128;
+dfm.importTitle = "";
 
 // Node and Flow details
 dfm.maxNodeLabelLen = 42;
