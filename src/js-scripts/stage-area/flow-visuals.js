@@ -841,7 +841,7 @@ dfm.FlowVisuals = class {
             flowNum: this.currentFlow.flow_num
         });
         let detailsOpt = new Konva.Image({
-            x: leftXOffset - dfm.nodeTemplate.optionWidth / 2,
+            x: labelWidth/2 - dfm.nodeTemplate.optionWidth / 2,
             y: rectHeight - dfm.nodeTemplate.optionHeight - 3,
             image: dfm.nodeGraphics.details,
             width: dfm.nodeTemplate.optionWidth,

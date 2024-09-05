@@ -1,0 +1,172 @@
+{
+	"flow_model_id": null,
+	"flow_model_title": "Test Model 5",
+	"update": false,
+	"pages": [
+        {
+		    "id": null,
+		    "hierarchical_id": "01",
+		    "title": "Test Model 5",
+		    "description": "A test model to demonstrate the effectiveness of the import routines.",
+		    "keywords": "example test",
+		    "user_authors": [{"id": null, "username": "warner1"}], 
+		    "external_authors": [{"id": null, "author": "John T Smythe"}],
+		    "references": [
+			    {
+				    "id": null,
+				    "source": "internet",
+				    "title": "Example Devices",
+				    "author": {"id": null, "author": "Jackson Taylor"}
+			    },
+			    {
+				    "id": null,
+				    "source": "web page",
+				    "title": "The Machine",
+				    "author": {"id": null, "author": "Johnson H James"}
+			    },
+			    {
+				    "id": null,
+				    "source": "HT Publications",
+				    "title": "The Mean Machine",
+				    "author": {"id": null, "author": "Heinrich Olsen"}
+			    }
+		    ],
+		    "nodes": [
+			    {
+				    "id": null,
+				    "node_num": "01",
+				    "x": 50,
+				    "y": 30,
+				    "label": "Petrol Station",
+				    "type": "mechanism",
+				    "definition": "Fuel station for refuelling",
+				    "keywords": "fueling station, fuels",
+				    "hyperlink": "https://narayana-art.co.uk",
+				    "has_child_page": false
+			    },
+			    {
+				    "id": null,
+				    "node_num": "02",
+				    "x": 50,
+				    "y": 190,
+				    "label": "car",
+				    "type": "mechanism",
+				    "definition": "An example vehicles",
+				    "keywords":"vehicles",
+				    "hyperlink": "https://narayana-art.co.uk",
+				    "has_child_page": true
+			    }
+		    ],
+		    "flows": [
+			    {
+				    "id": null,
+				    "flow_num": "01",
+				    "source_node_num": "01",
+				    "destination_node_num": "02",
+				    "label": "petrol",
+				    "label_x": -40,
+				    "label_y": 40,
+				    "label_width": 60,
+				    "drawing_group_x": 120,
+				    "drawing_group_y": 110,
+				    "definition": "An example flow",
+				    "keywords": "fuel", 
+				    "hyperlink": "https://narayana-art.co.uk",
+				    "arrow_points": [{"x": 0, "y":30}, {"x": -7, "y": 20}, {"x": 0, "y": 25}, {"x": 7, "y": 20}],
+				    "points": [{"x": 0, "y": 0}, {"x": 0, "y": 60}],
+				    "conversion_formulas": [
+					    {
+						    "id": null,
+						    "formula": "C6H6O2 + 8O2 = 6CO2 + 3H2O + O",
+						    "description": "petrol + air to water and carbon dioxide"
+					    }
+				    ]
+			    }
+
+		    ]
+	    },
+
+        {
+		    "id": null,
+		    "hierarchical_id": "0102",
+		    "title": "Car Components",
+		    "description": "A test model to demonstrate the effectiveness of the import routines.",
+		    "keywords": "example test",
+		    "user_authors": [{"id": null, "username": "warner1"}], 
+		    "external_authors": [{"id": null, "author": "John T Smythe"}],
+		    "references": [
+			    {
+				    "id": null,
+				    "source": "internet",
+				    "title": "Example Devices",
+				    "author": {"id": null, "author": "Jackson Taylor"}
+			    },
+			    {
+				    "id": null,
+				    "source": "web page",
+				    "title": "The Machine",
+				    "author": {"id": null, "author": "Johnson H James"}
+			    },
+			    {
+				    "id": null,
+				    "source": "HT Publications",
+				    "title": "The Mean Machine",
+				    "author": {"id": null, "author": "Heinrich Olsen"}
+			    }
+		    ],
+		    "nodes": [
+			    {
+				    "id": null,
+				    "node_num": "01",
+				    "x": 50,
+				    "y": 30,
+				    "label": "Petrol Tank",
+				    "type": "mechanism",
+				    "definition": "Storage for fuel",
+				    "keywords": "fuel storage",
+				    "hyperlink": "https://narayana-art.co.uk",
+				    "has_child_page": false
+			    },
+			    {
+				    "id": null,
+				    "node_num": "02",
+				    "x": 50,
+				    "y": 190,
+				    "label": "Engine",
+				    "type": "mechanism",
+				    "definition": "An example of fuel use",
+				    "keywords":"vehicles",
+				    "hyperlink": "https://narayana-art.co.uk",
+				    "has_child_page": false
+			    }
+		    ],
+		    "flows": [
+			    {
+				    "id": null,
+				    "flow_num": "01",
+				    "source_node_num": "01",
+				    "destination_node_num": "02",
+				    "label": "petrol",
+				    "label_x": -40,
+				    "label_y": 40,
+				    "label_width": 60,
+				    "drawing_group_x": 120,
+				    "drawing_group_y": 110,
+				    "definition": "An example flow",
+				    "keywords": "fuel", 
+				    "hyperlink": "https://narayana-art.co.uk",
+				    "arrow_points": [{"x": 0, "y":30}, {"x": -7, "y": 20}, {"x": 0, "y": 25}, {"x": 7, "y": 20}],
+				    "points": [{"x": 0, "y": 0}, {"x": 0, "y": 60}],
+				    "conversion_formulas": [
+					    {
+						    "id": null,
+						    "formula": "C6H6O2 + 8O2 = 6CO2 + 3H2O + O",
+						    "description": "petrol + air to water and carbon dioxide"
+					    }
+				    ]
+			    }
+
+		    ]
+	    }
+    ]
+}

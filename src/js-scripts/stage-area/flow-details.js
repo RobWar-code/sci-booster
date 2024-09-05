@@ -274,6 +274,14 @@ flowDetails = {
         x += flow.label_x + flow.drawing_group_x;
         y += flow.label_y + flow.drawing_group_y;
         dfm.hoverText.displayHoverText(text, x, y);
+    },
+
+    doHyperlink: function () {
+        let hyperlink = document.getElementById("flowHypertext").value;
+        if (hyperlink === "") return;
+
+        window.open(hyperlink, "_blank");
+
     }
 
 }

@@ -8,23 +8,31 @@ Contents
 
     Block robot logins/register
 
-    Update README and analysis with the node graphic details
-    
-    Allow for the upload of JSON flow model data
-
     Set-up Systems Tests
 
     Perform Systems Tests/Debugging
 
     Do the introductory page
+        Include details of the JSON import model format
+
+    Import Info Page
     
     Update the README with user features changes
 
-    Graphics
-
 <h1>Work Done
-    25/08/2024
+    05/09/2024
 
+    * Add the hyperlink button to the flow details modal
+
+    * Position of details button on flow in draw mode
+
+    * Update README and analysis with the node graphic details
+    
+    * Allow for the upload of JSON flow model data
+        * Test update on single page
+        * Test multi-page input format
+
+    25/08/2024
 
     * Make an object for the hover text code
       

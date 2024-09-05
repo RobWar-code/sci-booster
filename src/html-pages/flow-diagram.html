@@ -238,6 +238,7 @@
         <div class="modalFormCancelDiv">
           <button class="textButton" id="drawFlowButton" onclick="flowDetails.drawFlow()">Draw Flow</button>
           <button class="textButton" id="flowDeleteButton" onclick="flowDetails.deleteFlow()">Delete</button>
+          <button class="textButton" id="flowHyperlinkButton" onclick="flowDetails.doHyperlink()">Hyperlink</button>
           <button class="textButton" id="modalDismissButton" onclick="flowDetails.dismissFlowDetails()">Dismiss</button>
         </div>  
       </div>
@@ -326,22 +327,26 @@
           <!-- Model Options-->
           <div class="col-md-5 optionButtons optionsSection">
             <div id="modelEditOptionsDiv">
-              <button class="textButton" id="flowDoneButton" onclick="dfm.currentVisual.flowDone()" 
-                title="Click to finish flow drawing">Flow Done</button>
-              <button class="textButton" id="cancelFlowDrawButton" onclick="dfm.currentVisual.cancelFlowDraw()"
-                title="Cancel the flow drawing">Cancel Draw</button>
-              <button class="textButton" id="zoomBackButton" onclick="flowModelPage.zoomBack()" 
-                title="Zoom Back to higher level page">Zoom Back</button>
-              <button class="textButton" id="newModelButton" onclick="modelDetails.newModel()" title="Create New Model">
-                New</button> 
-              <button class="textButton" id="editModelButton" onclick="modelDetails.editModel('')">Edit</button> 
-              <button class="textButton" id="deleteModelButton" onclick="dfm.currentPage.deletePage()">Delete</button> 
-              <button class="textButton" id="saveModelButton" onclick="dfm.currentPage.saveModel(true)">Save</button>
-              <button class="textButton" id="cancelModelButton" title="Cancel this session" 
-                onclick="flowModelPage.cancelModel()">Cancel</button>
-              <button class="textButton" id="importModelButton" title="Import JSON flow model"
-                onclick="modelDetails.beginModelImport()">Import</button>
-              <button class="textButton" id="testButton" onclick="nodeDetails.testFetch()">TEST</button>
+              <p>
+                <button class="textButton" id="flowDoneButton" onclick="dfm.currentVisual.flowDone()" 
+                  title="Click to finish flow drawing">Flow Done</button>
+                <button class="textButton" id="cancelFlowDrawButton" onclick="dfm.currentVisual.cancelFlowDraw()"
+                  title="Cancel the flow drawing">Cancel Draw</button>
+                <button class="textButton" id="zoomBackButton" onclick="flowModelPage.zoomBack()" 
+                  title="Zoom Back to higher level page">Zoom Back</button>
+                <button class="textButton" id="newModelButton" onclick="modelDetails.newModel()" title="Create New Model">
+                  New</button> 
+                <button class="textButton" id="editModelButton" onclick="modelDetails.editModel('')">Edit</button> 
+                <button class="textButton" id="deleteModelButton" onclick="dfm.currentPage.deletePage()">Delete</button> 
+                <button class="textButton" id="saveModelButton" onclick="dfm.currentPage.saveModel(true)">Save</button>
+                <button class="textButton" id="cancelModelButton" title="Cancel this session" 
+                  onclick="flowModelPage.cancelModel()">Cancel</button>
+              </p>
+              <p>
+                <button class="textButton" id="importModelButton" title="Import JSON flow model"
+                  onclick="modelDetails.beginModelImport()">Import</button>
+                <button class="textButton" id="testButton" onclick="nodeDetails.testFetch()">TEST</button>
+              </p>
             </div>
             <p id="modelEditInfo">
               To be able to create or modify your own flow models see menu: login/register and signup
