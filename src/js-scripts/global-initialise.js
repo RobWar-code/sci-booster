@@ -5,7 +5,7 @@ const GLOBALS = {
     minAssumedDisplayWidth: 400,
     minStageWidth: 380,
     maxStageWidth: 760,
-    stageHeight: 580,
+    stageHeight: 680,
     minNodeWidth: 100,
     maxNodeWidth: 200,
     maxNodesPerPage: 8,

@@ -15,11 +15,21 @@ Contents
     Do the introductory page
         Include details of the JSON import model format
 
+    Adjust the README for building JSON models with ChatGPT
+    
     Import Info Page
     
     Update the README with user features changes
 
+    In the README Plan the release procedures
+
 <h1>Work Done
+    06/09/2024
+    
+    * Model not cleared from title selections when deleted
+
+    * Increase height of stage, convey dimensions to php import routines
+
     05/09/2024
 
     * Add the hyperlink button to the flow details modal

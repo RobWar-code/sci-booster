@@ -108,14 +108,14 @@ const flowModelPage = {
     },
 
     getModelSelectionList: async function () {
+        let modelSelector = document.getElementById("modelSelector");
+        modelSelector.innerHTML = "";
         let modelTitles = [];
         modelTitles = await this.fetchModelList();
         if (modelTitles.length > 0) {
             modelTitles.sort();
             // Insert the none selected item at the start of the array
             modelTitles.unshift("NONE SELECTED");
-            let modelSelector = document.getElementById("modelSelector");
-            modelSelector.innerHTML = "";
             for (let title of modelTitles) {
                 let opt = document.createElement('option');
                 opt.value = title;

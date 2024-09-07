@@ -79,12 +79,21 @@
         $sql = "DELETE FROM page_user_link";
         $result = $dbConn->query($sql);
         if (!$result) {
-            echo "Faile to clear page_user_link table<br>" . $dbConn->error . "<br>";
+            echo "Failed to clear page_user_link table<br>" . $dbConn->error . "<br>";
         }
         else {
             echo "Cleared page_user_link<br>";
         }
 
+        $sql = "DELETE FROM user";
+        $result = $dbConn->query($sql);
+        if (!$result) {
+            echo "Failed to clear user table<br>" . $dbConn->error . "<br>";
+        }
+        else {
+            echo "Cleared user<br>";
+        }
+        
         $sql = "DELETE FROM page";
         $result = $dbConn->query($sql);
         if (!$result) {

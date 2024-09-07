@@ -141,7 +141,7 @@
         $stmt = $dbConn->prepare($sql);
         $result = $stmt->execute();
         $stmt->store_result();
-        $stmt->bind_result($id, $pageId, $nodeNum, $label, 
+        $stmt->bind_result($id, $pageId, $nodeNum, $label, $graphicFile, $graphicText,
             $xCoord, $yCoord, $type, $definition, $keywords, $hyperlink, $hasChildPage);
         if ($result) {
             echo "<br>";
@@ -151,6 +151,8 @@
                 echo "page_id: " . $pageId . "<br>";
                 echo "node_num: " . $nodeNum . "<br>";
                 echo "label: " . $label . "<br>";
+                echo "graphic_file: " . $graphicFile . "<br>";
+                echo "graphic_text: " . $graphicText . "<br>";
                 echo "x_coord: " . $xCoord . "<br>";
                 echo "y_coord: " . $yCoord . "<br>";
                 echo "type: " . $type . "<br>";

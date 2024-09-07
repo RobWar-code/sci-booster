@@ -220,7 +220,7 @@ function deletePageNodes($pageId, $flowModelId, $hierarchicalId) {
             $nodeId = $row['id'];
             $nodeNum = $row['node_num'];
             $hasChildPage = $row['has_child_page'];
-            if ($hasChildPage === 1) {
+            if ($hasChildPage) {
                 $deletionHierarchicalId = $hierarchicalId . $nodeNum;
                 deletePage($flowModelId, $deletionHierarchicalId, null);
             }

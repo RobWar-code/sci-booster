@@ -5,7 +5,14 @@ Contents
         Due
         Fixed
     General Use Tests
-    Edit, New and Read-only Modes
+        Preparations
+        Login Tests
+        User Editing Tests
+            Model Details Input
+                User Authors
+                External Authors
+                References
+    In-Flight Tests: Edit, New and Read-only Modes
         Drawing - Edit Modes
     Model Save and Load
 
@@ -13,7 +20,22 @@ Contents
 
 <h2>Due
 
+
     Check-out Dismiss on flow-link, remove all details
+
+<h2>Fixed
+
+    07/08/2024
+    
+    * Missing reference Title not checked for on reference submit
+
+    * Clicking on an external author does not delete it
+
+    * Clicking on a user author deletes the wrong entry
+
+    * Prevent deletion of the current user
+
+    -----------------------------------------------------------------
 
     * Adjust length of flow line segment to fit between markers (not 
     overlapping marker)
@@ -30,8 +52,6 @@ Contents
 
     * Sort-out flow arrow direction
 
-<h2>Fixed
-
     * Width of flow labels
 
     * Problem with delete Node
@@ -46,33 +66,109 @@ Contents
 
 <h1>General Use Tests
 
-    * Login as an Editor
-    Use the new button to start a model
-        Add a node
-        Add a second node
-        create a flow from the first node to the second
-        create a flow from the second node to the first
-        Add flow to the left side of the first node from void
-        Add flow to the right side of the first node to void
-        Add flow to the top side of the first node from void
+<h2>Preparations
 
-    * Use the New button to start a new model
-    Save the current model
-    Add a node with all details set
-    Add a second node with all details set
-    Add a flow with all details set
-        Test Click line to insert a node.
-    Save the model
-    Edit the model
-    Draw a source flow from void to the second node
-    Save the model
-    Use the zoom button to start a further model definition
-    Enter all details for the page
-    Add a node
-    Add a flow from the void to the node
-    Save the page
+    Clear all of the tables in the database (user included) except the editor_key table.
 
-<h1>Edit, New and Read-only Modes
+<h2>Login Tests
+    * Click the login menu option
+    * Ensure that the owner option appears
+    * Login as owner - warner1, welcome123
+    * Logout
+    * Click the login menu option
+    * Ensure that the owner option does not appear
+    * Sign-up as an editor warner2, welcome223
+    * Logout
+    * Click the login menu option
+    * Register as a user warner3, welcome323
+    * Logout
+    * Click the login menu option
+    * Click login
+    * Enter an invalid username and password
+    * Check that an error is reported
+    * Clear the username and password fields and click Submit
+    * Ensure that an error message is displayed.
+    * Login as warner3
+    * Click the login option
+    * Ensure the signup as editor button appears
+    * Signup as editor using existing login 
+    * Ensure an error message appears
+    * Signup as editor warner4, welcome423
+
+<h2>User Editing Tests
+<h3>Model Details Input
+    * Login as User - warner3
+    * Ensure that the new, import options appear
+    * Click the new option
+    * Ensure that model details modal appears
+    * Click the Submit button
+    * Ensure that there is no effect 
+    * Click the Dismiss button
+    * Ensure that the modal is cleared
+    * Click the New button again
+    * Enter a description but no title
+    * Click the Submit button
+    * Ensure that there is no effect
+    * Enter a title
+    * Click the Submit button
+    * Ensure that the title and description are ticked
+    * Ensure that the editing instructions appear at the top of the Stage
+
+<h4>User Authors
+    * Ensure that the User Authors, External Authors and References options are displayed
+    * Enter some keywords
+    * Click the Submit button again
+    * Ensure that keywords are ticked
+    * Click the User Authors button
+    * Ensure that the current user is listed
+    * Enter the user warner4
+    * Click submit author
+    * Ensure that the user is added to the list
+    * Ensure that the submit author button is ticked
+    * Click on the warner4 entry to delete it
+    * Ensure that the warner4 entry is cleared
+    * Enter a non-existent username
+    * Click Submit Author
+    * Ensure that the username not found message is displayed
+    * Click the user authors option
+    * Ensure that the user authors list is retracted
+
+<h4>External Authors
+    * Click the External Authors button
+    * Ensure that the author entry details are displayed
+    * Enter an author name
+    * Click Submit Author
+    * Ensure that the entry is added to the list
+    * Enter another Author
+    * Click Submit Author
+    * Ensure that the entry is added to the list
+    * Click a list entry
+    * Ensure that it is deleted from the list
+    * Click the other list entry
+    * Ensure that the list is cleared
+    * Click on the external authors option
+    * Ensure that the list is retracted
+
+<h4>References
+    * Click on the References option
+    * Ensure that the reference form is displayed
+    * Complete all three fields
+    * Click on the Submit Reference option
+    * Ensure that the reference is added to the list
+    * Leave the Reference form blank
+    * Click on the Submit Reference button
+    * Ensure that nothing happens
+    * Complete the Title field
+    * Click on the Submit Reference button
+    * Ensure that the entry appears in the list
+    * Click an entry on the reference list
+    * Ensure that it is deleted from the list
+    Enter the Source field
+    Click on the Submit Reference button
+    Ensure that nothing happens
+
+
+<h1>In-Flight Tests: Edit, New and Read-only Modes
     Check the editing modes and operation when the "New" button
     is clicked
 

@@ -6,6 +6,12 @@ include_once __DIR__ . '/update-page.php';
 header('Content-Type: application/json');
 
 $filenameItem = saveImportFile();
+// Constants
+$STAGEWIDTH = $_POST['stageWidth'];
+$STAGEHEIGHT = $_POST['stageHeight'];
+$NODEWIDTH = $_POST['nodeWidth'];
+$NODEHEIGHT = $_POST['nodeHeight'];
+
 $newPageArray = arrangePageData($filenameItem);
 if (validateImportData($newPageArray, $_POST['username'])) {
     if (importPageData($newPageArray)) {
@@ -507,6 +513,11 @@ function validateReferences(&$page, $count) {
 }
 
 function validateNodes(&$page, $count) {
+    global $STAGEWIDTH;
+    global $STAGEHEIGHT;
+    global $NODEWIDTH;
+    global $NODEHEIGHT;
+
     $message = "";
     if (!array_key_exists('nodes', $page)) {
         $page['nodes'] = [];
@@ -528,7 +539,7 @@ function validateNodes(&$page, $count) {
             return $message;
         }
         $x = $node['x'];
-        if ($x < 0 || 390 < $x) {
+        if ($x < 0 || $STAGEWIDTH < $x) {
             $message = "ValidateNodes: x coordinate out of range at page $count<br>";
             return $message;
         }
@@ -537,7 +548,7 @@ function validateNodes(&$page, $count) {
             return $message;
         }
         $y = $node['y'];
-        if ($y < 0 || 580 < $y) {
+        if ($y < 0 || $STAGEHEIGHT < $y) {
             $message = "ValidateNodes: y coordinate out of range at page $count<br>";
             return $message;
         }
@@ -638,6 +649,11 @@ function validateNodes(&$page, $count) {
 }
 
 function validateFlows(&$page, $count) {
+    global $STAGEWIDTH;
+    global $STAGEHEIGHT;
+    global $NODEWIDTH;
+    global $NODEHEIGHT;
+
     $message = "";
     if (!array_key_exists("flows", $page)) {
         $page['flows'] = [];
@@ -697,7 +713,7 @@ function validateFlows(&$page, $count) {
             return $message;
         }
         $labelX = $flow['label_x'];
-        if ($labelX < -390 || 390 < $labelX) {
+        if ($labelX < -$STAGEWIDTH || $STAGEWIDTH < $labelX) {
             $message = "validateFlows: flow label_x is out of range at page $count<br>";
             return $message;
         }
@@ -707,7 +723,7 @@ function validateFlows(&$page, $count) {
             return $message;
         }
         $labelY = $flow['label_y'];
-        if ($labelY < -580 || 580 < $labelY) {
+        if ($labelY < -$STAGEHEIGHT || $STAGEHEIGHT < $labelY) {
             $message = "validateFlows: flow label_y is out of range at page $count<br>";
             return $message;
         }
@@ -727,7 +743,7 @@ function validateFlows(&$page, $count) {
             return $message;
         }
         $drawingGroupX = $flow['drawing_group_x'];
-        if ($drawingGroupX < 0 || 390 < $drawingGroupX) {
+        if ($drawingGroupX < 0 || $STAGEWIDTH < $drawingGroupX) {
             $message = "validateFlows: flow drawing_group_x value is out of range at page $count<br>";
             return $message;
         }
@@ -736,7 +752,7 @@ function validateFlows(&$page, $count) {
             return $message;
         }
         $drawingGroupY = $flow['drawing_group_y'];
-        if ($drawingGroupY < 0 || 580 < $drawingGroupY) {
+        if ($drawingGroupY < 0 || $STAGEHEIGHT < $drawingGroupY) {
             $message = "validateFlows: flow drawing_group_y value is out of range at page $count<br>";
             return $message;
         }
@@ -757,7 +773,7 @@ function validateFlows(&$page, $count) {
                 return $message;
             }
             $x = $point['x'];
-            if ($x < -300 || 300 < $x) {
+            if ($x < -($STAGEWIDTH - 40) || $STAGEWIDTH - 40 < $x) {
                 $message = "validateFlows: - arrow_point x value out of range at page $count<br>";
                 return $message;
             }
@@ -766,7 +782,7 @@ function validateFlows(&$page, $count) {
                 return $message;
             }
             $y = $point['y'];
-            if ($y < -500 || 500 < $y) {
+            if ($y < -($STAGEHEIGHT - 40) || $STAGEHEIGHT - 40 < $y) {
                 $message = "validateFlows: - arrow_point y value out of range at page $count<br>";
                 return $message;
             }
@@ -786,7 +802,7 @@ function validateFlows(&$page, $count) {
                 return $message;
             }
             $x = $point['x'];
-            if ($x < -300 || 300 < $x) {
+            if ($x < -($STAGEWIDTH - 40) || $STAGEWIDTH - 40 < $x) {
                 $message = "validateFlows: - flow line coordinate x out of range at page $count<br>";
                 return $message;
             }
@@ -795,7 +811,7 @@ function validateFlows(&$page, $count) {
                 return $message;
             }
             $y = $point['y'];
-            if ($y < -500 || 500 < $y) {
+            if ($y < -($STAGEHEIGHT - 40) || $STAGEHEIGHT - 40 < $y) {
                 $message = "validateFlows: - flow line coordinate y is out of range at page $count<br>";
                 return $message;
             }

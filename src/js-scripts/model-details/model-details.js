@@ -372,11 +372,15 @@ const modelDetails = {
     if (this.editMode === "read-only") return;
     let listItem = event.target;
     let itemNum = parseInt(listItem.dataset.item);
+    // Check whether the user is the current user
+    if (dfm.currentPage.page.user_authors[itemNum].username === dfm.username) {
+      return;
+    }
     if (dfm.currentPage.page.user_authors.length === 1) {
       dfm.currentPage.page.user_authors = [];
     }
     else {
-      dfm.currentPage.page.user_authors = dfm.currentPage.page.user_authors.splice(itemNum, 1);
+      dfm.currentPage.page.user_authors.splice(itemNum, 1);
     }
     this.displayAuthorsList();
   },
@@ -436,16 +440,16 @@ const modelDetails = {
   },
 
   deleteExtAuthor: function (event) {
-    if (this.editMode === "read-only") return;
+    if (dfm.modelEditMode === "read-only") return;
     let listItem = event.target;
     let itemNum = parseInt(listItem.dataset.item);
     if (dfm.currentPage.page.external_authors.length === 1) {
       dfm.currentPage.page.external_authors = [];
     }
     else {
-      dfm.currentPage.page.external_authors = dfm.currentPage.page.external_authors.splice(itemNum, 1);
+      dfm.currentPage.page.external_authors.splice(itemNum, 1);
     }
-    this.displayAuthorsList();
+    this.displayExtAuthorsList();
   },
 
   toggleReferences: function () {
@@ -471,6 +475,7 @@ const modelDetails = {
       refObj.source = Misc.stripHTML(document.getElementById("modelReferenceSource").value).trim();
       refObj.author = {id: null, author: Misc.stripHTML(document.getElementById("modelReferenceAuthor").value).trim()};
       refObj.title = Misc.stripHTML(document.getElementById("modelReferenceTitle").value).trim();
+      if (refObj.title === "") return;
       if (!(refObj.source === "" && refObj.author.author === "" && refObj.title === "")) {
         document.getElementById("modelReferenceSource").value = "";
         document.getElementById("modelReferenceAuthor").value = "";
@@ -547,6 +552,11 @@ const modelDetails = {
       let formData = new FormData();
       formData.append('file', file);
       formData.append('username', dfm.username);
+      formData.append('stageWidth', dfm.stageWidth);
+      formData.append('stageHeight', dfm.stageHeight);
+      formData.append('nodeWidth', dfm.nodeTemplate.width);
+      formData.append('nodeHeight', dfm.nodeTemplate.height);
+
       let progname = `${dfm.phpPath}flow-model/import.php`;
       fetch(progname, {
           method: 'POST',
