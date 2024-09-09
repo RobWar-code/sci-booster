@@ -287,6 +287,7 @@ const modelDetails = {
 
       dfm.currentPageSet = true;
       dfm.modelEditMode = "edit";
+      document.getElementById("pageDetailsButton").style.display = "block";
       // Display the Author and reference inputs
       document.getElementById("additionalModelDetailsDiv").style.display = "block";
       

@@ -35,6 +35,7 @@ const flowModelPage = {
                 document.getElementById("editModelButton").style.display = "none";
                 document.getElementById("deleteModelButton").style.display = "none";
                 document.getElementById("saveModelButton").style.display = "none";
+                document.getElementById("pageDetailsButton").style.display = "none";
             }
         }
         else if (dfm.userStatus === "editor" || dfm.userStatus === "owner") {
@@ -47,6 +48,7 @@ const flowModelPage = {
                 document.getElementById("editModelButton").style.display = "none";
                 document.getElementById("deleteModelButton").style.display = "none";
                 document.getElementById("saveModelButton").style.display = "none";
+                document.getElementById("pageDetailsButton").style.display = "none";
             }
             else {
                 // Display options for current model

@@ -12,6 +12,8 @@ Contents
                 User Authors
                 External Authors
                 References
+                Model Details Completion
+                Editing Permissions
     In-Flight Tests: Edit, New and Read-only Modes
         Drawing - Edit Modes
     Model Save and Load
@@ -20,6 +22,11 @@ Contents
 
 <h2>Due
 
+    * Page Details button not displayed when Leave option clicked on Model Details
+
+    * Page Details button still displayed after Cancel button clicked
+
+    * User author not given option to edit the selected model
 
     Check-out Dismiss on flow-link, remove all details
 
@@ -163,9 +170,70 @@ Contents
     * Ensure that the entry appears in the list
     * Click an entry on the reference list
     * Ensure that it is deleted from the list
-    Enter the Source field
-    Click on the Submit Reference button
-    Ensure that nothing happens
+    * Enter the Source field
+    * Click on the Submit Reference button
+    * Ensure that nothing happens
+
+<h4>Model Details Completion
+    * Login as user
+    * Enter a title, description and keywords
+    * Click Submit
+    * Ensure that the fields are ticked
+    * Click the User Authors option
+    * Enter warner4
+    * Click Submit Author
+    * Ensure that the user is added to the list
+    * Click the User Authors option
+    * Ensure that the list is closed-up
+    * Click the External Authors Option
+    * Enter the name of an author
+    * Click the Submit Author option
+    * Ensure that the name is added to the list
+    * Click the External Authors button
+    * Ensure that the External Authors list is closed-up
+    * Click the References button
+    * Enter the Source, Author and Title fields
+    * Click the Submit Reference button
+    * Ensure that the entry is added to the list
+    * Click the Leave button
+    * Ensure that the Page Details button is displayed
+    * Ensure that the New, Save and Cancel options appear in the options panel
+    * Click the Page Details button
+    * Ensure that all details are present as entered
+    * Ensure that the model details are editable
+    * Click the Save button
+    * Ensure that the model is added to the selection list
+    * Click the Cancel button
+    * Ensure that only the New Button is Displayed
+    * Ensure that the Page Details button is no longer displayed
+    * Click the entry in the Model Selection list
+    * Ensure that Model Details for that model are displayed
+    * Ensure that the Edit Model button is displayed
+    * Click the Edit Model button
+    * Ensure that the Model Details can be edited
+    * Click Leave
+
+<h3>Editing Permissions
+    * Logout from warner3
+    * Login as warner4
+    * Click the New Button
+    * Create a model details entry
+    * Click the Leave button
+    * Click the Save button
+    * Logout from warner4
+    * Login as warner3
+    * Select the model created as user warner4
+    * Ensure that the model is presented in read-only mode
+    * Ensure that the Edit Model button is hidden
+    * Click the Dismiss button
+    * Logout
+    * Login as owner warner1
+    * Click the Page Details button
+    * Ensure that the Edit Model button is visible
+    * Click the Edit Model button
+    * Ensure that details edits can be made
+
+
 
 
 <h1>In-Flight Tests: Edit, New and Read-only Modes
