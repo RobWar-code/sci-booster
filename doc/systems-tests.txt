@@ -14,6 +14,7 @@ Contents
                 References
                 Model Details Completion
                 Editing Permissions
+            Node Details Editing
     In-Flight Tests: Edit, New and Read-only Modes
         Drawing - Edit Modes
     Model Save and Load
@@ -22,17 +23,22 @@ Contents
 
 <h2>Due
 
-    * Page Details button not displayed when Leave option clicked on Model Details
-
-    * Page Details button still displayed after Cancel button clicked
-
-    * User author not given option to edit the selected model
 
     Check-out Dismiss on flow-link, remove all details
 
 <h2>Fixed
 
-    07/08/2024
+    10/09/2024
+    
+    * Node Details modal displayed erroneously when Hyperlink button clicked
+
+    * Page Details button not displayed when Leave option clicked on Model Details
+
+    * Page Details button still displayed after Cancel button clicked
+
+    * User author not given option to edit the selected model
+    
+    07/09/2024
     
     * Missing reference Title not checked for on reference submit
 
@@ -213,7 +219,7 @@ Contents
     * Ensure that the Model Details can be edited
     * Click Leave
 
-<h3>Editing Permissions
+<h3>Editing Permissions - Model Details
     * Logout from warner3
     * Login as warner4
     * Click the New Button
@@ -233,8 +239,47 @@ Contents
     * Click the Edit Model button
     * Ensure that details edits can be made
 
+<h2>Node Details Editing
 
-
+    * Login as warner3
+    * Click the New Button
+    * Enter details for a model
+    * Click the Submit button
+    * Ensure that the Model Details modal displays the Leave button
+    * Click the Leave button
+    * Ensure the model drawing/editing instructions appear above the Stage
+    * Click the stage toward the top left
+    * Ensure that the Node Details modal is displayed
+    * Enter a Title, Description and keywords
+    * Click Submit
+    * Ensure that the Node Details modal is cleared from the display 
+    * Ensure that the Node box is displayed in the position of the click on the stage
+    * Ensure that the title entered appears in the Node box
+    * Click the Details button in the node box
+    * Ensure that the same Node Details are displayed
+    * Use the Browse button on the Node Details form to select a graphic file 
+    * Click the Upload Graphic button
+    * Ensure that the name of the Graphic file appears in the node details
+    * Click the Submit button
+    * Ensure that the Node Details modal is cleared
+    * Click the Graphic button on the Node box
+    * Ensure that the graphic is displayed
+    * Click the dismiss button
+    * Ensure that the graphic is cleared
+    * Click the Node Details button on the node box
+    * Ensure that the node details are displayed
+    * Delete the Title field
+    * Click the Submit button
+    * Ensure that nothing happens
+    * Click the Dismiss button
+    * Ensure that the node details modal is cleared
+    * Click the Node Details button on the Node
+    * Ensure that the Node Details are displayed with the Title
+    * Enter an internet address in the Hypertext field
+    * Click the Submit Button
+    * Ensure the node details are cleared
+    * On the Node box, click the Hyperlink button
+    * Ensure that the internet page is loaded on another tab
 
 <h1>In-Flight Tests: Edit, New and Read-only Modes
     Check the editing modes and operation when the "New" button

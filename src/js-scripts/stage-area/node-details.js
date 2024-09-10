@@ -84,7 +84,6 @@ const nodeDetails = {
     submitNodeDetails: function (event) {
         event.preventDefault();
 
-        console.log("Node Details Submit");
         // Check the field contents
         let label = document.getElementById("nodeLabel").value;
         label = Misc.stripHTML(label).trim();
@@ -131,7 +130,6 @@ const nodeDetails = {
         node.keywords = keywords;
         node.definition = definition;
         node.hyperlink = hyperlink;
-        console.log("node:", node);
 
         document.getElementById("nodeDetails").style.display = "none";
 
@@ -206,6 +204,7 @@ const nodeDetails = {
     },
 
     doHyperlink: function (event) {
+        event.cancelBubble = true;
         let nodeNum = event.target.getAttr("nodeNum");
         let node = dfm.currentPage.getNode(nodeNum);
         if (node.hyperlink === "") return;
@@ -242,14 +241,13 @@ const nodeDetails = {
             .catch (error => {
                 document.getElementById("nodeErrors").innerText = `Problem uploading file ${filename}`;
                 document.getElementById("nodeErrors").style.display = "block";
-                console.log("Problem uploading graphic file " + filename + " " + error);
+                console.error("Problem uploading graphic file " + filename + " " + error);
             });
         }
     },
 
     testFetch: async function () {
         let progname = `${dfm.phpPath}flow-model/test.php`;
-        console.log("progname:", progname);
         let bodyJSON = JSON.stringify({request: "hello"});
         try {
             let response = await fetch(progname, {
@@ -260,10 +258,9 @@ const nodeDetails = {
                 body: bodyJSON
             });
             response = await response.json();
-            console.log("No Error", response);
         }
         catch {(error) => {
-            console.log("Same Problem", error);
+            console.error("Same Problem", error);
         }}
     }
 }
