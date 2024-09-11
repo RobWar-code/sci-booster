@@ -19,6 +19,9 @@ function scanInput($inputData) {
         if ($requestType === 'model title list') {
             getModelTitlesList();
         }
+        elseif ($requestType === "get page list") {
+            getModelPageList($inputData['flow_model_id']);
+        }
         elseif($requestType === "fetch model by title") {
             fetchModelPageByTitle($inputData['title']);
         }
@@ -225,15 +228,17 @@ function fetchModelPageByHierarchicalId($inputData) {
         echo json_encode($result);
     }
     else {
-        $pageId = findModelPageByHierarchicalId($hierarchicalId, $flowModelId, $flowModelTitle);
-        if ($pageId === null) {
+        $pageObj = findModelPageByHierarchicalId($hierarchicalId, $flowModelId, $flowModelTitle);
+        if ($pageObj['page_id'] === null) {
             $result = json_encode(['result'=>true, 'got_page'=>false]);
             echo $result;
         }
         else {
+            $pageId = $pageObj['page_id'];
+            $flowModelId = $pageObj['flow_model_id'];
             $result = extractPage($flowModelId, $pageId);
             $result['result'] = true;
-            $result['got_page'] =true;
+            $result['got_page'] = true;
             echo json_encode($result);    
         }
     }
@@ -255,4 +260,23 @@ function conductGeneralSearch($inputData) {
     $searchText = $inputData['search_item'];
     $result = generalSearch($searchText);
     echo json_encode($result);
+}
+
+function getModelPageList($flowModelId) {
+    global $dbConn;
+
+    $list = [];
+    $sql = "SELECT id, title FROM page WHERE flow_model_id = $flowModelId";
+    $result = $dbConn->query($sql);
+    if (!$result) {
+        error_log("getModelPageList: sql failed fetching list {$dbConn->error}", 0);
+        $response = ['result'=>false];
+    }
+    else {
+        while ($row = $result->fetch_assoc()) {
+            array_push($list, ['id'=>$row['id'], 'title'=>$row['title']]);
+        }
+        $response = ['result'=>true, 'list'=>$list];
+    }
+    echo json_encode($response);
 }

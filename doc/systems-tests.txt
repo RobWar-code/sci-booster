@@ -14,7 +14,8 @@ Contents
                 References
                 Model Details Completion
                 Editing Permissions
-            Node Details Editing
+        Node Details Editing
+        Child Page Editing
     In-Flight Tests: Edit, New and Read-only Modes
         Drawing - Edit Modes
     Model Save and Load
@@ -23,6 +24,9 @@ Contents
 
 <h2>Due
 
+    * Error loading parent page in Zoom Back option
+
+    * Save Model Page modal No option error
 
     Check-out Dismiss on flow-link, remove all details
 
@@ -280,6 +284,36 @@ Contents
     * Ensure the node details are cleared
     * On the Node box, click the Hyperlink button
     * Ensure that the internet page is loaded on another tab
+    * Click the Node Details button on the node box
+    * Click the Delete button on the Node Details modal
+    * Ensure that the Node Details modal and the node box are cleared
+
+<h2>Child Page Editing
+    * Login as warner3
+    * Click the New button
+    * Set-up a model
+    * Click the stage to add a node
+    * Complete node details
+    * On the node box, click the Zoom button
+    * Ensure that the Save Page Yes/No modal appears
+    * Click No
+    * Ensure that the Yes/No Modal is cleared
+    * Click the Zoom Page button on the node box again
+    * Ensure that the Save Page modal is displayed
+    * Click the Yes option
+    * Ensure that the page is saved
+    * Ensure that the Model Details modal is displayed
+    * Ensure that the stage is empty for a new node
+    * Enter the Model Details for the zoomed page
+    * Click the stage
+    * Ensure that the Node Details modal is displayed
+    * Fill in the node details 
+    * Click the Submit button
+    * Ensure that the node is displayed
+    * Save the zoomed page
+    Ensure that the page is saved
+    Click the Zoom Back button
+
 
 <h1>In-Flight Tests: Edit, New and Read-only Modes
     Check the editing modes and operation when the "New" button

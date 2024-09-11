@@ -258,6 +258,14 @@ body {
     width: 76%;
 }
 
+#pageSelectorRow {
+    display: none;
+}
+
+#pageSelector {
+    width: 78%;
+}
+
 #flowDoneButton {
     display: none;
 }

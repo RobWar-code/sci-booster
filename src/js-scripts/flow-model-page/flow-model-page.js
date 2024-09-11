@@ -303,7 +303,10 @@ const flowModelPage = {
                 let reload = true;
                 dfm.currentPage.saveModel(reload);             
             }
-            else if (response != "no") {
+            else if (response === "no") {
+                return;
+            }
+            else {
                 return;
             }
         }
@@ -313,7 +316,7 @@ const flowModelPage = {
         let nodeNum = event.target.getAttr("nodeNum");
         let hierarchicalId = dfm.currentPage.page.hierarchical_id + nodeNum;
         console.log("zoomPage - hierarchicalId:", hierarchicalId);
-        let flowModelId = dfm.currentPage.id;
+        let flowModelId = dfm.currentPage.flow_model_id;
         console.log("flowModelId:", flowModelId);
         let flowModelTitle = dfm.currentPage.flow_model_title;
         let node = dfm.currentPage.getNode(nodeNum);

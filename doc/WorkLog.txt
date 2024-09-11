@@ -8,6 +8,10 @@ Contents
 
     Block robot logins/register
 
+    Add Current model page look-up
+
+    Test deletion of a node with child page followed by Save
+
     Set-up Systems Tests
 
     Perform Systems Tests/Debugging

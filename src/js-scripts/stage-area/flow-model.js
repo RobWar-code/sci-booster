@@ -190,8 +190,8 @@ dfm.FlowPage = class {
 
 dfm.FlowPageData = class {
     constructor() {
-        this.id = null; // If known
         this.flow_model_title = "";
+        this.flow_model_id = null;
         this.update = false;
         this.page = new dfm.FlowPage();
         this.nodeEditMode = "new"; // "new" or "update"
@@ -292,6 +292,20 @@ dfm.FlowPageData = class {
         else {
             this.page.flows.splice(itemNum, 1);
         }
+    }
+
+    isMultiPage() {
+        if (this.page.hierarchical_id.length > 2) {
+            return true;
+        }
+        else {
+            for (node of this.page.nodes) {
+                if (node.has_child_page) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     // Server Interface
@@ -538,7 +552,32 @@ dfm.FlowPageData = class {
         catch {(error) => {
             console.error("Problem with receive-page script call - userExists()", error);
         }};
+    }
 
+    async getModelPageList() {
+        let requestObj = {
+            request: "get page list",
+            flow_model_id: this.flow_model_id
+        }
+        try {
+            response = await fetch(dfm.phpPath + "flow-model/receive-page.php", {
+                method: 'POST',
+                headers: 'Content-type: application/json',
+                body: JSON.stringify(requestObj)
+            });
 
+            responseObj = await JSON.parse(response);
+
+            if (responseObj.result === true) {
+                return responseObj.list;
+            }
+            else {
+                return null;
+            }
+        }
+        catch { (error) => {
+                console.error("Could not collect hierarchical page list" + error);
+            }
+        }
     }
 }

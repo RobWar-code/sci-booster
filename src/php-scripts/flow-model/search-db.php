@@ -167,7 +167,7 @@
                 $pageId = $row['id'];
             }
         }
-        return $pageId;
+        return ['page_id'=>$pageId, 'flow_model_id'=>$flowModelId];
     }
 
     function generalSearch($searchText) {
