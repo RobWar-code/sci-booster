@@ -299,7 +299,7 @@ dfm.FlowPageData = class {
             return true;
         }
         else {
-            for (node of this.page.nodes) {
+            for (let node of this.page.nodes) {
                 if (node.has_child_page) {
                     return true;
                 }
@@ -418,6 +418,11 @@ dfm.FlowPageData = class {
             if (this.page.hierarchical_id === '01') {
                 flowModelPage.getModelSelectionList();
             }
+            else {
+                // Update/reveal the page selection list
+                document.getElementById("pageSelectorRow").style.display = "block";
+                modelDetails.listPages();
+            }
             // Inform user
             flowModelPage.issueNotice("Saved Successfully");
         }
@@ -490,7 +495,7 @@ dfm.FlowPageData = class {
     }
 
     setPageData(pageData) {
-        this.id = pageData.flow_model_id;
+        this.flow_model_id = pageData.flow_model_id;
         this.flow_model_title = pageData.flow_model_title;
         let page = pageData.page;
         this.page.setPageData(page);
@@ -560,13 +565,13 @@ dfm.FlowPageData = class {
             flow_model_id: this.flow_model_id
         }
         try {
-            response = await fetch(dfm.phpPath + "flow-model/receive-page.php", {
+            let response = await fetch(dfm.phpPath + "flow-model/receive-page.php", {
                 method: 'POST',
-                headers: 'Content-type: application/json',
+                headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(requestObj)
             });
 
-            responseObj = await JSON.parse(response);
+            let responseObj = await response.json();
 
             if (responseObj.result === true) {
                 return responseObj.list;

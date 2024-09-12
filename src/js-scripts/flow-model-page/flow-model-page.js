@@ -90,6 +90,7 @@ const flowModelPage = {
         dfm.currentPage = {};
         dfm.currentPageSet = false;
         dfm.modelEditMode = "read-only";
+        document.getElementById("pageSelectorRow").style.display = "none";
         document.getElementById("flowModelTitle").innerText = "NONE";
         document.getElementById("pageTitle").innerText = "NONE";
         this.clearFlowModelEditMessage();

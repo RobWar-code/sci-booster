@@ -8,7 +8,9 @@ Contents
 
     Block robot logins/register
 
-    Add Current model page look-up
+    * Add Current model page look-up
+
+    * Clear page selector on Cancel
 
     Test deletion of a node with child page followed by Save
 

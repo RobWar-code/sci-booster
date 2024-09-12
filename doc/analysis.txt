@@ -19,6 +19,7 @@ Contents
 	Flow Diagram Page
 		Model Search Operation
 		Model Select Element
+		Page Select Element
 		Model Edit Options
 			Effect of Logout on User Edit Options
 		Page Information
@@ -345,6 +346,17 @@ Contents
 
 	This is then processed into the selector options by the corresponding
 	javascript.
+
+<h2>Page Select Element
+	The Page Select Element is provided to allow for the selection of a
+	page within a hierarchical model (one in which there is more than
+	one page).
+
+	The selector is filled and visible when the page loaded has more
+	than one hierarchical page, otherwise the element is invisible.
+
+	When a zoomed page is added and saved, the selector is updated
+	and made visible.
 
 <h2>Model Edit Options
 

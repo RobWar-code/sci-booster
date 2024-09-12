@@ -24,13 +24,15 @@ Contents
 
 <h2>Due
 
-    * Error loading parent page in Zoom Back option
-
-    * Save Model Page modal No option error
-
     Check-out Dismiss on flow-link, remove all details
 
 <h2>Fixed
+
+    12/09/2024
+    
+    * Error loading parent page in Zoom Back option
+
+    * Save Model Page modal No option error
 
     10/09/2024
     
@@ -311,8 +313,17 @@ Contents
     * Click the Submit button
     * Ensure that the node is displayed
     * Save the zoomed page
-    Ensure that the page is saved
-    Click the Zoom Back button
+    * Ensure that the page is saved
+    * Ensure that the page selector appears
+    * Click the Zoom Back button
+    * Ensure that the parent page is displayed and the child is cleared
+    * Click the Cancel button
+    * Ensure that the stage is cleared
+    * Select the same model using the Model selector
+    * Ensure that the first page (hierarchical id 01) is displayed
+    * Ensure that the page selector is displayed
+    * Click the other page on the page selector
+    * Ensure that the selected page is displayed
 
 
 <h1>In-Flight Tests: Edit, New and Read-only Modes

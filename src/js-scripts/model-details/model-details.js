@@ -117,31 +117,6 @@ const modelDetails = {
     this.displaySelectedModel();
   },
 
-  selectPage: async function(event, byId) {
-    if (event.target.value === "NONE SELECTED" || event.target.value === null) return;
-    if (dfm.currentPageSet && dfm.modelChanged) {
-      // Present the option to save the existing model
-      let doSave = await flowModelPage.saveModelRequired(`Save the current model - ${dfm.currentPage.page.title}?`);
-      if (doSave === "cancel") return;
-      if (doSave === "yes") {
-        let reload = false;
-        dfm.currentPage.saveModel(reload);
-      }
-    }
-    if (dfm.currentVisualsSet) {
-      dfm.currentVisual.destroyCurrentPage();
-    }
-    dfm.currentPage = new dfm.FlowPageData();
-    dfm.currentVisual = new dfm.FlowVisuals();
-    if (byId) {
-      await dfm.currentPage.selectPageById(event);
-    }
-    else {
-      await dfm.currentPage.selectModel(event.target.value);
-    }
-    this.displaySelectedModel();
-  },
-
   displaySelectedModel: function () {
     dfm.currentPageSet = true;
     dfm.modelChanged = false;
@@ -192,10 +167,10 @@ const modelDetails = {
     }
   },
 
-  listPages: function () {
+  listPages: async function () {
     elem = document.getElementById("pageSelector");
     elem.innerHTML = "";
-    let list = dfm.currentPage.getModelPageList();
+    let list = await dfm.currentPage.getModelPageList();
     if (list.length > 1) {
       list.sort((a, b)=>{return a.title >= b.title ? 1 : -1});
       let opt = document.createElement("option");
