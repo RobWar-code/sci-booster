@@ -171,7 +171,6 @@ flowDetails = {
         }
         document.getElementById("flowFormulasDiv").style.display = "block";
         this.displayFlowFormulas();
-        console.log("Got to toggleFormulas");
         if (this.editMode) {
             document.getElementById("flowFormulasInputForm").style.display = "block";
         }

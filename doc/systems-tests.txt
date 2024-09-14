@@ -15,7 +15,10 @@ Contents
                 Model Details Completion
                 Editing Permissions
         Node Details Editing
+            Flow Drawing
         Child Page Editing
+        Flow Editing
+
     In-Flight Tests: Edit, New and Read-only Modes
         Drawing - Edit Modes
     Model Save and Load
@@ -324,6 +327,51 @@ Contents
     * Ensure that the page selector is displayed
     * Click the other page on the page selector
     * Ensure that the selected page is displayed
+
+<h2>Flow Editing
+    * Login as warner4 (editor)
+    * Select a multi-page model from those created
+    * Click the Edit option
+    * Ensure that the Model Details modal is displayed
+    * Click the Dismiss button
+    * Ensure that the Model Details modal is cleared
+    * Ensure that the editing instructions appear above the stage
+    * Add a node to the first page
+    * On the pre-existent node click the Flow Link button
+    * Ensure that the Flow Details modal is displayed
+    * Enter a label for the flow
+    * Click the Submit button
+    * Ensure that the source and/or destination flow node required message appears
+    * Enter an invalid source node num
+    * Click the Submit Details button
+    * Ensure that an invalid node number message appears
+    * Repeat for the destination node
+    * Ensure that an invalid node message appears
+    * Enter node numbers 01 and 02 for the source and destination
+    * Click the Submit Details button
+    * Ensure that the draw flow button appears
+    * Enter the Hypertext address https://narayana-art.co.uk
+    * Click the Submit Details button
+    * Ensure that the hyperlink button appears
+    * Click the Hyperlink button
+    * Ensure that the site is opened in another tab
+    * Clear the tab
+    * Click the Conversion Formulas option
+    * Ensure that entry form for the formulas appears
+    * Enter a formula and a description
+    * Click the Submit Formula button
+    * Ensure that the entry appears in the list
+    * Click the entry in the list
+    * Ensure that it is deleted
+    * Leave the formula blank and click the Submit Formula button
+    * Ensure that nothing happens
+
+<h3>Flow Drawing
+    Following on from above:
+    * Click the Draw Flow button
+    * Ensure that the Flow Details modal is cleared
+    * Ensure that the instructions for drawing a flow appear above the stage
+
 
 
 <h1>In-Flight Tests: Edit, New and Read-only Modes
