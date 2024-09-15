@@ -391,6 +391,7 @@ dfm.FlowVisuals = class {
                 fill: 'white',
                 stroke: 'black',
                 strokeWidth: 1,
+                strokeScaleEnabled: false,
                 nodeNum: count
             });
             marker.setAttr("draggable", true);
@@ -716,7 +717,8 @@ dfm.FlowVisuals = class {
             fill: 'white',
             stroke: 'black',
             strokeWidth: 1,
-            nodeNum: flowNodeNum
+            nodeNum: flowNodeNum,
+            strokeScaleEnabled: false
         });
         flowNode.marker.setAttr("draggable", true);
         flowNode.marker.on("click", (e) => this.flowNodeClicked(e));
@@ -1254,6 +1256,7 @@ dfm.FlowVisuals = class {
             fill: 'white',
             stroke: 'black',
             strokeWidth: 1,
+            strokeScaleEnabled: false,
             nodeNum: newFlowNodeNum
         });
         marker.setAttr("draggable", true);

@@ -367,12 +367,43 @@ Contents
     * Ensure that nothing happens
 
 <h3>Flow Drawing
-    Following on from above:
+    Following on from the above:
     * Click the Draw Flow button
     * Ensure that the Flow Details modal is cleared
     * Ensure that the instructions for drawing a flow appear above the stage
-
-
+    * Click the stage below the first node
+    * Ensure that a circular marker appears
+    * Double click the circular marker
+    * Ensure that it disappears
+    * Click the stage
+    * Ensure that a marker appears
+    * Click the stage above the second node
+    * Ensure the marker appears
+    * Ensure that a line appears to connect with the first marker
+    * Click and drag the marker
+    * Ensure that it moves over the stage
+    * Drop (release) the marker
+    * Ensure that the line to the first marker is redrawn connected to it
+    * Click the line
+    * Ensure that a markeer is inserted into the line
+    * Double click the marker
+    * Ensure that is deleted
+    * Ensure that first and second markers are reconnected
+    * Double click the line
+    * Ensure that flow arrow appears
+    * Double click the flow arrow
+    * Ensure the flow arrow disappears
+    * Double click the line to reinstate it
+    * Double click the stage to produce the flow label
+    * Ensure the flow label appears
+    * Click and drag the flow label
+    * Drop it and ensure it rests at that position
+    * Click the flow details button on the label
+    * Ensure that flow details modal is displayed
+    * Click the dismiss button
+    * Ensure that the flow details modal is cleared
+    * Click the Flow Done button
+    * Ensure that the flow is redrawn without the markers
 
 <h1>In-Flight Tests: Edit, New and Read-only Modes
     Check the editing modes and operation when the "New" button
