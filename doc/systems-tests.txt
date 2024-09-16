@@ -15,9 +15,10 @@ Contents
                 Model Details Completion
                 Editing Permissions
         Node Details Editing
-            Flow Drawing
         Child Page Editing
         Flow Editing
+            Flow Drawing
+        Imports
 
     In-Flight Tests: Edit, New and Read-only Modes
         Drawing - Edit Modes
@@ -30,6 +31,9 @@ Contents
     Check-out Dismiss on flow-link, remove all details
 
 <h2>Fixed
+    15/09/2024
+
+    * Save Button missing after Flow Done clicked
 
     12/09/2024
     
@@ -339,6 +343,11 @@ Contents
     * Add a node to the first page
     * On the pre-existent node click the Flow Link button
     * Ensure that the Flow Details modal is displayed
+    * Enter a label
+    * Click the Dismiss button
+    * Ensure that the Flow Details modal is cleared
+    * Click the Flow Link button on the node
+    * Ensure that Flow Details modal is displayed
     * Enter a label for the flow
     * Click the Submit button
     * Ensure that the source and/or destination flow node required message appears
@@ -404,6 +413,51 @@ Contents
     * Ensure that the flow details modal is cleared
     * Click the Flow Done button
     * Ensure that the flow is redrawn without the markers
+    * Click the flow details button on the label
+    * Ensure that the flow details modal is displayed
+    * Click the Draw Flow button
+    * Ensure that Flow Details modal is cleared
+    * Ensure that marker appear on the flow line
+    * Ensure that flow line is drawn thicker
+    * Click the Flow Done button
+    * Ensure that flow is redrawn
+    * Click the Save button
+    * Ensure that the model is saved
+    * Click the Cancel button
+    * Use the Model Selector to reselect the model
+    * Ensure the Model Details are displayed
+    * Click the Dismiss button
+    * Ensure that Model Details are cleared
+    * Ensure the model is redrawn, including the flow
+    * Click the Edit button
+    * Click the Flow-Link button on the first Node
+    * Enter a label
+    * Click the Submit button
+    * Click the Draw Flow button
+    * Ensure that the modal is cleared
+    * Create a flow line with arrow and label
+    * Click the Flow Done button
+    * Ensure that flow is redrawn
+    * Click the Flow Details button on the flow label
+    * Ensure that the Flow Details modal is displayed
+    * Click the Delete button
+    * Ensure that Flow Details modal is cleared
+    * Ensure that flow, label and arrow are cleared from the drawing
+
+<h2>Imports
+    Set-up a JSON file for a model, using php-scripts/test/test-model5.json
+    Set the flow-model-title to ""
+    Login as warner3
+    Select a model using the model selector
+    Click the Edit Model button
+    Make a change to the title
+    Click the submit button
+    Click the Dismiss button
+    Ensure that model details modal is cleared
+    Click the import button
+    Ensure that the Save Model modal appears
+    Click the Cancel Button
+    
 
 <h1>In-Flight Tests: Edit, New and Read-only Modes
     Check the editing modes and operation when the "New" button
