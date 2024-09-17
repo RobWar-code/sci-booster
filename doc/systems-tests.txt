@@ -28,7 +28,11 @@ Contents
 
 <h2>Due
 
-    Check-out Dismiss on flow-link, remove all details
+    * Problem with title error report
+
+    * Save Model modal not displayed on Import after model details changed
+
+    * Check-out Dismiss on flow-link, remove all details
 
 <h2>Fixed
     15/09/2024
@@ -445,18 +449,31 @@ Contents
     * Ensure that flow, label and arrow are cleared from the drawing
 
 <h2>Imports
-    Set-up a JSON file for a model, using php-scripts/test/test-model5.json
-    Set the flow-model-title to ""
-    Login as warner3
-    Select a model using the model selector
-    Click the Edit Model button
-    Make a change to the title
-    Click the submit button
-    Click the Dismiss button
-    Ensure that model details modal is cleared
-    Click the import button
-    Ensure that the Save Model modal appears
-    Click the Cancel Button
+    * Set-up a JSON file for a model, using php-scripts/test/test-model5.json
+    * Set the flow-model-title to ""
+    * Login as warner3
+    * Select a model using the model selector
+    * Click the Edit Model button
+    * Make a change to the title
+    * Click the submit button
+    * Click the Dismiss button
+    * Ensure that model details modal is cleared
+    * Click the import button
+    * Ensure that the Save Model modal appears
+    * Click the Cancel Button
+    * Ensure that the Save Model modal is cleared
+    * Click the Import button
+    * Ensure that the Save Model modal appears
+    * Click the "No" button
+    * Ensure that the Import modal is displayed
+    * Click the Browse button
+    * Ensure that the client files object window is displayed
+    * Select the modified json file
+    * Ensure that the files window is cleared
+    * Ensure that name of the file appears next to the browse button
+    * Click the Import Flow Model button
+    * Ensure that an error message appears for the missing model title
+
     
 
 <h1>In-Flight Tests: Edit, New and Read-only Modes

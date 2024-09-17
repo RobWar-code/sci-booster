@@ -158,14 +158,14 @@ function arrangePageData($filedata) {
             }
         }
         if ($newPageItem['flow_model_title'] === "") {
-            $response = ['result'=>false, 'error'=>'Could not resolve model title'];
+            $response = ['result'=>false, 'error'=>'Could not resolve model title', 'status'=>'Could not resolve model title'];
             echo json_encode($response);
             exit;
         }
         if ($newPageItem['flow_model_id'] === null) {
             $flowModelItem = addNewModel($newPageItem['flow_model_title']);
             if ($flowModelItem === null) {
-                $response = ["result"=>false, "error"=>"Problem with model data"];
+                $response = ["result"=>false, "error"=>"Problem with model data", 'status'=>'Problem with model data'];
                 echo json_encode($response);
                 exit;
             }
@@ -191,7 +191,7 @@ function arrangePageData($filedata) {
             else {
                 $flowModelItem = addNewModel($pageData['flow_model_title']);
                 if ($flowModelItem === null) {
-                    $response = ["result"=>false, "error"=>"Problem with model data"];
+                    $response = ["result"=>false, "error"=>"Problem with model data", "status"=>"Problem with model data"];
                     echo json_encode($response);
                     exit;
                 }
@@ -202,7 +202,7 @@ function arrangePageData($filedata) {
         else {
             $flowModelItem = addNewModel($pageData['flow_model_title']);
             if ($flowModelItem === null) {
-                $response = ["result"=>false, "error"=>"Problem with model data"];
+                $response = ["result"=>false, "error"=>"Problem with model data", "status"=>"Problem with model data"];
                 echo json_encode($response);
                 exit;
             }
@@ -222,14 +222,14 @@ function arrangePageData($filedata) {
             }
         }
         if ($newPageItem['flow_model_title'] === "") {
-            $response = ['result'=>false, 'error'=>'Could not resolve model title'];
+            $response = ['result'=>false, 'error'=>'Could not resolve model title', 'status'=>'Could not resolve model title'];
             echo json_encode($response);
             exit;
         }
         if ($newPageItem['flow_model_id'] === null) {
             $flowModelItem = addNewModel($newPageItem['flow_model_title']);
             if ($flowModelItem === null) {
-                $response = ["result"=>false, "error"=>"Problem with model data"];
+                $response = ["result"=>false, "error"=>"Problem with model data", 'status'=>'Problem with model data'];
                 echo json_encode($response);
                 exit;
             }

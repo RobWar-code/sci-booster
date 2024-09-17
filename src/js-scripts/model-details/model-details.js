@@ -306,6 +306,7 @@ const modelDetails = {
       if (change) {
         let start = false;
         flowModelPage.showSaveOnPageEdit(start);
+        dfm.modelChanged = true;
       }
       // If this is a new model, automatically add the user author
       if (dfm.modelEditMode === "new") {
@@ -363,6 +364,7 @@ const modelDetails = {
         else {
           elem.style.display = "none";
           dfm.currentPage.page.user_authors.push({id: null, username: author});
+          dfm.modelChanged = true;
           let start = false;
           flowModelPage.showSaveOnPageEdit(start);
           this.displayAuthorsList();
@@ -410,6 +412,7 @@ const modelDetails = {
     else {
       dfm.currentPage.page.user_authors.splice(itemNum, 1);
     }
+    dfm.modelChanged = true;
     this.displayAuthorsList();
   },
 
@@ -435,6 +438,7 @@ const modelDetails = {
       author = Misc.stripRedundantNameChars(author);
       if (author != "") {
         dfm.currentPage.page.external_authors.push({id: null, author: author});
+        dfm.modelChanged = true;
         let start = false;
         flowModelPage.showSaveOnPageEdit(start);
         this.displayExtAuthorsList();
@@ -477,6 +481,7 @@ const modelDetails = {
     else {
       dfm.currentPage.page.external_authors.splice(itemNum, 1);
     }
+    dfm.modelChanged = true;
     this.displayExtAuthorsList();
   },
 
@@ -509,6 +514,7 @@ const modelDetails = {
         document.getElementById("modelReferenceAuthor").value = "";
         document.getElementById("modelReferenceTitle").value = "";
         dfm.currentPage.page.references.push(refObj);
+        dfm.modelChanged = true;
         let start = false;
         flowModelPage.showSaveOnPageEdit(start);
         this.displayReferencesList();
@@ -547,6 +553,7 @@ const modelDetails = {
     else {
       dfm.currentPage.page.references = dfm.currentPage.page.references.splice(itemNum, 1);
     }
+    dfm.modelChanged = true;
     this.displayReferencesList();
   },
 
@@ -555,13 +562,13 @@ const modelDetails = {
       return;
     }
     // Check whether there is a model already loaded
-    if (dfm.currentModelSet && dfm.modelChanged) {
-      let response = await flowModePage.saveModelRequired();
+    if (dfm.currentPageSet && dfm.modelChanged) {
+      let response = await flowModelPage.saveModelRequired("Save Current Model");
       if (response === "yes") {
           let reload = false;
           dfm.currentPage.saveModel(reload);
       }
-      else {
+      else if (response === "cancel") {
         return;
       }
     }
