@@ -265,9 +265,6 @@ function conductGeneralSearch($inputData) {
 function getModelPageList($flowModelId) {
     global $dbConn;
 
-    // Debug
-    error_log("flow_model_id: $flowModelId", 0);
-
     $list = [];
     $sql = "SELECT id, title FROM page WHERE flow_model_id = $flowModelId";
     $result = $dbConn->query($sql);

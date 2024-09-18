@@ -405,6 +405,7 @@ dfm.FlowPageData = class {
         if (!this.validateModel()) return;
 
         let pageJSONObject = this.prepareJSONObject();
+        console.log("pageJSONObject", pageJSONObject);
         let pageJSON = JSON.stringify(pageJSONObject);
         let pageData = await this.sendPage(pageJSON);
         if (pageData.result) {
@@ -460,7 +461,7 @@ dfm.FlowPageData = class {
 
     prepareJSONObject() {
         let pageJSONObj = {
-            flow_model_id: this.id,
+            flow_model_id: this.flow_model_id,
             flow_model_title: this.flow_model_title,
             update: this.update,
             page: {

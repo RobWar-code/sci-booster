@@ -27,6 +27,9 @@ Contents
 <h1>Bugs
 
 <h2>Due
+    * Invalid flow_model_id not checked in import
+
+    * Problem with flow_model_id in load/save page
 
     * Problem with title error report
 
@@ -450,7 +453,7 @@ Contents
 
 <h2>Imports
     * Set-up a JSON file for a model, using php-scripts/test/test-model5.json
-    * Set the flow-model-title to ""
+    * Set the flow_model_title to ""
     * Login as warner3
     * Select a model using the model selector
     * Click the Edit Model button
@@ -473,6 +476,21 @@ Contents
     * Ensure that name of the file appears next to the browse button
     * Click the Import Flow Model button
     * Ensure that an error message appears for the missing model title
+    * Modify the JSON file by entering a title
+    * Enter an alpha numeric value in the flow_model_id field
+    * Click the Dismiss button on the Import modal
+    * Ensure that the previous model is still present
+    * Click the Import button
+    * Ensure that the Save Model modal appears
+    * Click the Yes option
+    * Ensure that the model is saved
+    * Ensure that the Import modal appears
+    * Click the Browse button
+    * Select the modified json file
+    * Click the Import Model button
+    * Ensure that an error message appears for the flow_model_id
+
+
 
     
 
