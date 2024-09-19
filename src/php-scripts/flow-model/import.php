@@ -220,37 +220,66 @@ function arrangePageData($filedata) {
             echo json_encode($response);
             exit;
         }
-        $doAddNewModel = false;
         if (array_key_exists("flow_model_id", $pageData)) {
-            if ($pageData["flow_model_id"] != null) {
-                $pageData['update'] = true;
-            }
-            else {
-                $flowModelItem = addNewModel($pageData['flow_model_title']);
-                if ($flowModelItem === null) {
-                    $response = ["result"=>false, "error"=>"Problem with model data", "status"=>"Problem with model data"];
+            $flowModelId = $pageData['flow_model_id'];
+            if ($flowModelId != null) {
+                if (!is_int($flow_model_id)) {
+                    $response = ["result"=>false, "status"=>"flow_model_id has invalid value"];
                     echo json_encode($response);
                     exit;
                 }
-                $pageData['flow_model_id'] = $flowModelItem['id'];
-                $pageData['update'] = $flowModelItem['update'];
+                if (!modelExists($flowModelId)) {
+                    $response = ["result"=>false, "status"=>"flow_model_id key does not exist"];
+                    echo json_encode($response);
+                    exit;
+                }
+                $pageData['update'] = true;
+            }
+            else {
+                $flowModelTitle = $pageData['flow_model_title'];
+                $flowModelId = modelTitleExists($flowModelTitle); 
+                if ($flowModelId === null) {
+                    $pageData['update'] = false;
+                }
+                else {
+                    $pageData['update'] = true;
+                }
+                $pageData['flow_model_id'] = $flowModelId;
             }
         }
         else {
-            $flowModelItem = addNewModel($pageData['flow_model_title']);
-            if ($flowModelItem === null) {
-                $response = ["result"=>false, "error"=>"Problem with model data", "status"=>"Problem with model data"];
-                echo json_encode($response);
-                exit;
+            $flowModelTitle = $pageData['flow_model_title'];
+            $flowModelId = modelTitleExists($flowModelTitle); 
+            if ($flowModelId === null) {
+                $pageData['update'] = false;
             }
-            $pageData['flow_model_id'] = $flowModelItem['id'];
-            $pageData['update'] = $flowModelItem['update'];
+            else {
+                $pageData['update'] = true;
+            }
+            $pageData['flow_model_id'] = $flowModelId;
         }
         array_push($newModel, $pageData);
     }
     // Array of pages
     elseif (count($pageData) >= 1) {
         if (array_key_exists("flow_model_id", $pageData[0])){
+            $flowModelId = $pageData[0]["flow_model_id"];
+            if (!is_int($flowModelId)) {
+                $response = ['result'=>false, 'status'=>'Invalid flow_model_id value'];
+                echo json_encode($response);
+                exit;
+            }
+            if ($flowModelId != null) {
+                if (!modelExists($flowModelId)) {
+                    $response = ['result'=>false, 'status'=>'Non-existent flow_model_id key'];
+                    echo json_encode($response);
+                    exit;
+                }
+                $newPageItem['update'] = true;
+            }
+            else {
+                $newPageItem['update'] = false;
+            }
             $newPageItem['flow_model_id'] = $pageData[0]['flow_model_id'];
         }
         if (array_key_exists("hierarchical_id", $pageData[0])) {
@@ -295,7 +324,7 @@ function arrangePageData($filedata) {
     return $newModel;
 }
 
-modelExists($flowModelId) {
+function modelExists($flowModelId) {
     global $dbConn;
 
     $sql = "SELECT id FROM flow_model WHERE id = $flowModelId";
@@ -310,7 +339,7 @@ modelExists($flowModelId) {
     return false;
 }
 
-modelTitleExists($flowModelTitle) {
+function modelTitleExists($flowModelTitle) {
     global $dbConn;
 
     $flowModelId = null;
@@ -328,7 +357,7 @@ modelTitleExists($flowModelTitle) {
         $stmt->bind_result($flowModelId);
         if ($stmt->fetch()) {
             return $flowModelId;
-        };
+        }
         else {
             return null;
         }
