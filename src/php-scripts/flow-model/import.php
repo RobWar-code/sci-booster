@@ -281,19 +281,48 @@ function arrangePageData($filedata) {
                 $newPageItem['update'] = false;
             }
             $newPageItem['flow_model_id'] = $pageData[0]['flow_model_id'];
+            $newPageItem['update'] = true;
+        }
+        else {
+            $newPageItem['flow_model_id'] = null;
         }
         if (array_key_exists("hierarchical_id", $pageData[0])) {
             if ($pageData[0]['hierarchical_id'] === '01') {
-                $newPageItem['flow_model_title'] = $pageData[0]['title'];
+                if (!array_key_exists($pageData[0]['title'])) {
+                    $response = ["result"=>false, "status"=>"Missing title in page data"];
+                    echo json_encode($response);
+                    exit;
+                }
+                $title = $pageData[0]['title'];
+                if ($title === "") {
+                    $response = ["result"=>false, "status"=>"Title is empty in page data"];
+                    echo json_encode($response);
+                    exit;
+                }
+                $newPageItem['flow_model_title'] = $title;
+            }
+            else if ($flowModelId === null) {
+                $response = ["result"=>false, "status"=>"hierarchical_id of first page not set to 01"];
+                echo json_encode($response);
+                exit;
             }
         }
+        else {
+            if ($flowModelId === null) {
+                $response = ["result"=>false, "status"=>"hierarchical_id of first page missing"];
+                echo json_encode($response);
+                exit;
+            }
+        }
+
         if ($newPageItem['flow_model_title'] === "") {
             $response = ['result'=>false, 'error'=>'Could not resolve model title', 'status'=>'Could not resolve model title'];
             echo json_encode($response);
             exit;
         }
         if ($newPageItem['flow_model_id'] === null) {
-            $flowModelItem = addNewModel($newPageItem['flow_model_title']);
+            $flowModelTitle = $pageData[0]["title"];
+            $flowModelId = modelTitleExists($flowModelTitle);
             if ($flowModelItem === null) {
                 $response = ["result"=>false, "error"=>"Problem with model data", 'status'=>'Problem with model data'];
                 echo json_encode($response);
