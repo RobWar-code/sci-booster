@@ -1,11 +1,11 @@
 {
-	"flow_model_id": "A01",
+	"flow_model_id": null,
 	"flow_model_title": "Test Model 6",
 	"update": false,
 	"pages": [
         {
 		    "id": null,
-		    "hierarchical_id": "01",
+		    "hierarchical_id": "A0",
 		    "title": "Test Model 6",
 		    "description": "A test model to demonstrate the effectiveness of the import routines.",
 		    "keywords": "example test",

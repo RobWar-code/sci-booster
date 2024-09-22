@@ -489,6 +489,18 @@ Contents
     * Select the modified json file
     * Click the Import Model button
     * Ensure that an error message appears for the flow_model_id
+    * Adjust the flow_model_id of the test data to null
+    * Set the title of the first page to ""
+    * Click the browse button
+    * Select the test data file
+    * Click the Import Model button
+    * Ensure that an error message for the title appears
+    * Restore the title field of the test data
+    * Set the hierarchical_id to alpha numeric
+    * Click the Browse button
+    * Click the Import Model button
+    * Ensure that error message for the hierarchical_id appears
+
 
 
 

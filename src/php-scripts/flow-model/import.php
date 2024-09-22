@@ -14,6 +14,9 @@ $NODEHEIGHT = $_POST['nodeHeight'];
 
 $newPageArray = arrangePageData($filenameItem);
 if (validateImportData($newPageArray, $_POST['username'])) {
+    if (!$newPageArray[0]['update']) {
+        addNewModel($newPageArray[0]['flow_model_title']);
+    }
     if (importPageData($newPageArray)) {
         $response = ["result"=>true, "status"=>"DATA GOOD<br>", "flow_model_title"=>$newPageArray[0]['flow_model_title']];
         echo json_encode($response);
@@ -324,12 +327,11 @@ function arrangePageData($filedata) {
             $flowModelTitle = $pageData[0]["title"];
             $flowModelId = modelTitleExists($flowModelTitle);
             if ($flowModelItem === null) {
-                $response = ["result"=>false, "error"=>"Problem with model data", 'status'=>'Problem with model data'];
-                echo json_encode($response);
-                exit;
+                $newPageItem['update'] = false;
             }
-            $newPageItem['flow_model_id'] = $flowModelItem['id'];
-            $newPageItem['update'] = $flowModelItem['update'];
+            else {
+                $newPageItem['update'] = $flowModelItem['update'];
+            }
         }
         else {
             $newPageItem['update'] = true;
