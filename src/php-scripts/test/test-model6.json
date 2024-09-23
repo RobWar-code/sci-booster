@@ -5,7 +5,7 @@
 	"pages": [
         {
 		    "id": null,
-		    "hierarchical_id": "A0",
+		    "hierarchical_id": "01",
 		    "title": "Test Model 6",
 		    "description": "A test model to demonstrate the effectiveness of the import routines.",
 		    "keywords": "example test",
@@ -37,7 +37,7 @@
 				    "node_num": "01",
 				    "x": 50,
 				    "y": 30,
-				    "label": "Petrol Station",
+				    "label": "",
 				    "type": "mechanism",
 				    "definition": "Fuel station for refuelling",
 				    "keywords": "fueling station, fuels",

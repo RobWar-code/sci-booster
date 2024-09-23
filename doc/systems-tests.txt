@@ -499,7 +499,42 @@ Contents
     * Set the hierarchical_id to alpha numeric
     * Click the Browse button
     * Click the Import Model button
-    * Ensure that error message for the hierarchical_id appears
+    * Ensure that the error message for the hierarchical_id appears
+    * Set the hierarchical_id of the test data to an odd number of digits
+    * Click the Browse button
+    * Click the Import Model button
+    * Ensure that the error message for the hierarchical_id appears
+    * Set the hierarchical_id of the first page entry back to 01
+    * Set the user_author name to an unknown value
+    * Click the Browse button
+    * Click the Import Model button
+    * Ensure that an error message for user author appears
+    * Set the user-author name back to a known user, ie: warner1
+    * Set the first node entry for x to null
+    * Click the Browse button
+    * Click the Import Model button
+    * Ensure that an error message appears for the entry
+    * Set the first node entry to -1
+    * Click the Browse button
+    * Click the Import Model button
+    * Ensure that an error message appears for the entry
+    * Set the x entry back to 50
+    * Set the node_num to a0
+    * Click the Browse button
+    * Click the Import Model button
+    * Ensure that an error message appears for the entry
+    * Set the node_num to 132
+    * Click the Browse button
+    * Click the Import Model button
+    * Ensure that an error message appears for the entry
+    * Set the node_num back to 01
+    * Set the label to ""
+    * Click the Browse button
+    * Click the Import Model button
+    * Ensure that an error message appears for the entry
+
+
+
 
 
 

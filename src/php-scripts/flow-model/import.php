@@ -685,6 +685,10 @@ function validateNodes(&$page, $count) {
             $message = "ValidateNodes: x coordinate missing at page $count<br>";
             return $message;
         }
+        if (!is_int($node['x'])) {
+            $message = "ValidateNodes: x has invalid value at page $count<br>";
+            return $message;
+        }
         $x = $node['x'];
         if ($x < 0 || $STAGEWIDTH < $x) {
             $message = "ValidateNodes: x coordinate out of range at page $count<br>";
@@ -694,6 +698,9 @@ function validateNodes(&$page, $count) {
             $message = "ValidateNodes: y coordinate missing at page $count<br>";
             return $message;
         }
+        if (!is_int($node['y'])) {
+            $message = "ValidateNodes: invalid y value for node at page $count<br>";
+        }
         $y = $node['y'];
         if ($y < 0 || $STAGEHEIGHT < $y) {
             $message = "ValidateNodes: y coordinate out of range at page $count<br>";
@@ -702,6 +709,10 @@ function validateNodes(&$page, $count) {
 
         if (!array_key_exists("label", $node)) {
             $message = "ValidateNodes: label missing at page $count<br>";
+            return $message;
+        }
+        if ($node['label'] === "") {
+            $message = "ValidateNodes: label set to no value at page $count<br>";
             return $message;
         }
         $label = htmlspecialchars($node['label']);
