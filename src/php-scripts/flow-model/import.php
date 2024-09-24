@@ -471,6 +471,7 @@ function validateImportData(&$pageData, $username) {
         $message = validateNodes($page, $count);
         if ($message != "") break;
         $message = validateFlows($page, $count);
+        if ($message != "") break;
 
         ++$count;
     }
@@ -860,6 +861,10 @@ function validateFlows(&$page, $count) {
             return $message;
         }
         $label = htmlspecialchars($flow['label']);
+        if ($label === "") {
+            $message = "validateFlows: label set to empty at page $count<br>";
+            return $message;
+        }
         if (strlen($label) > 64) {
             $message = "validateFlows: flow label is too long (>64 chars) at page $count<br>";
             return $message;
@@ -871,6 +876,10 @@ function validateFlows(&$page, $count) {
             return $message;
         }
         $labelX = $flow['label_x'];
+        if (!is_int($labelX)) {
+            $message = "validateFlows: flow label_x is not integer at page $count<br>";
+            return $message;
+        }
         if ($labelX < -$STAGEWIDTH || $STAGEWIDTH < $labelX) {
             $message = "validateFlows: flow label_x is out of range at page $count<br>";
             return $message;
@@ -881,6 +890,10 @@ function validateFlows(&$page, $count) {
             return $message;
         }
         $labelY = $flow['label_y'];
+        if (!is_int($labelY)) {
+            $message = "validateFlows: flow label_y is not an integer at page $count<br>";
+            return $message;
+        }
         if ($labelY < -$STAGEHEIGHT || $STAGEHEIGHT < $labelY) {
             $message = "validateFlows: flow label_y is out of range at page $count<br>";
             return $message;
@@ -891,6 +904,10 @@ function validateFlows(&$page, $count) {
             return $message;
         }
         $labelWidth = $flow['label_width'];
+        if (!is_int($labelWidth)) {
+            $message = "validateFlows: flow label_width is not an integer at page $count<br>";
+            return $message;
+        }
         if ($labelWidth < 50 || 140 < $labelWidth) {
             $message = "validateFlows: flow label_width is out of range at page $count<br>";
             return $message;
@@ -901,6 +918,9 @@ function validateFlows(&$page, $count) {
             return $message;
         }
         $drawingGroupX = $flow['drawing_group_x'];
+        if (!is_int($drawingGroupX)) {
+            $message = "validateFlows: flow drawing_group_x is not an integer at page $count<br>";
+        }
         if ($drawingGroupX < 0 || $STAGEWIDTH < $drawingGroupX) {
             $message = "validateFlows: flow drawing_group_x value is out of range at page $count<br>";
             return $message;
@@ -910,6 +930,10 @@ function validateFlows(&$page, $count) {
             return $message;
         }
         $drawingGroupY = $flow['drawing_group_y'];
+        if (!is_int($drawingGroupY)) {
+            $message = "validateFlows: flow drawing_group_y is not an integer at page $count<br>";
+            return $message;
+        }
         if ($drawingGroupY < 0 || $STAGEHEIGHT < $drawingGroupY) {
             $message = "validateFlows: flow drawing_group_y value is out of range at page $count<br>";
             return $message;
@@ -931,6 +955,10 @@ function validateFlows(&$page, $count) {
                 return $message;
             }
             $x = $point['x'];
+            if (!is_int($x)) {
+                $message = "validateFlows: - x coordinate is not an integer at page $count<br>";
+                return $message;
+            }
             if ($x < -($STAGEWIDTH - 40) || $STAGEWIDTH - 40 < $x) {
                 $message = "validateFlows: - arrow_point x value out of range at page $count<br>";
                 return $message;
@@ -940,6 +968,10 @@ function validateFlows(&$page, $count) {
                 return $message;
             }
             $y = $point['y'];
+            if (!is_int($y)) {
+                $message = "validateFlows: - arrow point y coordinate is not an integer at page $count<br>";
+                return $message;
+            }
             if ($y < -($STAGEHEIGHT - 40) || $STAGEHEIGHT - 40 < $y) {
                 $message = "validateFlows: - arrow_point y value out of range at page $count<br>";
                 return $message;
@@ -960,6 +992,10 @@ function validateFlows(&$page, $count) {
                 return $message;
             }
             $x = $point['x'];
+            if (!is_int($x)) {
+                $message = "validateFlows: - flow line point coordinate x is not an integer at page $count<br>";
+                return $message;
+            }
             if ($x < -($STAGEWIDTH - 40) || $STAGEWIDTH - 40 < $x) {
                 $message = "validateFlows: - flow line coordinate x out of range at page $count<br>";
                 return $message;
@@ -969,6 +1005,10 @@ function validateFlows(&$page, $count) {
                 return $message;
             }
             $y = $point['y'];
+            if (!is_int($y)) {
+                $message = "validateFlows: - flow line point coordinate y is not an integer at page $count<br>";
+                return $message;
+            }
             if ($y < -($STAGEHEIGHT - 40) || $STAGEHEIGHT - 40 < $y) {
                 $message = "validateFlows: - flow line coordinate y is out of range at page $count<br>";
                 return $message;

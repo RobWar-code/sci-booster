@@ -27,6 +27,14 @@ Contents
 <h1>Bugs
 
 <h2>Due
+    Problem with uploading passed import data
+
+
+<h2>Fixed
+    24/09/2024
+    
+    * False data pass on flow label ""
+
     * Invalid flow_model_id not checked in import
 
     * Problem with flow_model_id in load/save page
@@ -36,8 +44,7 @@ Contents
     * Save Model modal not displayed on Import after model details changed
 
     * Check-out Dismiss on flow-link, remove all details
-
-<h2>Fixed
+    
     15/09/2024
 
     * Save Button missing after Flow Done clicked
@@ -528,10 +535,15 @@ Contents
     * Click the Import Model button
     * Ensure that an error message appears for the entry
     * Set the node_num back to 01
-    * Set the label to ""
+    * Set the node label to ""
     * Click the Browse button
     * Click the Import Model button
     * Ensure that an error message appears for the entry
+    Restore the node label
+    Set the first flow label to ""
+    Click the Browse button
+    Click the Import Model button
+    Ensure that an error message appears for the entry
 
 
 

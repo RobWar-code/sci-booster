@@ -22,7 +22,7 @@ function flagParentPage($flowModelId, $hierarchicalId, $flag) {
     $parentPageId = null;
 
     // Get the parent page id
-    $sql = "SELECT id FROM page WHERE flow_model_id = $flowModelId AND hierarchical_id = $parentHierarchicalId";
+    $sql = "SELECT id FROM page WHERE flow_model_id = $flowModelId AND hierarchical_id = '$parentHierarchicalId'";
     $result = $dbConn->query($sql);
     if (!$result) {
         error_log("flagParentPage: Search for parent failed - $hierarchicalId - {$dbConn->error}", 0);

@@ -84,7 +84,7 @@
         else {
             echo "Cleared page_user_link<br>";
         }
-
+/*
         $sql = "DELETE FROM user";
         $result = $dbConn->query($sql);
         if (!$result) {
@@ -93,7 +93,7 @@
         else {
             echo "Cleared user<br>";
         }
-        
+*/        
         $sql = "DELETE FROM page";
         $result = $dbConn->query($sql);
         if (!$result) {
