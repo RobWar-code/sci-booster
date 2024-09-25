@@ -539,11 +539,42 @@ Contents
     * Click the Browse button
     * Click the Import Model button
     * Ensure that an error message appears for the entry
-    Restore the node label
-    Set the first flow label to ""
+    * Restore the node label
+    * Set the first flow label to ""
+    * Click the Browse button
+    * Click the Import Model button
+    * Ensure that an error message appears for the entry
+    * Restore the flow label
+    * Set the flow_num to "a01"
+    * Click the Browse button
+    * Click the Import Model button
+    * Ensure that an error message appears for the entry
+    * Restore the flow_num
+    * Set the source_node_num to "a01"
+    * Click the Browse button
+    * Click the Import Model button
+    * Ensure that an error message appears for the entry
+    * Set the source_node_num to 1
+    * Click the Browse button
+    * Click the Import Model button
+    * Ensure that an error message appears for the entry
+    * Set the source_node_num and destination_node_num to ""
+    * Click the Browse button
+    * Click the Import Model button
+    * Ensure that an error message appears for the entry
+    * Set the source_node_num to ""
+    * Set the destination_node_num to "02"
+    * Set label_x to null
+    * Click the Browse button
+    * Click the Import Model button
+    * Ensure that an error message appears for label_x
+    Set the source_node_num to "01"
+    Set label_x to -400
     Click the Browse button
     Click the Import Model button
-    Ensure that an error message appears for the entry
+    Ensure that an error message appears for label_x
+
+
 
 
 

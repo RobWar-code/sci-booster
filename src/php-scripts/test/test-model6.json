@@ -61,10 +61,10 @@
 			    {
 				    "id": null,
 				    "flow_num": "01",
-				    "source_node_num": "01",
+				    "source_node_num": "",
 				    "destination_node_num": "02",
-				    "label": "",
-				    "label_x": -40,
+				    "label": "Petrol",
+				    "label_x": -400,
 				    "label_y": 40,
 				    "label_width": 60,
 				    "drawing_group_x": 120,

@@ -12,6 +12,8 @@ $STAGEHEIGHT = $_POST['stageHeight'];
 $NODEWIDTH = $_POST['nodeWidth'];
 $NODEHEIGHT = $_POST['nodeHeight'];
 
+error_log("Stagewidth: $STAGEWIDTH , $STAGEHEIGHT , $NODEWIDTH , $NODEHEIGHT", 0);
+
 $newPageArray = arrangePageData($filenameItem);
 if (validateImportData($newPageArray, $_POST['username'])) {
     if (!$newPageArray[0]['update']) {
@@ -504,25 +506,28 @@ function validatePageDetails(&$page, $count) {
     
     if (array_key_exists("hierarchical_id", $page)) {
         $hierarchicalId = $page['hierarchical_id'];
+        if (!is_string($hierarchicalId)) {
+            $message = "validatePageDetails: hierarchical_id is not of type string at page $count<br>";
+        }
         $matched = preg_match('/^[0-9]+$/', $hierarchicalId);
         if (!$matched) {
-            $message = "Faulty hierarchical_id at page $count, $title<br>";
+            $message = "validatePageDetails: Faulty hierarchical_id at page $count, $title<br>";
             return $message;
         }
         if (strlen($hierarchicalId) % 2 != 0) {
-            $message = "Uneven number of characters in hierarchical_id at page $count, $title<br>";
+            $message = "validatePageDetails: Uneven number of characters in hierarchical_id at page $count, $title<br>";
             return $message;
         }
     }
     else {
-        $message = "Missing file hierarchical_id at page $count, $title<br>";
+        $message = "validatePageDetails: Missing file hierarchical_id at page $count, $title<br>";
         return $message;
     }
 
     if (array_key_exists("description", $page)) {
         $description = htmlspecialchars($page['description']);
         if (strlen($description) > 4096) {
-            $message = "Description too long (>4096 chars) at page $count, $title<br>";
+            $message = "validatePageDetails: Description too long (>4096 chars) at page $count, $title<br>";
             return $message;
         }
         $page['description'] = $description;
@@ -534,7 +539,7 @@ function validatePageDetails(&$page, $count) {
     if (array_key_exists("keywords", $page)) {
         $keywords = htmlspecialchars($page['keywords']);
         if (strlen($keywords) > 256) {
-            $message = "Keywords too long (>256 chars) at Page $count, $title<br>";
+            $message = "validatePageDetails: Keywords too long (>256 chars) at Page $count, $title<br>";
             return $message;
         }
         $page['keywords'] = $keywords;
@@ -677,6 +682,10 @@ function validateNodes(&$page, $count) {
             return $message;
         }
         $nodeNum = $node['node_num'];
+        if (!is_string($nodeNum)) {
+            $message = "validateNodes: node_num is not of type string at page $count<br>";
+            return message;
+        }
         if (!preg_match('/^[0][0-9]$/', $nodeNum)){
             $message = "ValidateNodes: Badly formed node_num at page $count<br>";
             return $message;
@@ -824,6 +833,10 @@ function validateFlows(&$page, $count) {
             return $message;
         }
         $flowNum = $flow['flow_num'];
+        if (!is_string($flowNum)) {
+            $message = "validateFlows: flow_num is not given as a string at page $count<br>";
+            return $message;
+        }
         if (!preg_match("/^[0-9][0-9]$/", $flowNum)) {
             $message = "validateFlows: badly formed flow_num at page $count<br>";
             return $message;
@@ -833,12 +846,20 @@ function validateFlows(&$page, $count) {
             $message = "validateFlows: source_node_num field missing at page $count<br>";
             return $message;
         }
+        $sourceNodeNum = $flow['source_node_num'];
+        if (!is_string($sourceNodeNum)) {
+            $message = "validateFlows: source_node_num is not given as a string at page $count<br>";
+            return $message;
+        }
         if (!array_key_exists('destination_node_num', $flow)) {
             $message = "validateFlows: destination_node_num field missing at page $count<br>";
             return $message;
         }
-        $sourceNodeNum = $flow['source_node_num'];
         $destNodeNum = $flow['destination_node_num'];
+        if (!is_string($destNodeNum)) {
+            $message = "validateFlows: destination_node_num is not given as a string at page $count<br>";
+            return $message;
+        }
         if ($sourceNodeNum != "") {
             if (!preg_match('/^[0-9][0-9]$/', $sourceNodeNum)) {
                 $message = "validateFlows: source_node_num badly formed at page $count<br>";
