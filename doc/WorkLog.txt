@@ -8,6 +8,14 @@ Contents
 
     Block robot logins/register
 
+    Add warnings to import model for flow label_width and flow_arrow presence
+        Allow missing flow label_width
+        Allow missing flow_arrow
+
+    If updating a model from import, check the user has permissions
+
+    Update README for changes in the JSON model.
+
     * Add Current model page look-up
 
     * Clear page selector on Cancel

@@ -214,17 +214,34 @@ This feature allows for the importation/exportation of data for other
 sources, notably ChatGPT, in which the data may be easily edited for
 import.
 
-The following definition is known as the "JSON Hierarchical Flow Model 
-Definition Version 1.3"
+The following definition is known as the "Sci-Booster Model JSON
+Definition Version 1.4"
 
-Clarifications:
+The purpose of this section is to describe the required format of the flow-model 
+JSON object for data imports to the app. This is provided for both AI's such as
+ChatGPT and human contributors.
+
+The import data may also have been obtained as an export from the app database,
+in this case id fields will be set. Such exports can be edited.
+
+JSON Models supplied as updates without id fields must preserve title, label and
+hierarchical_id fields for the data items to be updated, although new items can be 
+added in an update.
+
+
+#### Descriptive Details
+A flow model consists of pages of component nodes and flows lines used to describe
+a flow system. The pages are defined as a heirarchy of descriptive detail for each
+component node as required. For example, a top-level flow model might be:
+
+Petrol Station -->petrol-- Car --->exhaust-- Atmosphere
 
 - The top level (page) of a flow model has upto four nodes and all subsequent
 pages are further definitions of the component nodes that they describe.
 - The flow_model_title should always be present at the top level and must the same
 as for the first page of hierarchical_id "01"
 - The "id" field of each field where shown below of the json model should be present and 
-set to null unless it is known via the site database.
+set to null unless it is known via the site database from a data export.
 - The hierarchical_id of the top-level page is "01" and its details apply to the whole model
 as well as the page that they describe
 - All definitions (nodes / pages) should confine themselves to the constraint of the parent.
@@ -237,7 +254,12 @@ for example)
 - A hierarchical_id is built from its parent node numbers in order of descent, ie: "010204".
 - When using keyword fields, beware of terms such as "flow" which are likely to be 
 too common to be useful
+- The stage (on which the model page is drawn) has width base 380 pixels, the height is 690 pixels
+- The flow label_width is optional (it is in any event calculated)
+- Flow arrow_points are optional, if not supplied, the user can add an arrow to the flow when
+using the app.
 
+#### JSON Object Structure
 ```js
 flow_models: [
 	{
@@ -276,6 +298,8 @@ flow_models: [
 					{
 						"id": , // May be null
 						"node_num" : "", // (ie: "01")
+						"x": , // Integer, the x coordinate of the component node box on the stage (0 to stage width)
+						"y": , // Integer, the y coordinate of the component node box on the stage (0 to stage height)
 						"label": "",
 						"graphic_file": "", // File name/ web link of the image associated with the node
 						"graphic_text": "",
@@ -294,6 +318,15 @@ flow_models: [
 						"source_node_num": "", 
 						"destination_node_num": "", // (optional)
 						"label": "",
+						"label_x": , // integer (range -stage width to stage width, relative to drawing_group_x)
+						"label_y": , // integer (range -stage height to stage height. relative to drawing_group_y)
+						"label_width": , // integer, optional to suit characters of the label that are size 13px
+						"drawing_group_x": ,// integer (the base coordinate of the flow on the stage)
+						"drawing_group_y": ,// integer (the base coordinate of the flow on the stage)
+						"arrow_points": , // [{x: , y: }] optional, the coordinates of the nodes of the arrow that
+										// sits on the flow line and points toward the destination
+						"points": ,// [{x: , y: }] the flow line node points, relative to drawing_group x, y. 
+									// (x: -stage width to stage width, y: -stage height to stage height)
 						"keywords": "", // (optional)
 						"definition": "", // (optional)
 						"conversion_formulas": [

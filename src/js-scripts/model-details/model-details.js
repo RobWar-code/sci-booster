@@ -587,7 +587,7 @@ const modelDetails = {
       let formData = new FormData();
       formData.append('file', file);
       formData.append('username', dfm.username);
-      formData.append('stageWidth', dfm.stageWidth);
+      formData.append('stageWidth', GLOBALS.minStageWidth);
       formData.append('stageHeight', dfm.stageHeight);
       formData.append('nodeWidth', dfm.nodeTemplate.width);
       formData.append('nodeHeight', dfm.nodeTemplate.height);

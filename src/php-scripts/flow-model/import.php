@@ -12,12 +12,18 @@ $STAGEHEIGHT = $_POST['stageHeight'];
 $NODEWIDTH = $_POST['nodeWidth'];
 $NODEHEIGHT = $_POST['nodeHeight'];
 
-error_log("Stagewidth: $STAGEWIDTH , $STAGEHEIGHT , $NODEWIDTH , $NODEHEIGHT", 0);
-
 $newPageArray = arrangePageData($filenameItem);
 if (validateImportData($newPageArray, $_POST['username'])) {
     if (!$newPageArray[0]['update']) {
-        addNewModel($newPageArray[0]['flow_model_title']);
+        $flowModelItem = addNewModel($newPageArray[0]['flow_model_title']);
+        if ($flowModelItem['found']) {
+            $flowModelId = $flowModelItem['id'];
+            $newPageArray[0]['flow_model_id'] = $flowModelId;
+            error_log("FlowModelId: ", $flowModelId);
+        }
+        else {
+            $flowModelId = null;
+        }
     }
     if (importPageData($newPageArray)) {
         $response = ["result"=>true, "status"=>"DATA GOOD<br>", "flow_model_title"=>$newPageArray[0]['flow_model_title']];
@@ -416,7 +422,9 @@ function importPageData($pageData) {
 
     $count = 0;
     foreach ($pageData as $pageItem) {
-        $flowModelId = $pageItem['flow_model_id'];
+        if ($count === 0) {
+            $flowModelId = $pageItem['flow_model_id'];
+        }
         $page = $pageItem['page'];
         if ($pageItem['update'] === false) {
             addPage($flowModelId, $pageItem);
@@ -489,6 +497,10 @@ function validateImportData(&$pageData, $username) {
 function validatePageDetails(&$page, $count) {
     if (array_key_exists("title", $page)) {
         $title = htmlspecialchars($page['title']);
+        if (!is_string($title)) {
+            $message = "Page title is not a string at Page $count<br>";
+            return $message;
+        }
         if ($title === "") {
             $message = "Missing Title at Page $count<br>";
             return $message;
@@ -525,6 +537,11 @@ function validatePageDetails(&$page, $count) {
     }
 
     if (array_key_exists("description", $page)) {
+        $description = $page['description'];
+        if (!is_string($description)) {
+            $message = "Page description is not a string at page $count<br>";
+            return $message;
+        }
         $description = htmlspecialchars($page['description']);
         if (strlen($description) > 4096) {
             $message = "validatePageDetails: Description too long (>4096 chars) at page $count, $title<br>";
@@ -537,7 +554,12 @@ function validatePageDetails(&$page, $count) {
     }
 
     if (array_key_exists("keywords", $page)) {
-        $keywords = htmlspecialchars($page['keywords']);
+        $keywords = $page['keywords'];
+        if (!is_string($keywords)) {
+            $message = "Page keywords not a string at page $count<br>";
+            return $message;
+        }
+        $keywords = htmlspecialchars($keywords);
         if (strlen($keywords) > 256) {
             $message = "validatePageDetails: Keywords too long (>256 chars) at Page $count, $title<br>";
             return $message;
@@ -599,6 +621,11 @@ function validateExternalAuthors(&$page, $count) {
     }
     $index = 0;
     foreach($page['external_authors'] as $authorItem) {
+        $author = $authorItem['author'];
+        if (!is_string($author)) {
+            $message = "External Author not a string at page $count<br>";
+            return $message;
+        }
         $author = htmlspecialchars($authorItem['author']);
         if (strlen($author) > 128) {
             $message = "Author name length too long > 128 characters at page $count<br>";
@@ -622,7 +649,12 @@ function validateReferences(&$page, $count) {
             $reference['source'] = "";
         }
         else {
-            $source = htmlspecialchars($reference['source']);
+            $source = $reference['source'];
+            if (!is_string($source)) {
+                $message = "Reference Source is not a string at page $count<br>";
+                return;
+            }
+            $source = htmlspecialchars($source);
             if (strlen($source) > 256) {
                 $message = "reference source > 256 chars long at page $count<br>";
                 return $message;
@@ -634,7 +666,12 @@ function validateReferences(&$page, $count) {
             $message = "Reference missing title at page $count<br>";
             return $message;
         }
-        $title = htmlspecialchars($reference['title']);
+        $title = $reference['title'];
+        if (!is_string($title)) {
+            $message = "Reference title is not a string at page $count<br>";
+            return $message;
+        }
+        $title = htmlspecialchars($title);
         if ($title === "") {
             $message = "Reference title is empty at page $count<br>";
             return $message;
@@ -649,7 +686,12 @@ function validateReferences(&$page, $count) {
             $reference['author'] = "";
         }
         else {
-            $author = htmlspecialchars($reference['author']['author']);
+            $author = $reference['author']['author'];
+            if (!is_string($author)) {
+                $message = "Reference author is not a string at page $count<br>";
+                return;
+            }
+            $author = htmlspecialchars($author);
             if (strlen($author) > 128) {
                 $message = "Reference author > 128 characters at page $count<br>";
                 return $message;
@@ -721,11 +763,16 @@ function validateNodes(&$page, $count) {
             $message = "ValidateNodes: label missing at page $count<br>";
             return $message;
         }
-        if ($node['label'] === "") {
-            $message = "ValidateNodes: label set to no value at page $count<br>";
+        $label = $node['label'];
+        if (!is_string($label)) {
+            $message = "Node label is not a string at page $count<br>";
             return $message;
         }
         $label = htmlspecialchars($node['label']);
+        if ($label === "") {
+            $message = "ValidateNodes: label set to no value at page $count<br>";
+            return $message;
+        }
         if (strlen($label) > 64) {
             $message = "ValidateNodes: label too long (>64) at page $count<br>";
             return $message;
@@ -737,6 +784,10 @@ function validateNodes(&$page, $count) {
         }
         else {
             $graphicFile = $node['graphic_file'];
+            if (!is_string($graphicFile)) {
+                $message = "Node graphic_file is not a string at page $count<br>";
+                return $message;
+            }
             $graphicFile = htmlspecialchars($graphicFile);
             if (strlen($graphicFile) > 256) {
                 $message = "ValidateNodes: graphic_file too long (>256 chars) at page $count<br>";
@@ -749,7 +800,12 @@ function validateNodes(&$page, $count) {
             $node['graphic_text'] = "";
         }
         else {
-            $graphicText = htmlspecialchars($node['graphic_text']);
+            $graphicText = $node['graphic_text'];
+            if (!is_string($graphicText)) {
+                $message = "Node graphic_text is not a string at page $count<br>";
+                return $message;
+            }
+            $graphicText = htmlspecialchars($graphic);
             if (strlen($graphicText) > 256) {
                 $message = "ValidateNodes: graphic_text too long (>256 chars) at page $count<br>";
                 return $message;
@@ -761,7 +817,12 @@ function validateNodes(&$page, $count) {
             $node['type'] = "mechanism";
         }
         else {
-            if ($node['type'] != "effect" && $node['type'] != "mechanism") {
+            $type = $node['type'];
+            if (!is_string($type)) {
+                $message = "Node type is not a string at page $count<br>";
+                return $message;
+            }
+            if ($type != "effect" && $type != "mechanism") {
                 $message = "ValidateNodes: node type must be either \"effect\" or \"mechanism\" at page $count<br>";
                 return $message;
             }
@@ -771,7 +832,12 @@ function validateNodes(&$page, $count) {
             $node['definition'] = "";
         }
         else {
-            $definition = htmlspecialchars($node['definition']);
+            $definition = $node['definition'];
+            if (!is_string($definition)) {
+                $message = "Node definition is not a string at page $count<br>";
+                return $message;
+            }
+            $definition = htmlspecialchars($definition);
             if (strlen($definition) > 4096) {
                 $message = "ValidateNodes: definition too long (>4096 chars) at page $count<br>";
                 return $message;
@@ -783,7 +849,12 @@ function validateNodes(&$page, $count) {
             $node['keywords'] = "";
         }
         else {
-            $keywords = htmlspecialchars($node['keywords']);
+            $keywords = $node['keywords'];
+            if (!is_string($keywords)) {
+                $message = "Node keywords is not a string at page $count<br>";
+                return $message;
+            }
+            $keywords = htmlspecialchars($keywords);
             if (strlen($keywords) > 256) {
                 $message = "ValidateNodes: keywords too long (>256 chars) at page $count<br>";
                 return $message;
@@ -795,7 +866,12 @@ function validateNodes(&$page, $count) {
             $node['hyperlink'] = "";
         }
         else {
-            $hyperlink = htmlspecialchars($node['hyperlink']);
+            $hyperlink = $node['hyperlink'];
+            if (!is_string($hyperlink)) {
+                $message = "Node hyperlink is not a string at page $count<br>";
+                return $message;
+            }
+            $hyperlink = htmlspecialchars($hyperlink);
             if (strlen($hyperlink) > 256) {
                 $message = "ValidateNodes: hyperlink greater than 256 chars at page $count<br>";
                 return $message;
@@ -881,7 +957,12 @@ function validateFlows(&$page, $count) {
             $message = "validateFlows: missing flow label field at page $count<br>";
             return $message;
         }
-        $label = htmlspecialchars($flow['label']);
+        $label = $flow['label'];
+        if (!is_string($label)) {
+            $message = "validateFlows: label is not a string at page $count<br>";
+            return $message;
+        }
+        $label = htmlspecialchars($label);
         if ($label === "") {
             $message = "validateFlows: label set to empty at page $count<br>";
             return $message;
@@ -920,18 +1001,20 @@ function validateFlows(&$page, $count) {
             return $message;
         }
 
-        if (!array_key_exists('label_width', $flow)) {
-            $message = "validateFlows: flow label_width is missing at page $count<br>";
-            return $message;
+        // Label Width is optional
+        if (array_key_exists('label_width', $flow)) {
+            $labelWidth = $flow['label_width'];
+            if (!is_int($labelWidth)) {
+                $message = "validateFlows: flow label_width is not an integer at page $count<br>";
+                return $message;
+            }
+            if ($labelWidth < 50 || 140 < $labelWidth) {
+                $message = "validateFlows: flow label_width is out of range at page $count<br>";
+                return $message;
+            }
         }
-        $labelWidth = $flow['label_width'];
-        if (!is_int($labelWidth)) {
-            $message = "validateFlows: flow label_width is not an integer at page $count<br>";
-            return $message;
-        }
-        if ($labelWidth < 50 || 140 < $labelWidth) {
-            $message = "validateFlows: flow label_width is out of range at page $count<br>";
-            return $message;
+        else {
+            $flow['label_width'] = 0;
         }
 
         if (!array_key_exists('drawing_group_x', $flow)) {
@@ -960,43 +1043,45 @@ function validateFlows(&$page, $count) {
             return $message;
         }
 
-        if (!array_key_exists("arrow_points", $flow)) {
-            $message = "validateFlows: arrow_points field missing at page $count<br>";
-            return $message;
+        // Arrow points are optional, and will be set to absent if not present
+        if (array_key_exists("arrow_points", $flow)) {
+            $arrowPoints = $flow['arrow_points'];
+            if (count($arrowPoints) != 4) {
+                $message = "validateFlows: arrow_points data incorrect at page $count<br>";
+                return $message;
+            }
+            for ($i = 0; $i < count($arrowPoints); $i++) {
+                $point = $arrowPoints[$i];
+                if (!array_key_exists('x', $point)) {
+                    $message = "validateFlows: - arrow_points missing x coordinate at page $count<br>";
+                    return $message;
+                }
+                $x = $point['x'];
+                if (!is_int($x)) {
+                    $message = "validateFlows: - arrow_points x coordinate is not an integer at page $count<br>";
+                    return $message;
+                }
+                if ($x < -($STAGEWIDTH - 40) || $STAGEWIDTH - 40 < $x) {
+                    $message = "validateFlows: - arrow_points x value out of range at page $count<br>";
+                    return $message;
+                }
+                if (!array_key_exists('y', $point)) {
+                    $message = "validateFlows: - arrow_points missing y coordinate at page $count<br>";
+                    return $message;
+                }
+                $y = $point['y'];
+                if (!is_int($y)) {
+                    $message = "validateFlows: - arrow_points y coordinate is not an integer at page $count<br>";
+                    return $message;
+                }
+                if ($y < -($STAGEHEIGHT - 40) || $STAGEHEIGHT - 40 < $y) {
+                    $message = "validateFlows: - arrow_points y value out of range at page $count<br>";
+                    return $message;
+                }
+            }
         }
-        $arrowPoints = $flow['arrow_points'];
-        if (count($arrowPoints) != 4) {
-            $message = "validateFlows: arrow_points data incorrect at page $count<br>";
-            return $message;
-        }
-        for ($i = 0; $i < count($arrowPoints); $i++) {
-            $point = $arrowPoints[$i];
-            if (!array_key_exists('x', $point)) {
-                $message = "validateFlows: - arrow_point missing x coordinate at page $count<br>";
-                return $message;
-            }
-            $x = $point['x'];
-            if (!is_int($x)) {
-                $message = "validateFlows: - x coordinate is not an integer at page $count<br>";
-                return $message;
-            }
-            if ($x < -($STAGEWIDTH - 40) || $STAGEWIDTH - 40 < $x) {
-                $message = "validateFlows: - arrow_point x value out of range at page $count<br>";
-                return $message;
-            }
-            if (!array_key_exists('y', $point)) {
-                $message = "validateFlows: - arrow_point missing y coordinate at page $count<br>";
-                return $message;
-            }
-            $y = $point['y'];
-            if (!is_int($y)) {
-                $message = "validateFlows: - arrow point y coordinate is not an integer at page $count<br>";
-                return $message;
-            }
-            if ($y < -($STAGEHEIGHT - 40) || $STAGEHEIGHT - 40 < $y) {
-                $message = "validateFlows: - arrow_point y value out of range at page $count<br>";
-                return $message;
-            }
+        else {
+            $flow['arrow_points'] = [];
         }
 
         if (!array_key_exists("points", $flow)) {
@@ -1040,7 +1125,12 @@ function validateFlows(&$page, $count) {
             $flow['definition'] = "";
         }
         else {
-            $definition = htmlspecialchars($flow['definition']);
+            $definition = $flow['definition'];
+            if (!is_string($definition)) {
+                $message = "validateFlows: flow definition is not a string at page $count<br>";
+                return $message;
+            }
+            $definition = htmlspecialchars($definition);
             if (strlen($definition) > 4096) {
                 $message = "validateFlows: flow definition longer than 4096 chars at page $count<br>";
                 return $message;
@@ -1052,7 +1142,12 @@ function validateFlows(&$page, $count) {
             $flow['keywords'] = "";
         }
         else {
-            $keywords = htmlspecialchars($flow['keywords']);
+            $keywords = $flow['keywords'];
+            if (!is_string($keywords)) {
+                $message = "validateFlows: flow keywords is not a string at page $count<br>";
+                return $message;
+            }
+            $keywords = htmlspecialchars($keywords);
             if (strlen($keywords) > 256) {
                 $message = "validateFlows: flow keywords longer than 256 chars at page $count<br>";
                 return $message;
@@ -1064,7 +1159,12 @@ function validateFlows(&$page, $count) {
             $flow['hyperlink'] = "";
         }
         else {
-            $hyperlink = htmlspecialchars($flow['hyperlink']);
+            $hyperlink = $flow['hyperlink'];
+            if (!is_string($hyperlink)) {
+                $message = "validateFlows: flow hyperlink is not a string at page $count<br>";
+                return $message;
+            }
+            $hyperlink = htmlspecialchars($hyperlink);
             if (strlen($hyperlink) > 256) {
                 $message = "validateFlows: flow hyperlink longer than 256 characters at page $count<br>";
                 return $message;
@@ -1081,7 +1181,12 @@ function validateFlows(&$page, $count) {
                     $message = "validateFlows: conversion formula missing formula field at page $count<br>";
                     return $message;
                 }
-                $formula = htmlspecialchars($formulaItem['formula']);
+                $formula = $formulaItem['formula'];
+                if (!is_string($formula)) {
+                    $message = "validateFlows: conversion formula, formula is not a string at page $count<br>";
+                    return $message;
+                }
+                $formula = htmlspecialchars($formula);
                 if ($formula === "") {
                     $message = "validateFlows: conversion formula missing formula at page $count<br>";
                     return $message;
@@ -1096,7 +1201,12 @@ function validateFlows(&$page, $count) {
                     $formulaItem['description'] = "";
                 }
                 else {
-                    $description = htmlspecialchars($formulaItem['description']);
+                    $description = $formulaItem['description'];
+                    if (!is_string($description)) {
+                        $message = "validateFlows: Conversion formula description is not a string at page $count<br>";
+                        return;
+                    }
+                    $description = htmlspecialchars($description);
                     if (strlen($description) > 4096) {
                         $message = "validateFlows: conversion formula, description longer than 4096 chars at page $count<br";
                         return $message;
@@ -1157,11 +1267,11 @@ function addNewModel($modelTitle) {
     }
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        return ['found'=>false, 'id'=>$row['id'], 'update'=>false];
+        return ['found'=>true, 'id'=>$row['id'], 'update'=>false];
     }
     else {
         error_log("addNewModel - inserted model not found", 0);
-        return null;
+        return ['found'=>false];
     }
 
 }

@@ -19,6 +19,8 @@ Contents
         Flow Editing
             Flow Drawing
         Imports
+            New Import from pages: data format
+            Update Import from pages: data format
 
     In-Flight Tests: Edit, New and Read-only Modes
         Drawing - Edit Modes
@@ -459,6 +461,8 @@ Contents
     * Ensure that flow, label and arrow are cleared from the drawing
 
 <h2>Imports
+
+<h3>New Import from pages: data format
     * Set-up a JSON file for a model, using php-scripts/test/test-model5.json
     * Set the flow_model_title to ""
     * Login as warner3
@@ -568,21 +572,53 @@ Contents
     * Click the Browse button
     * Click the Import Model button
     * Ensure that an error message appears for label_x
-    Set the source_node_num to "01"
-    Set label_x to -400
-    Click the Browse button
-    Click the Import Model button
-    Ensure that an error message appears for label_x
+    * Set the source_node_num to "01"
+    * Set label_x to -400
+    * Click the Browse button
+    * Click the Import Model button
+    * Ensure that an error message appears for label_x
+    * Set label_x to -40
+    * Set label_y to -700
+    * Click the Browse button
+    * Click the Import Model button
+    * Ensure that an error message appears for label_y
+    * Set label_y to 40
+    * Set drawing_group_x to -1
+    * Click the Browse button
+    * Click the Import Model button
+    * Ensure that an error message appears for drawing_group_x
+    * Set drawing_group_x to 120
+    * Set drawing_group_y to -1
+    * Click the Browse button
+    * Click the Import Model button
+    * Ensure that an error message appears for drawing_group_y
+    * Set drawing_group_y to 140
+    * Remove the label_width
+    * Set the first flow arrow_point x to "a0"
+    * Click the Browse button
+    * Click the Import Model button
+    * Ensure that a warning message appears for the flow arrow point
+    * Set label_width to -1
+    * Click the Browse button
+    * Click the Import Model button
+    * Ensure that an error message appears for label_width
+    * Set the label_width to 60
+    * Set the first flow arrow_point x to 0
+    * Cut and paste the flow arrow_points field to a temp file
+    * Set the first points field x value to "a0"
+    * Click the Browse button
+    * Click the Import Model button
+    * Ensure that an error message appears for the flow point
+    * Set the first points x coordinate to 0
+    * Copy and paste the arrow_points field back into the JSON file
+    * Click the Browse button
+    * Click the Import Model button
+    * Ensure that the data is imported as DATA GOOD without error messages 
+    * Click the Display Imported Model button
+    * Ensure that the flow model is displayed
 
+<h2>Update Import from pages: format
 
-
-
-
-
-
-
-
-    
 
 <h1>In-Flight Tests: Edit, New and Read-only Modes
     Check the editing modes and operation when the "New" button
