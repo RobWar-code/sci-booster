@@ -112,6 +112,12 @@ Contents
 
     Clear all of the tables in the database (user included) except the editor_key table.
 
+    The php operations 
+        clear-tables-page.php
+        dump-tables-to-screen.php
+
+    are provided to restore the system to a known state or to examine it for testing.
+
 <h2>Login Tests
     * Click the login menu option
     * Ensure that the owner option appears
@@ -618,6 +624,19 @@ Contents
     * Ensure that the flow model is displayed
 
 <h2>Update Import from pages: format
+    If it is not already present, copy the file test-model6.json to test-model6A.json
+    Make the following adjustments:
+        To the first page -
+        Change the "keywords" field value to "example import test"
+        Add the "user_authors" entry {id: null, "username": "warner4"}
+        Change the external_authors entry to {"id": null, "author": "Jackson Hindman"}
+        Change the first reference source to "internet site"
+        Change the second reference title to "The Machinery"
+        Chenge the first node definition to "Fuel station for refueling with petrol"
+        Change the second node label to "Automobile"
+        Change the first flow source_node_num to "01"
+        Change the second page hierarchical_id to "0101"
+        Change the second page title to "Pumping Station"
 
 
 <h1>In-Flight Tests: Edit, New and Read-only Modes

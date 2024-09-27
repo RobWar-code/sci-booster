@@ -236,6 +236,8 @@ component node as required. For example, a top-level flow model might be:
 
 Petrol Station -->petrol-- Car --->exhaust-- Atmosphere
 
+- The complete field must be included to indicate whether the
+whole model is being described or only certain pages (true/false)
 - The top level (page) of a flow model has upto four nodes and all subsequent
 pages are further definitions of the component nodes that they describe.
 - The flow_model_title should always be present at the top level and must the same
@@ -264,8 +266,10 @@ using the app.
 flow_models: [
 	{
 		"flow_model_id": , // Auto Long Int, may be null
-		"flow_model_title": "", // Must the same the first page with hierarchical_id of "01"
+		"flow_model_title": "", // Must the same as the first page with hierarchical_id of "01"
 		"update": , // true/false whether this is an update
+		"complete": , // true/false whether this is an update for a complete model, or only
+				// a partial update (subset of pages)
 		"pages" : [
 			{
 				"id": , // May be null

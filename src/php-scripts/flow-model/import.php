@@ -145,9 +145,24 @@ function arrangePageData($filedata) {
     ]
     */
     $newModel = [];
-    $newPageItem = ['flow_model_title'=>"", 'flow_model_id'=>null, 'update'=>false, 'page'=>[]];
+    $newPageItem = ['flow_model_title'=>"", 'flow_model_id'=>null, 'update'=>false, 'complete'=>true, 'page'=>[]];
     // Check whether json data contains a pages array
     if (array_key_exists("pages", $pageData)) {
+        // Check whether the "complete" field is present
+        if (!array_key_exists("complete", $pageData)) {
+            $response = ['result'=>false, 'status'=>"model complete field missing in model data"];
+            echo json_encode($response);
+            exit;
+        }
+        else {
+            $complete = $pageData['complete'];
+            if ($complete != true && $complete != false) {
+                $response = ['result'=>false, 'status'=>"model complete field should be true/false"];
+                echo json_encode($response);
+                exit;    
+            }
+            $noewPageItem['complete'] = $complete;
+        }
         // Check that the model title is present
         if (array_key_exists("flow_model_title", $pageData)) {
             $newPageItem['flow_model_title'] = $pageData['flow_model_title'];
@@ -231,6 +246,11 @@ function arrangePageData($filedata) {
             echo json_encode($response);
             exit;
         }
+        if (!array_key_exists('page', $pageData)) {
+            $response = ["result"=>false, "status"=>"page field in data not defined"];
+            echo json_encode($response);
+            exit;
+        }
         if (array_key_exists("flow_model_id", $pageData)) {
             $flowModelId = $pageData['flow_model_id'];
             if ($flowModelId != null) {
@@ -245,15 +265,27 @@ function arrangePageData($filedata) {
                     exit;
                 }
                 $pageData['update'] = true;
+                $pageData['complete'] = false;
             }
             else {
                 $flowModelTitle = $pageData['flow_model_title'];
                 $flowModelId = modelTitleExists($flowModelTitle); 
                 if ($flowModelId === null) {
+                    if (!array_key_exists("hierarchical_id", $pageData['page'])) {
+                        $response = ['result'=>false, 'status'=>"Missing hierarchical_id in page data"];
+                        echo json_encode($response);
+                        exit;
+                    }
+                    if ($pageData['page']['hierarchical_id'] != '01') {
+                        $response = ['result'=>false, 'status'=>"New model single page does not have hierarchical_id \"01\""];
+                        echo json_encode($response);
+                        exit;
+                    }
                     $pageData['update'] = false;
                 }
                 else {
                     $pageData['update'] = true;
+                    $pageData['complete'] = false;
                 }
                 $pageData['flow_model_id'] = $flowModelId;
             }
@@ -266,6 +298,7 @@ function arrangePageData($filedata) {
             }
             else {
                 $pageData['update'] = true;
+                $pageData['complete'] = false;
             }
             $pageData['flow_model_id'] = $flowModelId;
         }
@@ -273,6 +306,18 @@ function arrangePageData($filedata) {
     }
     // Array of pages
     elseif (count($pageData) >= 1) {
+        if (!array_key_exists('complete', $pageData[0])) {
+            $response = ['result'=>false, 'status'=>'complete field absent from first page of data'];
+            echo json_encode($response);
+            exit;
+        }
+        if ($pageData[0]['complete'] != true && $pageData[0]['complete'] != false) {
+            $response = ['result'=>false, 'status'=>'complete field must have value true or false'];
+            echo json_encode($response);
+            exit;
+        }
+        $newPageItem = [];
+        $newPageItem['complete'] = $pageData[0]['complete'];
         if (array_key_exists("flow_model_id", $pageData[0])){
             $flowModelId = $pageData[0]["flow_model_id"];
             if (!is_int($flowModelId)) {
@@ -453,9 +498,6 @@ function importPageData($pageData) {
                 }
             }
 
-            if ($doUpdate) {
-                updatePage($pageItem);
-            }
             else {
                 addPage($flowModelId, $pageItem);
             }
