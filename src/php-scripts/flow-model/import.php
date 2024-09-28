@@ -2,6 +2,7 @@
 include_once __DIR__ . '/../db-connect.php';
 include_once __DIR__ . '/add-page.php';
 include_once __DIR__ . '/update-page.php';
+include_once __DIR__ . '/delete-page.php';
 
 header('Content-Type: application/json');
 
@@ -11,6 +12,7 @@ $STAGEWIDTH = $_POST['stageWidth'];
 $STAGEHEIGHT = $_POST['stageHeight'];
 $NODEWIDTH = $_POST['nodeWidth'];
 $NODEHEIGHT = $_POST['nodeHeight'];
+$USERNAME = $_POST['username'];
 
 $newPageArray = arrangePageData($filenameItem);
 if (validateImportData($newPageArray, $_POST['username'])) {
@@ -19,7 +21,6 @@ if (validateImportData($newPageArray, $_POST['username'])) {
         if ($flowModelItem['found']) {
             $flowModelId = $flowModelItem['id'];
             $newPageArray[0]['flow_model_id'] = $flowModelId;
-            error_log("FlowModelId: ", $flowModelId);
         }
         else {
             $flowModelId = null;
@@ -150,14 +151,14 @@ function arrangePageData($filedata) {
     if (array_key_exists("pages", $pageData)) {
         // Check whether the "complete" field is present
         if (!array_key_exists("complete", $pageData)) {
-            $response = ['result'=>false, 'status'=>"model complete field missing in model data"];
+            $response = ['result'=>false, 'status'=>"model complete field missing in model data<br>"];
             echo json_encode($response);
             exit;
         }
         else {
             $complete = $pageData['complete'];
             if ($complete != true && $complete != false) {
-                $response = ['result'=>false, 'status'=>"model complete field should be true/false"];
+                $response = ['result'=>false, 'status'=>"model complete field should be true/false<br>"];
                 echo json_encode($response);
                 exit;    
             }
@@ -181,7 +182,7 @@ function arrangePageData($filedata) {
                 }
             }
             if (!$valid) {
-                $response = ["result"=>false, "status"=>"Missing flow_model_title"];
+                $response = ["result"=>false, "status"=>"Missing flow_model_title<br>"];
                 echo json_encode($response);
                 exit;
             }
@@ -189,7 +190,7 @@ function arrangePageData($filedata) {
         if (array_key_exists("flow_model_id", $pageData)) {
             if (!is_int($pageData["flow_model_id"])) {
                 if ($pageData["flow_model_id"] != null) {
-                    $response = ["result"=>false, "status"=>"Invalid flow_model_id in import file"];
+                    $response = ["result"=>false, "status"=>"Invalid flow_model_id in import file<br>"];
                     echo json_encode($response);
                     exit;
                 }
@@ -200,7 +201,7 @@ function arrangePageData($filedata) {
             if (array_key_exists("flow_model_id", $pageData['pages'][0])) {
                 if (!is_int($pageData['pages'][0]["flow_model_id"])) {
                     if ($pageData['pages'][0]["flow_model_id"] != null) {
-                        $response = ["result"=>false, "status"=>"Invalid flow_model_id in import file"];
+                        $response = ["result"=>false, "status"=>"Invalid flow_model_id in import file<br>"];
                         echo json_encode($response);
                         exit;
                     }
@@ -209,7 +210,7 @@ function arrangePageData($filedata) {
             }
         }
         if ($newPageItem['flow_model_title'] === "") {
-            $response = ['result'=>false, 'error'=>'Could not resolve model title', 'status'=>'Could not resolve model title'];
+            $response = ['result'=>false, 'error'=>'Could not resolve model title', 'status'=>'Could not resolve model title<br>'];
             echo json_encode($response);
             exit;
         }
@@ -228,7 +229,7 @@ function arrangePageData($filedata) {
                 $newPageItem['update'] = true;
             }
             else {
-                $response = ["result"=>false, "status"=>"Non-existent key from flow_model_id"];
+                $response = ["result"=>false, "status"=>"Non-existent key from flow_model_id<br>"];
                 echo json_encode($response);
                 exit;
             }
@@ -242,12 +243,12 @@ function arrangePageData($filedata) {
     // Single page
     elseif (array_key_exists('flow_model_title', $pageData)) {
         if ($pageData['flow_model_title'] === "") {
-            $response = ["result"=>false, "status"=>"flow_model_title is not set"];
+            $response = ["result"=>false, "status"=>"flow_model_title is not set<br>"];
             echo json_encode($response);
             exit;
         }
         if (!array_key_exists('page', $pageData)) {
-            $response = ["result"=>false, "status"=>"page field in data not defined"];
+            $response = ["result"=>false, "status"=>"page field in data not defined<br>"];
             echo json_encode($response);
             exit;
         }
@@ -255,12 +256,12 @@ function arrangePageData($filedata) {
             $flowModelId = $pageData['flow_model_id'];
             if ($flowModelId != null) {
                 if (!is_int($flow_model_id)) {
-                    $response = ["result"=>false, "status"=>"flow_model_id has invalid value"];
+                    $response = ["result"=>false, "status"=>"flow_model_id has invalid value<br>"];
                     echo json_encode($response);
                     exit;
                 }
                 if (!modelExists($flowModelId)) {
-                    $response = ["result"=>false, "status"=>"flow_model_id key does not exist"];
+                    $response = ["result"=>false, "status"=>"flow_model_id key does not exist<br>"];
                     echo json_encode($response);
                     exit;
                 }
@@ -272,12 +273,12 @@ function arrangePageData($filedata) {
                 $flowModelId = modelTitleExists($flowModelTitle); 
                 if ($flowModelId === null) {
                     if (!array_key_exists("hierarchical_id", $pageData['page'])) {
-                        $response = ['result'=>false, 'status'=>"Missing hierarchical_id in page data"];
+                        $response = ['result'=>false, 'status'=>"Missing hierarchical_id in page data<br>"];
                         echo json_encode($response);
                         exit;
                     }
                     if ($pageData['page']['hierarchical_id'] != '01') {
-                        $response = ['result'=>false, 'status'=>"New model single page does not have hierarchical_id \"01\""];
+                        $response = ['result'=>false, 'status'=>"New model single page does not have hierarchical_id \"01\"<br>"];
                         echo json_encode($response);
                         exit;
                     }
@@ -307,12 +308,12 @@ function arrangePageData($filedata) {
     // Array of pages
     elseif (count($pageData) >= 1) {
         if (!array_key_exists('complete', $pageData[0])) {
-            $response = ['result'=>false, 'status'=>'complete field absent from first page of data'];
+            $response = ['result'=>false, 'status'=>'complete field absent from first page of data<br>'];
             echo json_encode($response);
             exit;
         }
         if ($pageData[0]['complete'] != true && $pageData[0]['complete'] != false) {
-            $response = ['result'=>false, 'status'=>'complete field must have value true or false'];
+            $response = ['result'=>false, 'status'=>'complete field must have value true or false<br>'];
             echo json_encode($response);
             exit;
         }
@@ -321,13 +322,13 @@ function arrangePageData($filedata) {
         if (array_key_exists("flow_model_id", $pageData[0])){
             $flowModelId = $pageData[0]["flow_model_id"];
             if (!is_int($flowModelId)) {
-                $response = ['result'=>false, 'status'=>'Invalid flow_model_id value'];
+                $response = ['result'=>false, 'status'=>'Invalid flow_model_id value<br>'];
                 echo json_encode($response);
                 exit;
             }
             if ($flowModelId != null) {
                 if (!modelExists($flowModelId)) {
-                    $response = ['result'=>false, 'status'=>'Non-existent flow_model_id key'];
+                    $response = ['result'=>false, 'status'=>'Non-existent flow_model_id key<br>'];
                     echo json_encode($response);
                     exit;
                 }
@@ -345,34 +346,34 @@ function arrangePageData($filedata) {
         if (array_key_exists("hierarchical_id", $pageData[0])) {
             if ($pageData[0]['hierarchical_id'] === '01') {
                 if (!array_key_exists($pageData[0]['title'])) {
-                    $response = ["result"=>false, "status"=>"Missing title in page data"];
+                    $response = ["result"=>false, "status"=>"Missing title in page data<br>"];
                     echo json_encode($response);
                     exit;
                 }
                 $title = $pageData[0]['title'];
                 if ($title === "") {
-                    $response = ["result"=>false, "status"=>"Title is empty in page data"];
+                    $response = ["result"=>false, "status"=>"Title is empty in page data<br>"];
                     echo json_encode($response);
                     exit;
                 }
                 $newPageItem['flow_model_title'] = $title;
             }
             else if ($flowModelId === null) {
-                $response = ["result"=>false, "status"=>"hierarchical_id of first page not set to 01"];
+                $response = ["result"=>false, "status"=>"hierarchical_id of first page not set to 01<br>"];
                 echo json_encode($response);
                 exit;
             }
         }
         else {
             if ($flowModelId === null) {
-                $response = ["result"=>false, "status"=>"hierarchical_id of first page missing"];
+                $response = ["result"=>false, "status"=>"hierarchical_id of first page missing<br>"];
                 echo json_encode($response);
                 exit;
             }
         }
 
         if ($newPageItem['flow_model_title'] === "") {
-            $response = ['result'=>false, 'error'=>'Could not resolve model title', 'status'=>'Could not resolve model title'];
+            $response = ['result'=>false, 'error'=>'Could not resolve model title', 'status'=>'Could not resolve model title<br>'];
             echo json_encode($response);
             exit;
         }
@@ -465,44 +466,84 @@ function sortByHierarchicalId($a, $b) {
 function importPageData($pageData) {
     global $dbConn;
 
-    $count = 0;
-    foreach ($pageData as $pageItem) {
-        if ($count === 0) {
-            $flowModelId = $pageItem['flow_model_id'];
-        }
-        $page = $pageItem['page'];
-        if ($pageItem['update'] === false) {
+    $flowModelId = $pageData[0]['flow_model_id'];
+    if ($pageData[0]['update'] === false) {
+        // Add All Pages
+        foreach ($pageData as $pageItem) {
+            $page = $pageItem['page'];
             addPage($flowModelId, $pageItem);
         }
-        else {
-            $doUpdate = false;
-            // Check whether we have the page id
-            if (array_key_exists('id', $page)) {
-                if ($page['id'] != null) {
-                    $doUpdate = true;
+    }
+    else {
+        // Do Updates
+        if ($pageData[0]['complete']) {
+            // Do page deletions from database
+            $currentPageList = [];
+            $sql = "SELECT id, hierarchical_id FROM page WHERE flow_model_id = $flowModelId";
+            $result = $dbConn->query($sql);
+            if (!$result) {
+                error_log("importPageData: problem with hierarchical_id fetch from database {$dbConn->error}", 0);
+                return false;
+            }
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $hierarchicalId = $row['hierarchical_id'];
+                    $pageId = $row['id'];
+                    // Check against the imported set
+                    $found = false;
+                    foreach ($pageData as $pageItem) {
+                        if ($pageItem['page']['hierarchical_id'] === $hierarchicalId) {
+                            $found = true;
+                            break;
+                        }
+                    }
+                    if (!$found) {
+                        deletePage($flowModelId, $hierarchicalId, $pageId); 
+                        // Flag-out the parent node
+                        $nodeNum = substr($hierarchicalId, -2);
+                        $pageHierarchicalId = substr($hierarchicalId, 0, strlen($hierarchicalId) - 2);
+                        // Find the parent page
+                        $sql = "SELECT id FROM page WHERE flow_model_id = $flowModelId AND hierarchical_id = '$pageHierarchicalId'";
+                        $result2 = $dbConn->query($sql);
+                        if (!$result2) {
+                            error_log("importPageData: problem with search for parent page after delete {$dbConn->error}", 0);
+                            return false;
+                        }
+                        if ($result2->num_rows > 0) {
+                            $row = $result2->fetch_assoc();
+                            $parentPageId = $row['id'];
+                            // Update the node
+                            $sql = "UPDATE node SET has_child_page = 0 WHERE node_num = '$nodeNum' AND page_id = $parentPageId";
+                            $result3 = $dbConn->query($sql);
+                            if (!$result3) {
+                                error_log("importPageData: problem clearing has_child_page flag {$dbConn->error}", 0);
+                            }
+                        }
+                    }
                 }
             }
-            // Search for the page
-            if (!$doUpdate) {
-                $title = $page['title'];
-                $sql = "SELECT id FROM page WHERE title = '$title'";
-                $result = $dbConn->query($sql);
-                if (!$result) {
-                    error_log("importPageData: could not search for page title {$dbConn->error}", 0);
-                    return false;
-                }
-                if ($result->num_rows >= 1) {
-                    $row = $result->fetch_assoc();
-                    $pageItem['page']['id'] = $row['id'];
-                    $doUpdate = true;
-                }
+        }
+        // Update/add the pages
+        foreach ($pageData as $pageItem) {
+            $page = $pageItem['page'];
+            // Determine whether update or add
+            $hierarchicalId = $page['hierarchical_id'];
+            $sql = "SELECT id FROM page WHERE hierarchical_id = '$hierarchicalId' AND flow_model_id = $flowModelId";
+            $result = $dbConn->query($sql);
+            if (!$result) {
+                error_log("importPageData: Problem searching by hierarchical_id and flow_model_id {$dbConn->error}", 0);
+                return false;
             }
-
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $pageId = $row['id'];
+                $pageItem['page']['id'] = $pageId;
+                updatePage($pageItem);
+            }
             else {
                 addPage($flowModelId, $pageItem);
             }
         }
-        ++$count;
     }
     return true;
 }
@@ -524,7 +565,7 @@ function validateImportData(&$pageData, $username) {
         if ($message != "") break;
         $message = validateFlows($page, $count);
         if ($message != "") break;
-
+        $pageItem['page'] = $page;
         ++$count;
     }
     unset($pageItem);
@@ -622,7 +663,7 @@ function validateUserAuthors(&$page, $username, $count) {
     $message = "";
     $gotUser = false;
     if (!array_key_exists("user_authors", $page)) {
-        $page['user_authors'] = [$username];
+        $page['user_authors'] = ['username'=>$username];
         return $message;
     }
     foreach ($page['user_authors'] as $userItem) {
@@ -650,7 +691,9 @@ function validateUserAuthors(&$page, $username, $count) {
         }
     }
     if (!$gotUser) {
-        array_push($page['user_authors'], ['username'=>$username]);
+        $auth = $page['user_authors'];
+        array_push($auth, ['username'=>$username]);
+        $page['user_authors'] = $auth;
     }
     return $message;
 }
@@ -760,6 +803,7 @@ function validateNodes(&$page, $count) {
         $page['nodes'] = [];
         return;
     }
+    $count = 0;
     foreach($page['nodes'] as &$node) {
         if (!array_key_exists("node_num", $node)) {
             $message = "ValidateNodes: Missing node_num at page $count<br>";
@@ -847,7 +891,7 @@ function validateNodes(&$page, $count) {
                 $message = "Node graphic_text is not a string at page $count<br>";
                 return $message;
             }
-            $graphicText = htmlspecialchars($graphic);
+            $graphicText = htmlspecialchars($graphicText);
             if (strlen($graphicText) > 256) {
                 $message = "ValidateNodes: graphic_text too long (>256 chars) at page $count<br>";
                 return $message;
@@ -930,6 +974,8 @@ function validateNodes(&$page, $count) {
                 return $message;
             }
         }
+        $page['nodes'][$count] = $node;
+        ++$count;
     }
     return $message;
 }

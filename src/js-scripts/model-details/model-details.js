@@ -573,6 +573,8 @@ const modelDetails = {
       }
     }
     document.getElementById("importModal").style.display = "block";
+    document.getElementById("importFileInput").value = "";
+    document.getElementById("importStatus").innerText = "";
     document.getElementById("importGoodDiv").style.display = "none";
   },
 

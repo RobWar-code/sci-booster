@@ -165,11 +165,9 @@ const flowModelPage = {
     getSearchList: async function (e) {
         e.preventDefault();
         let searchString = document.getElementById("searchInput").value;
-        console.log("searchString:", searchString);
         searchString = Misc.stripHTML(searchString);
         if (searchString === null) return;
         let selectionResponse = await this.fetchSearchSelection(searchString);
-        console.log("selectionResponse:", selectionResponse);
         if (selectionResponse.result === true) {
             if (selectionResponse.list.length > 0) {
                 document.getElementById("searchSelectorCol").style.display = "block";
@@ -323,9 +321,7 @@ const flowModelPage = {
         // To construct the search
         let nodeNum = event.target.getAttr("nodeNum");
         let hierarchicalId = dfm.currentPage.page.hierarchical_id + nodeNum;
-        console.log("zoomPage - hierarchicalId:", hierarchicalId);
         let flowModelId = dfm.currentPage.flow_model_id;
-        console.log("flowModelId:", flowModelId);
         let flowModelTitle = dfm.currentPage.flow_model_title;
         let node = dfm.currentPage.getNode(nodeNum);
         let nodeLabel = node.label;

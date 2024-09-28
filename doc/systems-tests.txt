@@ -28,11 +28,22 @@ Contents
 
 <h1>Bugs
 
-<h2>Due
-    Problem with uploading passed import data
 
+<h2>Due
 
 <h2>Fixed
+    28/09/2024
+    
+    * Imported list of user authors should include the current user
+
+    * Clear the Import modal when loaded
+
+    * Pages not correctly added/deleted in update
+
+    * Missing child page from update
+
+    * Problem with uploading passed import data - missing update model procedure
+
     24/09/2024
     
     * False data pass on flow label ""
@@ -627,16 +638,28 @@ Contents
     If it is not already present, copy the file test-model6.json to test-model6A.json
     Make the following adjustments:
         To the first page -
-        Change the "keywords" field value to "example import test"
-        Add the "user_authors" entry {id: null, "username": "warner4"}
-        Change the external_authors entry to {"id": null, "author": "Jackson Hindman"}
-        Change the first reference source to "internet site"
-        Change the second reference title to "The Machinery"
-        Chenge the first node definition to "Fuel station for refueling with petrol"
-        Change the second node label to "Automobile"
-        Change the first flow source_node_num to "01"
-        Change the second page hierarchical_id to "0101"
-        Change the second page title to "Pumping Station"
+        * Change the "keywords" field value to "example import test"
+        * Add the "user_authors" entry {id: null, "username": "warner4"}
+        * Change the external_authors entry to {"id": null, "author": "Jackson Hindman"}
+        * Change the first reference source to "internet site"
+        * Change the second reference title to "The Machinery"
+        * Change the first node definition to "Fuel station for refueling with petrol"
+        * Change the first node has_child_page to true
+        * Change the second node label to "Automobile"
+        * Change the second node has_child_page to false
+        * Change the first flow source_node_num to "01"
+        * Change the second page hierarchical_id to "0101"
+        * Change the second page title to "Pumping Station"
+    * Logon as warner3
+    * Ensure that Test Model 6 is present in the Model Selection list
+    * Click the Import button
+    * Click the Browse button to test-model6A.json
+    * Click the Import Model button
+    * Ensure that the message DATA GOOD appears
+    * Click the Display Model button
+    * Ensure that the new Model definition appears (Compare with the test data test-model6A.json)
+    Ensure that the Edit Mode button appears on the Model Details modal
+
 
 
 <h1>In-Flight Tests: Edit, New and Read-only Modes
