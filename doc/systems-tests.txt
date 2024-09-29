@@ -21,6 +21,7 @@ Contents
         Imports
             New Import from pages: data format
             Update Import from pages: data format
+            Import Add - Single page format
 
     In-Flight Tests: Edit, New and Read-only Modes
         Drawing - Edit Modes
@@ -634,7 +635,7 @@ Contents
     * Click the Display Imported Model button
     * Ensure that the flow model is displayed
 
-<h2>Update Import from pages: format
+<h3>Update Import from pages: format
     If it is not already present, copy the file test-model6.json to test-model6A.json
     Make the following adjustments:
         To the first page -
@@ -658,9 +659,19 @@ Contents
     * Ensure that the message DATA GOOD appears
     * Click the Display Model button
     * Ensure that the new Model definition appears (Compare with the test data test-model6A.json)
-    Ensure that the Edit Mode button appears on the Model Details modal
+    * Ensure that the Edit Mode button appears on the Model Details modal
 
-
+<h3>Import Add - Single page format
+    The single page format has the form
+     {
+        flowModelId:
+        flowModelTitle:
+        update:
+        page: {
+            ...
+        }
+    }
+    Unless it is an update the page must have hierarchical_id '01'
 
 <h1>In-Flight Tests: Edit, New and Read-only Modes
     Check the editing modes and operation when the "New" button
