@@ -26,6 +26,12 @@ if (validateImportData($newPageArray, $_POST['username'])) {
             $flowModelId = null;
         }
     }
+    $message = validateHierarchicalIds($newPageArray);
+    if ($message != "") {
+        $response = ["result"=>false, "status"=>$message];
+        echo json_encode($response);
+        exit;
+    }
     if (importPageData($newPageArray)) {
         $response = ["result"=>true, "status"=>"DATA GOOD<br>", "flow_model_title"=>$newPageArray[0]['flow_model_title']];
         echo json_encode($response);
@@ -575,6 +581,74 @@ function validateImportData(&$pageData, $username) {
         exit;
     }
     return true;
+}
+
+function validateHierarchicalIds($pageData) {
+    global $dbConn;
+
+    $message = "";
+    $flowModelId = $pageData[0]['flow_model_id'];
+    $update = $pageData[0]['update'];
+    $complete = $pageData[0]['complete'];
+    foreach($pageData as $pageItem) {
+        $hierarchicalId = $pageItem['page']['hierarchical_id'];
+        $nodeNum = substr($hierarchicalId, -2);
+        $parent = substr($hierarchicalId, 0, strlen($hierarchicalId) - 2);
+        $found = false;
+        if ($hierarchicalId === '01') {
+            $found = true;
+        }
+        else {
+            // If update, search the existing model
+            if ($update && !$complete) {
+                $sql = "SELECT id FROM page WHERE flow_model_id = $flowModelId AND hierarchical_id = '$parent'";
+                $result = $dbConn->query($sql);
+                if (!$result) {
+                    error_log("validateHierarchicalId: Problem checking page in database {$dbConn->error}", 0);
+                    $message = "validateHierarchicalId: Problem checking page in database<br>";
+                    return $message;
+                }
+                if ($result->num_rows > 0) {
+                    // Check the node number
+                    $row = $result->fetch_assoc();
+                    $pageId = $row['id'];
+                    $sql = "SELECT id FROM node WHERE page_id = $pageId AND node_num = '$nodeNum'";
+                    $result = $dbConn->query($sql);
+                    if (!$result) {
+                        error_log("validateHierarchicalId: Problem checking node num in database {$dbConn->error}", 0);
+                        $message = "validateHierarchicalId: Problem checking node num in database<br>";
+                        return $message;
+                    }
+                    if ($result->num_rows > 0) {
+                        $found = true;
+                    }
+                }
+            }
+            if (!$found) {
+                // Search the import data
+                foreach($pageData as $testPage) {
+                    $testHierarchicalId = $testPage['page']['hierarchical_id'];
+                    if ($testHierarchicalId === $parent) {
+                        // Check the node number
+                        foreach ($testPage['page']['nodes'] as $node) {
+                            if ($node['node_num' === $nodeNum]) {
+                                $found = true;
+                                break;
+                            }
+                        }
+                    }
+                    if ($found) {
+                        break;
+                    }
+                }
+            }
+        }
+        if (!$found) {
+            $message = "Unmatched hierarchical_id in import data $hierarchicalId";
+            return $message;
+        }
+    }
+    return $message;
 }
 
 function validatePageDetails(&$page, $count) {
