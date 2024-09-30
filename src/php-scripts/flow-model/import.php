@@ -155,6 +155,12 @@ function arrangePageData($filedata) {
     $newPageItem = ['flow_model_title'=>"", 'flow_model_id'=>null, 'update'=>false, 'complete'=>true, 'page'=>[]];
     // Check whether json data contains a pages array
     if (array_key_exists("pages", $pageData)) {
+        // Check whether the pages array has members
+        if (count($pageData['pages']) === 0) {
+            $response = ['result'=>false, 'status'=>"model pages array has no members"];
+            echo json_encode($response);
+            exit;
+        }
         // Check whether the "complete" field is present
         if (!array_key_exists("complete", $pageData)) {
             $response = ['result'=>false, 'status'=>"model complete field missing in model data<br>"];
@@ -289,6 +295,7 @@ function arrangePageData($filedata) {
                         exit;
                     }
                     $pageData['update'] = false;
+                    $pageData['complete'] = true;
                 }
                 else {
                     $pageData['update'] = true;
@@ -302,6 +309,7 @@ function arrangePageData($filedata) {
             $flowModelId = modelTitleExists($flowModelTitle); 
             if ($flowModelId === null) {
                 $pageData['update'] = false;
+                $pageData['complete'] = true;
             }
             else {
                 $pageData['update'] = true;
@@ -631,7 +639,7 @@ function validateHierarchicalIds($pageData) {
                     if ($testHierarchicalId === $parent) {
                         // Check the node number
                         foreach ($testPage['page']['nodes'] as $node) {
-                            if ($node['node_num' === $nodeNum]) {
+                            if ($node['node_num'] === $nodeNum) {
                                 $found = true;
                                 break;
                             }

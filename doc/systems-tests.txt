@@ -660,6 +660,12 @@ Contents
     * Click the Display Model button
     * Ensure that the new Model definition appears (Compare with the test data test-model6A.json)
     * Ensure that the Edit Mode button appears on the Model Details modal
+    * Use test-model6B (with the added page hierarchical_id 0103)
+    * Click the Import button
+    * Click the Browse button
+    * Click the Import Model button
+    * Ensure that an error message appears for the hierarchical_id
+
 
 <h3>Import Add - Single page format
     The single page format has the form
