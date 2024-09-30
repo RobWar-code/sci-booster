@@ -670,14 +670,43 @@ Contents
 <h3>Import Add - Single page format
     The single page format has the form
      {
-        flowModelId:
-        flowModelTitle:
+        flow_model_id:
+        flow_model_title:
         update:
         page: {
             ...
         }
     }
     Unless it is an update the page must have hierarchical_id '01'
+
+    * Use the test file php-scripts/test/test-model7.json
+    * Login as warner3
+    * Click the Import button
+    * Click the Browse button and select the test file
+    * Click the Import Model button
+    * Ensure that the message DATA GOOD appears
+    * Click the Display Model button
+    * Ensure that the model details are displayed correctly
+    * If the file test-model7A is not already established, create it as follows:
+        Copy the file test-model7 into test-model7A
+        Change the model update field to true
+        Change the page hierarchical_id to "0102"
+        Change the page title to "Car"
+        Change the page description to 
+            "A single update test model page to demonstrate the effectiveness of the import routines."
+        Change the first node label to "Petrol tank"
+        Change the second node label to "Engine"
+    * Click the Cancel button on the web page
+    * Click the Import button
+    * Click the Browse button to select test-model7A.json
+    * Click the Import Model button
+    * Ensure that the message DATA GOOD appears
+    * Click the Display Model button
+    * Ensure that the Model Details for Test Model 7 are displayed
+    * Click the Zoom button on the second node
+    * Ensure that the page details for the update page are displayed
+
+
 
 <h1>In-Flight Tests: Edit, New and Read-only Modes
     Check the editing modes and operation when the "New" button
