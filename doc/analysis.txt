@@ -862,15 +862,10 @@ Contents
 	Clicking this option (if a signed-in user), causes the upload JSON Model File
 	Modal to be displayed. 
 
-	The JSON Model File modal warns the user if they are not logged-in, before
-	presenting the rest of the modal.
-
 	If the user is in edit mode and a model is already on display, the user is first
 	presented with the save page modal.
 
 	The options and fields on the modal are:
-		Select JSON File from list
-
 		Select JSON File from Client
 		Upload JSON File
 
@@ -880,6 +875,10 @@ Contents
 		Dismiss
 
 	Uploaded json is stored in sci-booster/assets/json/user/myfile.json
+
+	The JSON file can only be uploaded as an update if the user has the
+	appropriate permissions for the existing flow model on the database.
+	
 
 <h2>Imported JSON Validation
 

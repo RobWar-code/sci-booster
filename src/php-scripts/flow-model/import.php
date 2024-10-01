@@ -13,6 +13,7 @@ $STAGEHEIGHT = $_POST['stageHeight'];
 $NODEWIDTH = $_POST['nodeWidth'];
 $NODEHEIGHT = $_POST['nodeHeight'];
 $USERNAME = $_POST['username'];
+$USERSTATUS = $_POST['userStatus'];
 
 $newPageArray = arrangePageData($filenameItem);
 if (validateImportData($newPageArray, $_POST['username'])) {
@@ -565,11 +566,15 @@ function importPageData($pageData) {
 function validateImportData(&$pageData, $username) {
     $message = "";
     $count = 0;
+    $modelDetails = [];
+    $modelDetails['flow_model_id'] = $pageData[0]['flow_model_id'];
+    $modelDetails['flow_model_title'] = $pageData[0]['flow_model_title'];
+    $modelDetails['update'] = $pageData[0]['update'];
     foreach ($pageData as &$pageItem) {
         $page = $pageItem['page'];
         $message = validatePageDetails($page, $count);
         if ($message != "") break;
-        $message = validateUserAuthors($page, $username, $count);
+        $message = validateUserAuthors($page, $modelDetails, $username, $count);
         if ($message != "") break;
         $message = validateExternalAuthors($page, $count);
         if ($message != "") break;
@@ -739,8 +744,9 @@ function validatePageDetails(&$page, $count) {
     return "";
 }
 
-function validateUserAuthors(&$page, $username, $count) {
+function validateUserAuthors(&$page, $modelDetails, $username, $count) {
     global $dbConn;
+    global $USERSTATUS;
 
     $message = "";
     $gotUser = false;
@@ -771,6 +777,53 @@ function validateUserAuthors(&$page, $username, $count) {
         if ($userItem['username'] === $username) {
             $gotUser = true;
         }
+    }
+    // Check whether the user has permissions for this update
+    if ($count === 0 && $modelDetails['update'] === true && $USERSTATUS != "owner" && $USERSTATUS != "editor") {
+        // Get the pageId of the first model page
+        $flowModelId = $modelDetails['flow_model_id'];
+        $sql = "SELECT id FROM page WHERE flow_model_id = $flowModelId AND hierarchical_id = '01'";
+        $result = $dbConn->query($sql);
+        if (!$result) {
+            error_log("validateUserAuthors: Problem searching database for first model page {$dbConn->error}", 0);
+            $message = "validateUserAuthors: Problem searching database for first model page";
+            return $message;
+        }
+        if ($result->num_rows === 0) {
+            $message = "validateUserAuthors: Database problem update model has no first page {$modelDatails['flow_model_title']}";
+            return $message;
+        }
+        $row = $result->fetch_assoc();
+        $pageId = $row['id'];
+
+        // Get the id of the current user
+        $sql = "SELECT id FROM user WHERE username = '$username'";
+        $result = $dbConn->query($sql);
+        if (!$result) {
+            $message = "validateUserAuthors: Problem with accessing username";
+            error_log("$message {$dbConn->error}", 0);
+            return $message;
+        }
+        if ($result->num_rows === 0) {
+            $message = "validateUserAuthors: Invalid user sent from client";
+            return $message;
+        }
+        $row = $result->fetch_assoc();
+        $userId = $row['id'];
+
+        // Check whether the current user id is present for the first page
+        $sql = "SELECT id FROM page_user_link WHERE page_id = $pageId AND user_id = $userId";
+        $result = $dbConn->query($sql);
+        if (!$result) {
+            $message = "validateUserAuthors: Problem accessing page_user_link";
+            error_log("$message {$dbConn->error}", 0);
+            return $message;
+        }
+        if ($result->num_rows === 0) {
+            $message = "validateUserAuthors: User does not have permissions to perform this update";
+            return $message;
+        }
+
     }
     if (!$gotUser) {
         $auth = $page['user_authors'];

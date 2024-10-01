@@ -705,7 +705,31 @@ Contents
     * Ensure that the Model Details for Test Model 7 are displayed
     * Click the Zoom button on the second node
     * Ensure that the page details for the update page are displayed
-
+    * If test-model7B.json exists, use that, otherwise create as follows:
+        Copy test-model7A.json to test-model7B.json
+        Change the description field to:
+            "A single modification test model page to demonstrate the effectiveness of the import routines."
+    * Login as warner3
+    * Click the Import button
+    * Click the Browse button to select test-model7B.json
+    * Click the Import Model button
+    * Ensure that the message DATA GOOD is displayed
+    * Click the Display Model button
+    * Ensure that the model is displayed
+    * Click the Dismiss button on the model details
+    * Click the Zoom button on the second component node box
+    * Ensure that the page with hierarchical_id '02' is displayed
+    * Ensure that the modification to the description is present
+    If test-model7C.json is not present create it as follows
+        copy test-model7B.json to new file test-model7C.json
+        Change the description field to:
+            "Permission test model page to demonstrate the effectiveness of the import routines."
+    If not already done, register as user warner5 (not editor)
+    Login as user warner5
+    Click the Import button
+    Click the Browse button to select test-model7C.json
+    Click the Import Model button
+    Ensure that the message indicating that the user does not have update permissions is displayed
 
 
 <h1>In-Flight Tests: Edit, New and Read-only Modes
