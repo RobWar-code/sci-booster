@@ -360,7 +360,7 @@ function arrangePageData($filedata) {
         }
         if (array_key_exists("hierarchical_id", $pageData[0])) {
             if ($pageData[0]['hierarchical_id'] === '01') {
-                if (!array_key_exists($pageData[0]['title'])) {
+                if (!array_key_exists('title', $pageData[0])) {
                     $response = ["result"=>false, "status"=>"Missing title in page data<br>"];
                     echo json_encode($response);
                     exit;
@@ -395,12 +395,14 @@ function arrangePageData($filedata) {
         if ($newPageItem['flow_model_id'] === null) {
             $flowModelTitle = $pageData[0]["title"];
             $flowModelId = modelTitleExists($flowModelTitle);
-            if ($flowModelItem === null) {
+            if ($flowModelId === null) {
                 $newPageItem['update'] = false;
             }
             else {
-                $newPageItem['update'] = $flowModelItem['update'];
+                $newPageItem['update'] = true;
             }
+            $newPageItem['flow_model_id'] = $flowModelId;
+            $newPageItem['flow_model_title'] = $flowModelTitle;
         }
         else {
             $newPageItem['update'] = true;

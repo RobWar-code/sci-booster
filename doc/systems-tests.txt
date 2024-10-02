@@ -22,7 +22,7 @@ Contents
             New Import from pages: data format
             Update Import from pages: data format
             Import Add - Single page format
-
+            Import Add - Array of pages format
     In-Flight Tests: Edit, New and Read-only Modes
         Drawing - Edit Modes
     Model Save and Load
@@ -720,17 +720,57 @@ Contents
     * Click the Zoom button on the second component node box
     * Ensure that the page with hierarchical_id '02' is displayed
     * Ensure that the modification to the description is present
-    If test-model7C.json is not present create it as follows
+    * If test-model7C.json is not present create it as follows
         copy test-model7B.json to new file test-model7C.json
         Change the description field to:
             "Permission test model page to demonstrate the effectiveness of the import routines."
-    If not already done, register as user warner5 (not editor)
-    Login as user warner5
-    Click the Import button
-    Click the Browse button to select test-model7C.json
-    Click the Import Model button
-    Ensure that the message indicating that the user does not have update permissions is displayed
+    * If not already done, register as user warner5 (not editor)
+    * Login as user warner5
+    * Click the Import button
+    * Click the Browse button to select test-model7C.json
+    * Click the Import Model button
+    * Ensure that the message indicating that the user does not have update permissions is displayed
 
+<h3>Import Add - Array of pages format
+    * Login as warner3
+    * Click the Import button
+    * Click the Browse button to select file test-model8.json
+    * Click the Import Model button
+    * Ensure that the DATA GOOD message appears
+    * Click the Display Model button
+    * Ensure that the details for Test Model 8 are displayed
+    * Click the Display Model button
+    * Ensure that page "0101" is present by zooming
+    * Use the test-model8A.json or copy test-model8.json and create as follows:
+        Change the first page "update" field to "true"
+        Change the first page description to "Page array, update"
+    * Click the Import button
+    * Click the Browse button
+    * Click the Import Model button
+    * Ensure that the message DATA GOOD appears
+    * Click the Display Model button
+    * Ensure that updated description is displayed
+    * Click the Display Model button
+    * Ensure that the model is displayed correctly
+    * Click the Zoom page button on the first node
+    * Ensure that page 0101 details are displayed
+    * Use the test-model8B.json file or copy and edit the file test-model8A as follows
+        Change the complete field to false
+        Change the page description to "Partial Update"
+        Remove the second page
+    * Click the Import button
+    * Click the Browse button
+    * Click the Import Model button
+    * Ensure that the message DATA GOOD appears
+    * Click the Display Model button
+    * Ensure that updated description is displayed
+    * Click the Display Model button
+    * Ensure that the model is displayed correctly
+    * Click the Zoom page button on the first node
+    * Ensure that page 0101 details are displayed
+
+
+    
 
 <h1>In-Flight Tests: Edit, New and Read-only Modes
     Check the editing modes and operation when the "New" button
