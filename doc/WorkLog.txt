@@ -8,23 +8,11 @@ Contents
 
     Block robot logins/register
 
-    Add warnings to import model for flow label_width and flow_arrow presence
-        Allow missing flow label_width
-        Allow missing flow_arrow
-
-    If updating a model from import, check the user has permissions
-
-    Update README for changes in the JSON model.
-
-    * Add Current model page look-up
-
-    * Clear page selector on Cancel
-
     Test deletion of a node with child page followed by Save
 
-    Set-up Systems Tests
+    On the node buttons, zoom button distinguish between has child page and not
 
-    Perform Systems Tests/Debugging
+    On the node buttons, hyperlink button distinguish between has hyperlink and not
 
     Do the introductory page
         Include details of the JSON import model format
@@ -38,6 +26,24 @@ Contents
     In the README Plan the release procedures
 
 <h1>Work Done
+    02/10/2024
+
+    * Add warnings to import model for flow label_width and flow_arrow presence
+       * Allow missing flow label_width
+       * Allow missing flow_arrow
+
+    * If updating a model from import, check the user has permissions
+
+    * Update README for changes in the JSON model.
+
+    * Add Current model page look-up
+
+    * Clear page selector on Cancel
+
+    * Set-up Systems Tests
+
+    * Perform Systems Tests/Debugging
+
     06/09/2024
     
     * Model not cleared from title selections when deleted

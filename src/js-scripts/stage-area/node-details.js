@@ -138,7 +138,7 @@ const nodeDetails = {
             node.x = dfm.newNodeX;
             node.y = dfm.newNodeY;
             dfm.currentPage.addNode(node);
-            dfm.currentVisual.addNode(label, node.node_num, dfm.newNodeX, dfm.newNodeY);
+            dfm.currentVisual.addNode(node, node.node_num, dfm.newNodeX, dfm.newNodeY);
         }
         else {
             // node is updated

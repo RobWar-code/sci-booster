@@ -55,7 +55,7 @@ dfm.nodeData = {};
 dfm.stageApp = {};
 
 // Load the images
-dfm.numNodeGraphics = 6;
+dfm.numNodeGraphics = 7;
 dfm.nodeGraphics = {};
 dfm.loadedEvent = new CustomEvent('graphicsLoaded', {detail: {graphicsLoaded: true}});
 
@@ -100,8 +100,11 @@ function loadDrawingImages() {
     dfm.nodeGraphics.hyperlink = new Image();
     dfm.nodeGraphics.hyperlink.onload = loadRegister;
     dfm.nodeGraphics.hyperlink.src ='/sci-booster/src/images/web-link.png';
-    dfm.nodeGraphics.zoomDetails = new Image();
-    dfm.nodeGraphics.zoomDetails.onload = loadRegister;
-    dfm.nodeGraphics.zoomDetails.src = '/sci-booster/src/images/zoom-details.png';
+    dfm.nodeGraphics.zoomPresent = new Image();
+    dfm.nodeGraphics.zoomPresent.onload = loadRegister;
+    dfm.nodeGraphics.zoomPresent.src = '/sci-booster/src/images/zoom-present.png';
+    dfm.nodeGraphics.zoomAbsent = new Image();
+    dfm.nodeGraphics.zoomAbsent.onload = loadRegister;
+    dfm.nodeGraphics.zoomAbsent.src = '/sci-booster/src/images/zoom-absent.png';
 
 };

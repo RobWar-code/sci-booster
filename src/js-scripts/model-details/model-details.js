@@ -628,6 +628,10 @@ const modelDetails = {
 
   loadImportedModel: async function () {
     if (dfm.importTitle === "") return;
+    // Check whether a page is already on display
+    if (dfm.currentPageSet) {
+      flowModelPage.cancelModel();
+    }
     document.getElementById("importModal").style.display = "none";
     dfm.currentPage = new dfm.FlowPageData();
     dfm.currentVisual = new dfm.FlowVisuals();

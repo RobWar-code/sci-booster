@@ -63,10 +63,9 @@ dfm.FlowVisuals = class {
     redoNodes() {
         for (let node of dfm.currentPage.page.nodes) {
             let nodeNum = node.node_num;
-            let label = node.label;
             let x = node.x;
             let y = node.y;
-            this.addNode(label, nodeNum, x, y);
+            this.addNode(node, nodeNum, x, y);
         }
     }
 
@@ -88,10 +87,11 @@ dfm.FlowVisuals = class {
         dfm.currentVisualsSet = false;
     }
 
-    addNode(label, nodeNum, x, y) {
+    addNode(nodeItem, nodeNum, x, y) {
         let node = Misc.copyObject(this.nodeTemplate);
         node.active = true;
         node.nodeNum = nodeNum;
+        let label = nodeItem.label;
         node.label = label;
         node.nodeGroup = new Konva.Group({
             x: x,
@@ -138,10 +138,14 @@ dfm.FlowVisuals = class {
             nodeNum: nodeNum,
             hoverText: "Graphic"
         });
+        let zoomGraphic = dfm.nodeGraphics.zoomAbsent;
+        if (nodeItem.has_child_page) {
+            zoomGraphic = dfm.nodeGraphics.zoomPresent;
+        }
         node.zoomDetailsOpt = new Konva.Image({
             x: dfm.nodeTemplate.optionWidth * 2 + optionMargin * 3,
             y: dfm.nodeTemplate.optionTop,
-            image: dfm.nodeGraphics.zoomDetails,
+            image: zoomGraphic,
             width: dfm.nodeTemplate.optionWidth,
             height: dfm.nodeTemplate.optionHeight,
             nodeNum: nodeNum,
