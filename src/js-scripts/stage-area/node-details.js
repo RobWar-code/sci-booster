@@ -144,7 +144,7 @@ const nodeDetails = {
             // node is updated
             dfm.currentVisual.updateNode(label, nodeNum);
         }
-        if (dfm.currentPage.page.nodes.length === 1) {
+        if (dfm.currentPage.page.nodes.length > 0) {
             document.getElementById("saveModelButton").style.display = "inline";
         }
     },

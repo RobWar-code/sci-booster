@@ -284,6 +284,11 @@ Contents
     * Ensure that the Edit Model button is visible
     * Click the Edit Model button
     * Ensure that details edits can be made
+    * Reload the app 
+    * Select a model authored by warner3
+    * Click the Login option
+    * Login as warner3
+    * Ensure that the Edit, Save, Delete, Cancel and New option buttons appear
 
 <h2>Node Details Editing
 

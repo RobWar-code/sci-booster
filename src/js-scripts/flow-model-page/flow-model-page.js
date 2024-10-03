@@ -37,12 +37,20 @@ const flowModelPage = {
                 document.getElementById("saveModelButton").style.display = "none";
                 document.getElementById("pageDetailsButton").style.display = "none";
             }
-            else if (dfm.modelEditMode === "edit") {
-                document.getElementById("editModelButton").style.display = "none";
+            else {
+                // Check whether the user is an author of the current page
+                if (dfm.currentPage.isUserAuthor()) {
+                    document.getElementById("editModelButton").style.display = "inline";
+                    document.getElementById("deleteModelButton").style.display = "inline";
+                    document.getElementById("saveModelButton").style.display = "inline";
+                }
+                else {
+                    document.getElementById("editModelButton").style.display = "none";
+                    document.getElementById("deleteModelButton").style.display = "none";
+                    document.getElementById("saveModelButton").style.display = "none";
+                }
                 document.getElementById("newModelButton").style.display = "inline";
-                document.getElementById("deleteModelButton").style.display = "inline";
-                document.getElementById("saveModelButton").style.display = "inline";
-                document.getElementById("cancelModelButton").style.display = "inline";
+                document.getElementById("cancelModelButton").style.display = "inline"
             }
         }
         else if (dfm.userStatus === "editor" || dfm.userStatus === "owner") {

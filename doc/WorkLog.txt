@@ -12,18 +12,22 @@ Contents
 
     Favicon icon for sci-booster
 
-    Save option not shown after node edit
+    * Submit button missing on click node details opt
+
+    * Save option not shown after node edit submit
 
     * On the node buttons, zoom button distinguish between has child page and not
 
     * On the node buttons, hyperlink button distinguish between has hyperlink and not
 
-    On the node button, graphic button distinguish between has graphic or not
+    * On the node button, graphic button distinguish between has graphic or not
 
     Do the introductory page
         Include details of the JSON import model format
 
     Adjust the README for building JSON models with ChatGPT
+
+        Test and build 5 example model imports with ChatGPT
     
     Import Info Page
     

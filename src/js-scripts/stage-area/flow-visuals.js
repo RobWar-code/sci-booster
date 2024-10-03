@@ -129,10 +129,14 @@ dfm.FlowVisuals = class {
             nodeNum: nodeNum,
             hoverText: "Node Details"
         });
+        let imageGraphic = dfm.nodeGraphics.graphicPresent;
+        if (nodeItem.graphic_file === "") {
+            imageGraphic = dfm.nodeGraphics.graphicAbsent;
+        }
         node.graphicOpt = new Konva.Image({
             x: dfm.nodeTemplate.optionWidth + optionMargin * 2,
             y: dfm.nodeTemplate.optionTop,
-            image: dfm.nodeGraphics.graphic,
+            image: imageGraphic,
             width: dfm.nodeTemplate.optionWidth,
             height: dfm.nodeTemplate.optionHeight,
             nodeNum: nodeNum,
@@ -262,6 +266,11 @@ dfm.FlowVisuals = class {
                 linkGraphic = dfm.nodeGraphics.hyperlinkAbsent;
             }
             nodeObj.node.hyperlinkOpt.setAttr("image", linkGraphic);
+            let imageGraphic = dfm.nodeGraphics.graphicPresent;
+            if (nodeItem.graphic_file === "") {
+                imageGraphic = dfm.nodeGraphics.graphicAbsent;
+            }
+            nodeObj.node.graphicOpt.setAttr("image", imageGraphic);
             nodeObj.node.labelText.setAttr("text", nodeNum + " " + label);
             nodeObj.node.nodeGroup.draw();
         }

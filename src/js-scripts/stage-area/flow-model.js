@@ -405,7 +405,6 @@ dfm.FlowPageData = class {
         if (!this.validateModel()) return;
 
         let pageJSONObject = this.prepareJSONObject();
-        console.log("pageJSONObject", pageJSONObject);
         let pageJSON = JSON.stringify(pageJSONObject);
         let pageData = await this.sendPage(pageJSON);
         if (pageData.result) {
