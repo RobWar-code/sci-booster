@@ -10,9 +10,15 @@ Contents
 
     Test deletion of a node with child page followed by Save
 
-    On the node buttons, zoom button distinguish between has child page and not
+    Favicon icon for sci-booster
 
-    On the node buttons, hyperlink button distinguish between has hyperlink and not
+    Save option not shown after node edit
+
+    * On the node buttons, zoom button distinguish between has child page and not
+
+    * On the node buttons, hyperlink button distinguish between has hyperlink and not
+
+    On the node button, graphic button distinguish between has graphic or not
 
     Do the introductory page
         Include details of the JSON import model format

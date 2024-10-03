@@ -55,7 +55,7 @@ dfm.nodeData = {};
 dfm.stageApp = {};
 
 // Load the images
-dfm.numNodeGraphics = 7;
+dfm.numNodeGraphics = 8;
 dfm.nodeGraphics = {};
 dfm.loadedEvent = new CustomEvent('graphicsLoaded', {detail: {graphicsLoaded: true}});
 
@@ -97,9 +97,12 @@ function loadDrawingImages() {
     dfm.nodeGraphics.flowLink = new Image();
     dfm.nodeGraphics.flowLink.onload = loadRegister;
     dfm.nodeGraphics.flowLink.src = '/sci-booster/src/images/flow-link.png';
-    dfm.nodeGraphics.hyperlink = new Image();
-    dfm.nodeGraphics.hyperlink.onload = loadRegister;
-    dfm.nodeGraphics.hyperlink.src ='/sci-booster/src/images/web-link.png';
+    dfm.nodeGraphics.hyperlinkAbsent = new Image();
+    dfm.nodeGraphics.hyperlinkAbsent.onload = loadRegister;
+    dfm.nodeGraphics.hyperlinkAbsent.src ='/sci-booster/src/images/web-link-absent.png';
+    dfm.nodeGraphics.hyperlinkPresent = new Image();
+    dfm.nodeGraphics.hyperlinkPresent.onload = loadRegister;
+    dfm.nodeGraphics.hyperlinkPresent.src ='/sci-booster/src/images/web-link-present.png';
     dfm.nodeGraphics.zoomPresent = new Image();
     dfm.nodeGraphics.zoomPresent.onload = loadRegister;
     dfm.nodeGraphics.zoomPresent.src = '/sci-booster/src/images/zoom-present.png';

@@ -160,10 +160,14 @@ dfm.FlowVisuals = class {
             nodeNum: nodeNum,
             hoverText: "Flow Link"
         });
+        let linkGraphic = dfm.nodeGraphics.hyperlinkPresent;
+        if (nodeItem.hyperlink === "") {
+            linkGraphic = dfm.nodeGraphics.hyperlinkAbsent;
+        }
         node.hyperlinkOpt = new Konva.Image({
             x: dfm.nodeTemplate.optionWidth * 4 + optionMargin * 5,
             y: dfm.nodeTemplate.optionTop,
-            image: dfm.nodeGraphics.hyperlink,
+            image: linkGraphic,
             width: dfm.nodeTemplate.optionWidth,
             height: dfm.nodeTemplate.optionHeight,
             nodeNum: nodeNum,
@@ -250,8 +254,14 @@ dfm.FlowVisuals = class {
 
     updateNode(label, nodeNum) {
         let nodeObj = this.getNode(nodeNum);
+        let nodeItem = dfm.currentPage.getNode(nodeNum);
         if (nodeObj.found) {
             nodeObj.node.label = label;
+            let linkGraphic = dfm.nodeGraphics.hyperlinkPresent;
+            if (nodeItem.hyperlink === "") {
+                linkGraphic = dfm.nodeGraphics.hyperlinkAbsent;
+            }
+            nodeObj.node.hyperlinkOpt.setAttr("image", linkGraphic);
             nodeObj.node.labelText.setAttr("text", nodeNum + " " + label);
             nodeObj.node.nodeGroup.draw();
         }
