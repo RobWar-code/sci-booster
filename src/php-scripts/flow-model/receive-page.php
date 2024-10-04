@@ -30,6 +30,11 @@ function scanInput($inputData) {
         }
         elseif($requestType === "delete page by id") {
             deleteModelPage($inputData['page_id']);
+            $response = ["result"=>true];
+            echo json_encode($response);
+        }
+        elseif($requestType === "delete node and children") {
+            deleteNodeAndChildPages($inputData['node_id'], $inputData['flow_model_id'], $inputData['hierarchical_id']);
         }
         elseif($requestType === "zoom page") {
             fetchModelPageByHierarchicalId($inputData);

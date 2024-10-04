@@ -155,6 +155,7 @@ flowDetails = {
         }
         document.getElementById("drawFlowButton").style.display = "block";
         this.flowDetailsSet = true;       
+        dfm.modelChanged = true;
     },
 
     toggleFormulas: function () {
@@ -216,6 +217,7 @@ flowDetails = {
             dfm.currentPage.updateFlow(this.currentFlow);
             this.displayFlowFormulas();
         }
+        dfm.modelChanged = true;
     },
 
     deleteFlow: function() {

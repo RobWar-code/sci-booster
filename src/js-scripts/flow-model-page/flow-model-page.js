@@ -40,7 +40,12 @@ const flowModelPage = {
             else {
                 // Check whether the user is an author of the current page
                 if (dfm.currentPage.isUserAuthor()) {
-                    document.getElementById("editModelButton").style.display = "inline";
+                    if (!dfm.modelEditMode === "edit") {
+                        document.getElementById("editModelButton").style.display = "inline";
+                    }
+                    else {
+                        document.getElementById("editModelButton").style.display = "none";
+                    }
                     document.getElementById("deleteModelButton").style.display = "inline";
                     document.getElementById("saveModelButton").style.display = "inline";
                 }
@@ -297,6 +302,17 @@ const flowModelPage = {
         }
     },
 
+    deleteNodeRequired: async function(message) {
+        try {
+            let response = await this.showYesNoModal(message);
+            return response;
+        }
+        catch(error) {
+            console.error("deleteNodeRequired: could not collect response ", error);
+            return "cancel";
+        }
+    },
+
     deletePageRequired: async function(message) {
         try {
             let response = await this.showYesNoModal(message);
@@ -311,7 +327,7 @@ const flowModelPage = {
     zoomPage: async function(event) {
         event.cancelBubble = true;
         // Check whether the current page should be saved
-        if (dfm.modelEditMode && dfm.modelChanged) {
+        if (dfm.modelEditMode === "edit" && dfm.modelChanged) {
             let response = await this.saveModelRequired(`Save Page - ${dfm.currentPage.page.title}`);
             if (response === "yes") {
                 let reload = true;

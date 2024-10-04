@@ -12,15 +12,6 @@ Contents
 
     Favicon icon for sci-booster
 
-    * Submit button missing on click node details opt
-
-    * Save option not shown after node edit submit
-
-    * On the node buttons, zoom button distinguish between has child page and not
-
-    * On the node buttons, hyperlink button distinguish between has hyperlink and not
-
-    * On the node button, graphic button distinguish between has graphic or not
 
     Do the introductory page
         Include details of the JSON import model format
@@ -36,6 +27,25 @@ Contents
     In the README Plan the release procedures
 
 <h1>Work Done
+    04/10/2024
+
+    * Zoom to new page, when leave clicked without submit/model-changed reset 
+    edit mode to false (same as cancel) and update display etc.
+
+    * Edit button displayed after zoomed new model submitted
+
+    * Zoom does not save changes to current model - try selected model?
+
+    * Submit button missing on click node details opt
+
+    * Save option not shown after node edit submit
+
+    * On the node buttons, zoom button distinguish between has child page and not
+
+    * On the node buttons, hyperlink button distinguish between has hyperlink and not
+
+    * On the node button, graphic button distinguish between has graphic or not
+    
     02/10/2024
 
     * Add warnings to import model for flow label_width and flow_arrow presence

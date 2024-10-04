@@ -533,6 +533,44 @@ dfm.FlowPageData = class {
         }};
     }
 
+    async deleteDatabaseNodeAndChildren(node) {
+        if (!("id" in node)) {
+            console.error("Can only delete node from database");
+            return false;
+        }
+        else if (node.id === null) {
+            console.error("Node for deletion not derived from database");
+            return false;
+        }
+        let request = {request: "delete node and children", node_id: node.id, 
+            flow_model_id: this.flow_model_id, hierarchical_id: this.page.hierarchical_id};
+        let requestJSON = JSON.stringify(request);
+
+        try {
+            let response = await fetch(dfm.phpPath + 'flow-model/receive-page.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: requestJSON
+            })
+
+            let responseData = await response.json();
+
+            if (responseData.result === true) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        catch {(error) => {
+            console.error("Problem with receive-page script call - userExists()", error);
+            return false;
+        }};
+
+    }
+
     async userExists(username) {
         let message = {request: "find user", username: username};
         let messageJSON = JSON.stringify(message);

@@ -25,6 +25,9 @@ const modelDetails = {
         document.getElementById("modelHierarchicalId").innerText = dfm.currentPage.page.hierarchical_id;
       }
     }
+    else {
+      document.getElementById("modelHierarchicalId").innerText = '01';
+    }
     this.setModelEditDisplay();
     this.displayModelDetails();
     dfm.currentPageSet = false;
@@ -258,6 +261,8 @@ const modelDetails = {
     e.style.display = "none";
     if (dfm.modelEditMode === "new") {
       dfm.modelEditMode = "read-only";
+      document.getElementById("zoomBackButton").style.display = "none";
+      flowModelPage.cancelModel();
     }
     // If no model title set, alter the page display
     if (!dfm.currentPageSet) {

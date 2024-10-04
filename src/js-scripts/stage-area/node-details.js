@@ -147,6 +147,7 @@ const nodeDetails = {
         if (dfm.currentPage.page.nodes.length > 0) {
             document.getElementById("saveModelButton").style.display = "inline";
         }
+        dfm.modelChanged = true;
     },
 
     isDuplicateLabel: function (editMode, label) {
@@ -175,9 +176,26 @@ const nodeDetails = {
         return false;
     },
 
-    deleteNode: function () {
+    startDeleteNode: async function () {
         // Get the node number from the form
         let nodeNum = document.getElementById("nodeNum").innerText;
+        // Check whether the node has child page(s)
+        let node = dfm.currentPage.getNode(nodeNum);
+        if (node.has_child_page) {
+            $message = "This node has child pages - to remove this node the child pages must be deleted - proceed?";
+            $response = await flowModelPage.deleteNodeRequired($message);
+            if ($response === "yes") {
+                if (await dfm.currentPage.deleteDatabaseNodeAndChildren(node)) {
+                    this.deleteNode(nodeNum);
+                }
+            }
+            else {
+                return;
+            }
+        }
+    },
+
+    deleteNode: function (nodeNum) {
         dfm.currentPage.deleteNode(nodeNum);
         dfm.currentVisual.deleteNode(nodeNum);
         dfm.modelChanged = true;
