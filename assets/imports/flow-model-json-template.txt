@@ -1,0 +1,83 @@
+{
+	"flow_model_id": ,
+	"flow_model_title": "",
+	"update": ,
+	"complete": ,
+	"pages" : [
+		{
+			"id": ,
+	 		"hierarchical_id": "",
+			"title": "",
+			"keywords": "",
+			"user_authors": [
+				"id": ,
+				"username": ""
+			],
+			"external_authors": [
+				"id": ,
+				"author": ""
+			],
+			"references": [
+				{
+					"id": ,
+					"source": "",
+					"title":,
+					"author": {
+						"id":,
+						"author": "" 
+					}
+				},
+				..
+			],
+
+			"nodes": [
+				{
+					"id": ,
+					"node_num" : "",
+					"x": ,
+					"y": ,
+					"label": "",
+					"graphic_file": "",
+					"graphic_text": "",
+					"type": "",
+					"definition": "",
+					"keywords": "",
+					"hyperlink": "",
+					"has_child_page":
+				},
+				..
+			],
+
+			"flows" : [
+				{
+					"id": ,
+					"source_node_num": "", 
+					"destination_node_num": "",
+					"label": "",
+					"label_x": , 
+					"label_y": ,
+					"label_width": ,
+					"drawing_group_x": ,
+					"drawing_group_y": ,
+					"arrow_points": ,
+					"points": ,
+					"keywords": "",
+					"definition": "",
+					"conversion_formulas": [
+						{
+							"id": ,
+							"formula": "",
+							"description": ""
+						},
+						..
+					]
+					"hyperlink": ""
+				},
+				..
+			]
+			
+		},
+		..
+	]
+}
+

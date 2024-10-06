@@ -235,6 +235,15 @@ body {
     max-width: 900px;
 }
 
+#nodeGraphicCreditsDiv {
+    display: none;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 14px;
+    font-style: italic;
+    text-align: center;
+}
+
 /* Import JSON Modal */
 #importModal {
     display: none;

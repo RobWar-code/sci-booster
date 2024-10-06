@@ -165,6 +165,8 @@
           <input type="text" class="modalFormItem" name="nodeGraphicFile" id="nodeGraphicFile">
           <label for="nodeGraphicText" class="modalFormLabel">Image Text:</label>
           <input type="text" class="modalFormItem" name="nodeGraphicText" id="nodeGraphicText">
+          <label for="nodeGraphicCredits" class="modalFormLabel">Img Credits:</label>
+          <input type="text" class="modalFormItem" name="nodeGraphicCredits" id="nodeGraphicCredits">
           <label for="nodeType" class="modalFormLabel">Type:</label>
           <select name="nodeType" id="nodeType" class="modalFormItem">
             <option value="mechanism">Mechanism</option>
@@ -265,6 +267,10 @@
       <div class="genModalDiv">
         <img id="nodeGraphic" src="#" title="" width="800" height="400" />
         <p id="nodeGraphicPara"></p>
+        <div id="nodeGraphicCreditsDiv">
+          <span>Credits: </span>
+          <p id="nodeGraphicCreditsPara"></p>
+        </div>
         <div>
           <button class="textButton" id="nodeGraphicDismissBtn" onclick="dfm.nodeGraphic.dismissGraphic()">Dismiss</button>
         </div>

@@ -14,6 +14,13 @@ dfm.nodeGraphic = {
         imageElem.src = graphicFile;
         let textElem = document.getElementById("nodeGraphicPara");
         textElem.innerText = node.graphic_text;
+        if (node.graphic_credits != "") {
+            document.getElementById("nodeGraphicCreditsDiv").style.display = "block";
+            document.getElementById("nodeGraphicCreditsPara").innerText = node.graphic_credits;
+        }
+        else {
+            document.getElementById("nodeGraphicCreditsDiv").style.display = "none";
+        }
         let modalBackgroundElem = document.getElementById("nodeGraphicModal");
         modalBackgroundElem.style.height = document.body.scrollHeight;
         modalBackgroundElem.style.display = "block";

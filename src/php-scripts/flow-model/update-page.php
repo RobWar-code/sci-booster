@@ -379,10 +379,10 @@
         if (isset($nodeId)) {
             // Identify the fields that are different and update
             $table = "node";
-            $fieldNames = ['node_num', 'x', 'y', 'label', 'graphic_file', 'graphic_text', 
+            $fieldNames = ['node_num', 'x', 'y', 'label', 'graphic_file', 'graphic_text', 'graphic_credits', 
                 'type', 'definition', 'keywords', 'hyperlink', 'has_child_page'];
             $destFieldNames = ['node_num', 'x_coord', 'y_coord', 'label', 'graphic_file', 'graphic_text', 
-                'type', 'definition', 'keywords', 'hyperlink', 'has_child_page'];
+                'graphic_credits', 'type', 'definition', 'keywords', 'hyperlink', 'has_child_page'];
             $fieldValues = $node;
             $oldFieldValues = $oldNode;
             $types = "siisssssssi";

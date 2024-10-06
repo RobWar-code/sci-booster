@@ -1,0 +1,185 @@
+{
+  "flow_models": [
+    {
+      "flow_model_id": null,
+      "flow_model_title": "Oil Supply Chain",
+      "update": false,
+      "complete": true,
+      "pages": [
+        {
+          "id": null,
+          "hierarchical_id": "01",
+          "title": "Overview of Oil Supply Chain",
+          "keywords": "oil extraction, refinery, petrol station",
+          "user_authors": [],
+          "external_authors": [],
+          "references": [],
+          "nodes": [
+            {
+              "id": null,
+              "node_num": "01",
+              "x": 10,
+              "y": 10,
+              "label": "Oil Well",
+              "graphic_file": "",
+              "graphic_text": "",
+              "type": "Source",
+              "definition": "Initial extraction point for crude oil",
+              "keywords": "oil well, extraction",
+              "hyperlink": "",
+              "has_child_page": true
+            },
+            {
+              "id": null,
+              "node_num": "02",
+              "x": 150,
+              "y": 10,
+              "label": "Refinery",
+              "graphic_file": "",
+              "graphic_text": "Processes crude oil into various refined products",
+              "type": "Mechanism",
+              "definition": "Facility where crude oil is converted into products like diesel and petrol",
+              "keywords": "refining, diesel, petrol",
+              "hyperlink": "",
+              "has_child_page": true
+            },
+            {
+              "id": null,
+              "node_num": "03",
+              "x": 290,
+              "y": 10,
+              "label": "Petrol Station",
+              "graphic_file": "",
+              "graphic_text": "",
+              "type": "Destination",
+              "definition": "Retail outlet for refined petroleum products like petrol and diesel",
+              "keywords": "fuel retail, petrol, diesel",
+              "hyperlink": "",
+              "has_child_page": false
+            }
+          ],
+          "flows": [
+            {
+              "id": null,
+              "source_node_num": "01",
+              "destination_node_num": "02",
+              "label": "Crude Oil",
+              "label_x": 80,
+              "label_y": 50,
+              "drawing_group_x": 75,
+              "drawing_group_y": 40,
+              "points": [{"x": 140, "y": 0}]
+            },
+            {
+              "id": null,
+              "source_node_num": "02",
+              "destination_node_num": "03",
+              "label": "Oil Products",
+              "label_x": 80,
+              "label_y": 50,
+              "drawing_group_x": 220,
+              "drawing_group_y": 40,
+              "points": [{"x": 140, "y": 0}],
+              "definition": "Refined products like diesel and petrol distributed to retail locations"
+            }
+          ]
+        },
+        {
+          "id": null,
+          "hierarchical_id": "0101",
+          "title": "Detailed Oil Well Operations",
+          "keywords": "drilling, extraction process",
+          "user_authors": [],
+          "external_authors": [],
+          "references": [],
+          "nodes": [
+            {
+              "id": null,
+              "node_num": "01",
+              "x": 10,
+              "y": 10,
+              "label": "Drilling",
+              "graphic_file": "",
+              "graphic_text": "Drilling operations to access underground oil reserves",
+              "type": "Mechanism",
+              "definition": "The process of drilling wells to extract oil from underground",
+              "keywords": "drilling, operation",
+              "hyperlink": "",
+              "has_child_page": false
+            },
+            {
+              "id": null,
+              "node_num": "02",
+              "x": 150,
+              "y": 10,
+              "label": "Extraction",
+              "graphic_file": "",
+              "graphic_text": "Extraction mechanisms to pump crude oil to the surface",
+              "type": "Mechanism",
+              "definition": "Use of pumps and other mechanisms to extract oil from the ground",
+              "keywords": "pumping, crude oil",
+              "hyperlink": "",
+              "has_child_page": false
+            }
+          ],
+          "flows": []
+        },
+        {
+          "id": null,
+          "hierarchical_id": "0102",
+          "title": "Refinery Process Details",
+          "keywords": "crude oil processing, chemical treatment",
+          "user_authors": [],
+          "external_authors": [],
+          "references": [],
+          "nodes": [
+            {
+              "id": null,
+              "node_num": "01",
+              "x": 10,
+              "y": 10,
+              "label": "Distillation",
+              "graphic_file": "",
+              "graphic_text": "Distillation towers for initial separation of crude components",
+              "type": "Mechanism",
+              "definition": "Separates crude oil into components based on boiling points",
+              "keywords": "distillation, separation",
+              "hyperlink": "",
+              "has_child_page": false
+            },
+            {
+              "id": null,
+              "node_num": "02",
+              "x": 150,
+              "y": 10,
+              "label": "Conversion",
+              "graphic_file": "",
+              "graphic_text": "Conversion processes to transform crude components into usable fuels",
+              "type": "Mechanism",
+              "definition": "Processes that convert heavier fractions into lighter, more valuable products",
+              "keywords": "cracking, hydrocracking",
+              "hyperlink": "",
+              "has_child_page": false
+            },
+            {
+              "id": null,
+              "node_num": "03",
+              "x": 290,
+              "y": 10,
+              "label": "Treatment",
+              "graphic_file": "",
+              "graphic_text": "Chemical treatment to refine and stabilize fuel products",
+              "type": "Effect",
+              "definition": "Includes processes to remove impurities and enhance product quality",
+              "keywords": "sulfur removal, additives",
+              "hyperlink": "",
+              "has_child_page": false
+            }
+          ],
+          "flows": []
+        }
+      ]
+    }
+  ]
+}
+

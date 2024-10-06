@@ -369,6 +369,37 @@ Contents
     * Ensure that the page selector is displayed
     * Click the other page on the page selector
     * Ensure that the selected page is displayed
+    * Login as warner3
+    * Cancel any current display model
+    * Load a model authored by warner3
+    * Ensure that the model details are displayed
+    * Select Edit Mode 
+    * Click Leave
+    * Ensure that the model details are cleared
+    * Click on the stage to add a new node
+    * Ensure that the Node Details modal is displayed
+    * Enter a Label
+    * Click Submit
+    * Click Leave
+    * Ensure that the node appears on the stage
+    * Click the Zoom button on the new node
+    * Ensure that the Save Model modal appears
+    * Click the yes button
+    * Ensure that the model saved message appears
+    * Ensure that Model Details modal appears with the correct title and hierarchical ID (ie: '0103')
+    * Click the Submit button
+    * Ensure that the node details modal is cleared
+    * Ensure that the edit model information appears above the stage
+    * Click the stage
+    * Ensure that the Node Details modal appears
+    * Enter a label
+    * Click Submit
+    * Click Leave
+    * Ensure that a node box appears on the stage
+    * Click the Zoom Back button
+    * Ensure that the Save Model modal appears
+    * Click the Yes button
+    * Ensure that the model details for the parent page are displayed
 
 <h2>Flow Editing
     * Login as warner4 (editor)

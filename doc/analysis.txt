@@ -927,7 +927,8 @@ Contents
     y                   | int 0 to stage height   | Compulsory 
     label               | string maxlen 64        | Compulsory
     graphic_file        | string maxlen 256       | Can be empty
-    graphic_text        | string maxlen 256       | Can be empty
+    graphic_text        | string maxlen 1024      | Can be empty
+	graphic_credits     | string maxlen 256       | Can be empty
     type                | string                  | Must be either "effect" or "mechanism", default "mechanism"
     definition          | string maxlen 4096      | Can be empty
 	keywords            | string maxlen 256       | Can be empty
@@ -1004,6 +1005,7 @@ Contents
 				this.label = "";
 				this.graphic_file = "";
 				this.graphic_text = "";
+				this.graphic_credits = "";
 				this.type = ""; // (Mechanism/Effect)
 				this.definition = "";
 				this.keywords = "";
@@ -1264,6 +1266,7 @@ Contents
 					"label": "",
 					"graphic_file": "",  
 					"graphic_text": "",
+					"graphic_credits: "",
 					"keywords": "", // (optional)
 					"definition": "", // (optional)
 					"conversion_formulas": [

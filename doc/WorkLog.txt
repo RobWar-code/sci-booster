@@ -6,12 +6,13 @@ Contents
 
 <h1>Work Due
 
+    Remove the TEST button from the flow page
+    
+    Include graphic_credits field for nodes
+
     Block robot logins/register
 
-    Test deletion of a node with child page followed by Save
-
     Favicon icon for sci-booster
-
 
     Do the introductory page
         Include details of the JSON import model format
@@ -28,6 +29,8 @@ Contents
 
 <h1>Work Done
     04/10/2024
+
+    * Test deletion of a node with child page followed by Save
 
     * Zoom to new page, when leave clicked without submit/model-changed reset 
     edit mode to false (same as cancel) and update display etc.

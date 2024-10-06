@@ -47,7 +47,8 @@ be added to the edges of nodes.
 The nodes each contain buttons used to provide a new flow or more 
 details about the node.
 
-The flow lines between nodes are draughted automatically.
+The flow lines are simply drawn as linked lines by the user and arrows
+and labels can be easily added to them.
 
 ### Data Model
 
@@ -115,7 +116,8 @@ A node is associated with the following:
 - node_num - Char 2 ie: "01"
 - label - Char 32
 - graphic_file - Char 256
-- graphic_text - Char 256
+- graphic_text - Char 1024
+- graphic_credits - Char 256
 - x_coord - Short Int
 - y_coord - Short Int
 - type - Char 16 - "mechanism"/"effect"
@@ -215,7 +217,7 @@ sources, notably ChatGPT, in which the data may be easily edited for
 import.
 
 The following definition is known as the "Sci-Booster Model JSON
-Definition Version 1.4"
+Definition Version 1.5"
 
 The purpose of this section is to describe the required format of the flow-model 
 JSON object for data imports to the app. This is provided for both AI's such as
@@ -230,13 +232,16 @@ added in an update.
 
 
 #### Descriptive Details
-A flow model consists of pages of component nodes and flows lines used to describe
+A flow model consists of pages of component nodes and flow lines used to describe
 a flow system. The pages are defined as a heirarchy of descriptive detail for each
 component node as required. For example, a top-level flow model might be:
 
-Petrol Station -->petrol-- Car --->exhaust-- Atmosphere
+Petrol Station ------>------- Car ----->---- Atmosphere
+				  Petrol           Exhaust
 
-- The complete field must be included to indicate whether the
+- Fictional/example data should not be used in the json fields, they should
+  be left with "" or null values if not known
+- The "complete" field must be included to indicate whether the
 whole model is being described or only certain pages (true/false)
 - The top level (page) of a flow model has upto four nodes and all subsequent
 pages are further definitions of the component nodes that they describe.
@@ -249,17 +254,20 @@ as well as the page that they describe
 - All definitions (nodes / pages) should confine themselves to the constraint of the parent.
 - Pages inherit the flows from their parent node (whether source or destination), ideally they should
 be re-presented in the page
-- It is permitted to have more than one from flow from a component (as in motion from petrol flow, 
-for example)
+- It is permitted to have more than one flow from a component (as in motion and exhaust for a car
+with a petrol flow input, for example)
 - A page should not consist of more than 8 component nodes
 - A node number (NodeNum) is unique to a page only and consists of two digits, ie: "01".
 - A hierarchical_id is built from its parent node numbers in order of descent, ie: "010204".
 - When using keyword fields, beware of terms such as "flow" which are likely to be 
 too common to be useful
+- Flows are used to connect nodes and their positions should be calculated as such
 - The stage (on which the model page is drawn) has width base 380 pixels, the height is 690 pixels
+- The node boxes are 140 pixels wide by 75 pixels high
 - The flow label_width is optional (it is in any event calculated)
 - Flow arrow_points are optional, if not supplied, the user can add an arrow to the flow when
 using the app.
+- label_x and label_y of a flow are relative to the flow drawing_group_x, drawing_group_y
 
 #### JSON Object Structure
 ```js
@@ -307,10 +315,11 @@ flow_models: [
 						"label": "",
 						"graphic_file": "", // File name/ web link of the image associated with the node
 						"graphic_text": "",
+						"graphic_credits": "",
 						"type": "", // (Mechanism/Effect)
 						"definition": "", // optional
 						"keywords": "", // optional
-						"hyperlink":, "", // optional a hypertext link to further information
+						"hyperlink": "", // optional a hypertext link to further information
 						"has_child_page": // true/false
 					},
 					..
@@ -389,25 +398,30 @@ public/index.html file. (see the documentation)
 - npm install react-router-dom
 - npm install reactflow
 
+### Development Set-up
+	Using Apache/MySql/PHP for a local host environment
+
 ## Schedule
 
 Project Start: 01/04/2024
 
 | Item                         | Est Days | Actual Days |
 | ---------------------------- | -------- | ----------- |
-| Planning and Analysis        | 30       |             |
+| Planning and Analysis        | 30       | 15          |
 | Learn React Flow             | 5        | 5           |
-| Learn Vanilla PixiJS         | 3        |             |
-| Graphics                     | 2        |             |
+| Learn Vanilla PixiJS         | 3        | 1           |
+| Learn Konva Graphics		   | 3        | 3           |
+| Graphics                     | 2        | 2           |
 | Code Intro Page HTML         | 3        |             |
-| Code DataFlow Page HTML      | 5        |             |
-| Code DataFlow Page JS        | 20       |             |
-| Code MYSQL set-up            | 2        |             |
-| Code PHP/MYSQL               | 6        |             |
+| Import Help page             | 2        |             |
+| Code DataFlow Page HTML      | 5        | 7           |
+| Code DataFlow Page JS        | 20       | 55          |
+| Code MYSQL set-up            | 2        | 5           |
+| Code PHP/MYSQL               | 6        | 25          |
 | Flow Model Examples          | 5        |             |
-| Systems Test Plan            | 3        |             |
-| Systems Test                 | 6        |             |
+| Systems Test Plan            | 3        | 5           |
+| Systems Test                 | 6        | 23          |
 | ---------------------------- | -------- | ----------- |
-| Totals                       | 70       |             |
+| Totals                       | 75       |             |
 | ---------------------------- | -------- | ----------- |
 | Phase II Investigation       | 5        |             |

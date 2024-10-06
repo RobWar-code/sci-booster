@@ -12,7 +12,7 @@
     // Create the sci-booster tables
     include_once './db-connect.php';
 
-    dropTables();
+    // dropTables();
 
     /*
     $sql = "CREATE TABLE user (
@@ -66,7 +66,7 @@
     else {
         echo "problem setting editor key<br>";
     }
-    */
+    
 
     // flow_model Table
     $sql = "CREATE TABLE flow_model (
@@ -133,6 +133,14 @@
         echo "Problem adding reference table {$dbConn->error}<br>";
     }
 
+    */
+    $sql = "DROP TABLE node";
+    $result = $dbConn->query($sql);
+    if (!$result) {
+        error_log("Could not drop node table {$dbConn->error}", 0);
+        echo "Could not drop table node<br>";
+    }
+
     // node Table
     $sql = "CREATE TABLE node (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -140,7 +148,8 @@
         node_num CHAR(2) NOT NULL,
         label VARCHAR(64) NOT NULL,
         graphic_file VARCHAR(256),
-        graphic_text VARCHAR(256),
+        graphic_text VARCHAR(1024),
+        graphic_credits VARCHAR(256),
         x_coord SMALLINT NOT NULL,
         y_coord SMALLINT NOT NULL,
         type VARCHAR(16) NOT NULL,
@@ -158,6 +167,7 @@
         echo "Problem adding node table: " . $dbConn->error . "<br>";
     }
 
+    /*
     // Flow Table
     $sql = "CREATE TABLE flow (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -266,7 +276,7 @@
     else {
         echo "Problem adding conversion_formula table: " . $dbConn->error . "<br>";
     }
-
+*/
     
     function dropTables() {
         global $dbConn;
