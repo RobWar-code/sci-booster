@@ -156,6 +156,8 @@
     function updateExternalAuthor($author, $oldAuthor, $authorId) {
         global $dbConn;
 
+        if ($author === "") return;
+
         if ($authorId === NULL) {
             // The author given is not a user, so update the author name
             $result = findExternalAuthor($oldAuthor, $authorId);

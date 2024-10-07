@@ -1,0 +1,168 @@
+    {
+      "flow_model_id": null,
+      "flow_model_title": "Oil Well to Storage/Distribution Flow Model",
+      "update": false,
+      "complete": false,
+      "pages": [
+        {
+          "id": null,
+          "hierarchical_id": "01",
+          "title": "Oil Well to Refinery to Storage",
+          "keywords": "crude oil, refinery, fuels, storage",
+          "user_authors": [
+            {
+              "id": null,
+              "username": "warner3"
+            }
+          ],
+          "external_authors": [],
+          "references": [
+			{
+				"id": null, 
+				"source": "SpringerLink",
+				"title": "Introduction to Crude Oil and Petroleum Processing",
+				"author": {
+					"id": null, 
+					"author": "Steven A. Treese" 
+				}
+			},
+			{
+				"id": null, 
+				"source": "ASME Digital Collection",
+				"title": "Crude Oil Refining Processes",
+				"author": {
+					"id": null, 
+					"author": "" 
+				}
+			},
+			{
+				"id": null, 
+				"source": "SpringerLink",
+				"title": "Handbook of Petroleum Processing",
+				"author": {
+					"id": "null", 
+					"author": "David S. J. Stan Jones" 
+				}
+			},
+			{
+				"id": null, 
+				"source": "",
+				"title": "Springer Handbook of Petroleum Technology",
+				"author": {
+					"id": "null", 
+					"author": "Paul R. Robinson" 
+				}
+			}
+          ],
+          "nodes": [
+            {
+              "id": null,
+              "node_num": "01",
+              "x": 50,
+              "y": 10,
+              "label": "Oil Well",
+              "graphic_file": "warner3/oil-pump-jack.jpg",
+              "graphic_text": "Refinery and pump in West Texas",
+              "graphic_credits": "ibstockphoto.com",
+              "type": "mechanism",
+              "definition": "An oil well that extracts crude oil from the earth.",
+              "keywords": "crude oil, extraction",
+              "hyperlink": "",
+              "has_child_page": true
+            },
+            {
+              "id": null,
+              "node_num": "02",
+              "x": 50,
+              "y": 150,
+              "label": "Refinery",
+              "graphic_file": "",
+              "graphic_text": "",
+              "graphic_credits": "",
+              "type": "mechanism",
+              "definition": "A refinery processes crude oil into various fuels and products.",
+              "keywords": "refining, fuels",
+              "hyperlink": "",
+              "has_child_page": true
+            },
+            {
+              "id": null,
+              "node_num": "03",
+              "x": 50,
+              "y": 290,
+              "label": "Storage/Distribution Facilities",
+              "graphic_file": "",
+              "graphic_text": "",
+              "graphic_credits": "",
+              "type": "mechanism",
+              "definition": "Storage and distribution centers where refined fuels are stored and transported.",
+              "keywords": "storage, distribution",
+              "hyperlink": "",
+              "has_child_page": false
+            }
+          ],
+          "flows": [
+            {
+              "id": null,
+              "flow_num": "01",
+              "source_node_num": "01",
+              "destination_node_num": "02",
+              "label": "Crude Oil",
+              "label_x": -50,
+              "label_y": 22,
+              "label_width": 60,
+              "drawing_group_x": 120,
+              "drawing_group_y": 85,
+              "arrow_points": [
+                {"x":0, "y":20},
+                {"x":-8, "y":12},
+                {"x":0, "y":16},
+                {"x":8, "y":12}
+               ],
+              "points": [
+                {
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "x":0,
+                  "y":60
+                }
+              ],
+              "keywords": "crude oil",
+              "definition": "Flow of crude oil from the oil well to the refinery.",
+              "conversion_formulas": [],
+              "hyperlink": ""
+            },
+            {
+              "id": null,
+              "flow_num": "02",
+              "source_node_num": "02",
+              "destination_node_num": "03",
+              "label": "Fuels",
+              "label_x": -50,
+              "label_y": 22,
+              "label_width": 60,
+              "drawing_group_x": 120,
+              "drawing_group_y": 230,
+              "arrow_points": [
+                {"x":0, "y":20},
+                {"x":-8, "y":12},
+                {"x":0, "y":16},
+                {"x":8, "y":12}
+              ],
+              "points": [
+                {"x":0, "y":0},
+                {"x":0, "y":60}
+              ],
+              "keywords": "fuels, refined products",
+              "definition": "Flow of refined fuels from the refinery to the storage/distribution facilities.",
+              "conversion_formulas": [],
+              "hyperlink": ""
+            }
+          ]
+        }
+      ]
+    }
+
+

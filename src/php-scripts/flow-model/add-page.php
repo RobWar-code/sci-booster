@@ -251,17 +251,22 @@ function addPageReference($pageId, $reference) {
     $gotAuthor = false;
 
     // Process the author name
-    $nameParts = extractFirstAndLastNames($author);
-    $firstName = $nameParts['firstName'];
-    $lastName = $nameParts['lastName'];
-    // Search the database for the last name
-    $sql = "SELECT * FROM external_author WHERE last_name = '$lastName' AND first_name = '$firstName'";
-    $result = $dbConn->query($sql);
-    if ($result && $row = $result->fetch_assoc()) {
-        $authorId = $row['id'];
+    if ($author === "") {
+        $authorId = null;
         $gotAuthor = true;
     }
-    
+    else {
+        $nameParts = extractFirstAndLastNames($author);
+        $firstName = $nameParts['firstName'];
+        $lastName = $nameParts['lastName'];
+        // Search the database for the last name
+        $sql = "SELECT * FROM external_author WHERE last_name = '$lastName' AND first_name = '$firstName'";
+        $result = $dbConn->query($sql);
+        if ($result && $row = $result->fetch_assoc()) {
+            $authorId = $row['id'];
+            $gotAuthor = true;
+        }
+    }
     if (!$gotAuthor) {
         // Add the author to the external authors table
         $insertedAuthor = false;
@@ -304,7 +309,6 @@ function addPageReference($pageId, $reference) {
             }
         }
     }
-
 }
 
 function addNodes($pageId, $nodes) {

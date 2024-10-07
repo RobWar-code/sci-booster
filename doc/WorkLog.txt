@@ -6,9 +6,11 @@ Contents
 
 <h1>Work Due
 
-    Remove the TEST button from the flow page
+    Allow for Author "" in references
+
+    * Remove the TEST button from the flow page
     
-    Include graphic_credits field for nodes
+    * Include graphic_credits field for nodes
 
     Block robot logins/register
 

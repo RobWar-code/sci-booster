@@ -265,23 +265,5 @@ const nodeDetails = {
                 console.error("Problem uploading graphic file " + filename + " " + error);
             });
         }
-    },
-
-    testFetch: async function () {
-        let progname = `${dfm.phpPath}flow-model/test.php`;
-        let bodyJSON = JSON.stringify({request: "hello"});
-        try {
-            let response = await fetch(progname, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: bodyJSON
-            });
-            response = await response.json();
-        }
-        catch {(error) => {
-            console.error("Same Problem", error);
-        }}
     }
 }

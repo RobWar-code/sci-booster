@@ -216,8 +216,8 @@ This feature allows for the importation/exportation of data for other
 sources, notably ChatGPT, in which the data may be easily edited for
 import.
 
-The following definition is known as the "Sci-Booster Model JSON
-Definition Version 1.5"
+The following definition is known as the "Sci-Booster Flow Model JSON
+Definition Version 1.6"
 
 The purpose of this section is to describe the required format of the flow-model 
 JSON object for data imports to the app. This is provided for both AI's such as
@@ -328,6 +328,7 @@ flow_models: [
 				"flows" : [
 					{
 						"id": , // May be null
+						"flow_num": ""// Unique to the page two digits, ie: "03"
 						"source_node_num": "", 
 						"destination_node_num": "", // (optional)
 						"label": "",
