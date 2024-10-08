@@ -513,6 +513,16 @@ Contents
     * Ensure that Flow Details modal is cleared
     * Ensure that flow, label and arrow are cleared from the drawing
 
+    * Save a model with the flow details and a conversion formula set for a flow
+    * Cancel the model and then reload it
+    * Click the Dismiss button on the model details, so that it is read-only mode
+    * Click the flow details button on a flow
+    * Ensure that the flow details are displayed in read-only mode
+    * Click the Conversion Formulas button
+    * Ensure that formula is displayed, but not the input form
+    * Click on a formula entry
+    * Ensure that it is not deleted
+
 <h2>Imports
 
 <h3>New Import from pages: data format

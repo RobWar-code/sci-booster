@@ -31,11 +31,15 @@ flowDetails = {
         if (dfm.modelEditMode === "edit" && !dfm.flowDrawMode) {
             editMode = "edit";
             this.editMode = "edit";
+            this.flowFormulasOpen = false;
             document.getElementById("drawFlowButton").style.display = "block";
             document.getElementById("flowDeleteButton").style.display = "inline";
             this.setDisableFlowDetailsEdit(false);
         }
         else {
+            this.editMode = "";
+            editMode = "";
+            this.flowFormulasOpen = false;
             document.getElementById("drawFlowButton").style.display = "none";
             document.getElementById("flowDeleteButton").style.display = "none"
             this.setDisableFlowDetailsEdit(true);
@@ -54,6 +58,7 @@ flowDetails = {
     },
 
     displayFlowModal: function(editMode) {
+        document.getElementById("flowFormulasDiv").style.display = "none";
         if (editMode === "new") {
             this.clearValues();
             this.setDisableFlowDetailsEdit(false);
@@ -168,15 +173,16 @@ flowDetails = {
             setTimeout(() => {
                 document.getElementById("formulaToggleWarning").style.display = "none";
             }, 4000);
-            return;
         }
         document.getElementById("flowFormulasDiv").style.display = "block";
         this.displayFlowFormulas();
-        if (this.editMode) {
+        if (this.editMode === "edit" || this.editMode === "new") {
             document.getElementById("flowFormulasInputForm").style.display = "block";
+            document.getElementById("formulaDeletePara").style.display = "block";
         }
         else {
             document.getElementById("flowFormulasInputForm").style.display = "none";
+            document.getElementById("formulaDeletePara").style.display = "none";
         }
     },
 
@@ -201,6 +207,7 @@ flowDetails = {
     },
 
     deleteFormula: function(event) {
+        if (this.editMode != "edit" && this.editMode != "new") return;
         let itemNum = parseInt(event.target.dataset.item);
         this.currentFlow.conversion_formulas.splice(itemNum, 1);
         dfm.currentPage.updateFlow(this.currentFlow);

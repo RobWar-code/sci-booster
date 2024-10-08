@@ -58,7 +58,6 @@
         if (count($aOnly) > 0) {
             // Do inserts
             foreach($aOnly as $index) {
-                // Debug 
                 $author = $authors[$index]['author'];
                 // Check whether the id is present
                 if (isset($authors[$index]['id'])) {
@@ -209,9 +208,14 @@
                 $oldReference = $oldReferences[$oldIndex];
                 $oldReferenceId = $oldReferences[$oldIndex]['id'];
                 $externalAuthorId = checkAndUpdateReferenceAuthor($reference, $oldReferences);
+                if ($reference['author']['author'] === "") {
+                    $reference['author'] = null;
+                }
+                else {
+                    $reference['author'] = $externalAuthorId;
+                }
                 // Check the other fields
                 $table = 'reference';
-                $reference['author'] = $externalAuthorId;
                 $fieldNames = ['source', 'title', 'author'];
                 $destFieldNames = ['source', 'title', 'external_author_id'];
                 $types = "ssi";
@@ -252,17 +256,20 @@
         global $dbConn;
 
         $author = $reference['author']['author'];
+        if ($author === "") return null;
 
         $externalAuthorId = isset($reference['author']['id']) ? $reference['author']['id'] : null;
         // Find the old author
         $found = false;
-        $index = 0;
-        foreach($oldReferences as $oldReference) {
-            if ($oldReference['author']['id'] === $externalAuthorId) {
-                $found = true;
-                break;
+        if ($externalAuthorId != null) {
+            $index = 0;
+            foreach($oldReferences as $oldReference) {
+                if ($oldReference['author']['id'] === $externalAuthorId) {
+                    $found = true;
+                    break;
+                }
+                ++$index;
             }
-            ++$index;
         }
         if ($found) {
             $oldAuthor = $oldReference['author']['author'];

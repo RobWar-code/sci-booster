@@ -40,7 +40,7 @@ const flowModelPage = {
             else {
                 // Check whether the user is an author of the current page
                 if (dfm.currentPage.isUserAuthor()) {
-                    if (!dfm.modelEditMode === "edit") {
+                    if (dfm.modelEditMode != "edit") {
                         document.getElementById("editModelButton").style.display = "inline";
                     }
                     else {

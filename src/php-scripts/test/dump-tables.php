@@ -142,7 +142,7 @@
         $result = $stmt->execute();
         $stmt->store_result();
         $stmt->bind_result($id, $pageId, $nodeNum, $label, $graphicFile, $graphicText,
-            $xCoord, $yCoord, $type, $definition, $keywords, $hyperlink, $hasChildPage);
+            $graphicCredits, $xCoord, $yCoord, $type, $definition, $keywords, $hyperlink, $hasChildPage);
         if ($result) {
             echo "<br>";
             echo "Node Table: " . $stmt->num_rows . "<br>";
@@ -153,6 +153,7 @@
                 echo "label: " . $label . "<br>";
                 echo "graphic_file: " . $graphicFile . "<br>";
                 echo "graphic_text: " . $graphicText . "<br>";
+                echo "graphic_credits: " . $graphicCredits . "<br>";
                 echo "x_coord: " . $xCoord . "<br>";
                 echo "y_coord: " . $yCoord . "<br>";
                 echo "type: " . $type . "<br>";

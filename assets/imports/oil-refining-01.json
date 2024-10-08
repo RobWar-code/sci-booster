@@ -1,8 +1,8 @@
     {
       "flow_model_id": null,
       "flow_model_title": "Oil Well to Storage/Distribution Flow Model",
-      "update": false,
-      "complete": false,
+      "update": true,
+      "complete": true,
       "pages": [
         {
           "id": null,
@@ -74,7 +74,7 @@
               "id": null,
               "node_num": "02",
               "x": 50,
-              "y": 150,
+              "y": 165,
               "label": "Refinery",
               "graphic_file": "",
               "graphic_text": "",
@@ -89,8 +89,8 @@
               "id": null,
               "node_num": "03",
               "x": 50,
-              "y": 290,
-              "label": "Storage/Distribution Facilities",
+              "y": 310,
+              "label": "Storage and Distribution Facilities",
               "graphic_file": "",
               "graphic_text": "",
               "graphic_credits": "",
@@ -126,7 +126,7 @@
                 },
                 {
                   "x":0,
-                  "y":60
+                  "y":80
                 }
               ],
               "keywords": "crude oil",
@@ -144,7 +144,7 @@
               "label_y": 22,
               "label_width": 60,
               "drawing_group_x": 120,
-              "drawing_group_y": 230,
+              "drawing_group_y": 235,
               "arrow_points": [
                 {"x":0, "y":20},
                 {"x":-8, "y":12},
@@ -153,11 +153,16 @@
               ],
               "points": [
                 {"x":0, "y":0},
-                {"x":0, "y":60}
+                {"x":0, "y":80}
               ],
               "keywords": "fuels, refined products",
               "definition": "Flow of refined fuels from the refinery to the storage/distribution facilities.",
-              "conversion_formulas": [],
+              "conversion_formulas": [
+                 {
+                    "formula": "Crude Oil -> Fuels",
+                    "description": "The refining process by distillation"
+                 }
+              ],
               "hyperlink": ""
             }
           ]

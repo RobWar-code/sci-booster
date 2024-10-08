@@ -6,7 +6,15 @@ Contents
 
 <h1>Work Due
 
-    Allow for Author "" in references
+    When matching username logs in with existing model, edit button not displayed
+
+    * Edit Mode not cancelled correctly on flow details
+
+    * Conversion Formulas not displayed on read-only for flow details
+
+    * Delete of conversion formulas still available when read-only
+
+    * Allow for Author "" in references
 
     * Remove the TEST button from the flow page
     
