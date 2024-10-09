@@ -5,51 +5,48 @@
  * The firstName is "" if no firstName is given and the lastName has the name.
  */
 function extractFirstAndLastNames($author) {
-    // Check for last "." in the name
-    $author = trim($author);
-    $strEnd = strlen($author) - 1;
-    $found = false;
-    $i = $strEnd;
-    do {
-        $c = $author[$i];
-        if ($c === "." || $c === " ") {
-            $found = true;
-        }
-        else {
-            --$i;
-        }
-    } while ($i >= 0 && !$found);
-    if (!$found) {
+    // Remove .'s from name
+    $cleanAuthorItem = stripDotsAndSpareSpace($author);
+    $cleanAuthor = $cleanAuthorItem['newString'];
+    $lastSpace = $cleanAuthorItem['lastSpace'];
+    if ($lastSpace === -1) {
+        $lastName = $cleanAuthor;
         $firstName = "";
-        $lastName = trim($author);
     }
     else {
-        $lastName = substr($author, $i + 1, strlen($author) - ($i + 1));
-        if ($c === " ") {
-            // Find the nearest alpha
-            --$i;
-            $found = false;
-            do {
-                $c = $author[$i];
-                if (($c >= "A" && $c <= "Z") || ($c >= "a" && $c <= "z")) {
-                    $found = true;
-                }
-                else {
-                    --$i;
-                }
-            }  while ($i >= 0 && !$found);
-            if ($found) {
-                $firstName = substr($author, 0, $i + 1);
+        $lastName = substr($cleanAuthor, $lastSpace + 1);
+        $firstName = substr($cleanAuthor, 0, $lastSpace);
+    }
+    $nameParts = ['firstName' => $firstName, 'lastName' => $lastName];
+    return $nameParts;
+}
+
+function stripDotsAndSpareSpace($s) {
+    $s1 = trim($s);
+    $n = strlen($s1);
+    $s2 = "";
+    $lastSpace = -1;
+    $lastWasSpace = false;
+    for ($i = 0; $i < $n; $i++) {
+        $c = $s1[$i];
+        if ($c === ".") {
+            $addChar = " ";
+        }
+        elseif($c === " " || $c === "\t") {
+            if ($lastWasSpace) {
+                $addChar = "";
             }
             else {
-                $firstName = "";
+                $addChar = " ";
             }
         }
         else {
-            $firstName = trim(substr($author, 0, $i - 1));
+            $addChar = $c;
+        }
+        $s2 .= $addChar;
+        if ($addChar === " ") {
+            $lastSpace = strlen($s2) - 1;
         }
     }
-
-    $nameParts = ['firstName' => $firstName, 'lastName' => $lastName];
-    return $nameParts;
+    return ['newString'=>$s2, 'lastSpace'=>$lastSpace];
 }

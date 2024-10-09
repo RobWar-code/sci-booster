@@ -6,7 +6,13 @@ Contents
 
 <h1>Work Due
 
-    When matching username logs in with existing model, edit button not displayed
+    Database duplication error with external authors derived from references
+
+    * Not all dots removed from names in external author processing
+
+    * Problem with hierarchical_id test when importing a child page
+
+    * When matching username logs in with existing model, edit button not displayed
 
     * Edit Mode not cancelled correctly on flow details
 

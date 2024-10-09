@@ -175,7 +175,7 @@ function arrangePageData($filedata) {
                 echo json_encode($response);
                 exit;    
             }
-            $noewPageItem['complete'] = $complete;
+            $newPageItem['complete'] = $complete;
         }
         // Check that the model title is present
         if (array_key_exists("flow_model_title", $pageData)) {
@@ -634,6 +634,7 @@ function validateHierarchicalIds($pageData) {
                         $message = "validateHierarchicalId: Problem checking node num in database<br>";
                         return $message;
                     }
+                    error_log("Node derived from hierarchical id: {$result->num_rows}", 0);
                     if ($result->num_rows > 0) {
                         $found = true;
                     }
@@ -843,6 +844,13 @@ function validateExternalAuthors(&$page, $count) {
     }
     $index = 0;
     foreach($page['external_authors'] as $authorItem) {
+        if (array_key_exists('id', $authorItem)) {
+            $authorId = $authorItem['id'];
+            if ($authorId != null && !is_int($authorId)) {
+                $message = "External Author id is not null or an integer index at page $count";
+                return $message;
+            }
+        }
         $author = $authorItem['author'];
         if (!is_string($author)) {
             $message = "External Author not a string at page $count<br>";
@@ -905,13 +913,20 @@ function validateReferences(&$page, $count) {
         $reference['title'] = $title;
 
         if (!array_key_exists('author', $reference)) {
-            $reference['author'] = "";
+            $reference['author'] = ['id'=>null, 'author'=>""];
         }
         else {
+            if (array_key_exists('id', $reference['author'])) {
+                $authorId = $reference['author']['id'];
+                if ($authorId != null && !is_int($authorId)) {
+                    $message = "Reference author id is not null or an integer index at page $count<br>";
+                    return $message;
+                }
+            }
             $author = $reference['author']['author'];
             if (!is_string($author)) {
                 $message = "Reference author is not a string at page $count<br>";
-                return;
+                return $message;
             }
             $author = htmlspecialchars($author);
             if (strlen($author) > 128) {
