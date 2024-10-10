@@ -1,0 +1,310 @@
+{
+  "flow_model_id": null,
+  "flow_model_title": "Oil Well to Storage/Distribution Flow Model",
+  "update": true,
+  "complete": false,
+  "pages": [
+    {
+      "id": null,
+      "hierarchical_id": "010101",
+      "title": "Boring Components and Process",
+      "keywords": "boring, drilling, drive, extraction, oil well",
+      "user_authors": [
+        {
+          "id": null,
+          "username": "warner3"
+        }
+      ],
+      "external_authors": [],
+      "references": [],
+      "nodes": [
+        {
+          "id": null,
+          "node_num": "01",
+          "x": 10,
+          "y": 10,
+          "label": "Top Drive",
+          "graphic_file": "",
+          "graphic_text": "",
+          "graphic_credits": "",
+          "type": "mechanism",
+          "definition": "A mechanical device used to rotate the drill string during the boring process.",
+          "keywords": "top drive, drilling, rotary force",
+          "hyperlink": "",
+          "has_child_page": false
+        },
+        {
+          "id": null,
+          "node_num": "02",
+          "x": 10,
+          "y": 165,
+          "label": "Drill String",
+          "graphic_file": "",
+          "graphic_text": "",
+          "graphic_credits": "",
+          "type": "mechanism",
+          "definition": "A series of connected pipes that transmit the rotational force to the drill bit.",
+          "keywords": "drill string, boring, rotation",
+          "hyperlink": "",
+          "has_child_page": false
+        },
+        {
+          "id": null,
+          "node_num": "03",
+          "x": 10,
+          "y": 320,
+          "label": "Rotary Drill Bit",
+          "graphic_file": "",
+          "graphic_text": "",
+          "graphic_credits": "",
+          "type": "mechanism",
+          "definition": "A rotating drill bit used to bore through rock layers to access the oil reservoir.",
+          "keywords": "drill bit, rotary, boring, oil extraction",
+          "hyperlink": "",
+          "has_child_page": false
+        },
+        {
+          "id": null,
+          "node_num": "04",
+          "x": 230,
+          "y": 165,
+          "label": "Drilling Mud Pump",
+          "graphic_file": "",
+          "graphic_text": "",
+          "graphic_credits": "",
+          "type": "mechanism",
+          "definition": "A pump used to circulate drilling mud to lubricate the drill bit and carry rock cuttings to the surface.",
+          "keywords": "drilling mud, mud pump, lubrication, debris removal",
+          "hyperlink": "",
+          "has_child_page": false
+        },
+        {
+          "id": null,
+          "node_num": "05",
+          "x": 230,
+          "y": 330,
+          "label": "Mud Return System",
+          "graphic_file": "",
+          "graphic_text": "",
+          "graphic_credits": "",
+          "type": "mechanism",
+          "definition": "A system that recovers the drilling mud and separates it from rock cuttings.",
+          "keywords": "mud return, rock cuttings, drilling",
+          "hyperlink": "",
+          "has_child_page": false
+        }
+      ],
+      "flows": [
+        {
+          "id": null,
+          "flow_num": "01",
+          "source_node_num": "01",
+          "destination_node_num": "02",
+          "label": "Rotational Force",
+          "label_x": -40,
+          "label_y": 20,
+          "label_width": 80,
+          "drawing_group_x": 80,
+          "drawing_group_y": 85,
+          "arrow_points": [
+            {"x":0, "y":18},
+            {"x":-8, "y":10},
+            {"x":0, "y":14},
+            {"x":8, "y":10}
+          ],
+          "points": [
+            {"x": 0, "y": 0},
+            {"x": 0, "y": 80}
+          ],
+          "keywords": "rotational force, drilling, drive action",
+          "definition": "Flow of rotational force from the Top Drive to the Drill String.",
+          "conversion_formulas": [],
+          "hyperlink": ""
+        },
+        {
+          "id": null,
+          "flow_num": "02",
+          "source_node_num": "02",
+          "destination_node_num": "03",
+          "label": "Rotational Force",
+          "label_x": -40,
+          "label_y": 20,
+          "label_width": 80,
+          "drawing_group_x": 30,
+          "drawing_group_y": 240,
+          "arrow_points": [
+            {"x":0, "y":18},
+            {"x":-8, "y":10},
+            {"x":0, "y":14},
+            {"x":8, "y":10}
+          ],
+          "points": [
+            {"x": 0, "y": 0},
+            {"x": 0, "y": 80}
+          ],
+          "keywords": "rotational force, drilling, drive action",
+          "definition": "Flow of rotational force from the Top Drive to the Drill String.",
+          "conversion_formulas": [],
+          "hyperlink": ""
+        },
+        {
+          "id": null,
+          "flow_num": "03",
+          "source_node_num": "04",
+          "destination_node_num": "02",
+          "label": "Drilling Mud",
+          "label_x": -5,
+          "label_y": -30,
+          "label_width": 60,
+          "drawing_group_x": 150,
+          "drawing_group_y": 190,
+          "arrow_points": [
+            {"x":65, "y":0},
+            {"x":80, "y":-6},
+            {"x":78, "y":0},
+            {"x":80, "y":6}
+          ],
+          "points": [
+            {"x": 0, "y": 0},
+            {"x": 80, "y": 0}
+          ],
+          "keywords": "drilling mud, lubrication, debris",
+          "definition": "Flow of drilling mud from the Drilling Mud Pump to the Rotary Drill Bit.",
+          "conversion_formulas": [],
+          "hyperlink": ""
+        },
+        {
+          "id": null,
+          "flow_num": "04",
+          "source_node_num": "02",
+          "destination_node_num": "03",
+          "label": "Drilling Mud",
+          "label_x": -30,
+          "label_y": 50,
+          "label_width": 80,
+          "drawing_group_x": 120,
+          "drawing_group_y": 330,
+          "arrow_points": [
+            {"x":0, "y":20},
+            {"x":-8, "y":12},
+            {"x":0, "y":16},
+            {"x":8, "y":12}
+          ],
+          "points": [
+            {"x": 0, "y": 0},
+            {"x": 0, "y": 80}
+          ],
+          "keywords": "drilling mud, lubrication, debris",
+          "definition": "Flow of drilling mud from the Drilling Mud Pump to the Rotary Drill Bit.",
+          "conversion_formulas": [],
+          "hyperlink": ""
+        },
+        {
+          "id": null,
+          "flow_num": "05",
+          "source_node_num": "03",
+          "destination_node_num": "02",
+          "label": "Mud and Rock Cuttings",
+          "label_x": 75,
+          "label_y": 280,
+          "label_width": 120,
+          "drawing_group_x": 120,
+          "drawing_group_y": 300,
+          "arrow_points": [
+            {"x":0, "y":20},
+            {"x":-8, "y":12},
+            {"x":0, "y":16},
+            {"x":8, "y":12}
+          ],
+          "points": [
+            {"x": 0, "y": 0},
+            {"x": 0, "y": 80}
+          ],
+          "keywords": "rock cuttings, debris, mud return",
+          "definition": "Flow of rock cuttings and mud from the Rotary Drill Bit to the Mud Return System.",
+          "conversion_formulas": [],
+          "hyperlink": ""
+        },
+        {
+          "id": null,
+          "flow_num": "06",
+          "source_node_num": "02",
+          "destination_node_num": "05",
+          "label": "Mud and Rock Cuttings",
+          "label_x": 40,
+          "label_y": 30,
+          "label_width": 70,
+          "drawing_group_x": 120,
+          "drawing_group_y": 245,
+          "arrow_points": [
+            {"x":20, "y":20},
+            {"x":12, "y":12},
+            {"x":16, "y":16},
+            {"x":28, "y":28}
+          ],
+          "points": [
+            {"x": 0, "y": 0},
+            {"x": 230, "y": 395}
+          ],
+          "keywords": "rock cuttings, debris, mud return",
+          "definition": "Flow of rock cuttings and mud from the Rotary Drill Bit to the Mud Return System.",
+          "conversion_formulas": [],
+          "hyperlink": ""
+        },
+        {
+          "id": null,
+          "flow_num": "07",
+          "source_node_num": "05",
+          "destination_node_num": "04",
+          "label": "Drilling Mud",
+          "label_x": -30,
+          "label_y": 30,
+          "label_width": 80,
+          "drawing_group_x": 320,
+          "drawing_group_y": 85,
+          "arrow_points": [
+            {"x":0, "y":60},
+            {"x":-8, "y":68},
+            {"x":0, "y":72},
+            {"x":8, "y":52}
+          ],
+          "points": [
+            {"x": 0, "y": 0},
+            {"x": 0, "y": 80}
+          ],
+          "keywords": "drilling mud, lubrication, debris",
+          "definition": "Flow of drilling mud from Mud Return system to Mud Pump.",
+          "conversion_formulas": [],
+          "hyperlink": ""
+        },
+        {
+          "id": null,
+          "flow_num": "08",
+          "source_node_num": "05",
+          "destination_node_num": "",
+          "label": "Rock Debris",
+          "label_x": -30,
+          "label_y": 30,
+          "label_width": 80,
+          "drawing_group_x": 320,
+          "drawing_group_y": 465,
+          "arrow_points": [
+            {"x":0, "y":20},
+            {"x":-8, "y":12},
+            {"x":0, "y":16},
+            {"x":8, "y":12}
+          ],
+          "points": [
+            {"x": 0, "y": 0},
+            {"x": 0, "y": 80}
+          ],
+          "keywords": "drilling mud, lubrication, debris",
+          "definition": "Flow of rock debris and slurry from the boring process.",
+          "conversion_formulas": [],
+          "hyperlink": ""
+        }
+      ]
+    }
+  ]
+}
+

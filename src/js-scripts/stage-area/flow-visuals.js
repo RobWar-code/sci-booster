@@ -574,7 +574,7 @@ dfm.FlowVisuals = class {
         let rectHeight = fontSize + dfm.nodeTemplate.optionHeight + 6;
         if (textWidth > dfm.maxFlowLabelWidth) {
             textWidth = dfm.maxFlowLabelWidth;
-            rectHeight = this.calculateTextHeight(textItem, textWidth, fontSize, fontFamily) + dfm.nodeTenplate.optionHeight + 6;
+            rectHeight = this.calculateTextHeight(textItem, textWidth, fontSize, fontFamily) + dfm.nodeTemplate.optionHeight + 6;
         }
         let labelWidth = textWidth + 13;
 

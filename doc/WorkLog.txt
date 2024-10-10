@@ -6,7 +6,7 @@ Contents
 
 <h1>Work Due
 
-    Database duplication error with external authors derived from references
+    * Database duplication error with external authors derived from references
 
     * Not all dots removed from names in external author processing
 

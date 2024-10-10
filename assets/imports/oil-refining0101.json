@@ -100,7 +100,7 @@
           "label_x": 30,
           "label_y": -10,
           "label_width": 60,
-          "drawing_group_x": 170,
+          "drawing_group_x": 190,
           "drawing_group_y": 40,
           "arrow_points": [
             {"x":20, "y":0},
@@ -127,7 +127,7 @@
           "label_y": 30,
           "label_width": 60,
           "drawing_group_x": 120,
-          "drawing_group_y": 245,
+          "drawing_group_y": 240,
           "arrow_points": [
             {"x":0, "y":20},
             {"x":-8, "y":12},
