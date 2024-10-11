@@ -642,5 +642,74 @@ const modelDetails = {
     dfm.currentVisual = new dfm.FlowVisuals();
     await dfm.currentPage.selectModel(dfm.importTitle);
     this.displaySelectedModel();
+  },
+
+  beginModelExport: async function () {
+    // Check there is a current page
+    if (!dfm.currentPageSet) return;
+    // If the current model has been altered, then save it
+    if (dfm.modelChanged) {
+      await dfm.currentPage.saveModel(true);
+    }
+    document.getElementById("exportModal").style.display = "block";
+    window.scrollTo(0, 0);
+  },
+
+  modelExport: async function(modelType) {
+
+    let message = {};
+    if (modelType === "page") {
+      message = {
+          request: "export page",
+          flow_model_id: dfm.currentPage.flow_model_id,
+          hierarchical_id: dfm.currentPage.page.hierarchical_id
+      }
+    }
+    else {
+      message = {
+        request: "export model",
+        flow_model_id: dfm.currentPage.flow_model_id
+      }
+    }
+
+    let messageJSON = JSON.stringify(message);
+    try {
+      let response = await fetch(dfm.phpPath + 'flow-model/receive-page.php', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: messageJSON
+      })
+
+      let responseData = await response.json();
+      if (responseData.result) {
+        document.getElementById("exportModal").style.display = "none";
+        document.getElementById("noticeRow").style.display = "block";
+        document.getElementById("noticeText").innerText = "Export and Downloaded Initiated OK";
+        setTimeout(() => {
+          document.document.getElementById("noticeRow").style.display = "none";
+        }, 3000);
+      }
+      else {
+        document.getElementById("exportModal").style.display = "none";
+        document.getElementById("noticeRow").style.display = "block";
+        document.getElementById("noticeText").innerText = "Export model problem encountered";
+        setTimeout(() => {
+          document.document.getElementById("noticeRow").style.display = "none";
+        }, 3000);
+      }      
+    }
+    catch {(error) => {
+        console.error("modelExport: Problem with receive-page script call", error);
+        document.getElementById("exportModal").style.display = "none";
+        document.getElementById("noticeRow").style.display = "block";
+        document.getElementById("noticeText").innerText = "Export model error encountered";
+        setTimeout(() => {
+          document.document.getElementById("noticeRow").style.display = "none";
+        }, 3000);
+    }};
+
   }
+
 }

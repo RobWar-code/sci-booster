@@ -262,6 +262,16 @@
       </div>
     </div>
 
+    <!-- Flow Model Export Form -->
+    <div class="genModal" id="exportModal">
+      <div class="genModalForm">
+        <h1 class="modalFormTitle">Export and Download Model</h1>
+        <button class="textButton exportButton" onclick="modelDetails.exportModel('page')">Export Page</button>
+        <button class="textButton exportButton" onclick="modelDetails.exportModel('model')">Export Model</button>
+        <button class="textButton exportButton" onclick="modelDetails.dismissExportModal()">Dismiss</button>
+      </div>
+    </div>
+
     <!-- Node Graphic Modal -->
     <div class="genModal" id="nodeGraphicModal">
       <div class="genModalDiv">
@@ -357,6 +367,8 @@
               <p>
                 <button class="textButton" id="importModelButton" title="Import JSON flow model"
                   onclick="modelDetails.beginModelImport()">Import</button>
+                <button class="textButton" id="exportModelButton" title="Export and download JSON model"
+                  onclick="modelDetails.beginModelExport()">Export</button>
               </p>
             </div>
             <p id="modelEditInfo">

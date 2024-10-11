@@ -249,6 +249,16 @@ body {
     display: none;
 }
 
+/* Export JSON Modal */
+#exportModal {
+    display: none;
+}
+
+.exportButton {
+    display: block;
+    margin-bottom: 5px;
+}
+
 /* Yes/No Modal */
 #yesNoModal {
     display: none;

@@ -24,6 +24,7 @@ const flowModelPage = {
             document.getElementById("deleteModelButton").style.display = "none";
             document.getElementById("saveModelButton").style.display = "none";
             document.getElementById("importModelButton").style.display = "none";
+            document.getElementById("exportModelButton").style.display = "none";
         }
         else if (dfm.userStatus === "user") {
             document.getElementById("modelEditOptionsDiv").style.display = "block";

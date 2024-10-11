@@ -28,7 +28,7 @@ dfm.importTitle = "";
 // Node and Flow details
 dfm.maxNodeLabelLen = 42;
 dfm.maxFlowLabelLen = 42;
-dfm.maxFlowLabelWidth = 100;
+dfm.maxFlowLabelWidth = 64;
 dfm.flowLineWidth = 5;
 dfm.flowMarkerWidth = 10;
 dfm.flowArrowRadius = 8;
@@ -43,7 +43,7 @@ dfm.nodeTemplate = {
     textTop: 3,
     textLeft: 3,
     textLineHeight: 18,
-    fontSize: 13, 
+    fontSize: 12, 
     fontFamily: "Calibri",
     optionTop: 48,
     optionLeft: 3,

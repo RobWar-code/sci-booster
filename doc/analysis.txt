@@ -36,6 +36,7 @@ Contents
 		Model Details Option
 	Import Model JSON Option
 		Imported JSON Validation
+	Export Model JSON Option
 	Javascript Coding Structure
 		Flow Diagram Data Structures
 		Flow Drawing Logic
@@ -966,6 +967,21 @@ Contents
 	source              | string MaxLen 256         | Optional
 	title               | string Maxlen 128         | Compulsory
 	external_author     | string Maxlen 64          | Optional
+
+<h1>Export Model JSON Option
+	The export feature is available to any logged in user when a model is 
+	displayed.
+
+	If the current model has been edited, the current model is first saved.
+
+	When the Export option is clicked, the user is presented with the 
+	Export and Download Modal. This has two options: Export Page or
+	Export Model. Clicking the Export Page option collects and downloads
+	the current page only, whereas the Export Model option collects and
+	downloads the entire Model.
+
+	All fields of the pages are downloaded, including id's.
+
 
 <h1>Javascript Coding Structure
 	The code for the flow model diagrams stage is separated from
