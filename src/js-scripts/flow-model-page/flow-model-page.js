@@ -37,6 +37,7 @@ const flowModelPage = {
                 document.getElementById("deleteModelButton").style.display = "none";
                 document.getElementById("saveModelButton").style.display = "none";
                 document.getElementById("pageDetailsButton").style.display = "none";
+                document.getElementById("exportModelButton").style.display = "none";
             }
             else {
                 // Check whether the user is an author of the current page
@@ -56,7 +57,8 @@ const flowModelPage = {
                     document.getElementById("saveModelButton").style.display = "none";
                 }
                 document.getElementById("newModelButton").style.display = "inline";
-                document.getElementById("cancelModelButton").style.display = "inline"
+                document.getElementById("cancelModelButton").style.display = "inline";
+                document.getElementById("exportModelButton").style.display = "inline";
             }
         }
         else if (dfm.userStatus === "editor" || dfm.userStatus === "owner") {

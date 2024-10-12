@@ -1,0 +1,232 @@
+{
+    "flow_model_id": 63,
+    "flow_model_title": "Oil Well to Storage/Distribution Flow Model",
+    "update": true,
+    "page": {
+        "id": 109,
+        "flow_model_id": 63,
+        "hierarchical_id": "01",
+        "title": "Oil Well to Refinery to Storage",
+        "description": "The processes and components of oil refining systems",
+        "keywords": "crude oil, refinery, fuels, storage",
+        "user_authors": [
+            {
+                "id": 4,
+                "username": "warner3"
+            }
+        ],
+        "external_authors": [],
+        "references": [
+            {
+                "id": 248,
+                "source": "SpringerLink",
+                "title": "Introduction to Crude Oil and Petroleum Processing",
+                "author": {
+                    "id": 160,
+                    "author": "Steven A  Treese"
+                }
+            },
+            {
+                "id": 249,
+                "source": "ASME Digital Collection",
+                "title": "Crude Oil Refining Processes",
+                "author": {
+                    "id": null,
+                    "author": ""
+                }
+            },
+            {
+                "id": 250,
+                "source": "SpringerLink",
+                "title": "Handbook of Petroleum Processing",
+                "author": {
+                    "id": 161,
+                    "author": "David S  J  Stan Jones"
+                }
+            },
+            {
+                "id": 251,
+                "source": "",
+                "title": "Springer Handbook of Petroleum Technology",
+                "author": {
+                    "id": 162,
+                    "author": "Paul R  Robinson"
+                }
+            }
+        ],
+        "nodes": [
+            {
+                "id": 27,
+                "page_id": 109,
+                "node_num": "01",
+                "label": "Oil Well",
+                "graphic_file": "warner3/oil-pump-jack.jpg",
+                "graphic_text": "Refinery and pump in West Texas",
+                "graphic_credits": "ibstockphoto.com",
+                "x": 50,
+                "y": 10,
+                "type": "mechanism",
+                "definition": "An oil well that extracts crude oil from the earth.",
+                "keywords": "crude oil, extraction",
+                "hyperlink": "",
+                "has_child_page": true
+            },
+            {
+                "id": 28,
+                "page_id": 109,
+                "node_num": "02",
+                "label": "Refinery",
+                "graphic_file": "",
+                "graphic_text": "",
+                "graphic_credits": "",
+                "x": 50,
+                "y": 165,
+                "type": "mechanism",
+                "definition": "A refinery processes crude oil into various fuels and products.",
+                "keywords": "refining, fuels",
+                "hyperlink": "",
+                "has_child_page": false
+            },
+            {
+                "id": 29,
+                "page_id": 109,
+                "node_num": "03",
+                "label": "Storage and Distribution Facilities",
+                "graphic_file": "",
+                "graphic_text": "",
+                "graphic_credits": "",
+                "x": 50,
+                "y": 320,
+                "type": "mechanism",
+                "definition": "Storage and distribution centers where refined fuels are stored and transported.",
+                "keywords": "storage, distribution",
+                "hyperlink": "",
+                "has_child_page": false
+            }
+        ],
+        "flows": [
+            {
+                "id": 92,
+                "page_id": 109,
+                "flow_num": "01",
+                "label": "Crude Oil",
+                "drawing_group_x": 120,
+                "drawing_group_y": 85,
+                "label_x": -50,
+                "label_y": 22,
+                "label_width": 60,
+                "keywords": "crude oil",
+                "definition": "Flow of crude oil from the oil well to the refinery.",
+                "hyperlink": "",
+                "source_node_num": "01",
+                "destination_node_num": "02",
+                "arrow_points": [
+                    {
+                        "id": 601,
+                        "flow_id": 92,
+                        "x": 0,
+                        "y": 20
+                    },
+                    {
+                        "id": 602,
+                        "flow_id": 92,
+                        "x": -8,
+                        "y": 12
+                    },
+                    {
+                        "id": 603,
+                        "flow_id": 92,
+                        "x": 0,
+                        "y": 16
+                    },
+                    {
+                        "id": 604,
+                        "flow_id": 92,
+                        "x": 8,
+                        "y": 12
+                    }
+                ],
+                "points": [
+                    {
+                        "id": 306,
+                        "flow_id": 92,
+                        "x": 0,
+                        "y": 0
+                    },
+                    {
+                        "id": 307,
+                        "flow_id": 92,
+                        "x": 0,
+                        "y": 80
+                    }
+                ],
+                "conversion_formulas": []
+            },
+            {
+                "id": 93,
+                "page_id": 109,
+                "flow_num": "02",
+                "label": "Fuels",
+                "drawing_group_x": 120,
+                "drawing_group_y": 240,
+                "label_x": -50,
+                "label_y": 22,
+                "label_width": 60,
+                "keywords": "fuels, refined products",
+                "definition": "Flow of refined fuels from the refinery to the storage/distribution facilities.",
+                "hyperlink": "",
+                "source_node_num": "02",
+                "destination_node_num": "03",
+                "arrow_points": [
+                    {
+                        "id": 605,
+                        "flow_id": 93,
+                        "x": 0,
+                        "y": 20
+                    },
+                    {
+                        "id": 606,
+                        "flow_id": 93,
+                        "x": -8,
+                        "y": 12
+                    },
+                    {
+                        "id": 607,
+                        "flow_id": 93,
+                        "x": 0,
+                        "y": 16
+                    },
+                    {
+                        "id": 608,
+                        "flow_id": 93,
+                        "x": 8,
+                        "y": 12
+                    }
+                ],
+                "points": [
+                    {
+                        "id": 308,
+                        "flow_id": 93,
+                        "x": 0,
+                        "y": 0
+                    },
+                    {
+                        "id": 309,
+                        "flow_id": 93,
+                        "x": 0,
+                        "y": 80
+                    }
+                ],
+                "conversion_formulas": [
+                    {
+                        "id": 119,
+                        "flow_id": 93,
+                        "formula": "Crude Oil -&gt; Fuels",
+                        "description": "The refining process by distillation"
+                    }
+                ]
+            }
+        ]
+    },
+    "complete": false
+}

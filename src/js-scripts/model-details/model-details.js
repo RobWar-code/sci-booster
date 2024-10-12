@@ -133,6 +133,9 @@ const modelDetails = {
     if (dfm.userStatus === "editor" || dfm.userStatus === "owner" || dfm.currentPage.isUserAuthor()) {
       document.getElementById("editModelButton").style.display = "inline";
     }
+    if (dfm.userStatus != "unregistered") {
+      document.getElementById("exportModelButton").style.display = "inline";
+    }
     document.getElementById("cancelModelButton").style.display = "inline";
     flowModelPage.showSaveOnPageEdit(true);
     this.setReadOnlyDisplay();
@@ -646,7 +649,7 @@ const modelDetails = {
 
   beginModelExport: async function () {
     // Check there is a current page
-    if (!dfm.currentPageSet) return;
+    if (!dfm.currentPageSet || dfm.userStatus === "unregistered") return;
     // If the current model has been altered, then save it
     if (dfm.modelChanged) {
       await dfm.currentPage.saveModel(true);
@@ -655,21 +658,27 @@ const modelDetails = {
     window.scrollTo(0, 0);
   },
 
-  modelExport: async function(modelType) {
+  exportModel: async function(modelType) {
 
     let message = {};
+    let downloadFilename = "";
     if (modelType === "page") {
       message = {
           request: "export page",
           flow_model_id: dfm.currentPage.flow_model_id,
-          hierarchical_id: dfm.currentPage.page.hierarchical_id
+          hierarchical_id: dfm.currentPage.page.hierarchical_id,
+          username: dfm.username
       }
+      downloadFilename = dfm.currentPage.flow_model_title + dfm.currentPage.page.hierarchical_id + ".json";
     }
     else {
       message = {
         request: "export model",
-        flow_model_id: dfm.currentPage.flow_model_id
+        flow_model_id: dfm.currentPage.flow_model_id,
+        flow_model_title: dfm.currentPage.flow_model_title,
+        username: dfm.username
       }
+      downloadFilename = dfm.currentPage.flow_model_title + ".json";
     }
 
     let messageJSON = JSON.stringify(message);
@@ -686,18 +695,37 @@ const modelDetails = {
       if (responseData.result) {
         document.getElementById("exportModal").style.display = "none";
         document.getElementById("noticeRow").style.display = "block";
-        document.getElementById("noticeText").innerText = "Export and Downloaded Initiated OK";
+        document.getElementById("noticeText").innerText = "Export and Download Initiated OK";
         setTimeout(() => {
-          document.document.getElementById("noticeRow").style.display = "none";
-        }, 3000);
+          document.getElementById("noticeRow").style.display = "none";
+        }, 5000);
+
+        // Download the data
+        // Create a URL for the blob object
+        let indent = 4;
+        const dataStr = JSON.stringify(responseData.data, null, indent);
+        const blob = new Blob([dataStr], {type: 'application/json'});
+        const url = window.URL.createObjectURL(blob);
+
+        // Create a temporary link element and trigger the download
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = downloadFilename; // Optional: Set if you know the file type or get it from response headers
+        document.body.appendChild(a);
+        a.click();
+
+        // Clean up
+        a.remove();
+        window.URL.revokeObjectURL(url); // Free up memory by revoking the blob URL
+
       }
       else {
         document.getElementById("exportModal").style.display = "none";
         document.getElementById("noticeRow").style.display = "block";
-        document.getElementById("noticeText").innerText = "Export model problem encountered";
+        document.getElementById("noticeText").innerText = `Export model problem encountered ${responseData.status}`;
         setTimeout(() => {
-          document.document.getElementById("noticeRow").style.display = "none";
-        }, 3000);
+          document.getElementById("noticeRow").style.display = "none";
+        }, 5000);
       }      
     }
     catch {(error) => {

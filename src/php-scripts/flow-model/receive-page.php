@@ -28,6 +28,12 @@ function scanInput($inputData) {
         elseif($requestType === "fetch page by id") {
             fetchModelPageById($inputData['page_id']);
         }
+        elseif($requestType === "export page") {
+            exportPage($inputData);
+        }
+        elseif($requestType === "export model") {
+            exportModel($inputData);
+        }
         elseif($requestType === "delete page by id") {
             deleteModelPage($inputData['page_id']);
             $response = ["result"=>true];
@@ -284,4 +290,80 @@ function getModelPageList($flowModelId) {
         $response = ['result'=>true, 'list'=>$list];
     }
     echo json_encode($response);
+}
+
+function exportPage($inputData) {
+    // Check the request details
+    if (!array_key_exists('flow_model_id', $inputData)) {
+        $response = ['result'=>false, 'status'=>"Missing flow_model_id in export request data"];
+        echo json_encode($response);
+        exit;
+    }
+    if (!array_key_exists('hierarchical_id', $inputData)) {
+        $response = ['result'=>false, 'status'=>"Missing hierarchical_id in export page request data"];
+        echo json_encode($response);
+        exit;
+    }
+    $flowModelId = $inputData['flow_model_id'];
+    $hierarchicalId = $inputData['hierarchical_id'];
+    $pageIdObj = findModelPageByHierarchicalId($hierarchicalId, $flowModelId, "");
+    if ($pageIdObj['page_id'] === null) {
+        $response = ['result'=>false, 'status'=>"Could not fetch export page"];
+        echo json_encode($response);
+        exit;
+    }
+    $pageId = $pageIdObj['page_id'];
+    $pageData = extractPage($flowModelId, $pageId);
+    $pageData['complete'] = false;
+    $response = ['result'=>true, 'data'=>$pageData];
+    echo json_encode($response);
+    exit;
+}
+
+function exportModel($inputData) {
+    // Check Data
+    if (!array_key_exists('flow_model_id', $inputData)) {
+        $response = ["result"=>false, 'status'=>"Export model flow_model_id missing in request"];
+        echo json_encode($response);
+        exit;
+    }
+    if (!array_key_exists('flow_model_title', $inputData)) {
+        $response = ["result"=>false, 'status'=>"Export model flow_model_title missing in request"];
+        echo json_encode($response);
+        exit;
+    }
+
+    $flowModelId = $inputData['flow_model_id'];
+    $flowModelTitle = $inputData['flow_model_title'];
+
+    // Prepare object to send
+    $modelData = ['flow_model_id'=>$flowModelId, 'flow_model_title'=>$flowModelTitle, 'complete'=>true];
+    $pages = [];
+    $hierarchicalId = '01';
+    extractModelPages($hierarchicalId, $flowModelId, $pages);
+    $modelData['pages'] = $pages;
+    $response = ['result'=>true, 'data'=>$modelData];
+    echo json_encode($response);
+    exit;
+}
+
+function extractModelPages($hierarchicalId, $flowModelId, &$pages) {
+    // Get the page id
+    $idObj = findModelPageByHierarchicalId($hierarchicalId, $flowModelId, "");
+    if ($idObj['page_id'] === null) {
+        $response = ['result'=>false, 'status'=>"extractModelPages - could not find page $hierarchicalId for export"];
+        echo json_encode($response);
+        exit;
+    }
+    $pageId = $idObj['page_id'];
+    $pageData = extractPage($flowModelId, $pageId);
+    $page = $pageData['page'];
+    array_push($pages, $page);
+    foreach ($page['nodes'] as $node) {
+        $nodeNum = $node['node_num'];
+        if ($node['has_child_page']) {
+            $childHierarchicalId = $hierarchicalId . $nodeNum;
+            extractModelPages($childHierarchicalId, $flowModelId, $pages);
+        }
+    }
 }

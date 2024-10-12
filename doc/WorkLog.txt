@@ -6,6 +6,18 @@ Contents
 
 <h1>Work Due
 
+    Hide the graphic file browse when node details are read only
+
+    Prevent erroneous has_child_page settings
+
+    * Do the model export routines
+        * Single Page
+        * Complete Model
+
+    Reduce the flow font size to 10px 
+
+    Reduce the height of the flow details button to 10px
+
     * Database duplication error with external authors derived from references
 
     * Not all dots removed from names in external author processing

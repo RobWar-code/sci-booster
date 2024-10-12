@@ -268,7 +268,7 @@ function arrangePageData($filedata) {
         if (array_key_exists("flow_model_id", $pageData)) {
             $flowModelId = $pageData['flow_model_id'];
             if ($flowModelId != null) {
-                if (!is_int($flow_model_id)) {
+                if (!is_int($flowModelId)) {
                     $response = ["result"=>false, "status"=>"flow_model_id has invalid value<br>"];
                     echo json_encode($response);
                     exit;

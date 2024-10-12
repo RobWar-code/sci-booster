@@ -45,6 +45,8 @@
         global $dbConn;
 
         $page = [];
+        // Enable native type support before making a query
+        $dbConn->options(MYSQLI_OPT_INT_AND_FLOAT_NATIVE, 1);
         $sql = "SELECT * FROM page WHERE id = $pageId";
         $result = $dbConn->query($sql);
         if (!$result) {
