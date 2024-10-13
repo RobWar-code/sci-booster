@@ -313,8 +313,12 @@ function exportPage($inputData) {
         exit;
     }
     $pageId = $pageIdObj['page_id'];
-    $pageData = extractPage($flowModelId, $pageId);
+    $exPageData = extractPage($flowModelId, $pageId);
+    $pageData = [];
+    $pageData['flow_model_id'] = $exPageData['flow_model_id'];
+    $pageData['flow_model_title'] = $exPageData['flow_model_title'];
     $pageData['complete'] = false;
+    $pageData['page'] = $exPageData['page'];
     $response = ['result'=>true, 'data'=>$pageData];
     echo json_encode($response);
     exit;

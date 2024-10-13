@@ -822,6 +822,27 @@ Contents
     * Click the Display Model button
     * Ensure that the imported model is displayed correctly
 
+<h1>Export Tests
+    * Using the import operation insert a model with several children
+    * Export the top level page
+    * Ensure that it is downloaded correctly
+    * Modify the exported page so that one of the nodes' has_child_page
+         is set incorrectly to true
+    * Modify the exported page so that one of the nodes' has_child_page 
+        is set incorrectly to false
+    * Use the Import operation to import the modified page
+    * Ensure that the model is updated correctly and that the nodes indicate 
+        child pages correctly
+
+    * Export the whole model
+    * Ensure that it is downloaded correctly
+    * Modify the first page of the exported model so that one of the nodes' 
+        has_child_page is set incorrectly to true
+    * Modify the first page of the exported model so that one of the nodes' 
+        has_child_page is set incorrectly to false
+    * Use the Import operation to import the modified model
+    * Ensure that the model is updated correctly and that the nodes indicate child pages correctly
+
 
 <h1>In-Flight Tests: Edit, New and Read-only Modes
     Check the editing modes and operation when the "New" button

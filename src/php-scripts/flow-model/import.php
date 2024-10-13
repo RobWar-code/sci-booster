@@ -238,6 +238,7 @@ function arrangePageData($filedata) {
             $newPageItem['flow_model_id'] = $flowModelId;
         }
         else {
+            $flowModelId = $newPageItem['flow_model_id'];
             if (modelExists($flowModelId)) {
                 $newPageItem['update'] = true;
             }
@@ -571,6 +572,7 @@ function validateImportData(&$pageData, $username) {
     $modelDetails = [];
     $modelDetails['flow_model_id'] = $pageData[0]['flow_model_id'];
     $modelDetails['flow_model_title'] = $pageData[0]['flow_model_title'];
+    $modelDetails['complete'] = $pageData[0]['complete'];
     $modelDetails['update'] = $pageData[0]['update'];
     foreach ($pageData as &$pageItem) {
         $page = $pageItem['page'];
@@ -582,7 +584,7 @@ function validateImportData(&$pageData, $username) {
         if ($message != "") break;
         $message = validateReferences($page, $count);
         if ($message != "") break;
-        $message = validateNodes($page, $count);
+        $message = validateNodes($pageData, $page, $modelDetails, $count);
         if ($message != "") break;
         $message = validateFlows($page, $count);
         if ($message != "") break;
@@ -944,7 +946,7 @@ function validateReferences(&$page, $count) {
 
 }
 
-function validateNodes(&$page, $count) {
+function validateNodes($pageData, &$page, $modelDetails, $count) {
     global $STAGEWIDTH;
     global $STAGEHEIGHT;
     global $NODEWIDTH;
@@ -1126,10 +1128,42 @@ function validateNodes(&$page, $count) {
                 return $message;
             }
         }
+        $nodeNum = $node['node_num'];
+        $hierarchicalId = $page['hierarchical_id'];
+        $flowModelId = $modelDetails['flow_model_id'];
+        $complete = $modelDetails['complete'];
+        $hasChildPage = checkForChildPage($pageData, $flowModelId, $hierarchicalId, $nodeNum, $complete);
+        $node['has_child_page'] = $hasChildPage;
+
         $page['nodes'][$count] = $node;
         ++$count;
     }
     return $message;
+}
+
+function checkForChildPage($pageData, $flowModelId, $hierarchicalId, $nodeNum, $complete) {
+    $hasChildPage = false;
+    $childHierarchicalId = $hierarchicalId . $nodeNum;
+    // Check the import data for child
+    $found = false;
+    foreach ($pageData as $pageItem) {
+        if ($pageItem["page"]["hierarchical_id"] === $childHierarchicalId) {
+            $found = true;
+            break;
+        }
+    }
+    if ($found) {
+        $hasChildPage = true;
+    }
+    elseif ($complete === false && $flowModelId != null) {
+        // Check the database for the child page
+        $idObj = findModelPageByHierarchicalId($childHierarchicalId, $flowModelId, "");
+        $pageId = $idObj['page_id'];
+        if ($pageId != null) {
+            $hasChildPage = true;
+        }
+    }
+    return $hasChildPage;
 }
 
 function validateFlows(&$page, $count) {

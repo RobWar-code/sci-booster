@@ -568,13 +568,13 @@ dfm.FlowVisuals = class {
         // Determine text width
         // Calculate text width / height
         let textItem = flowDetailsItem.label;
-        let fontSize = dfm.nodeTemplate.fontSize;
+        let fontSize = dfm.flowFontSize;
         let fontFamily = dfm.nodeTemplate.fontFamily; 
         let textWidth = this.calculateTextWidth(textItem, fontSize, fontFamily);
-        let rectHeight = fontSize + dfm.nodeTemplate.optionHeight + 6;
+        let rectHeight = dfm.flowFontSize + dfm.flowOptionHeight + 6;
         if (textWidth > dfm.maxFlowLabelWidth) {
             textWidth = dfm.maxFlowLabelWidth;
-            rectHeight = this.calculateTextHeight(textItem, textWidth, fontSize, fontFamily) + dfm.nodeTemplate.optionHeight + 6;
+            rectHeight = this.calculateTextHeight(textItem, textWidth, fontSize, fontFamily) + dfm.flowOptionHeight + 6;
         }
         let labelWidth = textWidth + 13;
 
@@ -602,10 +602,10 @@ dfm.FlowVisuals = class {
         });
         let detailsOpt = new Konva.Image({
             x: labelWidth/2 - dfm.nodeTemplate.optionWidth / 2,
-            y: rectHeight - dfm.nodeTemplate.optionHeight - 3,
-            image: dfm.nodeGraphics.details,
+            y: rectHeight - dfm.flowOptionHeight - 3,
+            image: dfm.nodeGraphics.flowDetails,
             width: dfm.nodeTemplate.optionWidth,
-            height: dfm.nodeTemplate.optionHeight,
+            height: dfm.flowOptionHeight,
             hoverText: "Flow Details",
             flowNum: flowDetailsItem.flow_num
         });
@@ -812,13 +812,13 @@ dfm.FlowVisuals = class {
 
         // Calculate text width / height
         let textItem = this.currentFlow.label;
-        let fontSize = dfm.nodeTemplate.fontSize;
+        let fontSize = dfm.flowFontSize;
         let fontFamily = dfm.nodeTemplate.fontFamily; 
         let textWidth = this.calculateTextWidth(textItem, fontSize, fontFamily);
-        let rectHeight = fontSize + dfm.nodeTemplate.optionHeight + 6;
+        let rectHeight = dfm.flowFontSize + dfm.flowOptionHeight + 6;
         if (textWidth > dfm.maxFlowLabelWidth) {
             textWidth = dfm.maxFlowLabelWidth;
-            rectHeight = this.calculateTextHeight(textItem, textWidth, fontSize, fontFamily) + dfm.nodeTemplate.optionHeight + 6;
+            rectHeight = this.calculateTextHeight(textItem, textWidth, fontSize, fontFamily) + dfm.flowOptionHeight + 6;
         }
         let labelWidth = textWidth + 13;
 
@@ -867,10 +867,10 @@ dfm.FlowVisuals = class {
         });
         let detailsOpt = new Konva.Image({
             x: labelWidth/2 - dfm.nodeTemplate.optionWidth / 2,
-            y: rectHeight - dfm.nodeTemplate.optionHeight - 3,
-            image: dfm.nodeGraphics.details,
+            y: rectHeight - dfm.flowOptionHeight - 3,
+            image: dfm.nodeGraphics.flowDetails,
             width: dfm.nodeTemplate.optionWidth,
-            height: dfm.nodeTemplate.optionHeight,
+            height: dfm.flowOptionHeight,
             hoverText: "Flow Details",
             flowNum: this.currentFlow.flow_num
         });

@@ -183,11 +183,13 @@
           <p class="modalFormAdvisory" id="nodeErrors"></p>
           <button type="submit" class="textButton" id="nodeDetailsSubmit">Submit</button>
         </form>
-        <form id="nodeGraphicForm">
-          <input type="file" id="nodeGraphicInput" />
-          <button class="textButton" onclick="nodeDetails.uploadNodeGraphic(event)">Upload Graphic File</button>
-        </form>
-        <p class="modalFormAdvisory">Click Submit after selecting upload graphic file</p>
+        <div id="nodeGraphicDiv">
+          <form id="nodeGraphicForm">
+            <input type="file" id="nodeGraphicInput" />
+            <button class="textButton" onclick="nodeDetails.uploadNodeGraphic(event)">Upload Graphic File</button>
+          </form>
+          <p class="modalFormAdvisory">Click Submit after selecting upload graphic file</p>
+        </div>
         <div class="modalFormCancelDiv">
           <button class="textButton" id="nodeDeleteButton" onclick="nodeDetails.startDeleteNode()">Delete</button>
           <button class="textButton" id="modalDismissButton" onclick="nodeDetails.dismissNodeDetails()">Dismiss</button>

@@ -71,6 +71,12 @@ const nodeDetails = {
             document.getElementById("nodeDeleteButton").style.display = "inline";
         }
 
+        if (dfm.modelEditMode === "edit") {
+            document.getElementById("nodeGraphicDiv").style.display = "block";
+        }
+        else {
+            document.getElementById("nodeGraphicDiv").style.display = "none";
+        }
         window.scrollTo(0,0);
         document.getElementById("nodeDetails").style.display = "block";
         document.getElementById("nodeErrors").style.display = "none";

@@ -28,7 +28,9 @@ dfm.importTitle = "";
 // Node and Flow details
 dfm.maxNodeLabelLen = 42;
 dfm.maxFlowLabelLen = 42;
-dfm.maxFlowLabelWidth = 64;
+dfm.maxFlowLabelWidth = 58;
+dfm.flowFontSize = 10;
+dfm.flowOptionHeight = 10;
 dfm.flowLineWidth = 5;
 dfm.flowMarkerWidth = 10;
 dfm.flowArrowRadius = 8;
@@ -56,7 +58,7 @@ dfm.nodeData = {};
 dfm.stageApp = {};
 
 // Load the images
-dfm.numNodeGraphics = 9;
+dfm.numNodeGraphics = 10;
 dfm.nodeGraphics = {};
 dfm.loadedEvent = new CustomEvent('graphicsLoaded', {detail: {graphicsLoaded: true}});
 
@@ -113,5 +115,7 @@ function loadDrawingImages() {
     dfm.nodeGraphics.zoomAbsent = new Image();
     dfm.nodeGraphics.zoomAbsent.onload = loadRegister;
     dfm.nodeGraphics.zoomAbsent.src = '/sci-booster/src/images/zoom-absent.png';
-
+    dfm.nodeGraphics.flowDetails = new Image();
+    dfm.nodeGraphics.flowDetails.onload = loadRegister;
+    dfm.nodeGraphics.flowDetails.src = '/sci-booster/src/images/flow-details.png';
 };
