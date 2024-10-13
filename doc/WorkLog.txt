@@ -6,6 +6,52 @@ Contents
 
 <h1>Work Due
 
+    Example 1: Petroleum Refining
+        Procedure for each page:
+            Originate JSON in ChatGPT
+            Check all fields
+            Approximate flow lines
+            Import the page into the app
+            Adjust flow lines in the app
+        Pages:
+            01
+            0101
+            010101 
+
+    * Problems with edit flow drawing when loaded from database
+
+    Flow label not updated when label modified in flow details
+
+    * Redefine the Cancel Draw operation for flow lines as Delete Flow
+
+    Redefine the Dimiss operation for flow details as Delete flow if new
+
+    * Remove the Insert node into line function (ie: add node to end only)
+
+    * Use single click on the line to insert an arrow
+
+    Amend the systems tests to test the above changes
+    
+    Block robot logins/register
+
+    Favicon icon for sci-booster
+
+    Do the introductory page
+        Include details of the JSON import model format
+
+    Adjust the README for building JSON models with ChatGPT
+
+        Test and build 5 example model imports with ChatGPT
+    
+    Import Info Page
+    
+    Update the README with user features changes
+
+    In the README Plan the release procedures
+
+<h1>Work Done
+    13/10/24
+
     * Hide the graphic file browse when node details are read only
 
     * Prevent erroneous has_child_page settings
@@ -38,24 +84,6 @@ Contents
     
     * Include graphic_credits field for nodes
 
-    Block robot logins/register
-
-    Favicon icon for sci-booster
-
-    Do the introductory page
-        Include details of the JSON import model format
-
-    Adjust the README for building JSON models with ChatGPT
-
-        Test and build 5 example model imports with ChatGPT
-    
-    Import Info Page
-    
-    Update the README with user features changes
-
-    In the README Plan the release procedures
-
-<h1>Work Done
     04/10/2024
 
     * Test deletion of a node with child page followed by Save

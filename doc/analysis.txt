@@ -1130,7 +1130,7 @@ Contents
 	The flow label position is set relative to the position of the double click. 
 	The flow label is draggable.
 
-	If a flow line is double-clicked the flow arrow is added to it, in the direction
+	If a flow line is clicked the flow arrow is added to it, in the direction
 	from source node to destination as follows:
 
 		The nearest ends of the flow lines to the source and destination are used
@@ -1139,9 +1139,6 @@ Contents
 		/patternArt/Geo.js/perpendicularLine() to establish the arrow end points.
 
 	The flow arrow can be deleted by double clicking it.
-
-	When the flow line is clicked once, a node is inserted in the line, making
-	and extra line.
 	
 	Once the user is satisfied, he can click the flow drawing panel Flow Done button. 
 	The flow drawing is then saved in the model and the editing points disappear.
@@ -1149,7 +1146,7 @@ Contents
 	When the Flow Done button is clicked, the flow drawing details are first checked to
 	ensure that the following have been set:
 		Flow arrow
-		At least least two flow points
+		At least two flow points
 		Flow label
 	The user is informed if this is not the case.
 
@@ -1221,13 +1218,12 @@ Contents
 	If it is complete the flow is redrawn in non-flowDraw format and the data
 	submitted to the current page.
 
-<h3>Cancel Flow Draw Operation
+<h3>Delete Flow Operation
 
-	This option (Cancel Flow) appears along with the other page option buttons.
+	This option (Delete Flow) appears along with the other page option buttons.
 
-	When clicked, the current page data is checked to see whether the previous flow
-	is fully defined, if it is then that data is restored and displayed, otherwise
-	the flow is deleted from the current page and visual data.
+	When clicked, the current flow and visual flow is deleted, and edit mode
+	restored.
 
 <h1>Flow Model Database Transactions
 

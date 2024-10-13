@@ -264,9 +264,10 @@ flowDetails = {
         let instructElem = document.getElementById("instructionsText");
         let s = "Click the stage to draw the flow corner node by corner node."; 
         s += " Double-click the stage to add the flow label.";
+        s += " Drag and drop the label to move it."
         s += " To adjust a node drag and drop the marker circle. To delete it, double click the marker.";
-        s += " Click a line to insert an extra node. Double click a line to add the flow arrow.";
-        s += " Double click the flow arrow to delete it."
+        s += " Click a line to add the flow arrow.";
+        s += " Double click the flow arrow to delete it.";
         instructElem.innerText = s;
         instructElem.style.display = "block";
     },

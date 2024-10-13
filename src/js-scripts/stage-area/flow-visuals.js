@@ -316,6 +316,7 @@ dfm.FlowVisuals = class {
             return;
         }
         flow.flowGroup.destroy();
+        dfm.stageApp.draw();
         // Create the editable flow group
         this.flowLabelSet = false;
         this.flowDrawStarted = true;
@@ -355,6 +356,7 @@ dfm.FlowVisuals = class {
         // Clear the current flow drawing
         if (this.flowDrawStarted) {
             this.currentFlowDrawing.flowGroup.destroy();
+            dfm.stageApp.draw();
             this.currentFlowDrawing = {};
             this.flowDrawStarted = false;
         }
@@ -362,14 +364,7 @@ dfm.FlowVisuals = class {
         // Check whether a flow line has already been defined
         let flow = dfm.currentPage.getFlow(flowNum);
         if (flow != null) {
-            if (flow.points.length > 1) {
-                // Reconstruct the original flow line drawing.
-                this.currentFlow = flow;
-                this.makeVisualFlow(this.currentFlow);
-            }
-            else {
-                dfm.currentPage.deleteFlow(flowNum);
-            }
+            dfm.currentPage.deleteFlow(flowNum);
         }
         this.editMode = "";
         dfm.flowDrawMode = false;
@@ -439,6 +434,11 @@ dfm.FlowVisuals = class {
             lastY = y;
             ++count;
         }
+        this.flowNodeCount = flowDetails.points.length;
+        this.terminatingFlowNodeNum = this.flowNodeCount - 1;
+        this.flowDrawStarted = true;
+        this.lastX = lastX;
+        this.lastY = lastY;
         // Add the flow arrow
         let points = [];
         for (let coords of flowDetails.arrow_points) {
@@ -726,6 +726,7 @@ dfm.FlowVisuals = class {
         }
         else if (this.currentFlowDrawing.points.length > 0) {
             prevNodeNum = this.terminatingFlowNodeNum;
+            console.log("Got flow points", prevNodeNum);
             let flowNodeItem = this.findFlowNode(this.terminatingFlowNodeNum).flowNodeItem;
             flowNodeItem.nextNodeNum = flowNodeNum;
         }
@@ -1043,21 +1044,7 @@ dfm.FlowVisuals = class {
         e.cancelBubble = true;
         let flowNodeNum = e.target.getAttr("nodeNum");
         let {x, y} = dfm.stageApp.getPointerPosition();
-        if (this.flowLineClickedTime - Date.now() < 500 && this.lastFlowLineClicked === flowNodeNum) {
-            clearTimeout(this.flowLineClickTimer);
-            this.addFlowArrow(flowNodeNum, x, y);
-            this.flowLineClickedTime = 0;
-            this.lastFlowLineClicked = -1;
-        }
-        else {
-            this.lastFlowLineClicked = flowNodeNum;
-            this.flowLineClickedTime = Date.now();
-            this.flowLineClickTimer = setTimeout(() => {
-                this.insertFlowNode(flowNodeNum, x, y);
-                this.flowLineClickedTime = 0;
-                this.lastFlowLineClicked = -1;
-            }, 600);
-        }
+        this.addFlowArrow(flowNodeNum, x, y);
     }
 
     addFlowArrow(flowNodeNum, x, y) {
@@ -1268,6 +1255,8 @@ dfm.FlowVisuals = class {
         }
     }
 
+    /* This function withdrawn as too awkward for the user
+
     insertFlowNode(flowNodeNum, x, y) {
         x = x / dfm.scaleX - this.currentFlowDrawing.flowGroup.getAttr('x');
         y = y - this.currentFlowDrawing.flowGroup.getAttr('y');
@@ -1320,6 +1309,7 @@ dfm.FlowVisuals = class {
         this.currentFlowDrawing.points.push(flowNodeItem);
         this.currentFlowDrawing.flowGroup.draw();
     }
+    */
 
     getFlow(flowNum) {
         let found = false;
