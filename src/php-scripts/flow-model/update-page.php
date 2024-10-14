@@ -417,7 +417,7 @@
             $flowId = null;
             $flowNum = $flow['flow_num'];
             $label = $flow['label'];
-            if (isset($flow['$id'])) {
+            if (isset($flow['id'])) {
                 $flowId = $flow['id'];
             }
             $oldFlowData = findOldFlowMatch($oldFlows, $flowNum, $label, $flowId);

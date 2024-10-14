@@ -13,22 +13,16 @@ Contents
             Approximate flow lines
             Import the page into the app
             Adjust flow lines in the app
+        When pages completed, work through and add graphics as desirable
+
         Pages:
             01
             0101
-            010101 
+            010101
 
-    * Problems with edit flow drawing when loaded from database
+    Problem with save of flow deleted and redrawn with same name, but possibly different flow_num 
 
-    Flow label not updated when label modified in flow details
-
-    * Redefine the Cancel Draw operation for flow lines as Delete Flow
-
-    Redefine the Dimiss operation for flow details as Delete flow if new
-
-    * Remove the Insert node into line function (ie: add node to end only)
-
-    * Use single click on the line to insert an arrow
+    Issue with z-index layers, use group order instead
 
     Amend the systems tests to test the above changes
     
@@ -50,6 +44,21 @@ Contents
     In the README Plan the release procedures
 
 <h1>Work Done
+    14/10/2024
+
+    * Modifying flow label causes save update problems 
+
+    * Problems with edit flow drawing when loaded from database
+
+    * Flow label not updated when label modified in flow details
+
+    * Redefine the Cancel Draw operation for flow lines as Delete Flow
+
+    * Redefine the Dismiss operation for flow details as Delete flow if new
+
+    * Remove the Insert node into line function (ie: add node to end only)
+
+    * Use single click on the line to insert an arrow
     13/10/24
 
     * Hide the graphic file browse when node details are read only

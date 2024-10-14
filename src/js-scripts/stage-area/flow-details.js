@@ -118,7 +118,8 @@ flowDetails = {
             errElem.style.display = "block";
             return;
         }
-        this.currentFlow.flow_num = document.getElementById("flowNum").innerText;
+        let flowNum = document.getElementById("flowNum").innerText;
+        this.currentFlow.flow_num = flowNum;
         this.currentFlow.label = label;
         let sourceNodeNum = Misc.stripHTML(document.getElementById("flowSourceNodeNum").value).trim();
         // Check whether the given node num exists
@@ -157,6 +158,7 @@ flowDetails = {
         }
         else {
             dfm.currentPage.updateFlow(this.currentFlow);
+            dfm.currentVisual.updateFlowLabel(flowNum);
         }
         document.getElementById("drawFlowButton").style.display = "block";
         this.flowDetailsSet = true;       

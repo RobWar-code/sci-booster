@@ -565,6 +565,12 @@ dfm.FlowVisuals = class {
             visualFlowItem.flowGroup.add(flowArrow);
         }
         // Add the label
+        this.addVisualFlowLabel(visualFlowItem, flowDetailsItem)
+        this.nodeLayer.add(visualFlowItem.flowGroup);
+        return visualFlowItem;
+    }
+
+    addVisualFlowLabel(visualFlowItem, flowDetailsItem) {
         // Determine text width
         // Calculate text width / height
         let textItem = flowDetailsItem.label;
@@ -578,8 +584,8 @@ dfm.FlowVisuals = class {
         }
         let labelWidth = textWidth + 13;
 
-        x = flowDetailsItem.label_x;
-        y = flowDetailsItem.label_y;
+        let x = flowDetailsItem.label_x;
+        let y = flowDetailsItem.label_y;
         let flowLabelGroup = new Konva.Group({x: x, y: y});
         let rect = new Konva.Rect({
             x: 0,
@@ -615,9 +621,8 @@ dfm.FlowVisuals = class {
         flowLabelGroup.add(rect);
         flowLabelGroup.add(text);
         flowLabelGroup.add(detailsOpt);
+        visualFlowItem.flowLabelGroup = flowLabelGroup;
         visualFlowItem.flowGroup.add(flowLabelGroup);
-        this.nodeLayer.add(visualFlowItem.flowGroup);
-        return visualFlowItem;
     }
 
     // Function to calculate the angle between two points
@@ -726,7 +731,6 @@ dfm.FlowVisuals = class {
         }
         else if (this.currentFlowDrawing.points.length > 0) {
             prevNodeNum = this.terminatingFlowNodeNum;
-            console.log("Got flow points", prevNodeNum);
             let flowNodeItem = this.findFlowNode(this.terminatingFlowNodeNum).flowNodeItem;
             flowNodeItem.nextNodeNum = flowNodeNum;
         }
@@ -806,6 +810,15 @@ dfm.FlowVisuals = class {
         let ax2 = x2 - dx1;
         let ay2 = y2 - dy1;
         return {ax1, ay1, ax2, ay2};
+    }
+
+    updateFlowLabel(flowNum) {
+        // Remove the label from the existing flow drawing
+        let visualFlow = this.getFlow(flowNum);
+        visualFlow.flowLabelGroup.destroy();
+        dfm.stageApp.draw();
+        let flowDetails = dfm.currentPage.getFlow(flowNum);
+        this.addVisualFlowLabel(visualFlow, flowDetails);
     }
 
     addFlowLabel(fromClick) {

@@ -463,15 +463,10 @@ Contents
     * Drop (release) the marker
     * Ensure that the line to the first marker is redrawn connected to it
     * Click the line
-    * Ensure that a markeer is inserted into the line
-    * Double click the marker
-    * Ensure that is deleted
-    * Ensure that first and second markers are reconnected
-    * Double click the line
     * Ensure that flow arrow appears
     * Double click the flow arrow
     * Ensure the flow arrow disappears
-    * Double click the line to reinstate it
+    * Click the line to reinstate it
     * Double click the stage to produce the flow label
     * Ensure the flow label appears
     * Click and drag the flow label
@@ -522,6 +517,46 @@ Contents
     * Ensure that formula is displayed, but not the input form
     * Click on a formula entry
     * Ensure that it is not deleted
+
+    * Load a model page as its author
+    * Click the Edit Model button
+    * Click the Dismiss button to clear the Model Details modal
+    * Click the Flow Details button on a flow
+    * Ensure that the Flow Details modal appears for that flow
+    * Click the Draw Flow button
+    * Ensure that the Flow Details modal is cleared
+    * Ensure that the flow is drawn with markers in flow drawing mode
+    * Near the flow, click the stage
+    * Ensure that a marker appears joined to end marker node of the flow
+    * Drag and drop the previous end marker node of the flow
+    * Ensure that both line connections are adjusted to remain connected to the node markers
+    * Click the Delete Flow option on the page
+    * Ensure that the flow is deleted
+    * Ensure that component node editing mode is restored
+
+    * Load a model page as its author
+    * Ensure that the Model Details modal is displayed
+    * Click the Edit Model button
+    * Click the Dismiss Button
+    * Ensure that the component node editing instructions appear above the stage
+    * Click a Flow Details button on a flow
+    * Ensure that the flow details modal is displayed
+    * Modify the label of the flow
+    * Click the Submit button
+    * Ensure that the flow label is adjusted in the background drawing
+    * Click the Draw Flow Button
+    * Ensure that model drawing is displayed with flow having node markers
+    * Move the flow markers to reposition the flow
+    * Adjust the position of the flow label using drag and drop
+    * Delete the old flow arrow by double Clicking
+    * Click the line to add a flow arrow
+    * Ensure that the flow arrow is displayed correctly
+    * Click Flow Done
+    * Ensure that the flow is redrawn correctly
+    * Click Save
+    * Ensure that the diagram is saved
+    * Ensure that the flow is drawn correctly
+
 
 <h2>Imports
 
