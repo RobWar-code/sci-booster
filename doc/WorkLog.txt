@@ -22,10 +22,16 @@ Contents
 
     Problem with save of flow deleted and redrawn with same name, but possibly different flow_num 
 
-    Issue with z-index layers, use group order instead
+    Database or flow model deleted by accident - include warning when deleting model.
 
-    Amend the systems tests to test the above changes
+    When flow edited, non-edit version sometimes not cleared from display
+
+    * Adjust the width of the flow label to the actual width of the wrapped text
     
+    * Issue with z-index layers, use group order instead
+
+    * Adjust the hover text so that it is above the node layer
+
     Block robot logins/register
 
     Favicon icon for sci-booster
@@ -59,6 +65,9 @@ Contents
     * Remove the Insert node into line function (ie: add node to end only)
 
     * Use single click on the line to insert an arrow
+
+    * Amend the systems tests to test the above changes
+    
     13/10/24
 
     * Hide the graphic file browse when node details are read only

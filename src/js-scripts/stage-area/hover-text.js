@@ -30,17 +30,17 @@ dfm.hoverText = {
 
 		dfm.hoverGroup.add(dfm.hoverBox);
 		dfm.hoverGroup.add(dfm.hoverTextItem);
-		dfm.hoverTextItem.setZIndex(1);
-		dfm.hoverLayer.add(dfm.hoverGroup);
 	},
 
 	displayHoverText: function(message, x, y) {
 		dfm.hoverGroup.position({x, y});
 		dfm.hoverTextItem.setAttr('text', message);
+		dfm.hoverLayer.add(dfm.hoverGroup);
+		dfm.stageApp.draw();
 		this.activateHover();
 		setTimeout(() => {
 			if (dfm.stageApp && dfm.hoverLayer) {
-				dfm.hoverLayer.remove();
+				dfm.hoverGroup.remove();
 				dfm.stageApp.draw();
 			}
 			else {
@@ -50,8 +50,6 @@ dfm.hoverText = {
 	},
 
 	activateHover: function () {
-		dfm.stageApp.add(dfm.hoverLayer);
-		dfm.hoverLayer.setZIndex(1);
 		dfm.hoverLayer.draw();
 	}
 }

@@ -51,6 +51,7 @@ dfm.FlowVisuals = class {
     setStageDetails() {
         this.nodeLayer = new Konva.Layer();
         dfm.stageApp.add(this.nodeLayer);
+        dfm.stageApp.add(dfm.hoverLayer);
     }
 
     redoPage() {
@@ -418,7 +419,6 @@ dfm.FlowVisuals = class {
             marker.on("dragmove", (e) => this.flowNodeDragged(e));
             marker.on("dragend", (e) => this.flowNodeDragEnd(e));
             this.currentFlowDrawing.flowGroup.add(marker);
-            marker.setZIndex(0.2);
             let line = {};
             if (count > 0) {
                 line = this.drawFlowLine(lastX, lastY, x, y, count);
@@ -578,9 +578,11 @@ dfm.FlowVisuals = class {
         let fontFamily = dfm.nodeTemplate.fontFamily; 
         let textWidth = this.calculateTextWidth(textItem, fontSize, fontFamily);
         let rectHeight = dfm.flowFontSize + dfm.flowOptionHeight + 6;
-        if (textWidth > dfm.maxFlowLabelWidth) {
-            textWidth = dfm.maxFlowLabelWidth;
-            rectHeight = this.calculateTextHeight(textItem, textWidth, fontSize, fontFamily) + dfm.flowOptionHeight + 6;
+        let textHeight = 0;
+        if (textWidth >= dfm.maxFlowLabelWidth) {
+            textWidth = dfm.maxFlowLabelWidth - 2;
+            ({textWidth, textHeight} = this.calculateTextHeight(textItem, textWidth, fontSize, fontFamily)); 
+            rectHeight = textHeight + dfm.flowOptionHeight + 6;
         }
         let labelWidth = textWidth + 13;
 
@@ -662,17 +664,56 @@ dfm.FlowVisuals = class {
             fontFamily: fontFamily,
             visible: false // Hide the text object
         });
-
         textLayer.add(tempText);
         textLayer.draw();
 
-        // Get the height of the text
-        var textHeight = tempText.getClientRect().height;
+        // Get the dimensions of the text
+        let textWidth = this.getKonvaWrapTextMaxWidth(text, width, fontSize, fontFamily);
+        let textHeight = tempText.getClientRect().height;
 
         textLayer.destroy();
 
         // Return the width
-        return textHeight;
+        return {textWidth: textWidth, textHeight: textHeight};
+    }
+
+    getKonvaWrapTextMaxWidth(text, maxWidth, fontSize, fontFamily) {
+        let words = text.split(" ");
+        let maxWrapWidth = 0;
+        let done = false;
+        let n = 0;
+        while (!done && n < words.length) {
+            let width = 0;
+            let line = "";
+            let numWords = 0;
+            let lastWidth = 0;
+            while (width < maxWidth && n < words.length) {
+                line += words[n];
+                ++numWords;
+                width = this.calculateTextWidth(line, fontSize, fontFamily);
+                if (width < maxWidth) {
+                    lastWidth = width;
+                    ++n;
+                }
+            }
+            if (width > maxWidth) {
+                if (numWords === 1) {
+                    maxWrapWidth = maxWidth;
+                    done = true;
+                }
+                else {
+                    if (lastWidth > maxWrapWidth) {
+                        maxWrapWidth = lastWidth;
+                    }
+                }
+            }
+            else {
+                if (lastWidth > maxWrapWidth) {
+                    maxWrapWidth = lastWidth;
+                }
+            }
+        }
+        return maxWrapWidth;
     }
 
     checkFlowDrawing() {
@@ -764,7 +805,6 @@ dfm.FlowVisuals = class {
         flowNode.nextNodeNum = null;
         this.currentFlowDrawing.points.push(flowNode);
         this.currentFlowDrawing.flowGroup.add(flowNode.marker);
-        flowNode.marker.setZIndex(0.2);
         this.currentFlowDrawing.flowGroup.draw();
         ++this.flowNodeCount;
         this.lastX = x;
@@ -793,7 +833,6 @@ dfm.FlowVisuals = class {
         })
         line.on("click", (e) => this.flowLineClicked(e));
         this.currentFlowDrawing.flowGroup.add(line);
-        line.setZIndex(0.1);
         return line;
     }
 
@@ -830,9 +869,11 @@ dfm.FlowVisuals = class {
         let fontFamily = dfm.nodeTemplate.fontFamily; 
         let textWidth = this.calculateTextWidth(textItem, fontSize, fontFamily);
         let rectHeight = dfm.flowFontSize + dfm.flowOptionHeight + 6;
+        let textHeight = 0;
         if (textWidth > dfm.maxFlowLabelWidth) {
-            textWidth = dfm.maxFlowLabelWidth;
-            rectHeight = this.calculateTextHeight(textItem, textWidth, fontSize, fontFamily) + dfm.flowOptionHeight + 6;
+            textWidth = dfm.maxFlowLabelWidth - 2;
+            ({textWidth, textHeight} = this.calculateTextHeight(textItem, textWidth, fontSize, fontFamily));
+            rectHeight = textHeight + dfm.flowOptionHeight + 6;
         }
         let labelWidth = textWidth + 13;
 
