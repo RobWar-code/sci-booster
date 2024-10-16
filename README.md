@@ -217,7 +217,7 @@ sources, notably ChatGPT, in which the data may be easily edited for
 import.
 
 The following definition is known as the "Sci-Booster Flow Model JSON
-Definition Version 1.6"
+Definition Version 1.7"
 
 The purpose of this section is to describe the required format of the flow-model 
 JSON object for data imports to the app. This is provided for both AI's such as
@@ -236,8 +236,7 @@ A flow model consists of pages of component nodes and flow lines used to describ
 a flow system. The pages are defined as a heirarchy of descriptive detail for each
 component node as required. For example, a top-level flow model might be:
 
-Petrol Station ------>------- Car ----->---- Atmosphere
-				  Petrol           Exhaust
+Petrol Station ---flow:petrol--->------- Car --flow:exhaust-->---- Atmosphere
 
 - Fictional/example data should not be used in the json fields, they should
   be left with "" or null values if not known
@@ -258,16 +257,53 @@ be re-presented in the page
 with a petrol flow input, for example)
 - A page should not consist of more than 8 component nodes
 - A node number (NodeNum) is unique to a page only and consists of two digits, ie: "01".
+- The node "type" field should be "mechanism" or "effect". "mechanism" simply means physical unit,
+"effect" is for output conditions such as "pollution" or "explosion"
 - A hierarchical_id is built from its parent node numbers in order of descent, ie: "010204".
 - When using keyword fields, beware of terms such as "flow" which are likely to be 
 too common to be useful
-- Flows are used to connect nodes and their positions should be calculated as such
-- The stage (on which the model page is drawn) has width base 380 pixels, the height is 690 pixels
-- The node boxes are 140 pixels wide by 75 pixels high
-- The flow label_width is optional (it is in any event calculated)
-- Flow arrow_points are optional, if not supplied, the user can add an arrow to the flow when
-using the app.
-- label_x and label_y of a flow are relative to the flow drawing_group_x, drawing_group_y
+- Flows are used to connect component nodes and their positions should be calculated as such
+
+#### Visual Spatial Information for The Flow Diagram
+
+The drawing area (stage) onto which a flow diagram page is drawn is 380 pixels wide by
+690 pixels high.
+
+##### Component Node Boxes
+The stage area is sufficent for upto 8 component nodes, if arranged vertically in sets
+of 4. So eight is the maximum number of component nodes for a page.
+
+Component nodes are represented by rectangular boxes 140 pixels wide by 75 pixels high.
+
+On the drawing, vertically arranged component node should be spaced 90 pixels between
+the base of one node and the top of another.
+
+When there are more than 4 component nodes the node boxes should be offset from the left
+margin edge of the stage by 5 pixels for left hand column and margin of 5 pixels on the
+on the right, for the right hand column.
+
+The position of the component node is given in node "x" and "y" fields, this is the top left
+corner of the component node box.
+
+##### Flow Representations
+
+All flow coordinates are relative to the "drawing_group_x" and "drawing_group_y" 
+coordinates, which typically set to the position of the flow line described below.
+
+Flows are represented by sets of line segments whose coordinates are given in the flow
+"points" field.
+
+Generally the flow lines connect a source component node box to a destination node box,
+typically from the bottom of one box to the top of another.
+
+The flow details include an "arrow_points" for defining the coordinates of an equilateral 
+triangle that sits on the flow line and points toward the destination.
+
+The flow label appears in a box, who's top-left coordinates are given in the "label_x",
+"label_y" fields.
+
+The "label_width" field can be set to 60 by default, this is calculated from flow label text
+anyway.
 
 #### JSON Object Structure
 ```js

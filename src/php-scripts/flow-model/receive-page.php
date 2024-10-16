@@ -305,6 +305,9 @@ function exportPage($inputData) {
         exit;
     }
     $flowModelId = $inputData['flow_model_id'];
+    if (!is_int($flowModelId)) {
+        $flowModelId = (int) $flowModelId;
+    }
     $hierarchicalId = $inputData['hierarchical_id'];
     $pageIdObj = findModelPageByHierarchicalId($hierarchicalId, $flowModelId, "");
     if ($pageIdObj['page_id'] === null) {
@@ -338,6 +341,9 @@ function exportModel($inputData) {
     }
 
     $flowModelId = $inputData['flow_model_id'];
+    if (!is_int($flowModelId)) {
+        $flowModelId = (int) $flowModelId;
+    }
     $flowModelTitle = $inputData['flow_model_title'];
 
     // Prepare object to send

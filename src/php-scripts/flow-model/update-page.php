@@ -448,6 +448,8 @@
             }
             else {
                 // Add the flow
+                // Debug 
+                error_log("Adding flow: {$flow['flow_num']}", 0);
                 addFlow($flow, $pageId);
             }
         }
@@ -455,6 +457,8 @@
         for ($i = 0; $i < count($oldMatch); $i++) {
             if (!$oldMatch[$i]) {
                 $oldFlowId = $oldFlows[$i]['id'];
+                // Debug
+                error_log("Deleting Flow: {$flow['flow_num']}", 0);
                 deleteFlow($oldFlowId);
             }
         }

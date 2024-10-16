@@ -30,6 +30,7 @@ dfm.hoverText = {
 
 		dfm.hoverGroup.add(dfm.hoverBox);
 		dfm.hoverGroup.add(dfm.hoverTextItem);
+		dfm.stageApp.add(dfm.hoverLayer);
 	},
 
 	displayHoverText: function(message, x, y) {

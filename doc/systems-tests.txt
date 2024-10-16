@@ -23,6 +23,7 @@ Contents
             Update Import from pages: data format
             Import Add - Single page format
             Import Add - Array of pages format
+        Page Swapping and Hover Text
     In-Flight Tests: Edit, New and Read-only Modes
         Drawing - Edit Modes
     Model Save and Load
@@ -857,7 +858,7 @@ Contents
     * Click the Display Model button
     * Ensure that the imported model is displayed correctly
 
-<h1>Export Tests
+<h2>Export Tests
     * Using the import operation insert a model with several children
     * Export the top level page
     * Ensure that it is downloaded correctly
@@ -877,6 +878,15 @@ Contents
         has_child_page is set incorrectly to false
     * Use the Import operation to import the modified model
     * Ensure that the model is updated correctly and that the nodes indicate child pages correctly
+
+<h2>Page Swapping and Hover Text
+    * Import or use a model with several pages
+    * Display the page
+    * Make sure that the browser console is visible
+    * Use the page selector to move from page to page five or six times
+    * Ensure that Konva does not generate layer warnings
+    * Check the hover text on the drawing option buttons several times
+    * Ensure that the hover text appears above the rest of the stage
 
 
 <h1>In-Flight Tests: Edit, New and Read-only Modes

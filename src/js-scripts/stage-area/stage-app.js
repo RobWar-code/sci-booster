@@ -44,8 +44,12 @@ const stageApp = {
             }
         });
 
+        // Set-up node layer
+        nodeLayer = new Konva.Layer();
+        dfm.stageApp.add(nodeLayer);
         // Set-up the hover text
         dfm.hoverText.setupHoverText();
+        return nodeLayer;
     },
 
     redoStage: function () {

@@ -11,6 +11,7 @@ dfm.FlowVisuals = class {
         this.flowLineClickTimer = null;
         this.lastFlowLineClicked = -1;
         this.flowArrowClickTime = 0;
+        this.flowArrowAdded = false;
         this.flowLabelSet = false;
         this.flowDrawStarted = false;
         this.flowDrawTimeout = null;
@@ -49,9 +50,8 @@ dfm.FlowVisuals = class {
     }
 
     setStageDetails() {
-        this.nodeLayer = new Konva.Layer();
-        dfm.stageApp.add(this.nodeLayer);
-        dfm.stageApp.add(dfm.hoverLayer);
+        dfm.stageApp.destroy();
+        this.nodeLayer = stageApp.startStageApp();
     }
 
     redoPage() {
@@ -439,21 +439,27 @@ dfm.FlowVisuals = class {
         this.flowDrawStarted = true;
         this.lastX = lastX;
         this.lastY = lastY;
-        // Add the flow arrow
-        let points = [];
-        for (let coords of flowDetails.arrow_points) {
-            points.push(coords.x);
-            points.push(coords.y);
+        // Add the flow arrow (if present)
+        if (flowDetails.arrowPoints.length > 0) {
+            let points = [];
+            for (let coords of flowDetails.arrow_points) {
+                points.push(coords.x);
+                points.push(coords.y);
+            }
+            this.currentFlowDrawing.flowArrow = new Konva.Line({
+                points: points,
+                stroke: 'red',
+                strokeWidth: 2,
+                closed: true,
+                fill: 'white'
+            })
+            this.currentFlowDrawing.flowArrow.on("click", (e) => this.flowArrowClicked(e));
+            this.currentFlowDrawing.flowGroup.add(this.currentFlowDrawing.flowArrow);
+            this.flowArrowAdded = true;
         }
-        this.currentFlowDrawing.flowArrow = new Konva.Line({
-            points: points,
-            stroke: 'red',
-            strokeWidth: 2,
-            closed: true,
-            fill: 'white'
-        })
-        this.currentFlowDrawing.flowArrow.on("click", (e) => this.flowArrowClicked(e));
-        this.currentFlowDrawing.flowGroup.add(this.currentFlowDrawing.flowArrow);
+        else {
+            this.flowArrowAdded = false;
+        }
         this.currentFlowDrawing.flowGroup.draw();
         // Add the flow label
         let fromClick = false;
@@ -501,6 +507,10 @@ dfm.FlowVisuals = class {
         this.flows.push(visualFlowDrawing);
 
         // Add the flow details to the current page
+        // Debug
+        if (this.currentFlow.label === "Drilling Mud + Debris") {
+            console.log("currentFlow:", this.currentFlow);
+        }
         dfm.currentPage.updateFlow(this.currentFlow);
 
         // Remove the current flow details
@@ -522,6 +532,11 @@ dfm.FlowVisuals = class {
     }
 
     makeVisualFlow(flowDetailsItem) {
+        // Debug
+        if (flowDetailsItem.label === "Drilling Mud + Debris") {
+            console.log("Problem Flow:", flowDetailsItem);
+        }
+        
         let visualFlowItem = Misc.copyObject(this.flowTemplate);
         visualFlowItem.flowNum = flowDetailsItem.flow_num;
         visualFlowItem.active = false;
@@ -647,6 +662,8 @@ dfm.FlowVisuals = class {
 
         // Get the width of the text
         var textWidth = tempText.width();
+
+        tempText.destroy();
 
         // Return the width
         return textWidth;

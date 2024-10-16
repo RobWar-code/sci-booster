@@ -1282,7 +1282,7 @@ function validateFlows(&$page, $count) {
                 $message = "validateFlows: flow label_width is not an integer at page $count<br>";
                 return $message;
             }
-            if ($labelWidth < 50 || 140 < $labelWidth) {
+            if ($labelWidth < 30 || 140 < $labelWidth) {
                 $message = "validateFlows: flow label_width is out of range at page $count<br>";
                 return $message;
             }
