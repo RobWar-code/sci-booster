@@ -6,7 +6,7 @@ Contents
 
 <h1>Work Due
 
-    Example 1: Petroleum Refining
+    * Example 1: Petroleum Refining
         Procedure for each page:
             Originate JSON in ChatGPT
             Check all fields
@@ -19,6 +19,7 @@ Contents
             01
             0101
             010101
+            0201
 
     Modify the JSON section in the README to improve the output
         of chatGPT (Maximum 4 days on this).
@@ -27,7 +28,11 @@ Contents
 
     Database or flow model deleted by accident?
 
-    When flow edited, non-edit version sometimes not cleared from display
+    When flow edited, non-edit version sometimes not cleared from display?
+
+    Flow label sometimes not altered when changed in flow details?
+
+    Fit the node graphic into both the height and the width of the display.
 
     Clear debug from code
 
@@ -49,6 +54,27 @@ Contents
     In the README Plan the release procedures
 
 <h1>Work Done
+    17/10/2024
+
+    * Example 1: Petroleum Refining
+        Procedure for each page:
+            Originate JSON in ChatGPT
+            Check all fields
+            Approximate flow lines
+            Import the page into the app
+            Adjust flow lines in the app
+        When pages completed, work through and add graphics as desirable
+
+        Pages:
+            01
+            0101
+            010101
+            0201
+
+    * After modal dismiss restore the scroll to the original position
+
+    * Increase the height of the flow details button to 15px
+
     16/10/2024
 
     * Adjust the width of the flow label to the actual width of the wrapped text

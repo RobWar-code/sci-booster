@@ -58,13 +58,14 @@ The drawing area (stage) onto which a flow diagram page is drawn is 380 pixels w
 690 pixels high.
 
 ##### Component Node Boxes
+
 The stage area is sufficent for upto 8 component nodes, if arranged vertically in sets
 of 4. So eight is the maximum number of component nodes for a page.
 
 Component nodes are represented by rectangular boxes 140 pixels wide by 75 pixels high.
 
 On the drawing, vertically arranged component node should be spaced 90 pixels between
-the base of one node and the top of another.
+the base of one node and the top of another (ie: node y coordinates are 165 pixels apart.
 
 When there are more than 4 component nodes the node boxes should be offset from the left
 margin edge of the stage by 5 pixels for left hand column and margin of 5 pixels on the
@@ -84,8 +85,10 @@ Flows are represented by sets of line segments whose coordinates are given in th
 Generally the flow lines connect a source component node box to a destination node box,
 typically from the bottom of one box to the top of another.
 
-The flow details include an "arrow_points" field for defining the coordinates of each of the nodes
-of an equilateral triangle that sits on the flow line and points toward the destination.
+The flow details include an "arrow_points" field for defining the coordinates of each of the 
+4 nodes of an equilateral triangle, of which the bottom side is indented 
+toward the apex by two pixels, that sits on the flow line and points toward the destination.
+the triangle is about 10 pixels high.
 
 The flow label appears in a box, who's top-left coordinates are given in the "label_x",
 "label_y" fields.

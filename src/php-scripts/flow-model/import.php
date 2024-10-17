@@ -1450,6 +1450,10 @@ function validateFlows(&$page, $count) {
             $flow['conversion_formulas'] = [];
         }
         else {
+            if (!is_array($flow['conversion_formulas'])) {
+                $message = "validateFlows: conversion_formulas is not given as an array at page $count<br>";
+                return $message;
+            }
             foreach($flow['conversion_formulas'] as &$formulaItem) {
                 if (!array_key_exists('formula', $formulaItem)) {
                     $message = "validateFlows: conversion formula missing formula field at page $count<br>";

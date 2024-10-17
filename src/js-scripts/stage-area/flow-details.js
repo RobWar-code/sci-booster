@@ -65,6 +65,7 @@ flowDetails = {
             document.getElementById("drawFlowButton").style.display = "none";
             document.getElementById("flowDeleteButton").style.display = "none";
         }
+        dfm.currentVisual.lastWindowY = window.scrollY;
         window.scrollTo(0,0);
         document.getElementById("flowDetails").style.display = "block";
         document.getElementById("flowDetailsSubmit").style.display = "block";
@@ -250,6 +251,7 @@ flowDetails = {
             }
         }
         document.getElementById("flowDetails").style.display = "none";
+        window.scrollTo(0, dfm.currentVisual.lastWindowY);
     },
     
     drawFlow: function() {

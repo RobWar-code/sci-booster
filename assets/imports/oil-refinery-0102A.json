@@ -1,0 +1,430 @@
+{
+    "flow_model_id": 71,
+    "flow_model_title": "Oil Well to Storage/Distribution Flow Model",
+    "complete": false,
+    "page": {
+        "id": 133,
+        "flow_model_id": 71,
+        "hierarchical_id": "0102",
+        "title": "Refinery",
+        "description": "",
+        "keywords": "refining, oil, fuel, crude oil",
+        "user_authors": [
+            {
+                "id": 4,
+                "username": "warner3"
+            }
+        ],
+        "external_authors": [
+            {
+                "id": 181,
+                "author": " "
+            }
+        ],
+        "references": [],
+        "nodes": [
+            {
+                "id": 111,
+                "page_id": 133,
+                "node_num": "01",
+                "label": "Crude Oil Input",
+                "graphic_file": "",
+                "graphic_text": "Input point for crude oil into the refinery.",
+                "graphic_credits": "",
+                "x": 5,
+                "y": 10,
+                "type": "mechanism",
+                "definition": "The crude oil feed entering the refinery.",
+                "keywords": "crude oil, input",
+                "hyperlink": "",
+                "has_child_page": false
+            },
+            {
+                "id": 112,
+                "page_id": 133,
+                "node_num": "02",
+                "label": "Distillation Column",
+                "graphic_file": "warner3/oil-refinery-distillation.webp",
+                "graphic_text": "",
+                "graphic_credits": "",
+                "x": 5,
+                "y": 175,
+                "type": "mechanism",
+                "definition": "Primary separation process for crude oil.",
+                "keywords": "distillation, separation",
+                "hyperlink": "",
+                "has_child_page": false
+            },
+            {
+                "id": 113,
+                "page_id": 133,
+                "node_num": "03",
+                "label": "Cracking Unit",
+                "graphic_file": "",
+                "graphic_text": "Breaks larger hydrocarbons into smaller molecules.",
+                "graphic_credits": "",
+                "x": 5,
+                "y": 340,
+                "type": "mechanism",
+                "definition": "Processes heavy fractions into lighter fuels.",
+                "keywords": "cracking, light fuels",
+                "hyperlink": "",
+                "has_child_page": false
+            },
+            {
+                "id": 114,
+                "page_id": 133,
+                "node_num": "04",
+                "label": "Reforming Unit",
+                "graphic_file": "",
+                "graphic_text": "Rearranges molecules to increase the octane number.",
+                "graphic_credits": "",
+                "x": 5,
+                "y": 505,
+                "type": "mechanism",
+                "definition": "Converts naphtha into high-octane fuels.",
+                "keywords": "reforming, octane",
+                "hyperlink": "",
+                "has_child_page": false
+            },
+            {
+                "id": 115,
+                "page_id": 133,
+                "node_num": "05",
+                "label": "Blending Unit",
+                "graphic_file": "",
+                "graphic_text": "Blends different components into finished fuels.",
+                "graphic_credits": "",
+                "x": 235,
+                "y": 5,
+                "type": "mechanism",
+                "definition": "Produces final fuel blends.",
+                "keywords": "blending, fuels",
+                "hyperlink": "",
+                "has_child_page": false
+            },
+            {
+                "id": 116,
+                "page_id": 133,
+                "node_num": "06",
+                "label": "Fuel Storage",
+                "graphic_file": "",
+                "graphic_text": "Storage tanks for refined fuels.",
+                "graphic_credits": "",
+                "x": 235,
+                "y": 175,
+                "type": "mechanism",
+                "definition": "Stores the finished fuel products.",
+                "keywords": "storage, fuels",
+                "hyperlink": "",
+                "has_child_page": false
+            }
+        ],
+        "flows": [
+            {
+                "id": 199,
+                "page_id": 133,
+                "flow_num": "01",
+                "label": "Crude Oil",
+                "drawing_group_x": 75,
+                "drawing_group_y": 85,
+                "label_x": -25,
+                "label_y": 30,
+                "label_width": 60,
+                "keywords": "crude oil",
+                "definition": "Flow of crude oil to the distillation column.",
+                "hyperlink": "",
+                "source_node_num": "01",
+                "destination_node_num": "02",
+                "arrow_points": [
+                    {
+                        "id": 1829,
+                        "flow_id": 199,
+                        "x": 0,
+                        "y": 16
+                    },
+                    {
+                        "id": 1830,
+                        "flow_id": 199,
+                        "x": -7,
+                        "y": 6
+                    },
+                    {
+                        "id": 1831,
+                        "flow_id": 199,
+                        "x": 0,
+                        "y": 10
+                    },
+                    {
+                        "id": 1832,
+                        "flow_id": 199,
+                        "x": 6,
+                        "y": 6
+                    }
+                ],
+                "points": [
+                    {
+                        "id": 960,
+                        "flow_id": 199,
+                        "x": 0,
+                        "y": 0
+                    },
+                    {
+                        "id": 961,
+                        "flow_id": 199,
+                        "x": 0,
+                        "y": 90
+                    }
+                ],
+                "conversion_formulas": []
+            },
+            {
+                "id": 200,
+                "page_id": 133,
+                "flow_num": "02",
+                "label": "Heavy Fractions",
+                "drawing_group_x": 75,
+                "drawing_group_y": 250,
+                "label_x": -25,
+                "label_y": 35,
+                "label_width": 60,
+                "keywords": "heavy fractions",
+                "definition": "Heavy fractions flow to the cracking unit.",
+                "hyperlink": "",
+                "source_node_num": "02",
+                "destination_node_num": "03",
+                "arrow_points": [
+                    {
+                        "id": 1833,
+                        "flow_id": 200,
+                        "x": 0,
+                        "y": 16
+                    },
+                    {
+                        "id": 1834,
+                        "flow_id": 200,
+                        "x": -7,
+                        "y": 6
+                    },
+                    {
+                        "id": 1835,
+                        "flow_id": 200,
+                        "x": 0,
+                        "y": 10
+                    },
+                    {
+                        "id": 1836,
+                        "flow_id": 200,
+                        "x": 6,
+                        "y": 6
+                    }
+                ],
+                "points": [
+                    {
+                        "id": 962,
+                        "flow_id": 200,
+                        "x": 0,
+                        "y": 0
+                    },
+                    {
+                        "id": 963,
+                        "flow_id": 200,
+                        "x": 0,
+                        "y": 90
+                    }
+                ],
+                "conversion_formulas": [
+                    {
+                        "id": 128,
+                        "flow_id": 200,
+                        "formula": "typically: C16H34, C10H8 -&amp;gt; C8H18, C7H8, C6H12",
+                        "description": "Cracking of heavy fractions to smaller molecules"
+                    }
+                ]
+            },
+            {
+                "id": 201,
+                "page_id": 133,
+                "flow_num": "03",
+                "label": "Cracked Gasoline",
+                "drawing_group_x": 75,
+                "drawing_group_y": 415,
+                "label_x": -29,
+                "label_y": 30,
+                "label_width": 56,
+                "keywords": "cracked gasoline",
+                "definition": "Cracked gasoline flows to the reforming unit. Other fuels produced from the distillation/cracking process include: LPG, Kerosene, Diesel and Fuel Oil. Naptha and Bitumen are also produced",
+                "hyperlink": "",
+                "source_node_num": "03",
+                "destination_node_num": "04",
+                "arrow_points": [
+                    {
+                        "id": 1837,
+                        "flow_id": 201,
+                        "x": 0,
+                        "y": 16
+                    },
+                    {
+                        "id": 1838,
+                        "flow_id": 201,
+                        "x": -7,
+                        "y": 6
+                    },
+                    {
+                        "id": 1839,
+                        "flow_id": 201,
+                        "x": 0,
+                        "y": 10
+                    },
+                    {
+                        "id": 1840,
+                        "flow_id": 201,
+                        "x": 6,
+                        "y": 6
+                    }
+                ],
+                "points": [
+                    {
+                        "id": 964,
+                        "flow_id": 201,
+                        "x": 0,
+                        "y": 0
+                    },
+                    {
+                        "id": 965,
+                        "flow_id": 201,
+                        "x": 0,
+                        "y": 90
+                    }
+                ],
+                "conversion_formulas": []
+            },
+            {
+                "id": 202,
+                "page_id": 133,
+                "flow_num": "04",
+                "label": "Reformed Gasoline",
+                "drawing_group_x": 145,
+                "drawing_group_y": 540,
+                "label_x": 18,
+                "label_y": -180,
+                "label_width": 62,
+                "keywords": "reformed gasoline",
+                "definition": "Reformed gasoline flows to the blending unit.",
+                "hyperlink": "",
+                "source_node_num": "04",
+                "destination_node_num": "05",
+                "arrow_points": [
+                    {
+                        "id": 1841,
+                        "flow_id": 202,
+                        "x": 16,
+                        "y": 0
+                    },
+                    {
+                        "id": 1842,
+                        "flow_id": 202,
+                        "x": 8,
+                        "y": 7
+                    },
+                    {
+                        "id": 1843,
+                        "flow_id": 202,
+                        "x": 10,
+                        "y": 0
+                    },
+                    {
+                        "id": 1844,
+                        "flow_id": 202,
+                        "x": 8,
+                        "y": -8
+                    }
+                ],
+                "points": [
+                    {
+                        "id": 966,
+                        "flow_id": 202,
+                        "x": 0,
+                        "y": 0
+                    },
+                    {
+                        "id": 967,
+                        "flow_id": 202,
+                        "x": 20,
+                        "y": 0
+                    },
+                    {
+                        "id": 968,
+                        "flow_id": 202,
+                        "x": 72,
+                        "y": -500
+                    },
+                    {
+                        "id": 969,
+                        "flow_id": 202,
+                        "x": 89,
+                        "y": -501
+                    }
+                ],
+                "conversion_formulas": []
+            },
+            {
+                "id": 203,
+                "page_id": 133,
+                "flow_num": "05",
+                "label": "Finished Fuel",
+                "drawing_group_x": 305,
+                "drawing_group_y": 85,
+                "label_x": -25,
+                "label_y": 40,
+                "label_width": 60,
+                "keywords": "finished fuel",
+                "definition": "Finished fuel flows to storage.",
+                "hyperlink": "",
+                "source_node_num": "05",
+                "destination_node_num": "06",
+                "arrow_points": [
+                    {
+                        "id": 1845,
+                        "flow_id": 203,
+                        "x": 0,
+                        "y": 16
+                    },
+                    {
+                        "id": 1846,
+                        "flow_id": 203,
+                        "x": -7,
+                        "y": 6
+                    },
+                    {
+                        "id": 1847,
+                        "flow_id": 203,
+                        "x": 0,
+                        "y": 10
+                    },
+                    {
+                        "id": 1848,
+                        "flow_id": 203,
+                        "x": 6,
+                        "y": 6
+                    }
+                ],
+                "points": [
+                    {
+                        "id": 970,
+                        "flow_id": 203,
+                        "x": 0,
+                        "y": 0
+                    },
+                    {
+                        "id": 971,
+                        "flow_id": 203,
+                        "x": 0,
+                        "y": 90
+                    }
+                ],
+                "conversion_formulas": []
+            }
+        ]
+    }
+}

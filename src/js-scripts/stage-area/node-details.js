@@ -77,6 +77,7 @@ const nodeDetails = {
         else {
             document.getElementById("nodeGraphicDiv").style.display = "none";
         }
+        dfm.currentVisual.lastWindowY = window.scrollY;
         window.scrollTo(0,0);
         document.getElementById("nodeDetails").style.display = "block";
         document.getElementById("nodeErrors").style.display = "none";
@@ -85,6 +86,7 @@ const nodeDetails = {
 
     dismissNodeDetails: function () {
         document.getElementById("nodeDetails").style.display = "none";
+        window.scrollTo(0, dfm.currentVisual.lastWindowY);
     },
 
     submitNodeDetails: function (event) {

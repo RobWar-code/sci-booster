@@ -2,6 +2,7 @@
 dfm.FlowVisuals = class {
     constructor() {
         this.active = false;
+        this.lastWindowY = 0;
         this.drawFlowNum = "";
         this.flowNodeCount = 0;
         this.drawFlowClickTime = 0;
@@ -440,7 +441,7 @@ dfm.FlowVisuals = class {
         this.lastX = lastX;
         this.lastY = lastY;
         // Add the flow arrow (if present)
-        if (flowDetails.arrowPoints.length > 0) {
+        if (flowDetails.arrow_points.length > 0) {
             let points = [];
             for (let coords of flowDetails.arrow_points) {
                 points.push(coords.x);

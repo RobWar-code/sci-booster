@@ -11,7 +11,7 @@
       "user_authors": [
         {
           "id": null,
-          "username": ""
+          "username": "warner3"
         }
       ],
       "external_authors": [
@@ -25,7 +25,7 @@
         {
           "id": null,
           "node_num": "01",
-          "x": 10,
+          "x": 5,
           "y": 10,
           "label": "Crude Oil Input",
           "graphic_file": "",
@@ -40,8 +40,8 @@
         {
           "id": null,
           "node_num": "02",
-          "x": 10,
-          "y": 100,
+          "x": 5,
+          "y": 175,
           "label": "Distillation Column",
           "graphic_file": "",
           "graphic_text": "Separates crude oil into various fractions.",
@@ -55,8 +55,8 @@
         {
           "id": null,
           "node_num": "03",
-          "x": 10,
-          "y": 190,
+          "x": 5,
+          "y": 340,
           "label": "Cracking Unit",
           "graphic_file": "",
           "graphic_text": "Breaks larger hydrocarbons into smaller molecules.",
@@ -70,8 +70,8 @@
         {
           "id": null,
           "node_num": "04",
-          "x": 10,
-          "y": 280,
+          "x": 5,
+          "y": 505,
           "label": "Reforming Unit",
           "graphic_file": "",
           "graphic_text": "Rearranges molecules to increase the octane number.",
@@ -85,8 +85,8 @@
         {
           "id": null,
           "node_num": "05",
-          "x": 10,
-          "y": 370,
+          "x": 235,
+          "y": 5,
           "label": "Blending Unit",
           "graphic_file": "",
           "graphic_text": "Blends different components into finished fuels.",
@@ -100,8 +100,8 @@
         {
           "id": null,
           "node_num": "06",
-          "x": 10,
-          "y": 460,
+          "x": 235,
+          "y": 175,
           "label": "Fuel Storage",
           "graphic_file": "",
           "graphic_text": "Storage tanks for refined fuels.",
@@ -120,13 +120,13 @@
           "source_node_num": "01",
           "destination_node_num": "02",
           "label": "Crude Oil",
-          "label_x": 50,
-          "label_y": 40,
+          "label_x": -25,
+          "label_y": 30,
           "label_width": 60,
-          "drawing_group_x": 10,
-          "drawing_group_y": 10,
-          "arrow_points": [{ "x": 10, "y": 100 }],
-          "points": [{ "x": 20, "y": 100 }],
+          "drawing_group_x": 75,
+          "drawing_group_y": 85,
+          "arrow_points": [{ "x": 0, "y": 16 }, {"x": -7, "y": 6}, {"x":0, "y": 10}, {"x": 6, "y": 6}],
+          "points": [{ "x": 0, "y": 0 }, {"x": 0, "y": 90}],
           "keywords": "crude oil",
           "definition": "Flow of crude oil to the distillation column."
         },
@@ -136,15 +136,21 @@
           "source_node_num": "02",
           "destination_node_num": "03",
           "label": "Heavy Fractions",
-          "label_x": 50,
-          "label_y": 130,
+          "label_x": -25,
+          "label_y": 35,
           "label_width": 60,
-          "drawing_group_x": 10,
-          "drawing_group_y": 100,
-          "arrow_points": [{ "x": 10, "y": 190 }],
-          "points": [{ "x": 20, "y": 190 }],
+          "drawing_group_x": 75,
+          "drawing_group_y": 250,
+          "arrow_points": [{ "x": 0, "y": 16 }, {"x": -7, "y": 6}, {"x":0, "y": 10}, {"x": 6, "y": 6}],
+          "points": [{ "x": 0, "y": 0 }, {"x": 0, "y": 90}],
           "keywords": "heavy fractions",
-          "definition": "Heavy fractions flow to the cracking unit."
+          "definition": "Heavy fractions flow to the cracking unit.",
+          "conversion_formulas": [
+            {
+               "formula": "typically: C16H34, C10H8 -> C8H18, C7H8, C6H12",
+               "description": "Cracking of heavy fractions to smaller molecules"
+            }
+          ]
         },
         {
           "id": null,
@@ -155,10 +161,10 @@
           "label_x": 50,
           "label_y": 220,
           "label_width": 60,
-          "drawing_group_x": 10,
-          "drawing_group_y": 190,
-          "arrow_points": [{ "x": 10, "y": 280 }],
-          "points": [{ "x": 20, "y": 280 }],
+          "drawing_group_x": 75,
+          "drawing_group_y": 415,
+          "arrow_points": [{ "x": 0, "y": 16 }, {"x": -7, "y": 6}, {"x":0, "y": 10}, {"x": 6, "y": 6}],
+          "points": [{ "x": 0, "y": 0 }, {"x": 0, "y": 90}],
           "keywords": "cracked gasoline",
           "definition": "Cracked gasoline flows to the reforming unit."
         },
@@ -168,13 +174,13 @@
           "source_node_num": "04",
           "destination_node_num": "05",
           "label": "Reformed Gasoline",
-          "label_x": 50,
-          "label_y": 310,
+          "label_x": 18,
+          "label_y": -180,
           "label_width": 60,
-          "drawing_group_x": 10,
-          "drawing_group_y": 280,
-          "arrow_points": [{ "x": 10, "y": 370 }],
-          "points": [{ "x": 20, "y": 370 }],
+          "drawing_group_x": 145,
+          "drawing_group_y": 540,
+          "arrow_points": [{ "x": 16, "y": 0}, {"x": 8, "y": 7}, {"x": 10, "y": 0}, {"x": 8, "y": -8}],
+          "points": [{"x": 0, "y": 0}, {"x": 20, "y": 0}, {"x": 90, "y": -390}, {"x": 110, "y": -390}],
           "keywords": "reformed gasoline",
           "definition": "Reformed gasoline flows to the blending unit."
         },
@@ -184,13 +190,13 @@
           "source_node_num": "05",
           "destination_node_num": "06",
           "label": "Finished Fuel",
-          "label_x": 50,
-          "label_y": 400,
+          "label_x": -25,
+          "label_y": 40,
           "label_width": 60,
-          "drawing_group_x": 10,
-          "drawing_group_y": 370,
-          "arrow_points": [{ "x": 10, "y": 460 }],
-          "points": [{ "x": 20, "y": 460 }],
+          "drawing_group_x": 305,
+          "drawing_group_y": 85,
+          "arrow_points": [{ "x": 0, "y": 16 }, {"x": -7, "y": 6}, {"x":0, "y": 10}, {"x": 6, "y": 6}],
+          "points": [{ "x": 0, "y": 0 }, {"x": 0, "y": 90}],
           "keywords": "finished fuel",
           "definition": "Finished fuel flows to storage."
         }
