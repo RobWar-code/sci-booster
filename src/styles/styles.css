@@ -224,15 +224,14 @@ body {
     display: none;
 }
 
-#nodeGraphic {
-    width: calc(100% - 10px);
-    max-width: 900px;
-    height: auto;
+#nodeGraphicModalDiv {
+    width: 100%;
+    text-align: center;
 }
 
 #nodeGraphicPara {
-    width: calc(100% - 10px);
-    max-width: 900px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 #nodeGraphicCreditsDiv {

@@ -6,33 +6,26 @@ Contents
 
 <h1>Work Due
 
-    * Example 1: Petroleum Refining
-        Procedure for each page:
-            Originate JSON in ChatGPT
-            Check all fields
-            Approximate flow lines
-            Import the page into the app
-            Adjust flow lines in the app
-        When pages completed, work through and add graphics as desirable
-
+    Do the model for gasoline -> Car -> Atmosphere
         Pages:
             01
-            0101
-            010101
-            0201
 
     Modify the JSON section in the README to improve the output
         of chatGPT (Maximum 4 days on this).
 
     Problem with save of flow deleted and redrawn with same name, but possibly different flow_num 
 
-    Database or flow model deleted by accident?
+    Database deleted by accident - following ctrl-shift-r when node graphic displayed?
 
     When flow edited, non-edit version sometimes not cleared from display?
 
     Flow label sometimes not altered when changed in flow details?
 
-    Fit the node graphic into both the height and the width of the display.
+    * Node graphic on node details not displayed correctly
+
+    * Scroll to display top with node graphic
+
+    * Fit the node graphic into both the height and the width of the display.
 
     Clear debug from code
 

@@ -30,6 +30,9 @@ const nodeDetails = {
         if (node) {
             document.getElementById("nodeNum").innerText = nodeNum;
             document.getElementById("nodeLabel").value = node.label;
+            document.getElementById("nodeGraphicFile").value = node.graphic_file;
+            document.getElementById("nodeGraphicText").value = node.graphic_text;
+            document.getElementById("nodeGraphicCredits").value = node.graphic_credits;
             document.getElementById("nodeType").value = node.type;
             document.getElementById("nodeKeywords").value = node.keywords;
             document.getElementById("nodeDefinition").value = node.definition;
@@ -39,6 +42,9 @@ const nodeDetails = {
 
     setInputDisabledStatus: function (setting) {
         document.getElementById("nodeLabel").disabled = setting;
+        document.getElementById("nodeGraphicFile").disabled = setting;
+        document.getElementById("nodeGraphicText").disabled = setting;
+        document.getElementById("nodeGraphicCredits").disabled = setting;
         document.getElementById("nodeType").disabled = setting;
         document.getElementById("nodeKeywords").disabled = setting;
         document.getElementById("nodeDefinition").disabled = setting;
@@ -59,6 +65,9 @@ const nodeDetails = {
         if (editMode === "new") {
             // Clear the modal form fields
             document.getElementById("nodeLabel").value = "";
+            document.getElementById("nodeGraphicFile").value = "";
+            document.getElementById("nodeGraphicText").value = "";
+            document.getElementById("nodeGraphicCredits").value = "";
             document.getElementById("nodeKeywords").value = "";
             document.getElementById("nodeDefinition").value = "";
             document.getElementById("nodeHyperlink").value = "";
@@ -116,7 +125,7 @@ const nodeDetails = {
         let graphicText = document.getElementById("nodeGraphicText").value;
         graphicText = Misc.stripHTML(graphicText);
         let graphicCredits = document.getElementById("nodeGraphicCredits").value;
-        graphicText = Misc.stripHTML(graphicCredits);
+        graphicCredits = Misc.stripHTML(graphicCredits);
         let keywords = document.getElementById("nodeKeywords").value;
         keywords = Misc.stripHTML(keywords).trim();
         let definition = document.getElementById("nodeDefinition").value;

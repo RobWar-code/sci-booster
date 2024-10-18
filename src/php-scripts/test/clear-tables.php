@@ -1,88 +1,85 @@
 <?php
     include_once __DIR__ . "/../db-connect.php";
-    
-    function clearTables() {
+
+    // Collect the JSON data
+    header('Content-Type: application/json');
+
+    $inputData = json_decode(file_get_contents('php://input'), true);
+
+    $passKey = $inputData['pass_key'];
+
+    $result = clearTables($passKey);
+
+    echo json_encode($result);
+
+    function clearTables($passKey) {
         global $dbConn;
+
+        if ($passKey != "warnerxwy") {
+            $response = ['result'=>false, 'status'=>'bad pass key'];
+            return $response;
+        }
 
         $sql = "DELETE FROM conversion_formula";
         $result = $dbConn->query($sql);
         if (!$result) {
-            echo "Failed to clear conversion_formula table<br>" . $dbConn->error . "<br>";
-        }
-        else {
-            echo "Cleared conversion_formula<br>";
+            $response = ['result'=>false, 'status'=>"Failed to clear conversion_formula table: " . $dbConn->error];
+            return $response;
         }
 
         $sql = "DELETE FROM flow_point";
         $result = $dbConn->query($sql);
         if (!$result) {
-            echo "Failed to clear flow_point table<br>" . $dbConn->error . "<br>";
-        }
-        else {
-            echo "Cleared flow_point<br>";
+            $response = ['result'=> false, 'status'=>"Failed to clear flow_point table: " . $dbConn->error];
+            return $response;
         }
 
         $sql = "DELETE FROM flow_arrow_point";
         $result = $dbConn->query($sql);
         if (!$result) {
-            echo "Failed to clear flow_arrow_point table<br>" . $dbConn->error . "<br>";
-        }
-        else {
-            echo "Cleared flow_arrow_point<br>";
+            $response = ['result'=>false, 'status'=>"Failed to clear flow_arrow_point table: " . $dbConn->error];
+            return $response;
         }
 
         $sql = "DELETE FROM flow";
         $result = $dbConn->query($sql);
         if (!$result) {
-            echo "Failed to clear flow table<br>" . $dbConn->error . "<br>";
-        }
-        else {
-            echo "Cleared flow<br>";
+            $response = ['result'=>false, 'status'=>"Failed to clear flow table: " . $dbConn->error];
+            return $response;
         }
 
         $sql = "DELETE FROM node";
         $result = $dbConn->query($sql);
         if (!$result) {
-            echo "Failed to clear node table<br>" . $dbConn->error . "<br>";
-        }
-        else {
-            echo "Cleared node<br>";
+            $response = ['result'=>false, 'status'=>"Failed to clear node table: " . $dbConn->error];
+            return $response;
         }
 
         $sql = "DELETE FROM external_author_page_link";
         $result = $dbConn->query($sql);
         if (!$result) {
-            echo "Failed to clear external_author_page_link table<br>" . $dbConn->error . "<br>";
-        }
-        else {
-            echo "Cleared external_author_page_link<br>";
+            $response = ['result'=>false, 'status'=>"Failed to clear external_author_page_link table: " . $dbConn->error];
+            return $response;
         }
 
         $sql = "DELETE FROM reference";
         $result = $dbConn->query($sql);
         if (!$result) {
-            echo "Failed to clear reference table<br>" . $dbConn->error . "<br>";
-        }
-        else {
-            echo "Cleared reference<br>";
+            $response = ['result'=>false, 'status'=>"Failed to clear reference table: " . $dbConn->error];
+            return $response;
         }
 
         $sql = "DELETE FROM external_author";
         $result = $dbConn->query($sql);
         if (!$result) {
-            echo "Failed to clear external_author table<br>" . $dbConn->error . "<br>";
-        }
-        else {
-            echo "Cleared external_author<br>";
+            $response = ["result"=>false, 'status'=>"Failed to clear external_author table: " . $dbConn->error];
+            return $response;
         }
 
         $sql = "DELETE FROM page_user_link";
         $result = $dbConn->query($sql);
         if (!$result) {
-            echo "Failed to clear page_user_link table<br>" . $dbConn->error . "<br>";
-        }
-        else {
-            echo "Cleared page_user_link<br>";
+            $response = ['result'=>false, 'status'=>"Failed to clear page_user_link table: " . $dbConn->error];
         }
 /*
         $sql = "DELETE FROM user";
@@ -97,18 +94,16 @@
         $sql = "DELETE FROM page";
         $result = $dbConn->query($sql);
         if (!$result) {
-            echo "Failed to clear page table<br>" . $dbConn->error . "<br>";
-        }
-        else {
-            echo "Cleared page<br>";
+            $response = ['result'=>false, 'status'=>"Failed to clear page table: " . $dbConn->error];
+            return $response;
         }
 
         $sql = "DELETE FROM flow_model";
         $result = $dbConn->query($sql);
         if (!$result) {
-            echo "Failed to clear flow_model table<br>" . $dbConn->error . "<br>";
+            $response = ['result'=>false, 'status'=>"Failed to clear flow_model table: " . $dbConn->error];
+            return $response;
         }
-        else {
-            echo "Cleared flow_model<br>";
-        }
+
+        return ['result'=>true, 'status'=>"Data Cleared"];
     }

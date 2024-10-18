@@ -12,6 +12,7 @@ dfm.nodeGraphic = {
         }
         let imageElem = document.getElementById("nodeGraphic");
         imageElem.src = graphicFile;
+        imageElem.onload = () => this.adjustGraphic(imageElem);
         let textElem = document.getElementById("nodeGraphicPara");
         textElem.innerText = node.graphic_text;
         if (node.graphic_credits != "") {
@@ -24,9 +25,27 @@ dfm.nodeGraphic = {
         let modalBackgroundElem = document.getElementById("nodeGraphicModal");
         modalBackgroundElem.style.height = document.body.scrollHeight;
         modalBackgroundElem.style.display = "block";
+        dfm.currentVisual.lastWindowY = window.scrollY;
+        window.scrollTo(0, 0);
+    },
+
+    adjustGraphic: function (imgElem) {
+        let baseWidth = imgElem.naturalWidth;
+        let baseHeight = imgElem.naturalHeight;
+        let dWidth = window.innerWidth * 85/100;
+        let dHeight = window.innerHeight * 75/100;
+        let scale = dWidth/baseWidth;
+        if (scale * baseHeight > dHeight) {
+            scale = dHeight/baseHeight;
+        }
+        let width = baseWidth * scale;
+        let height = baseHeight * scale;
+        imgElem.width = width;
+        imgElem.height = height;
     },
 
     dismissGraphic: function () {
         document.getElementById("nodeGraphicModal").style.display = "none";
+        window.scrollTo(0, dfm.currentVisual.lastWindowY);
     }
 }

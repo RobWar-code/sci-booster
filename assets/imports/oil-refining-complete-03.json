@@ -1,8 +1,8 @@
 {
-    "flow_model_id": 71,
+    "flow_model_id": null,
     "flow_model_title": "Oil Well to Storage/Distribution Flow Model",
     "complete": true,
-    "update": true,
+    "update": false,
     "pages": [
         {
             "id": 130,
