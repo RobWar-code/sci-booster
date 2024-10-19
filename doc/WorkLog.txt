@@ -16,16 +16,15 @@ Contents
     Problem with save of flow deleted and redrawn with same name, but possibly different flow_num 
 
     Database deleted by accident - following ctrl-shift-r when node graphic displayed?
+        Modified clear tables to suppress accidental call
 
     When flow edited, non-edit version sometimes not cleared from display?
 
     Flow label sometimes not altered when changed in flow details?
 
-    * Node graphic on node details not displayed correctly
+    The draw flow function should scroll the page down to the previous location
 
-    * Scroll to display top with node graphic
-
-    * Fit the node graphic into both the height and the width of the display.
+    Reload and edit the oil refining model
 
     Clear debug from code
 
@@ -47,6 +46,14 @@ Contents
     In the README Plan the release procedures
 
 <h1>Work Done
+    18/10/2024
+    
+    * Node graphic on node details not displayed correctly
+
+    * Scroll to display top with node graphic
+
+    * Fit the node graphic into both the height and the width of the display.
+
     17/10/2024
 
     * Example 1: Petroleum Refining

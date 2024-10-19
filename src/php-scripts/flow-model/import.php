@@ -117,6 +117,7 @@ function arrangePageData($filedata) {
 
         }
         $response['error'] = $error;
+        $response['status'] = $error;
         echo json_encode($response);
         exit;
     }

@@ -1,0 +1,256 @@
+{
+    "flow_model_id": null,
+    "flow_model_title": "Gasoline Consumption",
+    "complete": false,
+    "update": true,
+    "pages": [
+        {
+            "id": null,
+            "hierarchical_id": "0102",
+            "title": "Car Subsystems",
+            "keywords": "car, gasoline, air, exhaust, combustion, engine, motion",
+            "user_authors": [
+                {
+                    "id": null,
+                    "username": "warner3"
+                }
+            ],
+            "external_authors": [
+                {
+                    "id": null,
+                    "author": " "
+                }
+            ],
+            "references": [],
+            "nodes": [
+                {
+                    "id": null,
+                    "node_num": "01",
+                    "x": 5,
+                    "y": 10,
+                    "label": "Fuel Tank",
+                    "graphic_file": "",
+                    "graphic_text": "Stores gasoline before it is sent to the engine.",
+                    "graphic_credits": "",
+                    "type": "mechanism",
+                    "definition": "The car's fuel storage system for gasoline.",
+                    "keywords": "fuel, gasoline, storage, fuel tank",
+                    "hyperlink": "",
+                    "has_child_page": false
+                },
+                {
+                    "id": null,
+                    "node_num": "02",
+                    "x": 5,
+                    "y": 175,
+                    "label": "Fuel Injector",
+                    "graphic_file": "",
+                    "graphic_text": "Injects gasoline into the combustion chamber.",
+                    "graphic_credits": "",
+                    "type": "mechanism",
+                    "definition": "Injects gasoline into the car's engine for combustion.",
+                    "keywords": "fuel injector, gasoline injection",
+                    "hyperlink": "",
+                    "has_child_page": false
+                },
+                {
+                    "id": null,
+                    "node_num": "03",
+                    "x": 5,
+                    "y": 340,
+                    "label": "Combustion Chamber",
+                    "graphic_file": "",
+                    "graphic_text": "The engine's chamber where gasoline burns with air to produce motion.",
+                    "graphic_credits": "",
+                    "type": "mechanism",
+                    "definition": "The place where air and gasoline combust to produce power.",
+                    "keywords": "combustion, air, gasoline, engine",
+                    "hyperlink": "",
+                    "has_child_page": false
+                },
+                {
+                    "id": null,
+                    "node_num": "04",
+                    "x": 5,
+                    "y": 505,
+                    "label": "Pistons",
+                    "graphic_file": "",
+                    "graphic_text": "Pistons move as a result of combustion to create motion.",
+                    "graphic_credits": "",
+                    "type": "mechanism",
+                    "definition": "Converts the explosion from combustion into motion.",
+                    "keywords": "pistons, motion, engine",
+                    "hyperlink": "",
+                    "has_child_page": false
+                },
+                {
+                    "id": null,
+                    "node_num": "06",
+                    "x": 235,
+                    "y": 10,
+                    "label": "Drive Subsystem",
+                    "graphic_file": "",
+                    "graphic_text": "",
+                    "graphic_credits": "",
+                    "type": "mechanism",
+                    "definition": "Converts the linear motion of the piston to rotational for the wheels",
+                    "keywords": "pistons, motion, engine",
+                    "hyperlink": "",
+                    "has_child_page": false
+                },
+                {
+                    "id": null,
+                    "node_num": "05",
+                    "x": 235,
+                    "y": 175,
+                    "label": "Exhaust System",
+                    "graphic_file": "",
+                    "graphic_text": "Emits exhaust gases from the engine to the atmosphere.",
+                    "graphic_credits": "",
+                    "type": "mechanism",
+                    "definition": "Removes exhaust gases from the combustion process.",
+                    "keywords": "exhaust, emissions, engine",
+                    "hyperlink": "",
+                    "has_child_page": false
+                }
+            ],
+            "flows": [
+                {
+                    "id": null,
+                    "flow_num": "01",
+                    "source_node_num": "01",
+                    "destination_node_num": "02",
+                    "label": "Gasoline Flow",
+                    "drawing_group_x": 75,
+                    "drawing_group_y": 85,
+                    "label_x": -25,
+                    "label_y": 15,
+                    "label_width": 60,
+                    "keywords": "gasoline, fuel",
+                    "definition": "Flow of gasoline from the fuel tank to the fuel injector.",
+                    "arrow_points": [
+                        { "x": 0, "y": 16 },
+                        { "x": -6, "y": 6 },
+                        { "x": 0, "y": 10 },
+                        { "x": 6, "y": 6 }
+                    ],
+                    "points": [
+                        { "x": 0, "y": 0 },
+                        { "x": 0, "y": 90 }
+                    ],
+                    "conversion_formulas": []
+                },
+                {
+                    "id": null,
+                    "flow_num": "02",
+                    "source_node_num": "02",
+                    "destination_node_num": "03",
+                    "label": "Gasoline to Combustion",
+                    "drawing_group_x": 75,
+                    "drawing_group_y": 250,
+                    "label_x": -20,
+                    "label_y": 25,
+                    "label_width": 60,
+                    "keywords": "combustion, gasoline",
+                    "definition": "Gasoline injected into the combustion chamber.",
+                    "arrow_points": [
+                        { "x": 0, "y": 16 },
+                        { "x": -6, "y": 6 },
+                        { "x": 0, "y": 10 },
+                        { "x": 6, "y": 6 }
+                    ],
+                    "points": [
+                        { "x": 0, "y": 0 },
+                        { "x": 0, "y": 90 }
+                    ],
+                    "conversion_formulas": [
+                        {
+                            "formula": "Gasoline + Oxygen -> Carbon Dioxide and Water with some carbon  monoxide",
+                            "description": "Conversion of fuel to exhaust" 
+                        }
+                    ]
+                },
+                {
+                    "id": null,
+                    "flow_num": "03",
+                    "source_node_num": "03",
+                    "destination_node_num": "04",
+                    "label": "Combustion to Motion",
+                    "drawing_group_x": 75,
+                    "drawing_group_y": 415,
+                    "label_x": -25,
+                    "label_y": 30,
+                    "label_width": 60,
+                    "keywords": "combustion, motion",
+                    "definition": "Combustion generates motion through the movement of pistons.",
+                    "arrow_points": [
+                        { "x": 0, "y": 16 },
+                        { "x": -6, "y": 6 },
+                        { "x": 0, "y": 10 },
+                        { "x": 6, "y": 6 }
+                    ],
+                    "points": [
+                        { "x": 0, "y": 0 },
+                        { "x": 0, "y": 50 }
+                    ],
+                    "conversion_formulas": []
+                },
+                {
+                    "id": null,
+                    "flow_num": "04",
+                    "source_node_num": "03",
+                    "destination_node_num": "05",
+                    "label": "Exhaust Gases",
+                    "drawing_group_x": 150,
+                    "drawing_group_y": 475,
+                    "label_x": 30,
+                    "label_y": -30,
+                    "label_width": 60,
+                    "keywords": "exhaust, emissions",
+                    "definition": "Exhaust gases generated by combustion are expelled.",
+                    "arrow_points": [
+                        { "x": 16, "y": 0 },
+                        { "x": 8, "y": -6 },
+                        { "x": 12, "y": 10 },
+                        { "x": 8, "y": 6 }
+                    ],
+                    "points": [
+                        { "x": 0, "y": 0 },
+                        { "x": 30, "y": 0 },
+                        { "x": 30, "y": -270},
+                        { "x": 140, "y": -270}
+                    ],
+                    "conversion_formulas": []
+                },
+                {
+                    "id": null,
+                    "flow_num": "05",
+                    "source_node_num": "04",
+                    "destination_node_num": "06",
+                    "label": "Linear Motion",
+                    "drawing_group_x": 145,
+                    "drawing_group_y": 455,
+                    "label_x": -25,
+                    "label_y": 30,
+                    "label_width": 60,
+                    "keywords": "piston motion",
+                    "definition": "Linear motion to be converted to rotational motion in the drive assembly",
+                    "arrow_points": [
+                        { "x": 16, "y": 0 },
+                        { "x": 8, "y": 6 },
+                        { "x": 12, "y": 0 },
+                        { "x": 8, "y": -6 }
+                    ],
+                    "points": [
+                        { "x": 0, "y": 0 },
+                        { "x": 110, "y": 0 },
+                        { "x": 110, "y": -390 },
+                        { "x": 140, "y": -390 }
+                    ],
+                    "conversion_formulas": []
+                }
+            ]
+        }
+    ]
+}
+

@@ -255,6 +255,9 @@ flowDetails = {
     },
     
     drawFlow: function() {
+        // Scroll back to edit position
+        window.scrollTo(0, dfm.currentVisual.lastWindowY);
+
         dfm.flowDrawMode = true;
         if (this.editMode === "new") {
             dfm.currentVisual.initialiseFlowDraw(this.currentFlow);

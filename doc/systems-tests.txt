@@ -336,6 +336,28 @@ Contents
     * Click the Delete button on the Node Details modal
     * Ensure that the Node Details modal and the node box are cleared
 
+    * Click the New button
+    * Ensure that the Model Details modal is displayed
+    * Enter a title
+    * Click Submit
+    * Ensure that the node editing message appears above the stage
+    * Click the stage to add a new node
+    * In the node details modal enter values for each of the fields
+    * Use the graphics button to upload a graphic
+    * Submit the details
+    * Click Submit
+    * Ensure that the node is displayed correctly
+    * Click the Node Details button on the node
+    * Ensure that the Node Details modal is displayed
+    * Ensure that all details are displayed correctly
+    * Click the Dismiss button
+    * Click the Save button
+    * Ensure that the Save Successful message appears
+    * Ensure that the diagram is displayed correctly 
+    * Click the node details button of the node in question
+    * Ensure that all details are displayed correctly
+
+
 <h2>Child Page Editing
     * Login as warner3
     * Click the New button

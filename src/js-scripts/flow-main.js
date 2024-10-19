@@ -28,7 +28,7 @@ dfm.importTitle = "";
 // Node and Flow details
 dfm.maxNodeLabelLen = 42;
 dfm.maxFlowLabelLen = 42;
-dfm.maxFlowLabelWidth = 58;
+dfm.maxFlowLabelWidth = 65;
 dfm.flowFontSize = 10;
 dfm.flowOptionHeight = 15;
 dfm.flowLineWidth = 5;
