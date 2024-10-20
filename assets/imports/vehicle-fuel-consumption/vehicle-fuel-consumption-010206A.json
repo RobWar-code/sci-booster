@@ -1,0 +1,273 @@
+{
+    "flow_model_id": null,
+    "flow_model_title": "Gasoline Consumption",
+    "complete": false,
+    "update": true,
+    "pages": [
+        {
+            "id": null,
+            "hierarchical_id": "010206",
+            "title": "Drive Subsystem",
+            "keywords": "drive subsystem, pistons, crankshaft, transmission, differential, wheels, linear motion",
+            "user_authors": [
+                {
+                    "id": null,
+                    "username": "warner3"
+                }
+            ],
+            "external_authors": [
+                {
+                    "id": null,
+                    "author": " "
+                }
+            ],
+            "references": [],
+            "nodes": [
+                {
+                    "id": null,
+                    "node_num": "01",
+                    "x": 5,
+                    "y": 10,
+                    "label": "Pistons",
+                    "graphic_file": "",
+                    "graphic_text": "Convert combustion energy into linear motion.",
+                    "graphic_credits": "",
+                    "type": "mechanism",
+                    "definition": "The pistons move linearly in the cylinders, driven by the force of combustion.",
+                    "keywords": "pistons, linear motion, combustion",
+                    "hyperlink": "",
+                    "has_child_page": false
+                },
+                {
+                    "id": null,
+                    "node_num": "02",
+                    "x": 5,
+                    "y": 175,
+                    "label": "Crankshaft",
+                    "graphic_file": "",
+                    "graphic_text": "Converts the piston's linear motion into rotational motion.",
+                    "graphic_credits": "",
+                    "type": "mechanism",
+                    "definition": "The crankshaft transforms the up-and-down motion of the pistons into rotational motion.",
+                    "keywords": "crankshaft, rotational motion, pistons",
+                    "hyperlink": "",
+                    "has_child_page": false
+                },
+                {
+                    "id": null,
+                    "node_num": "03",
+                    "x": 5,
+                    "y": 350,
+                    "label": "Flywheel",
+                    "graphic_file": "",
+                    "graphic_text": "Stores rotational energy from the crankshaft.",
+                    "graphic_credits": "",
+                    "type": "mechanism",
+                    "definition": "The flywheel stabilizes the rotational motion and stores energy for smooth power delivery.",
+                    "keywords": "flywheel, energy storage, rotational motion",
+                    "hyperlink": "",
+                    "has_child_page": false
+                },
+                {
+                    "id": null,
+                    "node_num": "04",
+                    "x": 5,
+                    "y": 515,
+                    "label": "Transmission",
+                    "graphic_file": "",
+                    "graphic_text": "Adjusts the rotational speed and torque to suit driving conditions.",
+                    "graphic_credits": "",
+                    "type": "mechanism",
+                    "definition": "The transmission regulates power and adjusts rotational speed and torque before sending it to the drive shaft.",
+                    "keywords": "transmission, torque, power regulation",
+                    "hyperlink": "",
+                    "has_child_page": false
+                },
+                {
+                    "id": null,
+                    "node_num": "05",
+                    "x": 235,
+                    "y": 10,
+                    "label": "Differential",
+                    "graphic_file": "",
+                    "graphic_text": "Allows the wheels to rotate at different speeds during turns.",
+                    "graphic_credits": "",
+                    "type": "mechanism",
+                    "definition": "The differential adjusts the rotation of the wheels, allowing them to rotate at different speeds during turns.",
+                    "keywords": "differential, wheels, speed adjustment",
+                    "hyperlink": "",
+                    "has_child_page": false
+                },
+                {
+                    "id": null,
+                    "node_num": "06",
+                    "x": 235,
+                    "y": 175,
+                    "label": "Wheels",
+                    "graphic_file": "",
+                    "graphic_text": "Convert rotational motion back into linear motion to move the car.",
+                    "graphic_credits": "",
+                    "type": "mechanism",
+                    "definition": "The wheels convert the rotational motion from the drivetrain into linear motion to move the car forward.",
+                    "keywords": "wheels, linear motion, car movement",
+                    "hyperlink": "",
+                    "has_child_page": false
+                }
+            ],
+            "flows": [
+                {
+                    "id": null,
+                    "flow_num": "01",
+                    "source_node_num": "01",
+                    "destination_node_num": "02",
+                    "label": "Linear to Rotational Motion",
+                    "drawing_group_x": 75,
+                    "drawing_group_y": 85,
+                    "label_x": -25,
+                    "label_y": 15,
+                    "label_width": 60,
+                    "keywords": "linear motion, rotational motion",
+                    "definition": "Pistons' linear motion is converted into rotational motion by the crankshaft.",
+                    "arrow_points": [
+                        { "x": 0, "y": 16 },
+                        { "x": -6, "y": 6 },
+                        { "x": 0, "y": 10 },
+                        { "x": 6, "y": 6 }
+                    ],
+                    "points": [
+                        { "x": 0, "y": 0 },
+                        { "x": 0, "y": 90 }
+                    ],
+                    "conversion_formulas": []
+                },
+                {
+                    "id": null,
+                    "flow_num": "02",
+                    "source_node_num": "02",
+                    "destination_node_num": "03",
+                    "label": "Rotational Energy Storage",
+                    "drawing_group_x": 75,
+                    "drawing_group_y": 250,
+                    "label_x": -20,
+                    "label_y": 25,
+                    "label_width": 60,
+                    "keywords": "rotational motion, energy storage",
+                    "definition": "Rotational motion is stabilized and stored in the flywheel.",
+                    "arrow_points": [
+                        { "x": 0, "y": 16 },
+                        { "x": -6, "y": 6 },
+                        { "x": 0, "y": 10 },
+                        { "x": 6, "y": 6 }
+                    ],
+                    "points": [
+                        { "x": 0, "y": 0 },
+                        { "x": 0, "y": 90 }
+                    ],
+                    "conversion_formulas": []
+                },
+                {
+                    "id": null,
+                    "flow_num": "03",
+                    "source_node_num": "03",
+                    "destination_node_num": "04",
+                    "label": "Power Regulation",
+                    "drawing_group_x": 75,
+                    "drawing_group_y": 415,
+                    "label_x": 15,
+                    "label_y": -10,
+                    "label_width": 60,
+                    "keywords": "transmission, power regulation",
+                    "definition": "The flywheel sends rotational motion to the transmission for regulation.",
+                    "arrow_points": [
+                        { "x": 0, "y": 16 },
+                        { "x": -6, "y": 6 },
+                        { "x": 0, "y": 10 },
+                        { "x": 6, "y": 6 }
+                    ],
+                    "points": [
+                        { "x": 0, "y": 0 },
+                        { "x": 0, "y": 90 }
+                    ],
+                    "conversion_formulas": []
+                },
+                {
+                    "id": null,
+                    "flow_num": "04",
+                    "source_node_num": "04",
+                    "destination_node_num": "05",
+                    "label": "Rotational Speed Adjustment",
+                    "drawing_group_x": 145,
+                    "drawing_group_y": 515,
+                    "label_x": 25,
+                    "label_y": -40,
+                    "label_width": 60,
+                    "keywords": "differential, speed adjustment",
+                    "definition": "The transmission sends rotational motion to the differential, which adjusts speed for each wheel.",
+                    "arrow_points": [
+                        { "x": 16, "y": 0 },
+                        { "x": 8, "y": 6 },
+                        { "x": 12, "y": 0 },
+                        { "x": 8, "y": -6 }
+                    ],
+                    "points": [
+                        { "x": 0, "y": 0 },
+                        { "x": 30, "y": 0 },
+                        { "x": 30, "y": -405},
+                        { "x": 90, "y": -405}
+                    ],
+                    "conversion_formulas": []
+                },
+                {
+                    "id": null,
+                    "flow_num": "05",
+                    "source_node_num": "05",
+                    "destination_node_num": "06",
+                    "label": "Rotational to Linear Motion",
+                    "drawing_group_x": 300,
+                    "drawing_group_y": 85,
+                    "label_x": -25,
+                    "label_y": 30,
+                    "label_width": 60,
+                    "keywords": "rotational motion, linear motion, car movement",
+                    "definition": "The wheels convert rotational motion from the differential back into linear motion, moving the car forward.",
+                    "arrow_points": [
+                        { "x": 0, "y": 16 },
+                        { "x": -6, "y": 6 },
+                        { "x": 0, "y": 10 },
+                        { "x": 6, "y": 6 }
+                    ],
+                    "points": [
+                        { "x": 0, "y": 0 },
+                        { "x": 0, "y": 90 }
+                    ],
+                    "conversion_formulas": []
+                },
+                {
+                    "id": null,
+                    "flow_num": "06",
+                    "source_node_num": "06",
+                    "destination_node_num": "",
+                    "label": "Linear Motion",
+                    "drawing_group_x": 305,
+                    "drawing_group_y": 250,
+                    "label_x": -25,
+                    "label_y": 40,
+                    "label_width": 60,
+                    "keywords": "rotational motion, linear motion, car movement",
+                    "definition": "The linear motion of the car from the rotation of the wheels",
+                    "arrow_points": [
+                        { "x": 0, "y": 16 },
+                        { "x": -6, "y": 6 },
+                        { "x": 0, "y": 10 },
+                        { "x": 6, "y": 6 }
+                    ],
+                    "points": [
+                        { "x": 0, "y": 0 },
+                        { "x": 0, "y": 90 }
+                    ],
+                    "conversion_formulas": []
+                }
+            ]
+        }
+    ]
+}

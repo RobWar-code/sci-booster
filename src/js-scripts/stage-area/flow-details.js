@@ -235,8 +235,8 @@ flowDetails = {
             return;
         }
         let flowNum = this.currentFlow.flow_num;
-        dfm.currentPage.deleteFlow(flowNum);
         dfm.currentVisual.deleteFlow(flowNum);
+        dfm.currentPage.deleteFlow(flowNum);
         document.getElementById("flowDetails").style.display = "none";
         dfm.modelChanged = true;
         document.getElementById("saveModelButton").style.display = "inline";
@@ -259,6 +259,7 @@ flowDetails = {
         window.scrollTo(0, dfm.currentVisual.lastWindowY);
 
         dfm.flowDrawMode = true;
+        console.log("flowDetails editMode:", this.editMode);
         if (this.editMode === "new") {
             dfm.currentVisual.initialiseFlowDraw(this.currentFlow);
         }

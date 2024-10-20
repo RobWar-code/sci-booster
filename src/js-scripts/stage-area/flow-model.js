@@ -425,6 +425,7 @@ dfm.FlowPageData = class {
             }
             // Inform user
             flowModelPage.issueNotice("Saved Successfully");
+            dfm.modelChanged = false;
         }
     }
 

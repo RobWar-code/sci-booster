@@ -312,13 +312,7 @@ dfm.FlowVisuals = class {
         this.currentFlow = flowDetails;
         // Remove the non-editable version of the flow line
         let flowNum = flowDetails.flow_num;
-        let flow = this.getFlow(flowNum);
-        if (flow === null) {
-            console.error("Visual flow details for flow not found:", flowNum);
-            return;
-        }
-        flow.flowGroup.destroy();
-        dfm.stageApp.draw();
+        this.deleteFlow(flowNum);
         // Create the editable flow group
         this.flowLabelSet = false;
         this.flowDrawStarted = true;
@@ -345,6 +339,7 @@ dfm.FlowVisuals = class {
         if (flowItemNum > -1) {
             let flow = this.flows[flowItemNum];
             flow.flowGroup.destroy();
+            this.nodeLayer.draw();
             if (this.flows.length === 1) {
                 this.flows = [];
             }
@@ -533,11 +528,6 @@ dfm.FlowVisuals = class {
     }
 
     makeVisualFlow(flowDetailsItem) {
-        // Debug
-        if (flowDetailsItem.label === "Drilling Mud + Debris") {
-            console.log("Problem Flow:", flowDetailsItem);
-        }
-        
         let visualFlowItem = Misc.copyObject(this.flowTemplate);
         visualFlowItem.flowNum = flowDetailsItem.flow_num;
         visualFlowItem.active = false;
