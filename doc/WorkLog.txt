@@ -21,9 +21,13 @@ Contents
     Database deleted by accident - following ctrl-shift-r when node graphic displayed?
         * Modified clear tables to suppress accidental call
 
+    Conversion of apostrophe to &#039; in import.php, problem with displaying it, check data.
+
     When Cancel Clicked during draw flow, Flow Done and Delete Flow are still displayed.
 
     Flow label sometimes not altered when changed in flow details?
+
+    Ensure save button displayed when any model value is submitted.
 
     * Delete flow sometimes gets into error condition - could be last flow in set?
 

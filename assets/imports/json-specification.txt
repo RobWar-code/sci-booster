@@ -112,6 +112,7 @@ flow_models: [
 					// are NodeNums, the first/top level is always "01"
 				"title": "",
 				"keywords": "",
+				"description": "",
 				"user_authors": [
 					"id": , // May be null (id of the user)
 					"username": ""

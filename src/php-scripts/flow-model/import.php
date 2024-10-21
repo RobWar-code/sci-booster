@@ -322,6 +322,11 @@ function arrangePageData($filedata) {
         }
         array_push($newModel, $pageData);
     }
+    elseif (!is_array($pageData)) {
+        $response = ['result'=>false, 'status'=>"JSON layout is incorrect"];
+        echo json_encode[$response];
+        exit;
+    }
     // Array of pages
     elseif (count($pageData) >= 1) {
         if (!array_key_exists('complete', $pageData[0])) {

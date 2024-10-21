@@ -162,6 +162,7 @@ flowDetails = {
             dfm.currentVisual.updateFlowLabel(flowNum);
         }
         document.getElementById("drawFlowButton").style.display = "block";
+        document.getElementById("saveModelButton").style.display = "inline";
         this.flowDetailsSet = true;       
         dfm.modelChanged = true;
     },
@@ -227,6 +228,7 @@ flowDetails = {
             dfm.currentPage.updateFlow(this.currentFlow);
             this.displayFlowFormulas();
         }
+        document.getElementById("saveModelButton").style.display = "inline";
         dfm.modelChanged = true;
     },
 

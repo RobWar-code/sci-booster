@@ -394,7 +394,7 @@
                 'graphic_credits', 'type', 'definition', 'keywords', 'hyperlink', 'has_child_page'];
             $fieldValues = $node;
             $oldFieldValues = $oldNode;
-            $types = "siisssssssi";
+            $types = "siissssssssi";
             updateFields($table, $nodeId, $fieldValues, $oldFieldValues, $fieldNames, $destFieldNames, $types);
         }
     }

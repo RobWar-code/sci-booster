@@ -125,9 +125,10 @@ const modelDetails = {
     dfm.modelChanged = false;
 
     // Set main page details
-    document.getElementById("flowModelTitle").innerText = dfm.currentPage.flow_model_title;
+    document.getElementById("flowModelTitle").innerHTML = dfm.currentPage.flow_model_title;
     document.getElementById("pageHierarchicalId").innerText = dfm.currentPage.page.hierarchical_id;
-    document.getElementById("pageTitle").innerText = dfm.currentPage.page.title;
+    document.getElementById("pageTitle").innerHTML = dfm.currentPage.page.title;
+    console.log("Page Title:", dfm.currentPage.page.title);
 
     document.getElementById("pageDetailsButton").style.display = "inline";
     if (dfm.userStatus === "editor" || dfm.userStatus === "owner" || dfm.currentPage.isUserAuthor()) {

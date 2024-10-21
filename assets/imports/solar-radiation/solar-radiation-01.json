@@ -1,0 +1,251 @@
+
+{
+    "flow_model_id": null,
+    "flow_model_title": "Solar Energy and Atmosphere-Ocean Interaction",
+    "update": false,
+    "complete": true,
+    "pages": [
+        {
+            "id": null,
+            "hierarchical_id": "01",
+            "title": "Solar Energy Flow in Earth's Atmosphere and Oceans",
+            "keywords": "solar radiation, atmosphere, oceans, energy flow, greenhouse effect, infrared radiation",
+            "user_authors": [
+                {
+                "id": null,
+                "username": "warner3"
+                }
+            ],
+            "external_authors": [],
+            "references": [
+                {
+                    "id": null,
+                    "source": "Web Page",
+                    "title": "Earth's Energy Budget",
+                    "author": {
+                        "id": null,
+                        "author": "NASA Earth Science"
+                    }
+                }
+            ],
+            "nodes": [
+                {
+                    "id": null,
+                    "node_num": "01",
+                    "x": 5,
+                    "y": 10,
+                    "label": "Sun",
+                    "graphic_file": "",
+                    "graphic_text": "Sun emitting solar radiation",
+                    "graphic_credits": "",
+                    "type": "mechanism",
+                    "definition": "The Sun emits solar radiation that reaches the Earth at approximately 1361 W/m² (solar constant).",
+                    "keywords": "sun, solar radiation",
+                    "hyperlink": "https://en.wikipedia.org/wiki/Solar_constant",
+                    "has_child_page": false
+                },
+                {
+                    "id": null,
+                    "node_num": "02",
+                    "x": 5,
+                    "y": 175,
+                    "label": "Atmosphere",
+                    "graphic_file": "",
+                    "graphic_text": "Atmosphere absorbing, reflecting, and reradiating energy",
+                    "graphic_credits": "",
+                    "type": "mechanism",
+                    "definition": "About 30% of the incoming solar radiation is reflected by the atmosphere, while 70% is absorbed or reradiated. The greenhouse effect traps part of this radiation.",
+                    "keywords": "atmosphere, absorption, reflection, reradiation, greenhouse effect",
+                    "hyperlink": "",
+                    "has_child_page": true
+                },
+                {
+                    "id": null,
+                    "node_num": "03",
+                    "x": 5,
+                    "y": 340,
+                    "label": "Oceans",
+                    "graphic_file": "",
+                    "graphic_text": "Oceans absorbing solar radiation",
+                    "graphic_credits": "",
+                    "type": "mechanism",
+                    "definition": "Oceans absorb approximately 90% of the solar energy that passes through the atmosphere.",
+                    "keywords": "oceans, solar energy absorption",
+                    "hyperlink": "",
+                    "has_child_page": true
+                },
+                {
+                    "id": null,
+                    "node_num": "04",
+                    "x": 5,
+                    "y": 505,
+                    "label": "Space",
+                    "graphic_file": "",
+                    "graphic_text": "Energy radiated to space",
+                    "graphic_credits": "",
+                    "type": "effect",
+                    "definition": "Energy that is reflected or reradiated by the Earth system into space, balancing Earth's energy budget.",
+                    "keywords": "space, energy reradiation",
+                    "hyperlink": "",
+                    "has_child_page": false
+                },
+                {
+                    "id": null,
+                    "node_num": "05",
+                    "x": 235,
+                    "y": 10,
+                    "label": "Earth Night-side",
+                    "graphic_file": "",
+                    "graphic_text": "Night-side reradiation of heat as infrared radiation",
+                    "graphic_credits": "",
+                    "type": "effect",
+                    "definition": "During the night, the Earth radiates heat back to space in the form of infrared radiation. About 70-85% of the absorbed solar energy is reradiated as heat.",
+                    "keywords": "night-side radiation, infrared radiation, heat loss",
+                    "hyperlink": "",
+                    "has_child_page": false
+                }
+            ],
+            "flows": [
+                {
+                    "id": null,
+                    "flow_num": "01",
+                    "source_node_num": "01",
+                    "destination_node_num": "02",
+                    "label": "Solar Radiation",
+                    "label_x": -25,
+                    "label_y": 30,
+                    "label_width": 60,
+                    "drawing_group_x": 75,
+                    "drawing_group_y": 85,
+                    "arrow_points": [
+                        { "x": 0, "y": 16 },
+                        { "x": -6, "y": 8 },
+                        { "x": 0, "y": 12 },
+                        { "x": 6, "y": 8 }
+                    ],
+                    "points": [
+                        { "x": 0, "y": 0 },
+                        { "x": 0, "y": 90 }
+                    ],
+                    "keywords": "solar radiation",
+                    "definition": "Incoming solar radiation from the Sun, around 1361 W/m², striking the Earth's atmosphere.",
+                    "conversion_formulas": [
+                        {
+                        "id": null,
+                        "formula": "Power = Area * SolarConstant",
+                        "description": "Formula for calculating the power of solar radiation based on the surface area."
+                        }
+                    ],
+                    "hyperlink": ""
+                },
+                {
+                    "id": null,
+                    "flow_num": "02",
+                    "source_node_num": "02",
+                    "destination_node_num": "03",
+                    "label": "Absorbed Radiation",
+                    "label_x": -25,
+                    "label_y": 30,
+                    "label_width": 60,
+                    "drawing_group_x": 75,
+                    "drawing_group_y": 265,
+                    "arrow_points": [
+                        { "x": 0, "y": 16 },
+                        { "x": -6, "y": 8 },
+                        { "x": 0, "y": 12 },
+                        { "x": 6, "y": 8 }
+                    ],
+                    "points": [
+                        { "x": 0, "y": 0 },
+                        { "x": 0, "y": 90 }
+                    ],
+                    "keywords": "absorbed radiation, atmosphere, oceans",
+                    "definition": "70% of the solar radiation is absorbed by the atmosphere and oceans, which contributes to warming.",
+                    "hyperlink": ""
+                },
+                {
+                    "id": null,
+                    "flow_num": "03",
+                    "source_node_num": "02",
+                    "destination_node_num": "04",
+                    "label": "Reflected Radiation",
+                    "label_x": 20,
+                    "label_y": 40,
+                    "label_width": 60,
+                    "drawing_group_x": 145,
+                    "drawing_group_y": 205,
+                    "arrow_points": [
+                        { "x": 16, "y": 0 },
+                        { "x": 8, "y": -6 },
+                        { "x": 12, "y": 0 },
+                        { "x": -8, "y": 6 }
+                    ],
+                    "points": [
+                        { "x": 0, "y": 0 },
+                        { "x": 30, "y": 0 },
+                        { "x": 30, "y": 245},
+                        { "x": 0, "y": 245}
+                    ],
+                    "keywords": "reflected radiation",
+                    "definition": "Approximately 30% of the incoming solar radiation is reflected back to space by the Earth's atmosphere.",
+                    "hyperlink": ""
+                },
+                {
+                    "id": null,
+                    "flow_num": "04",
+                    "source_node_num": "05",
+                    "destination_node_num": "04",
+                    "label": "Night-side Radiation",
+                    "label_x": -70,
+                    "label_y": 70,
+                    "label_width": 60,
+                    "drawing_group_x": 235,
+                    "drawing_group_y": 50,
+                    "arrow_points": [
+                        { "x": -16, "y": 0 },
+                        { "x": -8, "y": -6 },
+                        { "x": -12, "y": 0 },
+                        { "x": -8, "y": 6 }
+                    ],
+                    "points": [
+                        { "x": 0, "y": 0 },
+                        { "x": -30, "y": 0 },
+                        { "x": -30, "y": 475},
+                        { "x": -95, "y": 475}
+                    ],
+                    "keywords": "night-side infrared radiation, heat loss",
+                    "definition": "During the night, the heat stored in the Earth's surface and atmosphere is radiated back to space as infrared radiation.",
+                    "hyperlink": ""
+                },
+                {
+                    "id": null,
+                    "flow_num": "05",
+                    "source_node_num": "02",
+                    "destination_node_num": "05",
+                    "label": "Adsorbed Heat",
+                    "label_x": 35,
+                    "label_y": -175,
+                    "label_width": 60,
+                    "drawing_group_x": 145,
+                    "drawing_group_y": 195,
+                    "arrow_points": [
+                        { "x": 16, "y": 0 },
+                        { "x": 8, "y": -6 },
+                        { "x": 12, "y": 0 },
+                        { "x": 8, "y": 6 }
+                    ],
+                    "points": [
+                        { "x": 0, "y": 0 },
+                        { "x": 20, "y": 0 },
+                        { "x": 20, "y": -165},
+                        { "x": 90, "y": -165}
+                    ],
+                    "keywords": "retained heat",
+                    "definition": "Heat retained as surplus during the day is emitted over the night",
+                    "hyperlink": ""
+                }
+            ]
+        }
+    ]
+}
+

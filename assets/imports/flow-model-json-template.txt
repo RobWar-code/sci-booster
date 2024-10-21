@@ -9,6 +9,7 @@
 	 		"hierarchical_id": "",
 			"title": "",
 			"keywords": "",
+			"description": "",
 			"user_authors": [
 				"id": ,
 				"username": ""

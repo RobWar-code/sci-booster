@@ -1,0 +1,1651 @@
+{
+    "flow_model_id": 75,
+    "flow_model_title": "Gasoline Consumption",
+    "complete": true,
+    "pages": [
+        {
+            "id": 140,
+            "flow_model_id": 75,
+            "hierarchical_id": "01",
+            "title": "Gasoline Consumption",
+            "description": "",
+            "keywords": "gasoline, car, exhaust, motion, atmosphere",
+            "user_authors": [
+                {
+                    "id": 4,
+                    "username": "warner3"
+                }
+            ],
+            "external_authors": [
+                {
+                    "id": 186,
+                    "author": " "
+                }
+            ],
+            "references": [],
+            "nodes": [
+                {
+                    "id": 136,
+                    "page_id": 140,
+                    "node_num": "01",
+                    "label": "Gas Station",
+                    "graphic_file": "",
+                    "graphic_text": "A gas station where gasoline is pumped into the car.",
+                    "graphic_credits": "",
+                    "x": 5,
+                    "y": 10,
+                    "type": "mechanism",
+                    "definition": "Fueling station where gasoline is supplied to the vehicle.",
+                    "keywords": "gasoline, fueling, station",
+                    "hyperlink": "",
+                    "has_child_page": false
+                },
+                {
+                    "id": 137,
+                    "page_id": 140,
+                    "node_num": "02",
+                    "label": "Car",
+                    "graphic_file": "warner3/car-with-bonnet-up.webp",
+                    "graphic_text": "A car that uses gasoline for motion.",
+                    "graphic_credits": "",
+                    "x": 5,
+                    "y": 175,
+                    "type": "mechanism",
+                    "definition": "A vehicle that uses gasoline for propulsion and produces exhaust.",
+                    "keywords": "car, vehicle, gasoline, motion, exhaust",
+                    "hyperlink": "",
+                    "has_child_page": true
+                },
+                {
+                    "id": 138,
+                    "page_id": 140,
+                    "node_num": "03",
+                    "label": "Atmosphere",
+                    "graphic_file": "",
+                    "graphic_text": "The air into which the car&#039;s exhaust is emitted.",
+                    "graphic_credits": "",
+                    "x": 5,
+                    "y": 340,
+                    "type": "effect",
+                    "definition": "The air around the car that absorbs exhaust gases.",
+                    "keywords": "atmosphere, air, exhaust",
+                    "hyperlink": "",
+                    "has_child_page": false
+                }
+            ],
+            "flows": [
+                {
+                    "id": 222,
+                    "page_id": 140,
+                    "flow_num": "01",
+                    "label": "Gasoline",
+                    "drawing_group_x": 75,
+                    "drawing_group_y": 85,
+                    "label_x": -25,
+                    "label_y": 30,
+                    "label_width": 60,
+                    "keywords": "gasoline, fuel",
+                    "definition": "The flow of gasoline from the gas station to the car.",
+                    "hyperlink": "",
+                    "source_node_num": "01",
+                    "destination_node_num": "02",
+                    "arrow_points": [
+                        {
+                            "id": 2393,
+                            "flow_id": 222,
+                            "x": 0,
+                            "y": 16
+                        },
+                        {
+                            "id": 2394,
+                            "flow_id": 222,
+                            "x": -6,
+                            "y": 6
+                        },
+                        {
+                            "id": 2395,
+                            "flow_id": 222,
+                            "x": 0,
+                            "y": 10
+                        },
+                        {
+                            "id": 2396,
+                            "flow_id": 222,
+                            "x": 6,
+                            "y": 6
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 1294,
+                            "flow_id": 222,
+                            "x": 0,
+                            "y": 0
+                        },
+                        {
+                            "id": 1295,
+                            "flow_id": 222,
+                            "x": 0,
+                            "y": 90
+                        }
+                    ],
+                    "conversion_formulas": [
+                        {
+                            "id": 131,
+                            "flow_id": 222,
+                            "formula": "2C8H18 + 25O2 -&gt; 16CO2 + 18H2O + heat and pressure for motion",
+                            "description": "This is for complete combustion, see below for incomplete combustion."
+                        },
+                        {
+                            "id": 132,
+                            "flow_id": 222,
+                            "formula": "2C8H18 + 17O2 -&gt; 16CO + 18H2O + heat and pressure for motion",
+                            "description": "This is for incomplete combustion, which also produces nitrous oxides and particulates."
+                        }
+                    ]
+                },
+                {
+                    "id": 223,
+                    "page_id": 140,
+                    "flow_num": "02",
+                    "label": "Motion",
+                    "drawing_group_x": 145,
+                    "drawing_group_y": 220,
+                    "label_x": 30,
+                    "label_y": -20,
+                    "label_width": 60,
+                    "keywords": "motion, propulsion",
+                    "definition": "The motion generated by the car as it consumes gasoline. The explosion of the gasoline in the piston chamber produces motion of the piston.",
+                    "hyperlink": "",
+                    "source_node_num": "02",
+                    "destination_node_num": "",
+                    "arrow_points": [
+                        {
+                            "id": 2397,
+                            "flow_id": 223,
+                            "x": 16,
+                            "y": 0
+                        },
+                        {
+                            "id": 2398,
+                            "flow_id": 223,
+                            "x": 6,
+                            "y": -6
+                        },
+                        {
+                            "id": 2399,
+                            "flow_id": 223,
+                            "x": 9,
+                            "y": 0
+                        },
+                        {
+                            "id": 2400,
+                            "flow_id": 223,
+                            "x": 6,
+                            "y": 6
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 1296,
+                            "flow_id": 223,
+                            "x": 0,
+                            "y": 0
+                        },
+                        {
+                            "id": 1297,
+                            "flow_id": 223,
+                            "x": 120,
+                            "y": 0
+                        }
+                    ],
+                    "conversion_formulas": []
+                },
+                {
+                    "id": 224,
+                    "page_id": 140,
+                    "flow_num": "03",
+                    "label": "Exhaust",
+                    "drawing_group_x": 75,
+                    "drawing_group_y": 415,
+                    "label_x": 15,
+                    "label_y": -119,
+                    "label_width": 53,
+                    "keywords": "exhaust, emissions",
+                    "definition": "The exhaust gases released by the car into the atmosphere. CO2, CO, H20, and nitrous oxides",
+                    "hyperlink": "",
+                    "source_node_num": "02",
+                    "destination_node_num": "03",
+                    "arrow_points": [
+                        {
+                            "id": 2401,
+                            "flow_id": 224,
+                            "x": 42,
+                            "y": -135
+                        },
+                        {
+                            "id": 2402,
+                            "flow_id": 224,
+                            "x": 49,
+                            "y": -147
+                        },
+                        {
+                            "id": 2403,
+                            "flow_id": 224,
+                            "x": 42,
+                            "y": -143
+                        },
+                        {
+                            "id": 2404,
+                            "flow_id": 224,
+                            "x": 35,
+                            "y": -147
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 1298,
+                            "flow_id": 224,
+                            "x": 42,
+                            "y": -159
+                        },
+                        {
+                            "id": 1299,
+                            "flow_id": 224,
+                            "x": 42,
+                            "y": -80
+                        }
+                    ],
+                    "conversion_formulas": []
+                },
+                {
+                    "id": 225,
+                    "page_id": 140,
+                    "flow_num": "04",
+                    "label": "Air",
+                    "drawing_group_x": 34,
+                    "drawing_group_y": 334,
+                    "label_x": -23,
+                    "label_y": -66,
+                    "label_width": 28,
+                    "keywords": "fuel oxidant",
+                    "definition": "Air required for combustion of gasoline.",
+                    "hyperlink": "",
+                    "source_node_num": "03",
+                    "destination_node_num": "02",
+                    "arrow_points": [
+                        {
+                            "id": 2405,
+                            "flow_id": 225,
+                            "x": 0,
+                            "y": -27
+                        },
+                        {
+                            "id": 2406,
+                            "flow_id": 225,
+                            "x": -7,
+                            "y": -14
+                        },
+                        {
+                            "id": 2407,
+                            "flow_id": 225,
+                            "x": 0,
+                            "y": -19
+                        },
+                        {
+                            "id": 2408,
+                            "flow_id": 225,
+                            "x": 6,
+                            "y": -15
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 1300,
+                            "flow_id": 225,
+                            "x": 0,
+                            "y": 0
+                        },
+                        {
+                            "id": 1301,
+                            "flow_id": 225,
+                            "x": -1,
+                            "y": -83
+                        }
+                    ],
+                    "conversion_formulas": []
+                }
+            ]
+        },
+        {
+            "id": 141,
+            "flow_model_id": 75,
+            "hierarchical_id": "0102",
+            "title": "Car Subsystems",
+            "description": "",
+            "keywords": "car, gasoline, air, exhaust, combustion, engine, motion",
+            "user_authors": [
+                {
+                    "id": 4,
+                    "username": "warner3"
+                }
+            ],
+            "external_authors": [
+                {
+                    "id": 186,
+                    "author": " "
+                }
+            ],
+            "references": [],
+            "nodes": [
+                {
+                    "id": 139,
+                    "page_id": 141,
+                    "node_num": "01",
+                    "label": "Fuel Tank",
+                    "graphic_file": "",
+                    "graphic_text": "Stores gasoline before it is sent to the engine.",
+                    "graphic_credits": "",
+                    "x": 5,
+                    "y": 10,
+                    "type": "mechanism",
+                    "definition": "The car&#039;s fuel storage system for gasoline.",
+                    "keywords": "fuel, gasoline, storage, fuel tank",
+                    "hyperlink": "",
+                    "has_child_page": false
+                },
+                {
+                    "id": 140,
+                    "page_id": 141,
+                    "node_num": "02",
+                    "label": "Fuel Injector",
+                    "graphic_file": "",
+                    "graphic_text": "Injects gasoline into the combustion chamber.",
+                    "graphic_credits": "",
+                    "x": 5,
+                    "y": 175,
+                    "type": "mechanism",
+                    "definition": "Injects gasoline into the car&#039;s engine for combustion.",
+                    "keywords": "fuel injector, gasoline injection",
+                    "hyperlink": "",
+                    "has_child_page": false
+                },
+                {
+                    "id": 141,
+                    "page_id": 141,
+                    "node_num": "03",
+                    "label": "Combustion Chamber",
+                    "graphic_file": "warner3/car-cylinder-assembly.webp",
+                    "graphic_text": "Car engine showing pistons and cylinders.",
+                    "graphic_credits": "",
+                    "x": 5,
+                    "y": 340,
+                    "type": "mechanism",
+                    "definition": "The place where air and gasoline combust to produce power.",
+                    "keywords": "combustion, air, gasoline, engine",
+                    "hyperlink": "https://en.wikipedia.org/wiki/Internal_combustion_engine",
+                    "has_child_page": false
+                },
+                {
+                    "id": 142,
+                    "page_id": 141,
+                    "node_num": "04",
+                    "label": "Pistons",
+                    "graphic_file": "",
+                    "graphic_text": "Pistons move as a result of combustion to create motion.",
+                    "graphic_credits": "",
+                    "x": 5,
+                    "y": 505,
+                    "type": "mechanism",
+                    "definition": "Converts the explosion from combustion into motion.",
+                    "keywords": "pistons, motion, engine",
+                    "hyperlink": "",
+                    "has_child_page": false
+                },
+                {
+                    "id": 143,
+                    "page_id": 141,
+                    "node_num": "06",
+                    "label": "Drive Subsystem",
+                    "graphic_file": "",
+                    "graphic_text": "",
+                    "graphic_credits": "",
+                    "x": 235,
+                    "y": 10,
+                    "type": "mechanism",
+                    "definition": "Converts the linear motion of the piston to rotational for the wheels",
+                    "keywords": "pistons, motion, engine",
+                    "hyperlink": "https://en.wikipedia.org/wiki/Drivetrain",
+                    "has_child_page": true
+                },
+                {
+                    "id": 144,
+                    "page_id": 141,
+                    "node_num": "05",
+                    "label": "Exhaust System",
+                    "graphic_file": "",
+                    "graphic_text": "Emits exhaust gases from the engine to the atmosphere.",
+                    "graphic_credits": "",
+                    "x": 235,
+                    "y": 175,
+                    "type": "mechanism",
+                    "definition": "Removes exhaust gases from the combustion process.",
+                    "keywords": "exhaust, emissions, engine",
+                    "hyperlink": "",
+                    "has_child_page": false
+                },
+                {
+                    "id": 145,
+                    "page_id": 141,
+                    "node_num": "07",
+                    "label": "Air Intake",
+                    "graphic_file": "",
+                    "graphic_text": "",
+                    "graphic_credits": "",
+                    "x": 234,
+                    "y": 332,
+                    "type": "mechanism",
+                    "definition": "Air intake subsystem for fuel combustion",
+                    "keywords": "",
+                    "hyperlink": "",
+                    "has_child_page": true
+                }
+            ],
+            "flows": [
+                {
+                    "id": 226,
+                    "page_id": 141,
+                    "flow_num": "01",
+                    "label": "Gasoline Flow",
+                    "drawing_group_x": 75,
+                    "drawing_group_y": 85,
+                    "label_x": -24,
+                    "label_y": 27,
+                    "label_width": 56,
+                    "keywords": "gasoline, fuel",
+                    "definition": "Flow of gasoline from the fuel tank to the fuel injector.",
+                    "hyperlink": "",
+                    "source_node_num": "01",
+                    "destination_node_num": "02",
+                    "arrow_points": [
+                        {
+                            "id": 2553,
+                            "flow_id": 226,
+                            "x": 0,
+                            "y": 16
+                        },
+                        {
+                            "id": 2554,
+                            "flow_id": 226,
+                            "x": -6,
+                            "y": 6
+                        },
+                        {
+                            "id": 2555,
+                            "flow_id": 226,
+                            "x": 0,
+                            "y": 10
+                        },
+                        {
+                            "id": 2556,
+                            "flow_id": 226,
+                            "x": 6,
+                            "y": 6
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 1396,
+                            "flow_id": 226,
+                            "x": 0,
+                            "y": 0
+                        },
+                        {
+                            "id": 1397,
+                            "flow_id": 226,
+                            "x": 0,
+                            "y": 90
+                        }
+                    ],
+                    "conversion_formulas": []
+                },
+                {
+                    "id": 227,
+                    "page_id": 141,
+                    "flow_num": "02",
+                    "label": "Gasoline to Combustion",
+                    "drawing_group_x": 75,
+                    "drawing_group_y": 250,
+                    "label_x": -20,
+                    "label_y": 25,
+                    "label_width": 60,
+                    "keywords": "combustion, gasoline",
+                    "definition": "Gasoline injected into the combustion chamber.",
+                    "hyperlink": "",
+                    "source_node_num": "02",
+                    "destination_node_num": "03",
+                    "arrow_points": [
+                        {
+                            "id": 2557,
+                            "flow_id": 227,
+                            "x": 0,
+                            "y": 16
+                        },
+                        {
+                            "id": 2558,
+                            "flow_id": 227,
+                            "x": -6,
+                            "y": 6
+                        },
+                        {
+                            "id": 2559,
+                            "flow_id": 227,
+                            "x": 0,
+                            "y": 10
+                        },
+                        {
+                            "id": 2560,
+                            "flow_id": 227,
+                            "x": 6,
+                            "y": 6
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 1398,
+                            "flow_id": 227,
+                            "x": 0,
+                            "y": 0
+                        },
+                        {
+                            "id": 1399,
+                            "flow_id": 227,
+                            "x": 0,
+                            "y": 90
+                        }
+                    ],
+                    "conversion_formulas": [
+                        {
+                            "id": 133,
+                            "flow_id": 227,
+                            "formula": "Gasoline + Oxygen -&gt; Carbon Dioxide and Water with some carbon  monoxide",
+                            "description": "Conversion of fuel to exhaust"
+                        }
+                    ]
+                },
+                {
+                    "id": 228,
+                    "page_id": 141,
+                    "flow_num": "03",
+                    "label": "Combustion to Motion",
+                    "drawing_group_x": 75,
+                    "drawing_group_y": 415,
+                    "label_x": -41,
+                    "label_y": 26,
+                    "label_width": 73,
+                    "keywords": "combustion, motion",
+                    "definition": "Combustion generates motion through the movement of pistons.",
+                    "hyperlink": "",
+                    "source_node_num": "03",
+                    "destination_node_num": "04",
+                    "arrow_points": [
+                        {
+                            "id": 2561,
+                            "flow_id": 228,
+                            "x": 0,
+                            "y": 16
+                        },
+                        {
+                            "id": 2562,
+                            "flow_id": 228,
+                            "x": -6,
+                            "y": 6
+                        },
+                        {
+                            "id": 2563,
+                            "flow_id": 228,
+                            "x": 0,
+                            "y": 10
+                        },
+                        {
+                            "id": 2564,
+                            "flow_id": 228,
+                            "x": 6,
+                            "y": 6
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 1400,
+                            "flow_id": 228,
+                            "x": 0,
+                            "y": 0
+                        },
+                        {
+                            "id": 1401,
+                            "flow_id": 228,
+                            "x": 0,
+                            "y": 86
+                        }
+                    ],
+                    "conversion_formulas": []
+                },
+                {
+                    "id": 229,
+                    "page_id": 141,
+                    "flow_num": "04",
+                    "label": "Exhaust Gases",
+                    "drawing_group_x": 150,
+                    "drawing_group_y": 475,
+                    "label_x": 2,
+                    "label_y": -189,
+                    "label_width": 53,
+                    "keywords": "exhaust, emissions",
+                    "definition": "Exhaust gases generated by combustion are expelled.",
+                    "hyperlink": "",
+                    "source_node_num": "03",
+                    "destination_node_num": "05",
+                    "arrow_points": [
+                        {
+                            "id": 2565,
+                            "flow_id": 229,
+                            "x": 23,
+                            "y": -89
+                        },
+                        {
+                            "id": 2566,
+                            "flow_id": 229,
+                            "x": 11,
+                            "y": -95
+                        },
+                        {
+                            "id": 2567,
+                            "flow_id": 229,
+                            "x": 15,
+                            "y": -89
+                        },
+                        {
+                            "id": 2568,
+                            "flow_id": 229,
+                            "x": 10,
+                            "y": -82
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 1402,
+                            "flow_id": 229,
+                            "x": 0,
+                            "y": -89
+                        },
+                        {
+                            "id": 1403,
+                            "flow_id": 229,
+                            "x": 29,
+                            "y": -89
+                        },
+                        {
+                            "id": 1404,
+                            "flow_id": 229,
+                            "x": 30,
+                            "y": -270
+                        },
+                        {
+                            "id": 1405,
+                            "flow_id": 229,
+                            "x": 140,
+                            "y": -270
+                        }
+                    ],
+                    "conversion_formulas": []
+                },
+                {
+                    "id": 230,
+                    "page_id": 141,
+                    "flow_num": "05",
+                    "label": "Linear Motion",
+                    "drawing_group_x": 145,
+                    "drawing_group_y": 455,
+                    "label_x": 9,
+                    "label_y": 94,
+                    "label_width": 48,
+                    "keywords": "piston motion",
+                    "definition": "Linear motion to be converted to rotational motion in the drive assembly",
+                    "hyperlink": "",
+                    "source_node_num": "04",
+                    "destination_node_num": "06",
+                    "arrow_points": [
+                        {
+                            "id": 2569,
+                            "flow_id": 230,
+                            "x": 66,
+                            "y": 82
+                        },
+                        {
+                            "id": 2570,
+                            "flow_id": 230,
+                            "x": 54,
+                            "y": 75
+                        },
+                        {
+                            "id": 2571,
+                            "flow_id": 230,
+                            "x": 58,
+                            "y": 82
+                        },
+                        {
+                            "id": 2572,
+                            "flow_id": 230,
+                            "x": 54,
+                            "y": 89
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 1406,
+                            "flow_id": 230,
+                            "x": 4,
+                            "y": 83
+                        },
+                        {
+                            "id": 1407,
+                            "flow_id": 230,
+                            "x": 73,
+                            "y": 82
+                        },
+                        {
+                            "id": 1408,
+                            "flow_id": 230,
+                            "x": 73,
+                            "y": -395
+                        },
+                        {
+                            "id": 1409,
+                            "flow_id": 230,
+                            "x": 88,
+                            "y": -394
+                        }
+                    ],
+                    "conversion_formulas": []
+                },
+                {
+                    "id": 231,
+                    "page_id": 141,
+                    "flow_num": "06",
+                    "label": "Air",
+                    "drawing_group_x": 231,
+                    "drawing_group_y": 388,
+                    "label_x": -63,
+                    "label_y": 23,
+                    "label_width": 28,
+                    "keywords": "",
+                    "definition": "Air for combustion",
+                    "hyperlink": "",
+                    "source_node_num": "07",
+                    "destination_node_num": "03",
+                    "arrow_points": [
+                        {
+                            "id": 2573,
+                            "flow_id": 231,
+                            "x": -33,
+                            "y": 10
+                        },
+                        {
+                            "id": 2574,
+                            "flow_id": 231,
+                            "x": -21,
+                            "y": 17
+                        },
+                        {
+                            "id": 2575,
+                            "flow_id": 231,
+                            "x": -25,
+                            "y": 10
+                        },
+                        {
+                            "id": 2576,
+                            "flow_id": 231,
+                            "x": -22,
+                            "y": 3
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 1410,
+                            "flow_id": 231,
+                            "x": 1,
+                            "y": 10
+                        },
+                        {
+                            "id": 1411,
+                            "flow_id": 231,
+                            "x": -84,
+                            "y": 11
+                        }
+                    ],
+                    "conversion_formulas": []
+                }
+            ]
+        },
+        {
+            "id": 143,
+            "flow_model_id": 75,
+            "hierarchical_id": "010206",
+            "title": "Drive Subsystem",
+            "description": "",
+            "keywords": "drive subsystem, pistons, crankshaft, transmission, differential, wheels, linear motion",
+            "user_authors": [
+                {
+                    "id": 4,
+                    "username": "warner3"
+                }
+            ],
+            "external_authors": [
+                {
+                    "id": 186,
+                    "author": " "
+                }
+            ],
+            "references": [],
+            "nodes": [
+                {
+                    "id": 151,
+                    "page_id": 143,
+                    "node_num": "01",
+                    "label": "Pistons",
+                    "graphic_file": "",
+                    "graphic_text": "Convert combustion energy into linear motion.",
+                    "graphic_credits": "",
+                    "x": 5,
+                    "y": 10,
+                    "type": "mechanism",
+                    "definition": "The pistons move linearly in the cylinders, driven by the force of combustion.",
+                    "keywords": "pistons, linear motion, combustion",
+                    "hyperlink": "",
+                    "has_child_page": false
+                },
+                {
+                    "id": 152,
+                    "page_id": 143,
+                    "node_num": "02",
+                    "label": "Crankshaft",
+                    "graphic_file": "",
+                    "graphic_text": "Converts the piston&#039;s linear motion into rotational motion.",
+                    "graphic_credits": "",
+                    "x": 5,
+                    "y": 175,
+                    "type": "mechanism",
+                    "definition": "The crankshaft transforms the up-and-down motion of the pistons into rotational motion.",
+                    "keywords": "crankshaft, rotational motion, pistons",
+                    "hyperlink": "",
+                    "has_child_page": false
+                },
+                {
+                    "id": 153,
+                    "page_id": 143,
+                    "node_num": "03",
+                    "label": "Flywheel",
+                    "graphic_file": "",
+                    "graphic_text": "Stores rotational energy from the crankshaft.",
+                    "graphic_credits": "",
+                    "x": 5,
+                    "y": 350,
+                    "type": "mechanism",
+                    "definition": "The flywheel stabilizes the rotational motion and stores energy for smooth power delivery.",
+                    "keywords": "flywheel, energy storage, rotational motion",
+                    "hyperlink": "",
+                    "has_child_page": false
+                },
+                {
+                    "id": 154,
+                    "page_id": 143,
+                    "node_num": "04",
+                    "label": "Transmission",
+                    "graphic_file": "",
+                    "graphic_text": "Adjusts the rotational speed and torque to suit driving conditions.",
+                    "graphic_credits": "",
+                    "x": 5,
+                    "y": 515,
+                    "type": "mechanism",
+                    "definition": "The transmission regulates power and adjusts rotational speed and torque before sending it to the drive shaft.",
+                    "keywords": "transmission, torque, power regulation",
+                    "hyperlink": "",
+                    "has_child_page": false
+                },
+                {
+                    "id": 155,
+                    "page_id": 143,
+                    "node_num": "05",
+                    "label": "Differential",
+                    "graphic_file": "",
+                    "graphic_text": "Allows the wheels to rotate at different speeds during turns.",
+                    "graphic_credits": "",
+                    "x": 235,
+                    "y": 10,
+                    "type": "mechanism",
+                    "definition": "The differential adjusts the rotation of the wheels, allowing them to rotate at different speeds during turns.",
+                    "keywords": "differential, wheels, speed adjustment",
+                    "hyperlink": "https://en.wikipedia.org/wiki/Differential_(mechanical_device)",
+                    "has_child_page": false
+                },
+                {
+                    "id": 156,
+                    "page_id": 143,
+                    "node_num": "06",
+                    "label": "Wheels",
+                    "graphic_file": "",
+                    "graphic_text": "Convert rotational motion back into linear motion to move the car.",
+                    "graphic_credits": "",
+                    "x": 235,
+                    "y": 175,
+                    "type": "mechanism",
+                    "definition": "The wheels convert the rotational motion from the drivetrain into linear motion to move the car forward.",
+                    "keywords": "wheels, linear motion, car movement",
+                    "hyperlink": "",
+                    "has_child_page": false
+                }
+            ],
+            "flows": [
+                {
+                    "id": 236,
+                    "page_id": 143,
+                    "flow_num": "01",
+                    "label": "Linear to Rotational Motion",
+                    "drawing_group_x": 75,
+                    "drawing_group_y": 85,
+                    "label_x": -25,
+                    "label_y": 26,
+                    "label_width": 65,
+                    "keywords": "linear motion, rotational motion",
+                    "definition": "Pistons&#039; linear motion is converted into rotational motion by the crankshaft.",
+                    "hyperlink": "",
+                    "source_node_num": "01",
+                    "destination_node_num": "02",
+                    "arrow_points": [
+                        {
+                            "id": 2505,
+                            "flow_id": 236,
+                            "x": 0,
+                            "y": 16
+                        },
+                        {
+                            "id": 2506,
+                            "flow_id": 236,
+                            "x": -6,
+                            "y": 6
+                        },
+                        {
+                            "id": 2507,
+                            "flow_id": 236,
+                            "x": 0,
+                            "y": 10
+                        },
+                        {
+                            "id": 2508,
+                            "flow_id": 236,
+                            "x": 6,
+                            "y": 6
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 1366,
+                            "flow_id": 236,
+                            "x": 0,
+                            "y": 0
+                        },
+                        {
+                            "id": 1367,
+                            "flow_id": 236,
+                            "x": 0,
+                            "y": 90
+                        }
+                    ],
+                    "conversion_formulas": []
+                },
+                {
+                    "id": 237,
+                    "page_id": 143,
+                    "flow_num": "02",
+                    "label": "Rotational Energy Storage",
+                    "drawing_group_x": 75,
+                    "drawing_group_y": 250,
+                    "label_x": -20,
+                    "label_y": 25,
+                    "label_width": 65,
+                    "keywords": "rotational motion, energy storage",
+                    "definition": "Rotational motion is stabilized and stored in the flywheel.",
+                    "hyperlink": "",
+                    "source_node_num": "02",
+                    "destination_node_num": "03",
+                    "arrow_points": [
+                        {
+                            "id": 2509,
+                            "flow_id": 237,
+                            "x": 0,
+                            "y": 16
+                        },
+                        {
+                            "id": 2510,
+                            "flow_id": 237,
+                            "x": -6,
+                            "y": 6
+                        },
+                        {
+                            "id": 2511,
+                            "flow_id": 237,
+                            "x": 0,
+                            "y": 10
+                        },
+                        {
+                            "id": 2512,
+                            "flow_id": 237,
+                            "x": 6,
+                            "y": 6
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 1368,
+                            "flow_id": 237,
+                            "x": 0,
+                            "y": 0
+                        },
+                        {
+                            "id": 1369,
+                            "flow_id": 237,
+                            "x": 0,
+                            "y": 96
+                        }
+                    ],
+                    "conversion_formulas": []
+                },
+                {
+                    "id": 238,
+                    "page_id": 143,
+                    "flow_num": "03",
+                    "label": "Power Regulation",
+                    "drawing_group_x": 75,
+                    "drawing_group_y": 415,
+                    "label_x": -20,
+                    "label_y": 35,
+                    "label_width": 68,
+                    "keywords": "transmission, power regulation",
+                    "definition": "The flywheel sends rotational motion to the transmission for regulation.",
+                    "hyperlink": "",
+                    "source_node_num": "03",
+                    "destination_node_num": "04",
+                    "arrow_points": [
+                        {
+                            "id": 2513,
+                            "flow_id": 238,
+                            "x": 0,
+                            "y": 30
+                        },
+                        {
+                            "id": 2514,
+                            "flow_id": 238,
+                            "x": 7,
+                            "y": 18
+                        },
+                        {
+                            "id": 2515,
+                            "flow_id": 238,
+                            "x": 0,
+                            "y": 22
+                        },
+                        {
+                            "id": 2516,
+                            "flow_id": 238,
+                            "x": -5,
+                            "y": 18
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 1370,
+                            "flow_id": 238,
+                            "x": 1,
+                            "y": 14
+                        },
+                        {
+                            "id": 1371,
+                            "flow_id": 238,
+                            "x": 0,
+                            "y": 99
+                        }
+                    ],
+                    "conversion_formulas": []
+                },
+                {
+                    "id": 239,
+                    "page_id": 143,
+                    "flow_num": "04",
+                    "label": "Rotational Speed Adjustment",
+                    "drawing_group_x": 145,
+                    "drawing_group_y": 515,
+                    "label_x": 21,
+                    "label_y": -114,
+                    "label_width": 71,
+                    "keywords": "differential, speed adjustment",
+                    "definition": "The transmission sends rotational motion to the differential, which adjusts speed for each wheel.",
+                    "hyperlink": "",
+                    "source_node_num": "04",
+                    "destination_node_num": "05",
+                    "arrow_points": [
+                        {
+                            "id": 2517,
+                            "flow_id": 239,
+                            "x": 25,
+                            "y": 35
+                        },
+                        {
+                            "id": 2518,
+                            "flow_id": 239,
+                            "x": 13,
+                            "y": 28
+                        },
+                        {
+                            "id": 2519,
+                            "flow_id": 239,
+                            "x": 17,
+                            "y": 35
+                        },
+                        {
+                            "id": 2520,
+                            "flow_id": 239,
+                            "x": 13,
+                            "y": 42
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 1372,
+                            "flow_id": 239,
+                            "x": 1,
+                            "y": 36
+                        },
+                        {
+                            "id": 1373,
+                            "flow_id": 239,
+                            "x": 30,
+                            "y": 35
+                        },
+                        {
+                            "id": 1374,
+                            "flow_id": 239,
+                            "x": 28,
+                            "y": -467
+                        },
+                        {
+                            "id": 1375,
+                            "flow_id": 239,
+                            "x": 87,
+                            "y": -469
+                        }
+                    ],
+                    "conversion_formulas": []
+                },
+                {
+                    "id": 240,
+                    "page_id": 143,
+                    "flow_num": "05",
+                    "label": "Rotational to Linear Motion",
+                    "drawing_group_x": 300,
+                    "drawing_group_y": 85,
+                    "label_x": -25,
+                    "label_y": 30,
+                    "label_width": 60,
+                    "keywords": "rotational motion, linear motion, car movement",
+                    "definition": "The wheels convert rotational motion from the differential back into linear motion, moving the car forward.",
+                    "hyperlink": "",
+                    "source_node_num": "05",
+                    "destination_node_num": "06",
+                    "arrow_points": [
+                        {
+                            "id": 2521,
+                            "flow_id": 240,
+                            "x": 0,
+                            "y": 16
+                        },
+                        {
+                            "id": 2522,
+                            "flow_id": 240,
+                            "x": -6,
+                            "y": 6
+                        },
+                        {
+                            "id": 2523,
+                            "flow_id": 240,
+                            "x": 0,
+                            "y": 10
+                        },
+                        {
+                            "id": 2524,
+                            "flow_id": 240,
+                            "x": 6,
+                            "y": 6
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 1376,
+                            "flow_id": 240,
+                            "x": 0,
+                            "y": 0
+                        },
+                        {
+                            "id": 1377,
+                            "flow_id": 240,
+                            "x": 0,
+                            "y": 90
+                        }
+                    ],
+                    "conversion_formulas": []
+                },
+                {
+                    "id": 241,
+                    "page_id": 143,
+                    "flow_num": "06",
+                    "label": "Linear Motion",
+                    "drawing_group_x": 305,
+                    "drawing_group_y": 250,
+                    "label_x": -25,
+                    "label_y": 40,
+                    "label_width": 60,
+                    "keywords": "rotational motion, linear motion, car movement",
+                    "definition": "The linear motion of the car from the rotation of the wheels",
+                    "hyperlink": "",
+                    "source_node_num": "06",
+                    "destination_node_num": "",
+                    "arrow_points": [
+                        {
+                            "id": 2525,
+                            "flow_id": 241,
+                            "x": 0,
+                            "y": 16
+                        },
+                        {
+                            "id": 2526,
+                            "flow_id": 241,
+                            "x": -6,
+                            "y": 6
+                        },
+                        {
+                            "id": 2527,
+                            "flow_id": 241,
+                            "x": 0,
+                            "y": 10
+                        },
+                        {
+                            "id": 2528,
+                            "flow_id": 241,
+                            "x": 6,
+                            "y": 6
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 1378,
+                            "flow_id": 241,
+                            "x": 0,
+                            "y": 0
+                        },
+                        {
+                            "id": 1379,
+                            "flow_id": 241,
+                            "x": 0,
+                            "y": 90
+                        }
+                    ],
+                    "conversion_formulas": []
+                }
+            ]
+        },
+        {
+            "id": 142,
+            "flow_model_id": 75,
+            "hierarchical_id": "010207",
+            "title": "Air Intake Subsystem",
+            "description": "",
+            "keywords": "air intake, combustion, engine, air filter, throttle body, MAF sensor, intake valves",
+            "user_authors": [
+                {
+                    "id": 4,
+                    "username": "warner3"
+                }
+            ],
+            "external_authors": [
+                {
+                    "id": 186,
+                    "author": " "
+                }
+            ],
+            "references": [],
+            "nodes": [
+                {
+                    "id": 146,
+                    "page_id": 142,
+                    "node_num": "01",
+                    "label": "Air Filter",
+                    "graphic_file": "",
+                    "graphic_text": "Filters dust and debris from the incoming air.",
+                    "graphic_credits": "",
+                    "x": 5,
+                    "y": 10,
+                    "type": "mechanism",
+                    "definition": "A filter that removes contaminants from the air entering the engine.",
+                    "keywords": "air filter, engine, filtration",
+                    "hyperlink": "",
+                    "has_child_page": false
+                },
+                {
+                    "id": 147,
+                    "page_id": 142,
+                    "node_num": "02",
+                    "label": "Throttle Body",
+                    "graphic_file": "",
+                    "graphic_text": "Regulates the amount of air flowing into the engine.",
+                    "graphic_credits": "",
+                    "x": 5,
+                    "y": 175,
+                    "type": "mechanism",
+                    "definition": "The throttle body controls air flow to the engine based on the driver&#039;s input.",
+                    "keywords": "throttle body, air intake, engine",
+                    "hyperlink": "",
+                    "has_child_page": false
+                },
+                {
+                    "id": 148,
+                    "page_id": 142,
+                    "node_num": "03",
+                    "label": "Mass Airflow Sensor (MAF)",
+                    "graphic_file": "",
+                    "graphic_text": "Measures the amount of air entering the engine.",
+                    "graphic_credits": "",
+                    "x": 5,
+                    "y": 340,
+                    "type": "mechanism",
+                    "definition": "The MAF sensor determines the quantity of air entering the engine, ensuring the right air-fuel mixture.",
+                    "keywords": "MAF sensor, air intake, engine control",
+                    "hyperlink": "",
+                    "has_child_page": false
+                },
+                {
+                    "id": 149,
+                    "page_id": 142,
+                    "node_num": "04",
+                    "label": "Intake Manifold",
+                    "graphic_file": "",
+                    "graphic_text": "Distributes air evenly to each cylinder of the engine.",
+                    "graphic_credits": "",
+                    "x": 5,
+                    "y": 510,
+                    "type": "mechanism",
+                    "definition": "The intake manifold directs air to each cylinder for combustion.",
+                    "keywords": "intake manifold, engine, air distribution",
+                    "hyperlink": "",
+                    "has_child_page": false
+                },
+                {
+                    "id": 150,
+                    "page_id": 142,
+                    "node_num": "05",
+                    "label": "Intake Valves",
+                    "graphic_file": "",
+                    "graphic_text": "Controls air flow into the combustion chamber.",
+                    "graphic_credits": "",
+                    "x": 236,
+                    "y": 7,
+                    "type": "mechanism",
+                    "definition": "Intake valves open to allow air into the combustion chamber and close during compression.",
+                    "keywords": "intake valves, air intake, combustion chamber",
+                    "hyperlink": "",
+                    "has_child_page": false
+                }
+            ],
+            "flows": [
+                {
+                    "id": 232,
+                    "page_id": 142,
+                    "flow_num": "01",
+                    "label": "Filtered Air",
+                    "drawing_group_x": 75,
+                    "drawing_group_y": 85,
+                    "label_x": -25,
+                    "label_y": 15,
+                    "label_width": 60,
+                    "keywords": "filtered air, air intake",
+                    "definition": "Air flows from the air filter to the throttle body after filtration.",
+                    "hyperlink": "",
+                    "source_node_num": "01",
+                    "destination_node_num": "02",
+                    "arrow_points": [
+                        {
+                            "id": 2233,
+                            "flow_id": 232,
+                            "x": 0,
+                            "y": 16
+                        },
+                        {
+                            "id": 2234,
+                            "flow_id": 232,
+                            "x": -6,
+                            "y": 6
+                        },
+                        {
+                            "id": 2235,
+                            "flow_id": 232,
+                            "x": 0,
+                            "y": 10
+                        },
+                        {
+                            "id": 2236,
+                            "flow_id": 232,
+                            "x": 6,
+                            "y": 6
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 1196,
+                            "flow_id": 232,
+                            "x": 0,
+                            "y": 0
+                        },
+                        {
+                            "id": 1197,
+                            "flow_id": 232,
+                            "x": 0,
+                            "y": 90
+                        }
+                    ],
+                    "conversion_formulas": []
+                },
+                {
+                    "id": 233,
+                    "page_id": 142,
+                    "flow_num": "02",
+                    "label": "Regulated Air Flow",
+                    "drawing_group_x": 75,
+                    "drawing_group_y": 350,
+                    "label_x": -28,
+                    "label_y": -65,
+                    "label_width": 64,
+                    "keywords": "air flow, engine",
+                    "definition": "The throttle body regulates the air flow and passes it to the MAF sensor.",
+                    "hyperlink": "",
+                    "source_node_num": "02",
+                    "destination_node_num": "03",
+                    "arrow_points": [
+                        {
+                            "id": 2237,
+                            "flow_id": 233,
+                            "x": 0,
+                            "y": -71
+                        },
+                        {
+                            "id": 2238,
+                            "flow_id": 233,
+                            "x": 6,
+                            "y": -83
+                        },
+                        {
+                            "id": 2239,
+                            "flow_id": 233,
+                            "x": 0,
+                            "y": -79
+                        },
+                        {
+                            "id": 2240,
+                            "flow_id": 233,
+                            "x": -6,
+                            "y": -83
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 1198,
+                            "flow_id": 233,
+                            "x": 0,
+                            "y": -94
+                        },
+                        {
+                            "id": 1199,
+                            "flow_id": 233,
+                            "x": 0,
+                            "y": -15
+                        }
+                    ],
+                    "conversion_formulas": []
+                },
+                {
+                    "id": 234,
+                    "page_id": 142,
+                    "flow_num": "03",
+                    "label": "Measured Air Flow",
+                    "drawing_group_x": 75,
+                    "drawing_group_y": 420,
+                    "label_x": -25,
+                    "label_y": 30,
+                    "label_width": 60,
+                    "keywords": "MAF sensor, air flow",
+                    "definition": "The MAF sensor measures air flow and passes it to the intake manifold.",
+                    "hyperlink": "",
+                    "source_node_num": "03",
+                    "destination_node_num": "04",
+                    "arrow_points": [
+                        {
+                            "id": 2241,
+                            "flow_id": 234,
+                            "x": 0,
+                            "y": 16
+                        },
+                        {
+                            "id": 2242,
+                            "flow_id": 234,
+                            "x": -6,
+                            "y": 6
+                        },
+                        {
+                            "id": 2243,
+                            "flow_id": 234,
+                            "x": 0,
+                            "y": 10
+                        },
+                        {
+                            "id": 2244,
+                            "flow_id": 234,
+                            "x": 6,
+                            "y": 6
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 1200,
+                            "flow_id": 234,
+                            "x": 0,
+                            "y": 0
+                        },
+                        {
+                            "id": 1201,
+                            "flow_id": 234,
+                            "x": 0,
+                            "y": 90
+                        }
+                    ],
+                    "conversion_formulas": []
+                },
+                {
+                    "id": 235,
+                    "page_id": 142,
+                    "flow_num": "04",
+                    "label": "Air to Combustion Chamber",
+                    "drawing_group_x": 145,
+                    "drawing_group_y": 550,
+                    "label_x": 6,
+                    "label_y": -124,
+                    "label_width": 73,
+                    "keywords": "air flow, intake valves",
+                    "definition": "Air passes through the intake manifold and into the combustion chamber via intake valves.",
+                    "hyperlink": "",
+                    "source_node_num": "04",
+                    "destination_node_num": "05",
+                    "arrow_points": [
+                        {
+                            "id": 2245,
+                            "flow_id": 235,
+                            "x": 16,
+                            "y": 0
+                        },
+                        {
+                            "id": 2246,
+                            "flow_id": 235,
+                            "x": 8,
+                            "y": 6
+                        },
+                        {
+                            "id": 2247,
+                            "flow_id": 235,
+                            "x": 12,
+                            "y": 0
+                        },
+                        {
+                            "id": 2248,
+                            "flow_id": 235,
+                            "x": 8,
+                            "y": -6
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 1202,
+                            "flow_id": 235,
+                            "x": 0,
+                            "y": 0
+                        },
+                        {
+                            "id": 1203,
+                            "flow_id": 235,
+                            "x": 30,
+                            "y": 0
+                        },
+                        {
+                            "id": 1204,
+                            "flow_id": 235,
+                            "x": 30,
+                            "y": -510
+                        },
+                        {
+                            "id": 1205,
+                            "flow_id": 235,
+                            "x": 92,
+                            "y": -508
+                        }
+                    ],
+                    "conversion_formulas": []
+                }
+            ]
+        }
+    ]
+}
