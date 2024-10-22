@@ -15,6 +15,7 @@ Contents
                 Model Details Completion
                 Editing Permissions
         Node Details Editing
+        Encoding Tests
         Child Page Editing
         Flow Editing
             Flow Drawing
@@ -357,6 +358,32 @@ Contents
     * Click the node details button of the node in question
     * Ensure that all details are displayed correctly
 
+<h2>Encoding Tests
+    Login as warner3
+    Create a new Model (using the New Button)
+    Ensure that the Model Details modal is displayed
+    Enter each of the details containing the special characters <>'"
+    Click the Submit Button
+    Click the Leave Button
+    Click the Page Details button
+    Ensure that the details are displayed correctly
+
+    Click the stage to add a node
+    Ensure that the node details modal is displayed
+    In each of the fields enter values containing the special characters <>'"
+    Click the Submit Button
+    Ensure that the node is displayed correctly
+    Click the Node Details button on the node
+    Ensure that the input fields are displayed correctly
+    Click the Dismiss button
+    Click the node Graphic button
+    Ensure that the node credits and node text are displayed correctly
+
+    Flow
+
+    Model Selector
+
+    Page Selector
 
 <h2>Child Page Editing
     * Login as warner3

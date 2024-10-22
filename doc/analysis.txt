@@ -7,6 +7,7 @@ Contents
 		Primary Data Structures
 		JS Event Function Tracking
 		PHP Database Modules
+	Data Encoding Policies
 	Display Menu
 	Introductory Page
 	Login/Register Modal
@@ -120,6 +121,14 @@ Contents
 
 	All flow model data requests are handled via 
 		src/php-scripts/flow-model/receive-page.php
+
+<h1>Data Encoding Policies
+	HTML special characters are converted where appropriate by the PHP
+	htmlspecialchars() function into html character entities to be stored 
+	in the database and subsequently retrieved. When these values are represented 
+	to the user in input field field values, they are first reconverted by the 
+	miscHTML.convertHTMLEntities() function. Elsewhere innerHTML should be
+	used to display them.
 
 <h1>Display Menu
 	The main menu appears on both pages of the sci-booster website.

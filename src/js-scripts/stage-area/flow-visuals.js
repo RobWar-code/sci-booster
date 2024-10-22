@@ -93,7 +93,8 @@ dfm.FlowVisuals = class {
         let node = Misc.copyObject(this.nodeTemplate);
         node.active = true;
         node.nodeNum = nodeNum;
-        let label = nodeItem.label;
+        let label = miscHTML.convertHTMLEntities(nodeItem.label);
+        console.log("label:", label);
         node.label = label;
         node.nodeGroup = new Konva.Group({
             x: x,
@@ -579,7 +580,7 @@ dfm.FlowVisuals = class {
     addVisualFlowLabel(visualFlowItem, flowDetailsItem) {
         // Determine text width
         // Calculate text width / height
-        let textItem = flowDetailsItem.label;
+        let textItem = miscHTML.convertHTMLEntities(flowDetailsItem.label);
         let fontSize = dfm.flowFontSize;
         let fontFamily = dfm.nodeTemplate.fontFamily; 
         let textWidth = this.calculateTextWidth(textItem, fontSize, fontFamily);
@@ -872,7 +873,7 @@ dfm.FlowVisuals = class {
         if (this.flowLabelSet || !this.flowDrawStarted) return;
 
         // Calculate text width / height
-        let textItem = this.currentFlow.label;
+        let textItem = miscHTML.convertHTMLEntities(this.currentFlow.label);
         let fontSize = dfm.flowFontSize;
         let fontFamily = dfm.nodeTemplate.fontFamily; 
         let textWidth = this.calculateTextWidth(textItem, fontSize, fontFamily);

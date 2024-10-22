@@ -49,11 +49,11 @@ flowDetails = {
 
     loadDisplayFields: function(flow) {
         document.getElementById("flowNum").innerText = flow.flow_num;
-        document.getElementById("flowLabel").value = flow.label;
-        document.getElementById("flowKeywords").value = flow.keywords;
+        document.getElementById("flowLabel").value = miscHTML.convertHTMLEntities(flow.label);
+        document.getElementById("flowKeywords").value = miscHTML.convertHTMLEntities(flow.keywords);
         document.getElementById("flowSourceNodeNum").value = flow.source_node_num;
         document.getElementById("flowDestinationNodeNum").value = flow.destination_node_num;
-        document.getElementById("flowDefinition").value = flow.definition;
+        document.getElementById("flowDefinition").value = miscHTML.convertHTMLEntities(flow.definition);
         document.getElementById("flowHypertext").value = flow.hyperlink;
     },
 

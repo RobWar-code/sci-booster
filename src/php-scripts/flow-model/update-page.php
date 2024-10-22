@@ -23,11 +23,12 @@
         updateFlows($pageData, $oldPageData);
     }
 
-    function updatePageDetails($pageData, $oldPageData) {
+    function updatePageDetails(&$pageData, $oldPageData) {
         $table = "page";
         $id = $pageData['id'];
         $fieldsRef = $pageData;
         $oldFieldsRef = $oldPageData;
+        adjustFieldHtml($pageData, ["title", "keywords", "description"]);
         $fieldNames = ["hierarchical_id", "title", "keywords", "description"];
         $destFieldNames = [];
         $types = "ssss";
@@ -58,7 +59,7 @@
         if (count($aOnly) > 0) {
             // Do inserts
             foreach($aOnly as $index) {
-                $author = $authors[$index]['author'];
+                $author = htmlspecialchars($authors[$index]['author']);
                 // Check whether the id is present
                 if (isset($authors[$index]['id'])) {
                     $authorId = $authors[$index]['id'];
@@ -70,13 +71,13 @@
                     else {
                         // Remove the entry from the old authors only list (bOnly)
                         $bOnly = deleteKeyedRefValue($bOnly, $oldAuthors, "id", $authorId);
-                        $author = $authors[$index]['author'];
+                        $author = htmlspecialchars($authors[$index]['author']);
                         $oldAuthor = $oldAuthors[$oldIndex]['author'];
                         updateExternalAuthor($author, $oldAuthor, $authorId);
                     }
                 }
                 else {
-                    $author = $authors[$index];
+                    $author = htmlspecialchars($authors[$index]['author']);
                     addPageExternalAuthor($author, $pageId);
                 }
             }
@@ -84,7 +85,7 @@
         if (count($bOnly) > 0) {
             // Delete the page author links
             foreach($bOnly as $index) {
-                $author = $oldAuthors[$index]['author'];
+                $author = htmlspecialchars($oldAuthors[$index]['author']);
                 deleteAuthorPageLink($author, $pageId);
             }
         }
@@ -94,7 +95,7 @@
         $newArray = [];
         foreach($refArray as $index) {
             $record = $array[$index];
-            if (!array_key_exists($record, $key)) {
+            if (!array_key_exists($key, $record)) {
                 array_push($newArray, $record);
             }
             else {
@@ -195,16 +196,24 @@
         // Look for differences between the two lists
         $pageId = $pageData["id"];
         $references = $pageData['references'];
+        // Adjust the html in the references
+        $newReferences = [];
+        foreach ($references as $refItem) {
+            adjustFieldHtml($refItem, ["source", "title"]);
+            $author = htmlspecialchars($refItem['author']['author']);
+            $refItem['author']['author'] = $author;
+            array_push($newReferences, $refItem);
+        }
         $oldReferences = $oldPageData['references'];
         $key = 'title';
         $useSimilar = true;
-        $arrayDiffs = compareArrays($references, $oldReferences, $key, $useSimilar);
+        $arrayDiffs = compareArrays($newReferences, $oldReferences, $key, $useSimilar);
         $same = $arrayDiffs['same'];
         if (count($same) > 0) {
             for($i = 0; $i < count($same); $i += 2) {
                 $index = $same[$i];
                 $oldIndex = $same[$i + 1];
-                $reference = $references[$index];
+                $reference = $newReferences[$index];
                 $oldReference = $oldReferences[$oldIndex];
                 $oldReferenceId = $oldReferences[$oldIndex]['id'];
                 $externalAuthorId = checkAndUpdateReferenceAuthor($reference, $oldReferences);
@@ -227,7 +236,7 @@
         if (count($aOnly) > 0) {
             // Do reference additions
             foreach ($aOnly as $index) {
-                $reference = $references[$index];
+                $reference = $newReferences[$index];
                 if (isset($reference['id'])) {
                     // Remove the corresponding item from $bOnly
                     deleteKeyedRefValue($bOnly, $oldReferences, "id", $reference['id']);
@@ -309,6 +318,8 @@
         }
 
         foreach($nodes as $node) {
+            // Adjust html for each applicable field
+            adjustFieldHtml($node, ["label", "graphic_text", "graphic_credits", "definition", "keywords"]);
             $nodeId = null;
             if (isset($node['id'])) {
                 $nodeId = $node['id'];
@@ -413,6 +424,8 @@
         }
 
         foreach($flows as $flow) {
+            // Adjust html of the flow
+            adjustFieldHtml($flow, ["label", "keywords", "definition", "hyperlink"]);
             // Search for a corresponding entry in old flows
             $flowId = null;
             $flowNum = $flow['flow_num'];
@@ -475,6 +488,8 @@
 
         for ($i = 0; $i < count($formulas); $i++) {
             $conversionFormula = $formulas[$i];
+            // Adjust the html for the formula record
+            adjustFieldHtml($conversionFormula, ['formula', 'description']);
             $formulaId = null;
             if (isset($conversionFormula['id'])) {
                 $formulaId = $conversionFormula['id'];
@@ -631,6 +646,12 @@
             return null;
         }
         return ['oldFlow'=>$oldFlow, 'index'=>$index];
+    }
+
+    function adjustFieldHtml(&$record, $fieldNames) {
+        foreach ($fieldNames as $field) {
+            $record[$field] = htmlspecialchars($record[$field]);
+        }
     }
 
     /**

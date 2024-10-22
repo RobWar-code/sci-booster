@@ -22,6 +22,9 @@ Contents
         * Modified clear tables to suppress accidental call
 
     Conversion of apostrophe to &#039; in import.php, problem with displaying it, check data.
+        Duplicate model on save.
+
+    On node details modal delete button displayed when read-only
 
     When Cancel Clicked during draw flow, Flow Done and Delete Flow are still displayed.
 

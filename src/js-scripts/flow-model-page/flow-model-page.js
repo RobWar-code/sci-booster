@@ -139,10 +139,16 @@ const flowModelPage = {
         let modelTitles = [];
         modelTitles = await this.fetchModelList();
         if (modelTitles.length > 0) {
-            modelTitles.sort();
-            // Insert the none selected item at the start of the array
-            modelTitles.unshift("NONE SELECTED");
+            // Convert the html entity symbols
+            adjustedTitles = [];
             for (let title of modelTitles) {
+                let adjustedTitle = miscHTML.convertHTMLEntities(title);
+                adjustedTitles.push(adjustedTitle);
+            }
+            adjustedTitles.sort();
+            // Insert the none selected item at the start of the array
+            adjustedTitles.unshift("NONE SELECTED");
+            for (let title of adjustedTitles) {
                 let opt = document.createElement('option');
                 opt.value = title;
                 opt.text = title;
@@ -186,6 +192,11 @@ const flowModelPage = {
         let selectionResponse = await this.fetchSearchSelection(searchString);
         if (selectionResponse.result === true) {
             if (selectionResponse.list.length > 0) {
+                // Adjust the html entities in the search results
+                for (let listItem of selectionResponse.list) {
+                    let text = miscHTML.convertHTMLEntities(listItem.page);
+                    listItem.page = text;
+                }
                 document.getElementById("searchSelectorCol").style.display = "block";
                 let elem = document.getElementById("searchSelector");
                 elem.innerHTML = "";

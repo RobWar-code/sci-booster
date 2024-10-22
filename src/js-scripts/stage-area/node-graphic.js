@@ -14,10 +14,10 @@ dfm.nodeGraphic = {
         imageElem.src = graphicFile;
         imageElem.onload = () => this.adjustGraphic(imageElem);
         let textElem = document.getElementById("nodeGraphicPara");
-        textElem.innerText = node.graphic_text;
+        textElem.innerHTML = node.graphic_text;
         if (node.graphic_credits != "") {
             document.getElementById("nodeGraphicCreditsDiv").style.display = "block";
-            document.getElementById("nodeGraphicCreditsPara").innerText = node.graphic_credits;
+            document.getElementById("nodeGraphicCreditsPara").innerHTML = node.graphic_credits;
         }
         else {
             document.getElementById("nodeGraphicCreditsDiv").style.display = "none";

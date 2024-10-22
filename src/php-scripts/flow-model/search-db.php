@@ -7,6 +7,7 @@
     function findFlowModel($title) {
         global $dbConn;
 
+        $title = htmlspecialchars($title);
         $flowModelId = null;
         $sql = "SELECT id FROM flow_model WHERE title = ?";
         $stmt = $dbConn->prepare($sql);
@@ -30,6 +31,7 @@
     function findExternalAuthor($author, $authorId) {
         global $dbConn;
 
+        $author = htmlspecialchars($author);
         if ($authorId != NULL) {
             // Search by authorId
             $sql = "SELECT * FROM external_author WHERE id = $authorId";
@@ -64,6 +66,8 @@
 
     function findModelPageByTitle($title) {
         global $dbConn;
+
+        $title = htmlspecialchars($title);
 
         // Get the flow model id
         $pageId = null;
@@ -130,6 +134,7 @@
     function findModelPageByHierarchicalId($hierarchicalId, $flowModelId, $flowModelTitle) {
         global $dbConn;
 
+        $flowModelTitle = htmlspecialchars($flowModelTitle);
         $pageId = null;
         if ($flowModelId === null) {
             // Search for the title
@@ -212,7 +217,7 @@
                     while ($row = $result->fetch_assoc()) {
                         $fw = makeWordArray(strtolower($row[$fieldItem['field']]), $includeChars);
                         $baseScore = $fieldItem['points'];
-                        $score = matchWordLists($w, $fw, $baseScore);
+                        $score = matchWordLists(htmlspecialchars($w), $fw, $baseScore);
                         if ($score > 0) {
                             insertMatchScore($score, $fieldItem, $row, $scoreList);
                         }

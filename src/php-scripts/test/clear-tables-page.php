@@ -30,7 +30,7 @@
             let responseData = await response.json();
             console.log("responseData:", responseData);
             if (responseData.result === false) {
-                document.getElementById("report").innerText = "Clear Tables Failed";
+                document.getElementById("report").innerText = "Clear Tables Failed: " + responseData.status;
             }
             else {
                 document.getElementById("report").innerText = "Clear Tables Succeeded";

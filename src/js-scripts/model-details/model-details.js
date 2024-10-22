@@ -178,6 +178,10 @@ const modelDetails = {
     elem = document.getElementById("pageSelector");
     elem.innerHTML = "";
     let list = await dfm.currentPage.getModelPageList();
+    // Adjust the html entities for display
+    for (let item of list) {
+      item.title = miscHTML.convertHTMLEntities(item.title);
+    }   
     if (list.length > 1) {
       list.sort((a, b)=>{return a.title >= b.title ? 1 : -1});
       let opt = document.createElement("option");
@@ -195,9 +199,9 @@ const modelDetails = {
 
   loadDisplayValues: function() {
     document.getElementById("modelHierarchicalId").innerText = dfm.currentPage.page.hierarchical_id;
-    document.getElementById("modelTitle").value = dfm.currentPage.page.title;
-    document.getElementById("modelDescription").value = dfm.currentPage.page.description;
-    document.getElementById("modelKeywords").value = dfm.currentPage.page.keywords;
+    document.getElementById("modelTitle").value = miscHTML.convertHTMLEntities(dfm.currentPage.page.title);
+    document.getElementById("modelDescription").value = miscHTML.convertHTMLEntities(dfm.currentPage.page.description);
+    document.getElementById("modelKeywords").value = miscHTML.convertHTMLEntities(dfm.currentPage.page.keywords);
     this.displayAuthorsList();
     this.displayExtAuthorsList();
     this.displayReferencesList();

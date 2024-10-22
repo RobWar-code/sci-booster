@@ -29,13 +29,13 @@ const nodeDetails = {
         let node = dfm.currentPage.getNode(nodeNum);
         if (node) {
             document.getElementById("nodeNum").innerText = nodeNum;
-            document.getElementById("nodeLabel").value = node.label;
+            document.getElementById("nodeLabel").value = miscHTML.convertHTMLEntities(node.label);
             document.getElementById("nodeGraphicFile").value = node.graphic_file;
-            document.getElementById("nodeGraphicText").value = node.graphic_text;
-            document.getElementById("nodeGraphicCredits").value = node.graphic_credits;
+            document.getElementById("nodeGraphicText").value = miscHTML.convertHTMLEntities(node.graphic_text);
+            document.getElementById("nodeGraphicCredits").value = miscHTML.convertHTMLEntities(node.graphic_credits);
             document.getElementById("nodeType").value = node.type;
-            document.getElementById("nodeKeywords").value = node.keywords;
-            document.getElementById("nodeDefinition").value = node.definition;
+            document.getElementById("nodeKeywords").value = miscHTML.convertHTMLEntities(node.keywords);
+            document.getElementById("nodeDefinition").value = miscHTML.convertHTMLEntities(node.definition);
             document.getElementById("nodeHyperlink").value = node.hyperlink;
         }
     },

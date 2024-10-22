@@ -53,7 +53,7 @@ function addPageDetails($flowModelId, $pageData) {
     $pageId = NULL;
 
     // Check whether the page title already exists
-    $title = $pageData['page']['title'];
+    $title = htmlspecialchars($pageData['page']['title']);
     $sql = "SELECT title FROM page WHERE title = '$title'";
     $result = $dbConn->query($sql);
     if ($result && $result->num_rows > 0) {
@@ -65,8 +65,11 @@ function addPageDetails($flowModelId, $pageData) {
         if ($stmt === FALSE) {
             error_log("addPageDetails: problem with prepare {$dbConn->error}", 0);
         }
-        $stmt->bind_param('issss', $flowModelId, $pageData['page']['hierarchical_id'], 
-            $title, $pageData['page']['keywords'], $pageData['page']['description']);
+        $hierarchicalId = $pageData['page']['hierarchical_id'];
+        $keywords = htmlspecialchars($pageData['page']['keywords']);
+        $description = htmlspecialchars($pageData['page']['description']);
+        $stmt->bind_param('issss', $flowModelId, $hierarchicalId, 
+            $title, $keywords, $description);
         if($stmt->execute()) {
             // Get the page id
             $sql = "SELECT id FROM page WHERE title = '$title'";
@@ -150,7 +153,7 @@ function addPageExternalAuthor($externalAuthor, $pageId) {
     $gotAuthor = false;
     $gotUser = false;
     // Extract the first (names) and last name
-    $author = $externalAuthor['author']; 
+    $author = htmlspecialchars($externalAuthor['author']); 
     $nameParts = extractFirstAndLastNames($author);
     $firstName = $nameParts['firstName'];
     $lastName = $nameParts['lastName'];
@@ -245,9 +248,9 @@ function addPageReferences($pageId, $references) {
 function addPageReference($pageId, $reference) {
     global $dbConn;
 
-    $source = $reference["source"];
-    $title = $reference["title"];
-    $author = $reference["author"]["author"];
+    $source = htmlspecialchars($reference["source"]);
+    $title = htmlspecialchars($reference["title"]);
+    $author = htmlspecialchars($reference["author"]["author"]);
     $gotAuthor = false;
 
     // Process the author name
@@ -330,9 +333,14 @@ function addNode($node, $pageId) {
         error_log("addNodes: problem with sql: {$dbConn->error}", 0);
     }
     else {
-        $stmt->bind_param("isssssiissssi", $pageId, $node['node_num'], $node['label'], 
-            $node['graphic_file'], $node['graphic_text'], $node['graphic_credits'], $node['x'],
-            $node['y'], $node['type'], $node['definition'], $node['keywords'],
+        $label = htmlspecialchars($node['label']);
+        $graphicText = htmlspecialchars($node['graphic_text']);
+        $graphicCredits = htmlspecialchars($node['graphic_credits']);
+        $definition = htmlspecialchars($node['definition']);
+        $keywords = htmlspecialchars($node['keywords']);
+        $stmt->bind_param("isssssiissssi", $pageId, $node['node_num'], $label, 
+            $node['graphic_file'], $graphicText, $graphicCredits, $node['x'],
+            $node['y'], $node['type'], $definition, $keywords,
             $node['hyperlink'], $hasChildPage);
         if (!$stmt->execute()) {
             error_log("addNodes: failed to save node: {$node['node_num']} {$dbConn->error}", 0);
@@ -390,14 +398,14 @@ function addFlow($flow, $pageId) {
         $stmt->bind_param("issiiiiisssssii",
             $pageId,
             $flow['flow_num'],
-            $flow['label'],
+            htmlspecialchars($flow['label']),
             $flow['drawing_group_x'],
             $flow['drawing_group_y'],
             $flow['label_x'],
             $flow['label_y'],
             $flow['label_width'],
-            $flow['keywords'],
-            $flow['definition'],
+            htmlspecialchars($flow['keywords']),
+            htmlspecialchars($flow['definition']),
             $flow['hyperlink'],
             $flow['source_node_num'],
             $flow['destination_node_num'],
@@ -487,7 +495,7 @@ function addConversionFormula($flowId, $conversionFormula) {
         error_log("addConversionFormula: problem with sql: {$dbConn->error}", 0);
     }
     else {
-        $stmt->bind_param("iss", $flowId, $conversionFormula['formula'], $conversionFormula['description']);
+        $stmt->bind_param("iss", $flowId, htmlspecialchars($conversionFormula['formula']), htmlspecialchars($conversionFormula['description']));
         if (!$stmt->execute()) {
             error_log("addConversionFormula: problem insert formula: {$dbConn->error}", 0);
         }

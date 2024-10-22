@@ -63,7 +63,7 @@ function handlePageData($inputData) {
         // Search for the flow model title
         $flowModelId = findFlowModel($inputData['flow_model_title']);
         if ($flowModelId === null) {
-            $flowModelId = addFlowModel($inputData['flow_model_title']);
+            $flowModelId = addFlowModel(htmlspecialchars($inputData['flow_model_title']));
         }
 
         if ($flowModelId != NULL) {
