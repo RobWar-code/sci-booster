@@ -4,6 +4,7 @@ include_once __DIR__ . "/add-page.php";
 include_once __DIR__ . "/update-page.php";
 include_once __DIR__ . "/extract-page.php";
 include_once __DIR__ . "/search-db.php";
+include_once __DIR__ . "/convert-json-entities.php";
 include_once __DIR__ . "/../users/find-user.php";
 
 // Collect the JSON data
@@ -321,7 +322,9 @@ function exportPage($inputData) {
     $pageData['flow_model_id'] = $exPageData['flow_model_id'];
     $pageData['flow_model_title'] = $exPageData['flow_model_title'];
     $pageData['complete'] = false;
-    $pageData['page'] = $exPageData['page'];
+    $pageData['pages'] = [];
+    array_push($pageData['pages'], $exPageData['page']);
+    convertJsonEntities($pageData);
     $response = ['result'=>true, 'data'=>$pageData];
     echo json_encode($response);
     exit;
@@ -352,6 +355,7 @@ function exportModel($inputData) {
     $hierarchicalId = '01';
     extractModelPages($hierarchicalId, $flowModelId, $pages);
     $modelData['pages'] = $pages;
+    convertJsonEntities($modelData);
     $response = ['result'=>true, 'data'=>$modelData];
     echo json_encode($response);
     exit;

@@ -674,7 +674,8 @@ const modelDetails = {
           hierarchical_id: dfm.currentPage.page.hierarchical_id,
           username: dfm.username
       }
-      downloadFilename = dfm.currentPage.flow_model_title + dfm.currentPage.page.hierarchical_id + ".json";
+      downloadFilename = miscHTML.makeFilename(dfm.currentPage.flow_model_title);
+      downloadFilename = downloadFilename + "-" + dfm.currentPage.page.hierarchical_id + ".json";
     }
     else {
       message = {
@@ -683,7 +684,8 @@ const modelDetails = {
         flow_model_title: dfm.currentPage.flow_model_title,
         username: dfm.username
       }
-      downloadFilename = dfm.currentPage.flow_model_title + ".json";
+      downloadFilename = miscHTML.makeFilename(dfm.currentPage.flow_model_title);
+      downloadFilename = downloadFilename + ".json";
     }
 
     let messageJSON = JSON.stringify(message);

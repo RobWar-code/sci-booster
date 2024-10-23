@@ -6,7 +6,7 @@ Contents
 
 <h1>Work Due
 
-    Do the model for gasoline -> Car -> Atmosphere
+    * Do the model for gasoline -> Car -> Atmosphere
         Pages:
             01
             0102
@@ -16,13 +16,19 @@ Contents
     * Modify the JSON section in the README to improve the output
         of chatGPT (Maximum 4 days on this).
 
-    Problem with save of flow deleted and redrawn with same name, but possibly different flow_num 
+    * Problem with save of flow deleted and redrawn with same name, but possibly different flow_num 
 
-    Database deleted by accident - following ctrl-shift-r when node graphic displayed?
+
+    * Database deleted by accident - following ctrl-shift-r when node graphic displayed?
         * Modified clear tables to suppress accidental call
 
-    Conversion of apostrophe to &#039; in import.php, problem with displaying it, check data.
-        Duplicate model on save.
+    * Conversion of apostrophe to &#039; etc. in import.php, problem with displaying it, check data.
+        * Duplicate encoding
+        * Model duplicated on save
+        * Allow for decoding of html entities for export JSON (reparse the extract output)
+        * Check delete search functions for entities
+
+    * Option button on flow overwrites text - The Flow <>'" - possibly label height calculation.
 
     On node details modal delete button displayed when read-only
 
@@ -30,7 +36,9 @@ Contents
 
     Flow label sometimes not altered when changed in flow details?
 
-    Ensure save button displayed when any model value is submitted.
+    Report import problem (model title changed) when performing import update
+
+    * Ensure save button displayed when any model value is submitted.
 
     * Delete flow sometimes gets into error condition - could be last flow in set?
 

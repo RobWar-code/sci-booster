@@ -359,31 +359,58 @@ Contents
     * Ensure that all details are displayed correctly
 
 <h2>Encoding Tests
-    Login as warner3
-    Create a new Model (using the New Button)
-    Ensure that the Model Details modal is displayed
-    Enter each of the details containing the special characters <>'"
-    Click the Submit Button
-    Click the Leave Button
-    Click the Page Details button
-    Ensure that the details are displayed correctly
+    * Login as warner3
+    * Create a new Model (using the New Button)
+    * Ensure that the Model Details modal is displayed
+    * Enter each of the details containing the special characters <>'"
+    * Click the Submit Button
+    * Click the Leave Button
+    * Click the Page Details button
+    * Ensure that the details are displayed correctly
 
-    Click the stage to add a node
-    Ensure that the node details modal is displayed
-    In each of the fields enter values containing the special characters <>'"
-    Click the Submit Button
-    Ensure that the node is displayed correctly
-    Click the Node Details button on the node
-    Ensure that the input fields are displayed correctly
-    Click the Dismiss button
-    Click the node Graphic button
-    Ensure that the node credits and node text are displayed correctly
+    * Click the stage to add a node
+    * Ensure that the node details modal is displayed
+    * In each of the fields enter values containing the special characters <>'"
+    * Click the Submit Button
+    * Ensure that the node is displayed correctly
+    * Click the Node Details button on the node
+    * Ensure that the input fields are displayed correctly
+    * Click the Dismiss button
+    * Click the node Graphic button
+    * Ensure that the node credits and node text are displayed correctly
 
-    Flow
+    * Click the Save button
+    * Ensure that the saved successfully message appears
+    * Ensure the node is displayed correctly (ie: with '"<> chars)
 
-    Model Selector
+    * Click the flow link button on the node
+    * Ensure flow details Modal is displayed
+    * Enter values including '"<> where applicable
+    * Click submit
+    * Ensure that input values are displayed correctl on the form
+    * Click the Draw Flow button
+    * Create a flow with line, arrow and label
+    * Ensure the label correctly displays the text and chars '"<>
+    * Click the Flow Done button
+    * Ensure that label is correctly displayed
 
-    Page Selector
+    * Click the Save button
+    * Ensure that saved successfully message appears
+    * Ensure that the flow and node are displayed correctly
+    * Click the Flow Details button on the flow
+    * Ensure that the Flow Details modal is displayed
+    * Ensure that the fields of the flow display the '"<> chars
+
+    * Click the export button
+    * Ensure that a validly named file is downloaded
+    * Check the download json file to ensure that the '\"<> are presented correctly
+    * Make a change to the description field of the page
+    * Save the file
+    * Import the file again
+    * Ensure that the Data Good message appears
+    * Click Display Model
+    * Ensure that model details are displayed
+    * Ensure that the edit appears for the model description
 
 <h2>Child Page Editing
     * Login as warner3

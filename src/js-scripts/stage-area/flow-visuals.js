@@ -585,13 +585,16 @@ dfm.FlowVisuals = class {
         let fontFamily = dfm.nodeTemplate.fontFamily; 
         let textWidth = this.calculateTextWidth(textItem, fontSize, fontFamily);
         let rectHeight = dfm.flowFontSize + dfm.flowOptionHeight + 6;
+        console.log("rectheight = 1:", rectHeight);
         let textHeight = 0;
         if (textWidth >= dfm.maxFlowLabelWidth) {
-            textWidth = dfm.maxFlowLabelWidth - 2;
+            textWidth = dfm.maxFlowLabelWidth;
             ({textWidth, textHeight} = this.calculateTextHeight(textItem, textWidth, fontSize, fontFamily)); 
+            textWidth += 6;
             rectHeight = textHeight + dfm.flowOptionHeight + 6;
+            console.log("rectHeight > 1 line:", rectHeight);
         }
-        let labelWidth = textWidth + 13;
+        let labelWidth = textWidth + 7;
 
         let x = flowDetailsItem.label_x;
         let y = flowDetailsItem.label_y;
@@ -678,7 +681,8 @@ dfm.FlowVisuals = class {
 
         // Get the dimensions of the text
         let textWidth = this.getKonvaWrapTextMaxWidth(text, width, fontSize, fontFamily);
-        let textHeight = tempText.getClientRect().height;
+        let textBox = tempText.getClientRect();
+        let textHeight = textBox.height;
 
         textLayer.destroy();
 
@@ -879,12 +883,13 @@ dfm.FlowVisuals = class {
         let textWidth = this.calculateTextWidth(textItem, fontSize, fontFamily);
         let rectHeight = dfm.flowFontSize + dfm.flowOptionHeight + 6;
         let textHeight = 0;
-        if (textWidth > dfm.maxFlowLabelWidth) {
-            textWidth = dfm.maxFlowLabelWidth - 2;
+        if (textWidth >= dfm.maxFlowLabelWidth) {
+            textWidth = dfm.maxFlowLabelWidth;
             ({textWidth, textHeight} = this.calculateTextHeight(textItem, textWidth, fontSize, fontFamily));
+            textWidth += 6;
             rectHeight = textHeight + dfm.flowOptionHeight + 6;
         }
-        let labelWidth = textWidth + 13;
+        let labelWidth = textWidth + 7;
 
         let x, y;
         if (fromClick) {

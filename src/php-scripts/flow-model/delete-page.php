@@ -129,6 +129,8 @@ function deleteExternalAuthorPageLinks($pageId) {
 function deleteAuthorPageLink($author, $pageId) {
     global $dbConn;
 
+    // Convert the entities in author
+    $author = htmlspecialchars($author, ENT_QUOTES, "UTF-8", false);
     // Delete the external_author_page link;
     // Get the first and last names
     $gotAuthorId = false;

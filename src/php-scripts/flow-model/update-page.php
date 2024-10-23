@@ -59,7 +59,7 @@
         if (count($aOnly) > 0) {
             // Do inserts
             foreach($aOnly as $index) {
-                $author = htmlspecialchars($authors[$index]['author']);
+                $author = htmlspecialchars($authors[$index]['author'], ENT_QUOTES, 'UTF-8', false);
                 // Check whether the id is present
                 if (isset($authors[$index]['id'])) {
                     $authorId = $authors[$index]['id'];
@@ -71,13 +71,13 @@
                     else {
                         // Remove the entry from the old authors only list (bOnly)
                         $bOnly = deleteKeyedRefValue($bOnly, $oldAuthors, "id", $authorId);
-                        $author = htmlspecialchars($authors[$index]['author']);
+                        $author = htmlspecialchars($authors[$index]['author'], ENT_QUOTES, 'UTF-8', false);
                         $oldAuthor = $oldAuthors[$oldIndex]['author'];
                         updateExternalAuthor($author, $oldAuthor, $authorId);
                     }
                 }
                 else {
-                    $author = htmlspecialchars($authors[$index]['author']);
+                    $author = htmlspecialchars($authors[$index]['author'], ENT_QUOTES, 'UTF-8', false);
                     addPageExternalAuthor($author, $pageId);
                 }
             }
@@ -85,7 +85,7 @@
         if (count($bOnly) > 0) {
             // Delete the page author links
             foreach($bOnly as $index) {
-                $author = htmlspecialchars($oldAuthors[$index]['author']);
+                $author = htmlspecialchars($oldAuthors[$index]['author'], ENT_QUOTES, 'UTF-8', false);
                 deleteAuthorPageLink($author, $pageId);
             }
         }
@@ -200,7 +200,7 @@
         $newReferences = [];
         foreach ($references as $refItem) {
             adjustFieldHtml($refItem, ["source", "title"]);
-            $author = htmlspecialchars($refItem['author']['author']);
+            $author = htmlspecialchars($refItem['author']['author'], ENT_QUOTES, 'UTF-8', false);
             $refItem['author']['author'] = $author;
             array_push($newReferences, $refItem);
         }
@@ -320,6 +320,8 @@
         foreach($nodes as $node) {
             // Adjust html for each applicable field
             adjustFieldHtml($node, ["label", "graphic_text", "graphic_credits", "definition", "keywords"]);
+            // Debug
+            error_log("updateNodes: node label - {$node['label']}", 0);
             $nodeId = null;
             if (isset($node['id'])) {
                 $nodeId = $node['id'];
@@ -379,7 +381,7 @@
         $index = -1;
         $count = 0;
         foreach($nodes as $node) {
-            if ($node['label'] === $label && $node['node_num'] === $nodeNum) {
+            if (htmlspecialchars($node['label'], ENT_QUOTE, "UTF-8", false) === $label && $node['node_num'] === $nodeNum) {
                 $index = $count;
                 break;
             }
@@ -426,6 +428,8 @@
         foreach($flows as $flow) {
             // Adjust html of the flow
             adjustFieldHtml($flow, ["label", "keywords", "definition", "hyperlink"]);
+            // Debug
+            error_log("updateFlows: flow label: {$flow['label']}", 0);
             // Search for a corresponding entry in old flows
             $flowId = null;
             $flowNum = $flow['flow_num'];
@@ -650,7 +654,7 @@
 
     function adjustFieldHtml(&$record, $fieldNames) {
         foreach ($fieldNames as $field) {
-            $record[$field] = htmlspecialchars($record[$field]);
+            $record[$field] = htmlspecialchars($record[$field], ENT_QUOTES, 'UTF-8', false);
         }
     }
 
