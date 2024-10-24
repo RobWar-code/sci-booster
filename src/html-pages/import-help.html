@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/styles.css">
+    <link rel="stylesheet" href="../styles/import-styles.css">
+    <title>Sci-Booster Import Help</title>
+</head>
+<body>
+
+    <pre>
+### JSON Inputs / Outputs
+
+This feature allows for the importation/exportation of data for 
+other sources, notably ChatGPT, in which the data may be easily 
+edited for import.
+
+The following definition is known as the "Sci-Booster Flow Model 
+JSON Definition Version 1.8"
+
+The purpose of this section is to describe the required format 
+of the flow-model JSON object for data imports to the app. This 
+is provided for both AI's such as ChatGPT and human contributors.
+
+The import data may also have been obtained as an export from 
+the app database, in this case id fields will be set. Such exports 
+can be edited.
+
+JSON Models supplied as updates without id fields must preserve 
+title, label and hierarchical_id fields for the data items to be 
+updated, although new items can be added in an update.
+
+#### Descriptive Details
+A flow model consists of pages of component nodes and flow lines 
+used to describe a flow system. The pages are defined as a 
+heirarchy of descriptive detail for each component node as 
+required. For example, a top-level flow model might be:
+
+Petrol Station --flow:petrol->-- Car --flow:exhaust-->- Atmosphere
+
+- Fictional/example data should not be used in the json fields, 
+they should be left with "" or null values if not known
+- The "complete" field must be included to indicate whether the
+whole model is being described or only certain pages (true/false)
+- The top level (page) of a flow model has upto four nodes and all 
+subsequent pages are further definitions of the component nodes 
+that they describe.
+- The flow_model_title should always be present at the top level 
+and must the same as for the first page of hierarchical_id "01"
+- The "id" field of each field where shown below of the json model 
+should be present and set to null unless it is known via the site 
+database from a data export.
+- The hierarchical_id of the top-level page is "01" and its 
+details apply to the whole model as well as the page that they 
+describe.
+- All definitions (nodes / pages) should confine themselves to the 
+constraint of the parent.
+- Pages inherit the flows from their parent node (whether source 
+or destination), ideally they should be re-presented in the page
+- It is permitted to have more than one flow from a component 
+(as in motion and exhaust for a car with a petrol flow input, for 
+example)
+- A page should not consist of more than 8 component nodes
+- A node number (NodeNum) is unique to a page only and consists of 
+two digits, ie: "01".
+- The node "type" field should be "mechanism" or "effect". 
+"mechanism" simply means physical unit, "effect" is for output 
+conditions such as "pollution" or "explosion"
+- A hierarchical_id is built from its parent node numbers in order 
+of descent, ie: "010204".
+- When using keyword fields, beware of terms such as "flow" which 
+are likely to be too common to be useful
+- Flows are used to connect component nodes and their positions 
+should be calculated as such
+
+#### Visual Spatial Information for The Flow Diagram
+
+The drawing area (stage) onto which a flow diagram page is drawn 
+is 380 pixels wide by 690 pixels high.
+
+##### Component Node Boxes
+
+The stage area is sufficent for upto 8 component nodes, if 
+arranged vertically in sets of 4. So eight is the maximum number 
+of component nodes for a page.
+
+Component nodes are represented by rectangular boxes 140 pixels 
+wide by 75 pixels high.
+
+On the drawing, vertically arranged component node should be 
+spaced 90 pixels between the base of one node and the top of 
+another (ie: node y coordinates are 165 pixels apart).
+
+When there are more than 4 component nodes the node boxes should 
+be offset from the left margin edge of the stage by 5 pixels for 
+left hand column and margin of 5 pixels on theon the right, for 
+the right hand column.
+
+The position of the component node is given in node "x" and "y" 
+fields, this is the top left corner of the component node box.
+
+##### Flow Representations
+
+All flow coordinates are relative to the "drawing_group_x" and 
+"drawing_group_y" coordinates, which typically set to the 
+position of the flow line described below.
+
+Flows are represented by sets of line segments whose coordinates 
+are given in the flow "points" field, each start/end points of 
+the set of line segments should be given.
+
+Generally the flow lines connect a source component node box to 
+a destination node box, typically from the bottom of one box to 
+the top of another.
+
+The flow details include an "arrow_points" field for defining the 
+coordinates of each of the 4 nodes of an equilateral triangle, of 
+which the bottom side is indented toward the apex by two pixels, 
+that sits on the flow line and points toward the destination.
+The triangle is about 10 pixels high.
+
+The flow label appears in a box, who's top-left coordinates are 
+given in the "label_x", "label_y" fields.
+
+The "label_width" field can be set to 60 by default, this is 
+calculated from flow label text anyway.
+
+#### JSON Object Structure
+```js
+{
+  "flow_model_id": , // Auto Long Int, may be null
+  "flow_model_title": "", // Must the same as the first page 
+    // with hierarchical_id of "01"
+  "update": , // true/false whether this is an update
+  "complete": , // true/false whether this is an update 
+    // for a complete model, or only
+    // a partial update (subset of pages)
+  "pages" : [
+    {
+      "id": , // May be null
+      "hierarchical_id": "", // ie: 01020406 for a level
+        // four page. Note that the numbers (apart from
+        // the first) are NodeNums, the first/top level
+        // is always "01"
+      "title": "",
+      "keywords": "",
+      "description": "",
+      "user_authors": [
+        {
+          "id": , // May be null (id of the user)
+          "username": ""
+        }
+      ], // Authors who are users
+      "external_authors": [
+        {
+          "id": , // May be null (id of the author)
+          "author": ""
+        }
+      ],
+      "references": [
+        {
+            "id": , // may be null
+            "source": "", // ie: "Web Page" or Publisher
+            "title":,
+            "author": {
+                "id":, // May be null
+                "author": "" 
+            }
+        },
+        ..
+      ], // The sources of the information, ie: book, 
+        // paper titles  
+      "nodes": [
+        {
+          "id": , // May be null
+          "node_num" : "", // (ie: "01")
+          "x": , // Integer, the x coordinate of the component 
+            // node box on the stage (0 to stage width)
+          "y": , // Integer, the y coordinate of the component 
+            // node box on the stage (0 to stage height)
+          "label": "",
+          "graphic_file": "", // File name/ web link of the
+            // image associated with the node
+          "graphic_text": "",
+          "graphic_credits": "",
+          "type": "", // (Mechanism/Effect)
+          "definition": "", // optional
+          "keywords": "", // optional
+          "hyperlink": "", // optional a hypertext link to 
+            // further information
+          "has_child_page": // true/false
+        },
+        ..
+      ], 
+      "flows" : [
+        {
+          "id": , // May be null
+          "flow_num": ""// Unique to the page two digits, 
+            // ie: "03"
+          "source_node_num": "", 
+          "destination_node_num": "", // (optional)
+          "label": "",
+          "label_x": , // integer (range -stage width to
+            // stage width, relative to drawing_group_x)
+          "label_y": , // integer (range -stage height to
+            // stage height. relative to drawing_group_y)
+          "label_width": , // integer, optional to suit 
+            // characters of the label that are size 12px
+          "drawing_group_x": ,// integer (the base 
+            // coordinate of the flow on the stage)
+          "drawing_group_y": ,// integer (the base 
+            // coordinate of the flow on the stage)
+          "arrow_points": , // [{x: , y: }] optional, the
+            // coordinates of the nodes of the arrow that
+            // sits on the flow line and points toward the
+            // destination
+          "points": ,// [{x: , y: }] the flow line node, 
+            // points relative to drawing_group x, y. 
+            // (x: -stage width to stage width, y: -stage 
+            // height to stage height)
+          "keywords": "", // (optional)
+          "definition": "", // (optional)
+          "conversion_formulas": [
+            {
+              "id": , // May be null
+              "formula": "",
+              "description": ""
+            },
+            ..
+          ]
+          "hyperlink": "" // (optional) a link to further 
+            // information
+        },
+        ..
+      ]
+        
+    },
+    ..
+  ]
+}
+```        
+    </pre>
+    
+</body>
+</html>

@@ -634,6 +634,19 @@ Contents
     * Ensure that the diagram is saved
     * Ensure that the flow is drawn correctly
 
+    * Login as warner3
+    * Use the model selector to choose a model with flows
+    * Ensure that the model details modal is displayed
+    * Ensure that the diagram is displayed
+    * Click the Edit Model button
+    * Click the Dismiss button
+    * Click on the Flow Details button of a flow
+    * Ensure that the flow details modal is displayed
+    * Click the Draw Flow button
+    * Ensure that the flow is shown in editable mode
+    * Click the Cancel option
+    * Ensure that the model is removed from the page
+    * Ensure that the Flow Done and Delete Flow buttons are cleared
 
 <h2>Imports
 
@@ -822,6 +835,14 @@ Contents
     * Click the Browse button
     * Click the Import Model button
     * Ensure that an error message appears for the hierarchical_id
+
+    * Login as warner3
+    * Export a model 
+    * Ensure that the model file is saved in the client downloads
+    * Modify the flow_model_title in the saved json file
+    * Import the saved json file
+    * Click Display Model
+    * Ensure that the model title at the head of the page is correctly adjusted
 
 
 <h3>Import Add - Single page format

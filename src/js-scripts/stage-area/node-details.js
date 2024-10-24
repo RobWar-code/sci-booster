@@ -7,6 +7,7 @@ const nodeDetails = {
         dfm.newNodeX = stageCursorPos.x / dfm.scaleX;
         dfm.newNodeY = stageCursorPos.y;
         dfm.currentPage.nodeEditMode = "new";
+        this.setInputDisabledStatus(false);
         this.displayNodeDetailsModal(editMode);
     },
 
@@ -77,7 +78,12 @@ const nodeDetails = {
             document.getElementById("nodeDeleteButton").style.display = "none";
         }
         else {
-            document.getElementById("nodeDeleteButton").style.display = "inline";
+            if (dfm.modelEditMode === "edit") {
+                document.getElementById("nodeDeleteButton").style.display = "inline";
+            }
+            else {
+                document.getElementById("nodeDeleteButton").style.display = "none";
+            }
         }
 
         if (dfm.modelEditMode === "edit") {

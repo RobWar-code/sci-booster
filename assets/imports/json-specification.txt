@@ -5,7 +5,7 @@ sources, notably ChatGPT, in which the data may be easily edited for
 import.
 
 The following definition is known as the "Sci-Booster Flow Model JSON
-Definition Version 1.7"
+Definition Version 1.8"
 
 The purpose of this section is to describe the required format of the flow-model 
 JSON object for data imports to the app. This is provided for both AI's such as
@@ -17,7 +17,6 @@ in this case id fields will be set. Such exports can be edited.
 JSON Models supplied as updates without id fields must preserve title, label and
 hierarchical_id fields for the data items to be updated, although new items can be 
 added in an update.
-
 
 #### Descriptive Details
 A flow model consists of pages of component nodes and flow lines used to describe
@@ -98,97 +97,94 @@ anyway.
 
 #### JSON Object Structure
 ```js
-flow_models: [
-	{
-		"flow_model_id": , // Auto Long Int, may be null
-		"flow_model_title": "", // Must the same as the first page with hierarchical_id of "01"
-		"update": , // true/false whether this is an update
-		"complete": , // true/false whether this is an update for a complete model, or only
-				// a partial update (subset of pages)
-		"pages" : [
-			{
-				"id": , // May be null
-		 		"hierarchical_id": "", // ie: 01020406 for a level four page. Note that the numbers (apart from the first)
-					// are NodeNums, the first/top level is always "01"
-				"title": "",
-				"keywords": "",
-				"description": "",
-				"user_authors": [
-					"id": , // May be null (id of the user)
-					"username": ""
-				], // Authors who are users
-				"external_authors": [
-					"id": , // May be null (id of the author)
-					"author": ""
-				],
-				"references": [
-					{
-						"id": , // may be null
-						"source": "", // ie: "Web Page" or Publisher
-						"title":,
-						"author": {
-							"id":, // May be null
-							"author": "" 
-						}
-					},
-					..
-				], // The sources of the information, ie: book, paper titles
+{
+	"flow_model_id": , // Auto Long Int, may be null
+	"flow_model_title": "", // Must the same as the first page with hierarchical_id of "01"
+	"update": , // true/false whether this is an update
+	"complete": , // true/false whether this is an update for a complete model, or only
+			// a partial update (subset of pages)
+	"pages" : [
+		{
+			"id": , // May be null
+			"hierarchical_id": "", // ie: 01020406 for a level four page. Note that the numbers (apart from the first)
+				// are NodeNums, the first/top level is always "01"
+			"title": "",
+			"keywords": "",
+			"description": "",
+			"user_authors": [
+				"id": , // May be null (id of the user)
+				"username": ""
+			], // Authors who are users
+			"external_authors": [
+				"id": , // May be null (id of the author)
+				"author": ""
+			],
+			"references": [
+				{
+					"id": , // may be null
+					"source": "", // ie: "Web Page" or Publisher
+					"title":,
+					"author": {
+						"id":, // May be null
+						"author": "" 
+					}
+				},
+				..
+			], // The sources of the information, ie: book, paper titles
 
-				"nodes": [
-					{
-						"id": , // May be null
-						"node_num" : "", // (ie: "01")
-						"x": , // Integer, the x coordinate of the component node box on the stage (0 to stage width)
-						"y": , // Integer, the y coordinate of the component node box on the stage (0 to stage height)
-						"label": "",
-						"graphic_file": "", // File name/ web link of the image associated with the node
-						"graphic_text": "",
-						"graphic_credits": "",
-						"type": "", // (Mechanism/Effect)
-						"definition": "", // optional
-						"keywords": "", // optional
-						"hyperlink": "", // optional a hypertext link to further information
-						"has_child_page": // true/false
-					},
-					..
-				],
+			"nodes": [
+				{
+					"id": , // May be null
+					"node_num" : "", // (ie: "01")
+					"x": , // Integer, the x coordinate of the component node box on the stage (0 to stage width)
+					"y": , // Integer, the y coordinate of the component node box on the stage (0 to stage height)
+					"label": "",
+					"graphic_file": "", // File name/ web link of the image associated with the node
+					"graphic_text": "",
+					"graphic_credits": "",
+					"type": "", // (Mechanism/Effect)
+					"definition": "", // optional
+					"keywords": "", // optional
+					"hyperlink": "", // optional a hypertext link to further information
+					"has_child_page": // true/false
+				},
+				..
+			],
 
-				"flows" : [
-					{
-						"id": , // May be null
-						"flow_num": ""// Unique to the page two digits, ie: "03"
-						"source_node_num": "", 
-						"destination_node_num": "", // (optional)
-						"label": "",
-						"label_x": , // integer (range -stage width to stage width, relative to drawing_group_x)
-						"label_y": , // integer (range -stage height to stage height. relative to drawing_group_y)
-						"label_width": , // integer, optional to suit characters of the label that are size 13px
-						"drawing_group_x": ,// integer (the base coordinate of the flow on the stage)
-						"drawing_group_y": ,// integer (the base coordinate of the flow on the stage)
-						"arrow_points": , // [{x: , y: }] optional, the coordinates of the nodes of the arrow that
-										// sits on the flow line and points toward the destination
-						"points": ,// [{x: , y: }] the flow line node points, relative to drawing_group x, y. 
-									// (x: -stage width to stage width, y: -stage height to stage height)
-						"keywords": "", // (optional)
-						"definition": "", // (optional)
-						"conversion_formulas": [
-							{
-								"id": , // May be null
-								"formula": "",
-								"description": ""
-							},
-							..
-						]
-						"hyperlink": "" // (optional) a link to further information
-					},
-					..
-				]
-				
-			},
-			..
-		]
-	},
-	..
-]
+			"flows" : [
+				{
+					"id": , // May be null
+					"flow_num": ""// Unique to the page two digits, ie: "03"
+					"source_node_num": "", 
+					"destination_node_num": "", // (optional)
+					"label": "",
+					"label_x": , // integer (range -stage width to stage width, relative to drawing_group_x)
+					"label_y": , // integer (range -stage height to stage height. relative to drawing_group_y)
+					"label_width": , // integer, optional to suit characters of the label that are size 13px
+					"drawing_group_x": ,// integer (the base coordinate of the flow on the stage)
+					"drawing_group_y": ,// integer (the base coordinate of the flow on the stage)
+					"arrow_points": , // [{x: , y: }] optional, the coordinates of the nodes of the arrow that
+									// sits on the flow line and points toward the destination
+					"points": ,// [{x: , y: }] the flow line node points, relative to drawing_group x, y. 
+								// (x: -stage width to stage width, y: -stage height to stage height)
+					"keywords": "", // (optional)
+					"definition": "", // (optional)
+					"conversion_formulas": [
+						{
+							"id": , // May be null
+							"formula": "",
+							"description": ""
+						},
+						..
+					]
+					"hyperlink": "" // (optional) a link to further information
+				},
+				..
+			]
+			
+		},
+		..
+	]
+}
 ```
 

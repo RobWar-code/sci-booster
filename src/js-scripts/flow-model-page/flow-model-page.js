@@ -4,105 +4,110 @@ const flowModelPage = {
         if (dfm.flowDrawMode) {
             document.getElementById("flowDoneButton").style.display = "inline";
             document.getElementById("cancelFlowDrawButton").style.display = "inline";
+            document.getElementById("cancelModelButton").style.display = "inline";
             document.getElementById("saveModelButton").style.display = "none";
             document.getElementById("newModelButton").style.display = "none";
             document.getElementById("editModelButton").style.display = "none";
             document.getElementById("deleteModelButton").style.display = "none";
             document.getElementById("importModelButton").style.display = "none";
         }
-        else if (dfm.userStatus === "unregistered") {
-            if (dfm.currentPageSet) {
-                document.getElementById("cancelModelButton").style.display = "inline";
-                this.clearFlowModelEditMessage();
-            }
-            else {
-                document.getElementById("cancelModelButton").style.display = "none";
-            }
-            document.getElementById("modelEditInfo").style.display = "block";
-            document.getElementById("newModelButton").style.display = "none";
-            document.getElementById("editModelButton").style.display = "none";
-            document.getElementById("deleteModelButton").style.display = "none";
-            document.getElementById("saveModelButton").style.display = "none";
-            document.getElementById("importModelButton").style.display = "none";
-            document.getElementById("exportModelButton").style.display = "none";
-        }
-        else if (dfm.userStatus === "user") {
-            document.getElementById("modelEditOptionsDiv").style.display = "block";
-            document.getElementById("modelEditInfo").style.display = "none";
-            document.getElementById("importModelButton").style.display = "inline";
-            // Check whether a model is loaded, and if it is, whether the user is the author
-            if (!dfm.currentPageSet) {
-                document.getElementById("newModelButton").style.display = "inline";
+        else {
+            document.getElementById("flowDoneButton").style.display = "none";
+            document.getElementById("cancelFlowDrawButton").style.display = "none";
+            if (dfm.userStatus === "unregistered") {
+                if (dfm.currentPageSet) {
+                    document.getElementById("cancelModelButton").style.display = "inline";
+                    this.clearFlowModelEditMessage();
+                }
+                else {
+                    document.getElementById("cancelModelButton").style.display = "none";
+                }
+                document.getElementById("modelEditInfo").style.display = "block";
+                document.getElementById("newModelButton").style.display = "none";
                 document.getElementById("editModelButton").style.display = "none";
                 document.getElementById("deleteModelButton").style.display = "none";
                 document.getElementById("saveModelButton").style.display = "none";
-                document.getElementById("pageDetailsButton").style.display = "none";
+                document.getElementById("importModelButton").style.display = "none";
                 document.getElementById("exportModelButton").style.display = "none";
             }
-            else {
-                // Check whether the user is an author of the current page
-                if (dfm.currentPage.isUserAuthor()) {
-                    if (dfm.modelEditMode != "edit") {
-                        document.getElementById("editModelButton").style.display = "inline";
-                    }
-                    else {
-                        document.getElementById("editModelButton").style.display = "none";
-                    }
-                    document.getElementById("deleteModelButton").style.display = "inline";
-                    document.getElementById("saveModelButton").style.display = "inline";
-                }
-                else {
+            else if (dfm.userStatus === "user") {
+                document.getElementById("modelEditOptionsDiv").style.display = "block";
+                document.getElementById("modelEditInfo").style.display = "none";
+                document.getElementById("importModelButton").style.display = "inline";
+                // Check whether a model is loaded, and if it is, whether the user is the author
+                if (!dfm.currentPageSet) {
+                    document.getElementById("newModelButton").style.display = "inline";
                     document.getElementById("editModelButton").style.display = "none";
                     document.getElementById("deleteModelButton").style.display = "none";
                     document.getElementById("saveModelButton").style.display = "none";
+                    document.getElementById("pageDetailsButton").style.display = "none";
+                    document.getElementById("exportModelButton").style.display = "none";
                 }
-                document.getElementById("newModelButton").style.display = "inline";
-                document.getElementById("cancelModelButton").style.display = "inline";
-                document.getElementById("exportModelButton").style.display = "inline";
+                else {
+                    // Check whether the user is an author of the current page
+                    if (dfm.currentPage.isUserAuthor()) {
+                        if (dfm.modelEditMode != "edit") {
+                            document.getElementById("editModelButton").style.display = "inline";
+                        }
+                        else {
+                            document.getElementById("editModelButton").style.display = "none";
+                        }
+                        document.getElementById("deleteModelButton").style.display = "inline";
+                        document.getElementById("saveModelButton").style.display = "inline";
+                    }
+                    else {
+                        document.getElementById("editModelButton").style.display = "none";
+                        document.getElementById("deleteModelButton").style.display = "none";
+                        document.getElementById("saveModelButton").style.display = "none";
+                    }
+                    document.getElementById("newModelButton").style.display = "inline";
+                    document.getElementById("cancelModelButton").style.display = "inline";
+                    document.getElementById("exportModelButton").style.display = "inline";
+                }
             }
-        }
-        else if (dfm.userStatus === "editor" || dfm.userStatus === "owner") {
-            document.getElementById("modelEditOptionsDiv").style.display = "block";
-            document.getElementById("modelEditInfo").style.display = "none";
-            document.getElementById("importModelButton").style.display = "inline";
-            // Check whether a model is loaded
-            if (!dfm.currentPageSet) {
-                document.getElementById("newModelButton").style.display = "inline";
-                document.getElementById("editModelButton").style.display = "none";
-                document.getElementById("deleteModelButton").style.display = "none";
-                document.getElementById("saveModelButton").style.display = "none";
-                document.getElementById("pageDetailsButton").style.display = "none";
-            }
-            else {
-                // Display options for current model
-                document.getElementById("newModelButton").style.display = "inline";
-                if (dfm.modelEditMode === "edit") {
+            else if (dfm.userStatus === "editor" || dfm.userStatus === "owner") {
+                document.getElementById("modelEditOptionsDiv").style.display = "block";
+                document.getElementById("modelEditInfo").style.display = "none";
+                document.getElementById("importModelButton").style.display = "inline";
+                // Check whether a model is loaded
+                if (!dfm.currentPageSet) {
+                    document.getElementById("newModelButton").style.display = "inline";
                     document.getElementById("editModelButton").style.display = "none";
-                }
-                else {
-                    document.getElementById("editModelButton").style.display = "inline";
-                }
-                if (dfm.currentPage.page.id === null) {
                     document.getElementById("deleteModelButton").style.display = "none";
+                    document.getElementById("saveModelButton").style.display = "none";
+                    document.getElementById("pageDetailsButton").style.display = "none";
                 }
                 else {
-                    document.getElementById("deleteModelButton").style.display = "inline";
+                    // Display options for current model
+                    document.getElementById("newModelButton").style.display = "inline";
+                    if (dfm.modelEditMode === "edit") {
+                        document.getElementById("editModelButton").style.display = "none";
+                    }
+                    else {
+                        document.getElementById("editModelButton").style.display = "inline";
+                    }
+                    if (dfm.currentPage.page.id === null) {
+                        document.getElementById("deleteModelButton").style.display = "none";
+                    }
+                    else {
+                        document.getElementById("deleteModelButton").style.display = "inline";
+                    }
+                    document.getElementById("saveModelButton").style.display = "inline";
                 }
-                document.getElementById("saveModelButton").style.display = "inline";
             }
-        }
-        if (dfm.currentPageSet) {
-            if (dfm.currentPage.page.hierarchical_id.length > 2) {
-                document.getElementById("zoomBackButton").style.display = "inline";
+            if (dfm.currentPageSet) {
+                if (dfm.currentPage.page.hierarchical_id.length > 2) {
+                    document.getElementById("zoomBackButton").style.display = "inline";
+                }
+                else {
+                    document.getElementById("zoomBackButton").style.display = "none";
+                }
+                document.getElementById("cancelModelButton").style.display = "inline";
             }
             else {
                 document.getElementById("zoomBackButton").style.display = "none";
+                document.getElementById("cancelModelButton").style.display = "none";
             }
-            document.getElementById("cancelModelButton").style.display = "inline";
-        }
-        else {
-            document.getElementById("zoomBackButton").style.display = "none";
-            document.getElementById("cancelModelButton").style.display = "none";
         }
     },
 
@@ -113,6 +118,7 @@ const flowModelPage = {
         dfm.currentPage = {};
         dfm.currentPageSet = false;
         dfm.modelEditMode = "read-only";
+        dfm.flowDrawMode = false;
         document.getElementById("pageSelectorRow").style.display = "none";
         document.getElementById("flowModelTitle").innerText = "NONE";
         document.getElementById("pageTitle").innerText = "NONE";
@@ -307,7 +313,7 @@ const flowModelPage = {
 
     saveModelRequired: async function(message) {
         try {
-            let response = await this.showYesNoModal(message);
+            let response = await this.showYesNoModal(miscHTML.convertHTMLEntities(message));
             return response;
         }
         catch(error) {
@@ -434,9 +440,11 @@ const flowModelPage = {
                 dfm.modelEditMode = "read-only";
                 // Set main page details
                 hierarchicalId = dfm.currentPage.page.hierarchical_id;
-                document.getElementById("flowModelTitle").innerText = dfm.currentPage.flow_model_title;
+                document.getElementById("flowModelTitle").innerText = 
+                    miscHTML.convertHTMLEntities(dfm.currentPage.flow_model_title);
                 document.getElementById("pageHierarchicalId").innerText = hierarchicalId;
-                document.getElementById("pageTitle").innerText = dfm.currentPage.page.title;
+                document.getElementById("pageTitle").innerText = 
+                    miscHTML.convertHTMLEntities(dfm.currentPage.page.title);
 
                 if (hierarchicalId.length > 2) {
                     document.getElementById("zoomBackButton").style.display = "inline";
@@ -468,7 +476,7 @@ const flowModelPage = {
                     dfm.currentPage.page.hierarchical_id = hierarchicalId;
                     dfm.currentVisual = new dfm.FlowVisuals();
                     // Set main page details
-                    document.getElementById("flowModelTitle").innerText = flowModelTitle;
+                    document.getElementById("flowModelTitle").innerText = miscHTML.convertHTMLEntities(flowModelTitle);
                     document.getElementById("pageHierarchicalId").innerText = hierarchicalId;
                     document.getElementById("pageTitle").innerText = "Not Defined";
                     modelDetails.newModel();

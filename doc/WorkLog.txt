@@ -6,6 +6,32 @@ Contents
 
 <h1>Work Due
 
+    Flow label sometimes not altered when changed in flow details?
+
+    Reload and check the exported models
+
+    Do the Import Info Page
+    
+    Clear debug from code
+
+    Block robot logins/register
+
+    Favicon icon for sci-booster
+
+    Do the introductory page
+        Include details of the JSON import model format
+
+    Adjust the README for building JSON models with ChatGPT
+
+        Test and build 5 example model imports with ChatGPT
+    
+    Update the README with user features changes
+
+    In the README Plan the release procedures
+
+<h1>Work Done
+    24/10/2024
+    
     * Do the model for gasoline -> Car -> Atmosphere
         Pages:
             01
@@ -30,13 +56,17 @@ Contents
 
     * Option button on flow overwrites text - The Flow <>'" - possibly label height calculation.
 
-    On node details modal delete button displayed when read-only
+    * On node details modal delete button displayed when read-only
 
-    When Cancel Clicked during draw flow, Flow Done and Delete Flow are still displayed.
+    * When Cancel Clicked during draw flow, Flow Done and Delete Flow are still displayed.
 
-    Flow label sometimes not altered when changed in flow details?
+    * Problem with save from zoom.
 
-    Report import problem (model title changed) when performing import update
+    * On zoom default model displayed without entity conversions.
+
+    * On new zoom Edit mode, node details disabled
+
+    * Report import problem (model title changed) when performing import update
 
     * Ensure save button displayed when any model value is submitted.
 
@@ -46,28 +76,6 @@ Contents
 
     * The draw flow function should scroll the page down to the previous location
 
-    Reload and edit the oil refining model
-
-    Clear debug from code
-
-    Block robot logins/register
-
-    Favicon icon for sci-booster
-
-    Do the introductory page
-        Include details of the JSON import model format
-
-    Adjust the README for building JSON models with ChatGPT
-
-        Test and build 5 example model imports with ChatGPT
-    
-    Import Info Page
-    
-    Update the README with user features changes
-
-    In the README Plan the release procedures
-
-<h1>Work Done
     18/10/2024
     
     * Node graphic on node details not displayed correctly

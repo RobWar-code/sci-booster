@@ -381,7 +381,7 @@
         $index = -1;
         $count = 0;
         foreach($nodes as $node) {
-            if (htmlspecialchars($node['label'], ENT_QUOTE, "UTF-8", false) === $label && $node['node_num'] === $nodeNum) {
+            if (htmlspecialchars($node['label'], ENT_QUOTES, "UTF-8", false) === $label && $node['node_num'] === $nodeNum) {
                 $index = $count;
                 break;
             }

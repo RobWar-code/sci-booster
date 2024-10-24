@@ -21,7 +21,7 @@ const modelDetails = {
     this.clearDisplayData();
     if ("page" in dfm.currentPage) {
       if (dfm.currentPage.page.title != "") {
-        document.getElementById("modelTitle").value = dfm.currentPage.page.title;
+        document.getElementById("modelTitle").value = miscHTML.convertHTMLEntities(dfm.currentPage.page.title);
         document.getElementById("modelHierarchicalId").innerText = dfm.currentPage.page.hierarchical_id;
       }
     }
@@ -128,7 +128,6 @@ const modelDetails = {
     document.getElementById("flowModelTitle").innerHTML = dfm.currentPage.flow_model_title;
     document.getElementById("pageHierarchicalId").innerText = dfm.currentPage.page.hierarchical_id;
     document.getElementById("pageTitle").innerHTML = dfm.currentPage.page.title;
-    console.log("Page Title:", dfm.currentPage.page.title);
 
     document.getElementById("pageDetailsButton").style.display = "inline";
     if (dfm.userStatus === "editor" || dfm.userStatus === "owner" || dfm.currentPage.isUserAuthor()) {
@@ -630,7 +629,7 @@ const modelDetails = {
       .catch (error => {
           document.getElementById("importStatus").innerText = `Problem uploading file ${filename}`;
           document.getElementById("importStatus").style.display = "block";
-          console.log("Problem uploading import file " + filename + " " + error);
+          console.error(`importModel: error - ${error}`);
       });
     }
   },

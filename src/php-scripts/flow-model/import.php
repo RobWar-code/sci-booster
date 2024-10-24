@@ -451,6 +451,7 @@ function modelExists($flowModelId) {
 function modelTitleExists($flowModelTitle) {
     global $dbConn;
 
+    $flowModelTitle = htmlspecialchars($flowModelTitle, ENT_QUOTES, "UTF-8", false);
     $flowModelId = null;
     $sql = "SELECT id FROM flow_model WHERE title = ?";
     $stmt = $dbConn->prepare($sql);
@@ -500,6 +501,25 @@ function importPageData($pageData) {
     }
     else {
         // Do Updates
+        // Update the model title
+        $flowModelTitle = htmlspecialchars($pageData[0]['flow_model_title'], ENT_QUOTES, "UTF-8", false);
+        $flowModelId = $pageData[0]['flow_model_id'];
+        $sql = "UPDATE flow_model SET title = ? WHERE id = $flowModelId";
+        $stmt = $dbConn->prepare($sql);
+        if ($stmt === false) {
+            error_log("importPageData: problem with model update sql {$dbConn->error}", 0);
+            $response = ["result"=>false, "status"=>"importPageData: problem with model update sql <br>"];
+            echo json_encode($response);
+            exit;
+        }
+        $stmt->bind_param("s", $flowModelTitle);
+        if (!$stmt->execute()) {
+            error_log("importPageData: Could not update flow model record", 0);
+            $response = ["result"=>false, "status"=>"importPageData: could not update flow_model record"];
+            echo json_encode($response);
+            exit;
+        }
+        
         if ($pageData[0]['complete']) {
             // Do page deletions from database
             $currentPageList = [];

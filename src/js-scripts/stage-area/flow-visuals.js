@@ -94,7 +94,6 @@ dfm.FlowVisuals = class {
         node.active = true;
         node.nodeNum = nodeNum;
         let label = miscHTML.convertHTMLEntities(nodeItem.label);
-        console.log("label:", label);
         node.label = label;
         node.nodeGroup = new Konva.Group({
             x: x,
@@ -504,10 +503,6 @@ dfm.FlowVisuals = class {
         this.flows.push(visualFlowDrawing);
 
         // Add the flow details to the current page
-        // Debug
-        if (this.currentFlow.label === "Drilling Mud + Debris") {
-            console.log("currentFlow:", this.currentFlow);
-        }
         dfm.currentPage.updateFlow(this.currentFlow);
 
         // Remove the current flow details
@@ -585,14 +580,12 @@ dfm.FlowVisuals = class {
         let fontFamily = dfm.nodeTemplate.fontFamily; 
         let textWidth = this.calculateTextWidth(textItem, fontSize, fontFamily);
         let rectHeight = dfm.flowFontSize + dfm.flowOptionHeight + 6;
-        console.log("rectheight = 1:", rectHeight);
         let textHeight = 0;
         if (textWidth >= dfm.maxFlowLabelWidth) {
             textWidth = dfm.maxFlowLabelWidth;
             ({textWidth, textHeight} = this.calculateTextHeight(textItem, textWidth, fontSize, fontFamily)); 
             textWidth += 6;
             rectHeight = textHeight + dfm.flowOptionHeight + 6;
-            console.log("rectHeight > 1 line:", rectHeight);
         }
         let labelWidth = textWidth + 7;
 
