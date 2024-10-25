@@ -112,12 +112,16 @@ anyway.
 			"keywords": "",
 			"description": "",
 			"user_authors": [
-				"id": , // May be null (id of the user)
-				"username": ""
+				{
+					"id": , // May be null (id of the user)
+					"username": ""
+				}
 			], // Authors who are users
 			"external_authors": [
-				"id": , // May be null (id of the author)
-				"author": ""
+				{
+					"id": , // May be null (id of the author)
+					"author": ""
+				}
 			],
 			"references": [
 				{

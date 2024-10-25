@@ -36,6 +36,20 @@ body {
     margin-bottom: 4px;
 }
 
+/* Navigation */
+.navBlock {
+    background-color: #d000d0;
+}
+
+.navbar-brand {
+    color: #e0e000;
+    font-weight: bold;
+}
+
+.nav-link {
+    color: #202060;
+}
+
 /* Flow Model Page */
 .pageHead {
     font-size: 20px;

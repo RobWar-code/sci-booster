@@ -10,7 +10,11 @@ Contents
 
     Reload and check the exported models
 
-    Do the Import Info Page
+    Save login details and current model when changing page from flow-diagram
+
+    * Scale the font in the <pre> block of the import help page
+
+    * Do the Import Info Page
     
     Clear debug from code
 

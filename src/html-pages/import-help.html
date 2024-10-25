@@ -3,13 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../styles/styles.css">
+    <link rel="stylesheet" href="/sci-booster/src/lib/bootstrap/bootstrap-5.1.3-dist/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">    <link rel="stylesheet" href="../styles/styles.css">
     <link rel="stylesheet" href="../styles/import-styles.css">
     <title>Sci-Booster Import Help</title>
 </head>
 <body>
+  <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid navBlock">
+        <a class="navbar-brand" href="./flow-diagram.html">Sci-Booster</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" 
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"><img src="/sci-booster/src/images/zoom-details.png" width="20" height="20"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Intro</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="./flow-diagram.html">Flow Models</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+  </nav>
 
-    <pre>
+  <!-- Main Page Content-->
+  <div class="container">
+  
+    <div class="row">
+      <div class="col text-center">
+        <h1>Information for Import and Export of Flow Diagram JSON Files</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-0 col-md-1"></div>
+      <div class="col-sm-12 col-md-10">
+        <p>
+          This page provides a description of and specification for the format 
+          of the JSON files used by the Sci-Booster Import and Export operations.
+          Click the button below to copy the specification into your clipboard.
+          You can pass this to a text AI such as ChatGPT to save time on the 
+          production of the diagrams.
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-5"></div>
+      <div class="col-sm-2 text-center">
+        <button class="textButton" onclick="copySpec()">Copy Specification</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-8 text-center" id="copyMessage"></div>
+    </div>
+  </div>
+    <div id="specDiv">
+        <pre id="specText">
 ### JSON Inputs / Outputs
 
 This feature allows for the importation/exportation of data for 
@@ -240,7 +295,34 @@ calculated from flow label text anyway.
   ]
 }
 ```        
-    </pre>
-    
+        </pre>
+    </div>
+
+<script src="/sci-booster/src/lib/bootstrap/bootstrap-5.1.3-dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  window.addEventListener('resize', ()=>{
+    let specElem = document.getElementById("specText");
+    let w = specElem.offsetWidth;
+    let newFontSize = 10;
+    if (w > 400) {
+      newFontSize = Math.floor(10 * w/400);
+    }
+    specElem.style.fontSize = newFontSize + "px";
+  });
+
+  function copySpec() {
+    var codeText = document.getElementById('specText').innerText;
+
+    // Use the Clipboard API to copy the text
+    navigator.clipboard.writeText(codeText).then(function() {
+        // Success message
+        document.getElementById('copyMessage').innerText = 'Code copied to clipboard!';
+    }).catch(function(err) {
+        // Error message
+        document.getElementById('copyMessage').innerText = 'Failed to copy text: ' + err;
+    });
+}
+
+</script>
 </body>
 </html>

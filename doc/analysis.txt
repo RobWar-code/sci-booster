@@ -10,6 +10,7 @@ Contents
 	Data Encoding Policies
 	Display Menu
 	Introductory Page
+	Import Help Page
 	Login/Register Modal
 		Signup as User
 		Signup as Editor
@@ -131,13 +132,14 @@ Contents
 	used to display them.
 
 <h1>Display Menu
-	The main menu appears on both pages of the sci-booster website.
+	The main menu appears on each of the sci-booster website.
 	It is a basic bootstrap navbar with the following components:
 	Icon Image
 	Sci-Booster Title
 	Menu
 		Intro
 		Flows
+		Import Help
 		Login/Register
 		Narayana-Art
 
@@ -283,6 +285,21 @@ Contents
 	and summarises the flow model approach to learning and describing
 	systems.
 
+<h1>Import Help Page
+	The Import Help page is provide to guide the user in the use and uses
+	of the Import and Export operations.
+
+	It includes a clipboard copy text giving the specification which
+	could be used by an AI such as ChatGPT to produce appropriate
+	JSON representations of the flow diagrams for import.
+
+	There are one or two paragraphs of explanation preceding the
+	<pre> block that is provided for the purposes of copying to
+	the clipboard.
+
+	The <pre> block text is arranged to that is reasonably legible
+	on a 390 pixel wide display.
+	
 <h1>Flow Diagram Page
 	see also: doc/FlowPage.svg
 

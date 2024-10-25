@@ -1,4 +1,16 @@
+#specDiv {
+    width: 100%;
+}
+
 pre {
-    font-size: small;
+    margin: auto;
+    width: 60%;
+    min-width: 400px;
+    max-width: 600px;
+    padding-left: 2px;
+    font-family: "Space Mono", monospace;
+    font-size: 10px;
+    color: white;
+    background-color: #404040;
     overflow-x: auto;
 }
