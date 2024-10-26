@@ -486,5 +486,52 @@ const flowModelPage = {
                 console.error("doZoomPage: hierarchical owner page not found.");
             }
         }
+    },
+
+    gotoPage: function(pageTitle) {
+        // Save the current settings in local storage
+        let pageSettings = {
+            pageSet: dfm.currentPageSet,
+            modelChanged: dfm.modelChanged,
+            username: dfm.username, 
+            userStatus: dfm.userStatus
+        }
+        if (dfm.currentPageSet) {
+            pageJSONObj = dfm.currentPage.prepareJSONObject();
+            pageSettings.page = pageJSONObj;
+        }
+        settingsJSON = JSON.stringify(pageSettings);
+        localStorage.setItem("pageSettings", settingsJSON);
+        if (pageTitle === "Introduction") {
+            window.location = "./intro.html";
+        }
+        else if (pageTitle === "Import Help") {
+            window.location = "./import-help.html";
+        }
+    },
+
+    restorePage: function() {
+        // Collect the page data from local storage
+        let pageSettings = JSON.parse(localStorage.getItem("pageSettings"));
+        if (pageSettings) {
+            dfm.username = pageSettings.username;
+            dfm.userStatus = pageSettings.userStatus;
+            dfm.currentPageSet = pageSettings.pageSet;
+            if (dfm.currentPageSet) {
+                dfm.currentPage = new dfm.FlowPageData();
+                dfm.currentPage.setPageData(pageSettings.page);
+                dfm.currentVisual = new dfm.FlowVisuals();
+                dfm.currentVisual.redoPage();
+                dfm.modelChanged = pageSettings.modelChanged;
+                // Display titles etc.
+                document.getElementById("flowModelTitle").innerText = 
+                    miscHTML.convertHTMLEntities(dfm.currentPage.flow_model_title);
+                document.getElementById("pageTitle").innerText =
+                    miscHTML.convertHTMLEntities(dfm.currentPage.page.title);
+                document.getElementById("pageHierarchicalId").innerText = dfm.currentPage.page.hierarchical_id;
+                document.getElementById("pageDetailsButton").style.display = "block";
+                this.displayModelEditOptions();
+            }
+        }
     }
 }

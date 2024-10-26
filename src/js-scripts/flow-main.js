@@ -77,6 +77,7 @@ document.addEventListener("graphicsLoaded", (e) => {
 function flowMain() {
     flowModelPage.getModelSelectionList();
     stageApp.startStageApp();
+    flowModelPage.restorePage();
 };
 
 function loadDrawingImages() {

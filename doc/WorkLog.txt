@@ -8,26 +8,29 @@ Contents
 
     Flow label sometimes not altered when changed in flow details?
 
-    Reload and check the exported models
+    * Reload and check the exported models
 
-    Save login details and current model when changing page from flow-diagram
+    * Save login details and current model when changing page from flow-diagram
 
     * Scale the font in the <pre> block of the import help page
 
     * Do the Import Info Page
-    
+
+    * Favicon icon for sci-booster
+
+    * Do the introductory page
+        Include details of the JSON import model format
+
+
     Clear debug from code
 
     Block robot logins/register
 
-    Favicon icon for sci-booster
-
-    Do the introductory page
-        Include details of the JSON import model format
+    Forgot Password get out - include email in login details
 
     Adjust the README for building JSON models with ChatGPT
 
-        Test and build 5 example model imports with ChatGPT
+    Test and build 3 example model imports with ChatGPT
     
     Update the README with user features changes
 

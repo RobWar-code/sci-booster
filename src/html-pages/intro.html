@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/sci-booster/src/images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/sci-booster/src/lib/bootstrap/bootstrap-5.1.3-dist/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">    <link rel="stylesheet" href="../styles/styles.css">
+    <link rel="stylesheet" href="../styles/import-styles.css">
+    <title>Sci-Booster Introduction</title>
+</head>
+<body>
+  <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid navBlock">
+        <a class="navbar-brand" href="./flow-diagram.html">Sci-Booster</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" 
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"><img src="/sci-booster/src/images/zoom-details.png" width="20" height="20"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="./flow-diagram.html">Flow Models</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="./import-help.html">Import Help</a>
+            </li>
+            </ul>
+        </div>
+      </div>
+  </nav>
+  <div class="container">
+    <div class="row">
+        <div class="col text-center">
+            <header>
+                <h1>Introduction To Hierarchical Flow Modelling</h1>
+            </header>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-0 col-md-1"></div>
+        <div class="col-sm-12, col-md-10">
+            <section>
+            <p>
+                The purpose of this site is to provide a simple and straight forward
+                means of preparing, accessing and presenting information about systems.
+                These can be any sort of system whether natural, technological, chemical
+                or conceptual.
+            </p>
+            <p>
+                The basic approach consists of tracking flows (whether of data, chemicals 
+                or energy) and their transformations through various physical or conceptual
+                devices or systems.
+            </p>
+            <p>
+                Consider for example the flow of petrol to power a car, we might represent 
+                this as:
+            </p>
+            <p>
+                Petrol Station --&gt;-(flow:Petrol)-- Car --&gt-(flow:Exhaust)-- Atmosphere
+            </p>
+            <p>
+                In this case the component nodes of the flow are Petrol Station, Car and 
+                Atmosphere and the flows are Petrol and Exhaust.
+            </p>
+            <p>
+                Because this is a hierarchical modelling system, we can provide more details 
+                of say, the Car, ie:
+            </p>
+            <p>
+                (flow:Petrol)--&gt;--Cylinder--&gt;-(flow:Motion)-- Piston --&gt;-- Drive Assembly
+            </p>
+            <p>
+                The Flow Modelling page provides both for the diagramming of such flows
+                and their hierarchical further definitions.
+            </p>
+            <p>
+                Facilities are also provided for adding graphics and web links for further
+                information to the diagrams.
+            </p>
+            <p>
+                In addition the diagrams can be imported or exported for external creation or
+                editing in a json format, which also makes it suitable for use in other
+                applications.
+            </p>
+            </section>
+        </div>
+    </div>
+  </div>
+<script src="/sci-booster/src/lib/bootstrap/bootstrap-5.1.3-dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
