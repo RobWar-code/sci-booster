@@ -42,7 +42,7 @@
             echo json_encode($response);
             exit;
         }
-        $stmt->bind_params("s", $tempPassword);
+        $stmt->bind_param("s", $tempPassword);
         if (!$stmt->execute()) {
             $response = ['result'=>false, 'status'=>"sendLinkEmail: pass update failed {$dbConn->error}"];
             echo json_encode($response);
@@ -68,7 +68,9 @@
         </head>
         <body>
             <p>{$textMessage}</p>
-            <p><a href='https://narayana-art.co.uk/sci-booster/src/php_scripts/users/redo-password.php?param=$tempPassword'>Click here to confirm your email</a></p>
+            <p><a href='https://narayana-art.co.uk/sci-booster/src/php_scripts/users/redo-password.php?param=$tempPassword";
+        $message .= "&username=$username'>";
+        $message .= "Click here to create a new password</a></p>
         </body>
         </html>
         ";
