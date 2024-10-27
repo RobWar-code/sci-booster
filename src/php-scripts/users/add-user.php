@@ -21,6 +21,13 @@
         exit();
     }
 
+    $email = $inputData['email'];
+    if ($email === "") {
+        $responseObj = ['result' => FALSE, 'error' => 'add-user.php email is null'];
+        echo json_encode($responseObj);
+        exit();
+    }
+
     if ($inputData['password'] === "") {
         $responseObj = ['result' => FALSE, 'error' => "add-user.php password is null"];
         echo json_encode($responseObj);
@@ -88,13 +95,13 @@
         // Convert the password
         $hashedPassword = password_hash($inputData['password'], PASSWORD_BCRYPT, ['cost' => 10]);
 
-        $sql = "INSERT INTO user (username, password, status) VALUES (?,?,?)";
+        $sql = "INSERT INTO user (username, email, password, status) VALUES (?,?,?,?)";
         $stmt = $dbConn->prepare($sql);
         if ($stmt === FALSE) {
             error_log("add-user.php: problem with $stmt prepare" . $dbConn->error, 0);
             return FALSE;
         }
-        $stmt->bind_param('sss', $inputData['username'], $hashedPassword, $inputData['status']);
+        $stmt->bind_param('ssss', $inputData['username'], $inputData['email'], $hashedPassword, $inputData['status']);
         if ($stmt->execute()) {
             return TRUE;
         }

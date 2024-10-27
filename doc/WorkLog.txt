@@ -21,12 +21,19 @@ Contents
     * Do the introductory page
         Include details of the JSON import model format
 
-
     Clear debug from code
 
     Block robot logins/register
 
     Forgot Password get out - include email in login details
+        Amend analysis
+        Amend create-table.php
+        Add the field to the login register modal
+        Amend the register interface code
+        Amend the register php code
+        Add a forgot password procedure and link button
+        
+
 
     Adjust the README for building JSON models with ChatGPT
 

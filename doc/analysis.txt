@@ -16,6 +16,7 @@ Contents
 		Signup as Editor
 		Signup as Owner
 		Login
+			Forgot Password
 		User Type Privileges
 		Login During Edit Modes
 	Flow Diagram Page
@@ -250,6 +251,20 @@ Contents
 	If the data is validated, it is transmitted to the login.php
 	script which requires the username and password and which
 	sends back the status (user type).
+
+<h3>Forgot Password
+
+	A forgot password action button is also included which sends
+	a message with a link to the user's email address. This
+	includes a recovery password from the temp password table 
+	which is only usable once.
+
+	This supplies a link to the forgot-password.html form
+	which requests a new password from the user and this
+	is sent to the procedure forgot-password.php along with
+	the temporary password. This checks the temporary password 
+	and updates the user's password if it is valid. The
+	temporary password and is then deleted.
 
 <h2>User Type Privileges
 

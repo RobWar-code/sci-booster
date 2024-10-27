@@ -131,6 +131,12 @@ const login = {
             errElem.style.display = "block";
             return;
         }
+        let email = document.getElementById("email").value;
+        if (!miscHTML.validateEmail(email)){
+            errElem.innerText = "Invalid Email Address";
+            errElem.style.display = "block";
+        }
+
         let password = document.getElementById("password").value;
         password = Misc.stripHTML(password);
         if (password === "") {
@@ -154,6 +160,7 @@ const login = {
             let signupObj = {
                 request: "addUser",
                 username: username,
+                email: email,
                 password: password,
                 status: dfm.loginOption,
                 editor_key: editorKey

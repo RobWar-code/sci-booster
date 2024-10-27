@@ -80,17 +80,16 @@
         $result = $dbConn->query($sql);
         if (!$result) {
             $response = ['result'=>false, 'status'=>"Failed to clear page_user_link table: " . $dbConn->error];
+            return $response;
         }
-/*
+
         $sql = "DELETE FROM user";
         $result = $dbConn->query($sql);
         if (!$result) {
-            echo "Failed to clear user table<br>" . $dbConn->error . "<br>";
+            $response = ['result'=>false, "Failed to clear user table" . $dbConn->error];
+            return $response;
         }
-        else {
-            echo "Cleared user<br>";
-        }
-*/        
+        
         $sql = "DELETE FROM page";
         $result = $dbConn->query($sql);
         if (!$result) {

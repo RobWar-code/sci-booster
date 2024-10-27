@@ -68,6 +68,7 @@ and labels can be easily added to them.
 - conversion_formula
 - user
 - user_page_link
+- temp_password
 - editor_key
 
 
@@ -165,11 +166,16 @@ Links
 #### user
 - id - Auto Unique Long Int
 - username - Char 64
+- email - Char 128
 - password - Password
 - status - Char 16 - "owner"/"editor"/"user"
 
 #### editor_key
 - key - VarChar(255)
+
+#### temp_password
+- id - Auto Unique Long Int
+- password - Char 12 
 
 #### user_page_link
 - id - Auto Unique Long Int

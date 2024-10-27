@@ -15,9 +15,24 @@
     // dropTables();
 
     /*
+    // page_user_link Table
+    $sql = "DROP TABLE page_user_link";
+    if (!$dbConn->query($sql)) {
+        echo "Problem dropping table page_user_link {$dbConn->error}<br>";
+    }
+    */
+    // User Table
+    $sql = "DROP TABLE user";
+
+    if (!$dbConn->query($sql)) {
+        echo "Problem dropping user table";
+        exit;
+    }
+
     $sql = "CREATE TABLE user (
         id INT AUTO_INCREMENT PRIMARY KEY,
         username VARCHAR(64) NOT NULL UNIQUE,
+        email VARCHAR(128) NOT NULL,
         password VARCHAR(256) NOT NULL,
         status VARCHAR(16) NOT NULL
     )";
@@ -28,7 +43,36 @@
     else {
         echo "Problem adding user table: " . $dbConn->error . "<br>";
     }
+
+    // Add page user link
+    $sql = "CREATE TABLE page_user_link (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        page_id INT,
+        user_id INT,
+        FOREIGN KEY (page_id) REFERENCES page(id),
+        FOREIGN KEY (user_id) REFERENCES user(id)
+    )";
+    if ($dbConn->query($sql) === TRUE) {
+        echo "Added page_user_link table<br>";
+    }
+    else {
+        echo "Problem adding page_user_link table: " . $dbConn->error . "<br>";
+    }
+
+
+    // Temp Password Table
+    $sql = "CREATE TABLE temp_password (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        password VARCHAR(12) NOT NULL
+    )";
+    if ($dbConn->query($sql) === TRUE) {
+        echo "Added temp_password table<br>";
+    }
+    else {
+        echo "Problem adding temp_password table<br>";
+    }
     
+    /*
     $sql = "DROP TABLE IF EXISTS editor_key";
 
     if ($dbConn->query($sql) === TRUE) {
@@ -133,7 +177,6 @@
         echo "Problem adding reference table {$dbConn->error}<br>";
     }
 
-    */
     $sql = "DROP TABLE node";
     $result = $dbConn->query($sql);
     if (!$result) {
@@ -245,21 +288,6 @@
         echo "Problem adding external_author_page_link table: " . $dbConn->error . "<br>";
     }
 
-    // page_user_link Table
-    $sql = "CREATE TABLE page_user_link (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        page_id INT,
-        user_id INT,
-        FOREIGN KEY (page_id) REFERENCES page(id),
-        FOREIGN KEY (user_id) REFERENCES user(id)
-    )";
-
-    if ($dbConn->query($sql) === TRUE) {
-        echo "Added page_user_link table<br>";
-    }
-    else {
-        echo "Problem adding page_user_link table: " . $dbConn->error . "<br>";
-    }
     
     // conversion_formula Table
     $sql = "CREATE TABLE conversion_formula (
