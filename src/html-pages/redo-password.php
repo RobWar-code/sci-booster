@@ -8,6 +8,9 @@
 <body>
     <h2>Reset your Sci-Booster Password</h2>
     <?php
+        include_once __DIR__ . "/../php_scripts/db-connect.php";
+        include_once __DIR__ . "/../php-scripts/users/check-passkey.php";
+
         if (!isset($_GET['param'])) {
             echo "No temporary pass key<br>";
             exit;
@@ -23,32 +26,6 @@
         }
 
         echo "<p>Enter a new password for user: $username</p>";
-
-        function checkPasskey($passkey) {
-            global $dbConn;
-
-            $sql = "SELECT id FROM temp_password WHERE password = ?";
-            if(!$stmt->prepare($sql)) {
-                echo "checkPasskey: invalid sql<br>";
-                exit;
-            }
-            $stmt->bind_param("s", $passkey);
-            $result = $stmt->execute();
-            if (!$result) {
-                echo "checkPasskey: database access failed<br>";
-                exit;
-            }
-            else {
-                $stmt->store_result();
-                $stmt->bind_result($passId);
-                if (!$stmt->fetch()) {
-                    return false;
-                }
-                else {
-                    return true;
-                }
-            }
-        }
         
     ?>
     <form onsubmit="sendNewPassword()">

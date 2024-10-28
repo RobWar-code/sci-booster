@@ -1,5 +1,5 @@
 <?php
-    include_once __DIR__ . '../db-connect.php';
+    include_once __DIR__ . "/../db-connect.php";
 
     // Collect the JSON data
     header('Content-Type: application/json');
@@ -32,6 +32,9 @@
         $row = $result->fetch_assoc();
         $email = $row['email'];
 
+        // Debug
+        error_log("username: $username, email $email", 0);
+
         // Create a temporary password
         $tempPassword = createTempPassword();
         // Store it in the temp_password table
@@ -51,7 +54,7 @@
 
         // Send the email
         // Ensure the $from is a valid email address
-        $from = "rowaniar@netscape.net";
+        $from = "warnrobin@yahoo.com";
         $subject = "Forgot Sci-Booster Password";
         $textMessage = "Hello $username, You have told us that you forgot your password.";
         $textMessage .= " Click the link below to provide another.";
@@ -61,6 +64,8 @@
         $headers .= 'From: ' . $from . "\r\n";
 
         // Prepare the message
+        $message = "Hello World";
+        /*
         $message = "
         <html>
         <head>
@@ -74,14 +79,19 @@
         </body>
         </html>
         ";
+        */
 
         // Send the email
         if(mail($email, $subject, $message, $headers)) {
             $response=['result'=>true, 'status'=>"Email sent successfully to {$email}"];
             echo json_encode($response);
+            // Debug 
+            error_log("mail sent", 0);
         } else {
             $response=['result'=>false, 'status'=>"Failed to send email."];
             echo json_encode($response);
+            // Debug
+            error_log("mail not sent", 0);
         }
     }
 

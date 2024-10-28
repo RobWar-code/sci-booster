@@ -137,7 +137,7 @@
           <form id="signupForm" onsubmit="login.submitSignup(event)">
             <label for="username" class="modalFormLabel">Username:</label>
             <input type="text" class="modalFormItem" name="username" id="username">
-            <label for="email" class="modalFormLabel">email:</label>
+            <label for="email" class="modalFormLabel" id="emailLabel">email:</label>
             <input type="text" class="modalFormItem" name="email" id="email">
             <label for="password" class="modalFormLabel">Password:</label>
             <input type="password" class="modalFormItem" name="password" id="password">
@@ -148,6 +148,9 @@
             <p class="modalFormAdvisory" id="loginErrorsPara"></p>
             <button class="textButton" type="submit">Submit</button>
           </form>
+          <button class="text-button" id="forgotPasswordButton" onclick="login.forgotPassword()">
+            Forgot Password
+          </button>
           <p class="modalFormAdvisory" id="loginDonePara">LOGIN COMPLETED</p>
         </div>
         <div class="modalFormCancelDiv">

@@ -1,5 +1,6 @@
 <?php
-    include_once __DIR__ . "../db-connect.php";
+    include_once __DIR__ . "/../db-connect.php";
+    include_once __DIR__ . "/check-passkey.php";
 
     header('Content-Type: application/json');
 
@@ -10,6 +11,8 @@
     echo json_encode($response);
 
     function resetPassword($inputData) {
+        global $dbConn;
+
         if (!isset($inputData['username'])) {
             $response = ['result'=>false, 'status'=>"resetPassword: Missing username from data"];
             return $response;
@@ -26,4 +29,25 @@
             $response = ['result'=>false, 'status'=>"resetPassword: invalid pass key"];
             return $response;
         }
+
+        // Update the password
+        $sql = "UPDATE user SET password = '$password' WHERE username = '$username'";
+        $result = $dbConn->query($sql);
+        if (!$result) {
+            $response = ['result'=>false, 'status'=>"resetPassword: database update failed {$dbConn->error}"];
+            return $response;
+        }
+
+        // Clear the passkey token
+        $sql = "DELETE FROM temp_password WHERE password = '$passkey'";
+        $result = $dbConn->query($sql);
+        if (!$result) {
+            $response = ['result'=>false, 'status'=>"resetPassword: remove passkey failed {$dbConn->error}"];
+            return $response;
+        }
+
+        $response = ['result'=>true, 'status'=>"resetPassword: Password Accepted"];
+        return $response;
+
     }
+

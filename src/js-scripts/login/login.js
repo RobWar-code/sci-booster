@@ -97,6 +97,16 @@ const login = {
 
         // Display the signup/login form
         document.getElementById("signupDiv").style.display = "block";
+        if (loginOpt === "login") {
+            document.getElementById("forgotPasswordButton").style.display = "block";
+            document.getElementById("emailLabel").style.display = "none";
+            document.getElementById("email").style.display = "none";
+        }
+        else {
+            document.getElementById("forgotPasswordButton").style.display = "none";
+            document.getElementById("emailLabel").style.display = "inline";
+            document.getElementById("email").style.display = "inline";
+        }
         document.getElementById("loginErrorsPara").style.display = "none";
         document.getElementById("loginDonePara").style.display = "none";
 
@@ -290,5 +300,42 @@ const login = {
             console.error("Problem with login script call", error);
             return {result: false, error: "login Systems Error"};
         }};
+    },
+
+    forgotPassword: async function () {
+        // Check whether a user name has been entered
+        let username = document.getElementById("username").value;
+        if (username === "") {
+            document.getElementById("loginErrorsPara").innerText = "Username not submitted";
+            document.getElementById("loginErrorsPara").style.display = "block";
+            return;
+        }
+        // Send email link to user
+        let messageObj = {username: username};
+        let messageJson = JSON.stringify(messageObj);
+        try {
+            let response = await fetch(dfm.phpPath + "users/forgot-password.php", {
+                method: 'POST',
+                header: {
+                    "Content-Type": 'application/json'
+                },
+                body: messageJson
+            });
+
+            let responseData = await response.json();
+            if (!responseData.result) {
+                document.getElementById("loginErrorsPara").innerText = responseData.status;
+                document.getElementById("loginErrorsPara").style.display = "block";
+            }
+            else {
+                document.getElementById("loginErrorsPara").style.display = "none";
+                document.getElementById("loginDonePara").innerText = "Email with link for new password, sent to your address";
+                document.getElementById("loginDonePara").style.display = "block";
+            }
+        }
+        catch { (error) => {
+            console.log("Problem with password server call: " + error);
+            return;
+        }}
     }
 }
