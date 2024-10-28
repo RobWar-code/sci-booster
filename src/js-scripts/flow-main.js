@@ -1,6 +1,3 @@
-// Site Details
-dfm.phpPath = "/sci-booster/src/php-scripts/";
-
 // User Details
 dfm.userStatus = "unregistered"; // Other options are "user", "editor", "owner"
 dfm.username = "";

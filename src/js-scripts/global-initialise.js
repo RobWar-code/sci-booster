@@ -21,3 +21,5 @@ const GLOBALS = {
 
 // The global application object
 var dfm = {};
+dfm.phpPath = "/sci-booster/src/php-scripts/";
+dfm.jsPath = "/sci-booster/src/js-scripts";

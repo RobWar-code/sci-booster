@@ -59,6 +59,7 @@
     <p id="warning" style="color: red;"></p>
     <a href="./flow_diagram.html">Return to Flow Diagram page</a>
 
+<script src="../js-scripts/global-initialise.js"></script>
 <script>
     async function sendNewPassword() {
         let password = document.getElementById("password").value;
@@ -76,7 +77,7 @@
         }
         let messageJSON = JSON.stringify(messageObj);
         try {
-            let response = await fetch("/sci-booster/src/php-scripts/user/reset_password.php", {
+            let response = await fetch(dfm.phpPath + "users/reset_password.php", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
