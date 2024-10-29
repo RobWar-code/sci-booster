@@ -67,6 +67,7 @@ const login = {
             document.getElementById("signupOpt").style.display = "none";
             document.getElementById("editorSignupOpt").style.display = "block";
             document.getElementById("ownerSignupOpt").style.display = "none";
+            document.getElementById("profileOpt").style.display = "block";
         }
         else {
             document.getElementById("loginOpt").style.display = "none";
@@ -74,13 +75,14 @@ const login = {
             document.getElementById("signupOpt").style.display = "none";
             document.getElementById("editorSignupOpt").style.display = "none";
             document.getElementById("ownerSignupOpt").style.display = "none";
+            document.getElementById("profileOpt").style.display = "block";
         }
 
         // Hide the login options
         document.getElementById("signupDiv").style.display = "none";
     },
 
-    doLoginOpt: function (loginOpt) {
+    doLoginOpt: async function (loginOpt) {
         // Clear the signup options display
         document.getElementById("loginOptionsDiv").style.display = "none";
 
@@ -102,6 +104,10 @@ const login = {
             document.getElementById("emailLabel").style.display = "none";
             document.getElementById("email").style.display = "none";
         }
+        else if (loginOpt === "profile") {
+            document.getElementById("emailLabel").style.display = "inline";
+            document.getElementById("email").style.display = "inline";
+        }
         else {
             document.getElementById("forgotPasswordButton").style.display = "none";
             document.getElementById("emailLabel").style.display = "inline";
@@ -110,10 +116,25 @@ const login = {
         document.getElementById("loginErrorsPara").style.display = "none";
         document.getElementById("loginDonePara").style.display = "none";
 
-        // Clear any residual text
-        document.getElementById("username").value = "";
-        document.getElementById("password").value = "";
-        document.getElementById("editorKey").value = "";
+        let userDetails = null;
+        if (loginOpt === "profile") {
+            // Fetch the user details from the user table
+            userDetails = await fetchUserDetails(dfm.username);
+            if (userDetails != null) {
+                document.getElementById("username").value = dfm.username;
+                document.getElementById("username").disabled = true;
+                document.getElementById("email").value = userDetails.email;
+                document.getElementById("password").value = userDetails.password;
+            } 
+        }
+        else {
+            // Clear any residual text
+            document.getElementById("username").value = "";
+            document.getElementById("username").disabled = false;
+            document.getElementById("email").value = "";
+            document.getElementById("password").value = "";
+            document.getElementById("editorKey").value = "";
+        }
 
         if (loginOpt === "editor") {
             document.getElementById("editorKeyDiv").style.display = "block";
@@ -167,26 +188,45 @@ const login = {
                 }
             }
 
-            let signupObj = {
-                request: "addUser",
-                username: username,
-                email: email,
-                password: password,
-                status: dfm.loginOption,
-                editor_key: editorKey
-            }
-
             let userAdded = false;
-            let responseObj = await this.addUser(signupObj);   
-            if ("error" in responseObj) {
-                errElem.innerText = "addUser Problem: " + responseObj.error;
-                errElem.style.display = "block";
+            let userUpdated = false;
+            if (dfm.loginOption != "profile") {
+                let signupObj = {
+                    request: "addUser",
+                    username: username,
+                    email: email,
+                    password: password,
+                    status: dfm.loginOption,
+                    editor_key: editorKey
+                }
+
+                let responseObj = await this.addUser(signupObj);   
+                if ("error" in responseObj) {
+                    errElem.innerText = "addUser Problem: " + responseObj.error;
+                    errElem.style.display = "block";
+                }
+                else {
+                    userAdded = true;
+                }
             }
             else {
-                userAdded = true;
-            }
+                let signupObj = {
+                    request: "updateUser",
+                    username: username,
+                    email: email,
+                    password: password,
+                }
 
-            if (userAdded) {
+                let responseObj = await this.updateUser(signupObj);   
+                if ("error" in responseObj) {
+                    errElem.innerText = "updateUser Problem: " + responseObj.error;
+                    errElem.style.display = "block";
+                }
+                else {
+                    userUpdated = true;
+                }
+            }
+            if (userAdded || userUpdated) {
                 let messageElem = document.getElementById("loginDonePara");
                 messageElem.style.display = "block";
                 setTimeout(() => {
@@ -337,5 +377,13 @@ const login = {
             console.log("Problem with password server call: " + error);
             return;
         }}
+    },
+
+    fetchUserDetails: async function(username) {
+        try {
+            response = await fetch(dfm.phpPath + "users/fetch-user.php", {
+                method: 'POST',
+            })
+        }
     }
 }

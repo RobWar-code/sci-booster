@@ -21,7 +21,13 @@ Contents
     * Do the introductory page
         Include details of the JSON import model format
 
+    Test and build 3 example model imports with ChatGPT
+
+    Add a profile editing modal (only visible if logged in)
+    
     Clear debug from code
+
+    Set-up the narayana-art.co.uk/sci-booster web-page
 
     Block robot logins/register
 
@@ -32,13 +38,13 @@ Contents
         Amend the register interface code
         Amend the register php code
         Add a forgot password procedure and link button
+        Display the message for email sent on the main page
+        Set-up to do the testing on the narayana-art.co.uk website
         
 
 
     Adjust the README for building JSON models with ChatGPT
 
-    Test and build 3 example model imports with ChatGPT
-    
     Update the README with user features changes
 
     In the README Plan the release procedures
