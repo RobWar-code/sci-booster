@@ -12,6 +12,7 @@
     function fetchUser($username) {
         global $dbConn;
 
+        // Debug
         $sql = "SELECT * FROM user WHERE username = '$username'";
         $result = $dbConn->query($sql);
         if (!$result) {

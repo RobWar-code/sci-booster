@@ -140,13 +140,19 @@
           <form id="signupForm" onsubmit="login.submitSignup(event)">
             <label for="username" class="modalFormLabel">Username:</label>
             <input type="text" class="modalFormItem" name="username" id="username">
-            <label for="email" class="modalFormLabel" id="emailLabel">email:</label>
-            <input type="text" class="modalFormItem" name="email" id="email">
+            <div id="emailDiv">
+              <label for="email" class="modalFormLabel" id="emailLabel">email:</label>
+              <input type="text" class="modalFormItem" name="email" id="email">
+            </div>
             <label for="password" class="modalFormLabel">Password:</label>
             <input type="password" class="modalFormItem" name="password" id="password">
             <div id="editorKeyDiv">
               <label for="editorKey" class="modalFormLabel">Editor Key:</label>
               <input type="password" class="modalFormItem" name="editorKey" id="editorKey">
+            </div>
+            <div id="currentPasswordDiv">
+              <label for="currentPassword" class="modalFormLabel">Old Password:</label>
+              <input type="password" class="modalFormItem" name="currentPassword" id="currentPassword">
             </div>
             <p class="modalFormAdvisory" id="loginErrorsPara"></p>
             <button class="textButton" type="submit">Submit</button>

@@ -17,6 +17,7 @@ Contents
 		Signup as Owner
 		Login
 			Forgot Password
+		Login Profile
 		User Type Privileges
 		Login During Edit Modes
 	Flow Diagram Page
@@ -265,6 +266,17 @@ Contents
 	the temporary password. This checks the temporary password 
 	and updates the user's password if it is valid. The
 	temporary password and is then deleted.
+
+<h2>Login Profile
+	The Profile option button appears on the Login options
+	modal if the user is already logged in.
+
+	The profile details are presented when the user clicks
+	the Profile option on the Login modal. This presents
+	the user with Username, Email Password and Old Password
+	fields. These can be edited in order to update the details.
+	The user must submit the old password before
+	the submission can take effect.
 
 <h2>User Type Privileges
 

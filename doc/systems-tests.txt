@@ -156,6 +156,42 @@ Contents
     * Ensure an error message appears
     * Signup as editor warner4, welcome423
 
+    Add a new user warner5
+    Click the login option
+    Ensure that the login modal has the Profile button displayed
+    Click the Profile button
+    Ensure that the fields: Username, Email, Password and Old Password are displayed
+    Change the Email
+    Enter the current password for warner5
+    Ensure that the modal is cleared
+    Click the Login option
+    Ensure that the login Modal is displayed
+    Click the Profile option
+    Ensure that the details for the user include the new Email
+    Update the Username (warner6)
+    Enter the current password in Old Password
+    Click the submit button
+    Ensure that the modal is cleared
+    Click the Login option
+    Ensure that the Login Modal is displayed
+    Click the Profile button
+    Ensure that the new username is displayed
+    Enter a new password
+    Enter the old password
+    Click submit
+    Ensure that the modal is cleared
+    Click the login option
+    Ensure that the login modal is displayed
+    Click the Logout option
+    Ensure that the Login modal is cleared
+    Click the Login option
+    Ensure that the login modal is displayed
+    Enter the new username (warner6)
+    Enter the new password
+    Click Submit
+    Ensure that the login message is displayed
+    Ensure that the login Modal is cleared from the display
+
 <h2>User Editing Tests
 <h3>Model Details Input
     * Login as User - warner3

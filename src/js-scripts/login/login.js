@@ -101,17 +101,14 @@ const login = {
         document.getElementById("signupDiv").style.display = "block";
         if (loginOpt === "login") {
             document.getElementById("forgotPasswordButton").style.display = "block";
-            document.getElementById("emailLabel").style.display = "none";
-            document.getElementById("email").style.display = "none";
+            document.getElementById("emailDiv").style.display = "none";
         }
         else if (loginOpt === "profile") {
-            document.getElementById("emailLabel").style.display = "inline";
-            document.getElementById("email").style.display = "inline";
+            document.getElementById("emailDiv").style.display = "block";
         }
         else {
             document.getElementById("forgotPasswordButton").style.display = "none";
-            document.getElementById("emailLabel").style.display = "inline";
-            document.getElementById("email").style.display = "inline";
+            document.getElementById("emailDiv").style.display = "block";
         }
         document.getElementById("loginErrorsPara").style.display = "none";
         document.getElementById("loginDonePara").style.display = "none";
@@ -119,15 +116,16 @@ const login = {
         let userDetails = null;
         if (loginOpt === "profile") {
             // Fetch the user details from the user table
-            userDetails = await fetchUserDetails(dfm.username);
+            userDetails = await this.fetchUserDetails(dfm.username);
             if (userDetails != null) {
                 document.getElementById("username").value = dfm.username;
-                document.getElementById("username").disabled = true;
                 document.getElementById("email").value = userDetails.email;
-                document.getElementById("password").value = userDetails.password;
+                document.getElementById("password").value = "XXXABCDE";
+                document.getElementById("currentPasswordDiv").style.display = "block";
             } 
         }
         else {
+            document.getElementById("currentPasswordDiv").style.display = "none";
             // Clear any residual text
             document.getElementById("username").value = "";
             document.getElementById("username").disabled = false;
@@ -156,26 +154,33 @@ const login = {
         // Validate the username and password
         let errElem = document.getElementById("loginErrorsPara");
         let username = document.getElementById("username").value;
-        username = Misc.stripHTML(username);
-        if (username === "") {
+        let usernamePattern = /^[a-zA-Z0-9]+$/
+        if (!usernamePattern.test(username)) {
             errElem.innerText = "Empty or invalid username";
             errElem.style.display = "block";
             return;
         }
-        let email = document.getElementById("email").value;
-        if (!miscHTML.validateEmail(email)){
-            errElem.innerText = "Invalid Email Address";
-            errElem.style.display = "block";
+        let email = "";
+        if (dfm.loginOption != "login") {
+            email = document.getElementById("email").value;
+            if (!miscHTML.validateEmail(email)){
+                errElem.innerText = "Invalid Email Address";
+                errElem.style.display = "block";
+            }
         }
 
         let password = document.getElementById("password").value;
+        let passwordChanged = false;
         password = Misc.stripHTML(password);
         if (password === "") {
             errElem.innerText = "Empty or invalid password";
             errElem.style.display = "block";
             return;
         }
-
+        if (password != "XXXABCDE") {
+            passwordChanged = true;
+        }
+        
         if (dfm.loginOption != "login") {
             let editorKey = "";
             if (dfm.loginOption === "editor") {
@@ -204,25 +209,49 @@ const login = {
                 if ("error" in responseObj) {
                     errElem.innerText = "addUser Problem: " + responseObj.error;
                     errElem.style.display = "block";
+                    return;
                 }
                 else {
                     userAdded = true;
                 }
             }
             else {
+                // Profile Resubmission
+                // Check the current password
+                let oldPassword = document.getElementById("currentPassword").value;
+                if (oldPassword === "") {
+                    errElem.innerText = "Missing current(old) password";
+                    return;
+                }
+                let loginObj = {
+                    request: "login",
+                    username: dfm.username,
+                    password: oldPassword
+                }
+                resultObj = await this.doLoginRequest(loginObj);
+                if (!resultObj.result) {
+                    errElem.innerText = resultObj.error;
+                    errElem.style.display = "block";
+                    return;
+                }
+    
                 let signupObj = {
-                    request: "updateUser",
+                    request: "update user",
+                    old_username: dfm.username,
                     username: username,
                     email: email,
                     password: password,
+                    password_entered: passwordChanged
                 }
 
                 let responseObj = await this.updateUser(signupObj);   
-                if ("error" in responseObj) {
-                    errElem.innerText = "updateUser Problem: " + responseObj.error;
+                if (!responseObj.result) {
+                    errElem.innerText = "updateUser Problem: " + responseObj.status;
                     errElem.style.display = "block";
+                    return;
                 }
                 else {
+                    dfm.username = username;
                     userUpdated = true;
                 }
             }
@@ -233,7 +262,7 @@ const login = {
                     messageElem.style.display = "none";
                     document.getElementById("loginDetails").style.display = "none";
                 }, 3000);
-                dfm.userStatus = dfm.loginOption;
+                if (dfm.loginOption != "profile") dfm.userStatus = dfm.loginOption;
                 dfm.username = username;
                 dfm.loginOption = "";
                 flowModelPage.displayModelEditOptions();            
@@ -356,7 +385,7 @@ const login = {
         try {
             let response = await fetch(dfm.phpPath + "users/forgot-password.php", {
                 method: 'POST',
-                header: {
+                headers: {
                     "Content-Type": 'application/json'
                 },
                 body: messageJson
@@ -380,10 +409,56 @@ const login = {
     },
 
     fetchUserDetails: async function(username) {
+        let userDetails = null;
+        let requestObj = {
+            request: 'fetch user',
+            username: username
+        };
+        let requestJSON = JSON.stringify(requestObj);
         try {
-            response = await fetch(dfm.phpPath + "users/fetch-user.php", {
+            let response = await fetch(dfm.phpPath + "users/fetch-user.php", {
                 method: 'POST',
-            })
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: requestJSON
+            });
+
+            let responseData = await response.json();
+
+            if (!responseData.result) {
+                document.getElementById("loginErrorsPara").innerText = "fetchUserDetails: Problem encountered" + responseData.status;
+            }
+            else {
+                userDetails = responseData.data;
+            }
         }
+        catch { (error) => {
+            document.getElementById("loginErrorsPara").innerText = "fetchUserDetails: Error encountered - " + error;
+        }}
+
+        return userDetails;
+    },
+
+    updateUser: async function (userDetails) {
+        let userDetailsJSON = JSON.stringify(userDetails);
+        try {
+            let response = await fetch(dfm.phpPath + "users/update-user.php", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: userDetailsJSON
+            });
+
+            let responseData = await response.json();
+
+            return responseData;
+        }
+        catch {(error) => {
+            console.error("got to update problem");
+            let response = {result: false, status: "updateUser: Problem with update - " + error};
+            return response;
+        }}
     }
 }
