@@ -3,7 +3,7 @@
         global $dbConn;
 
         $sql = "SELECT id FROM temp_password WHERE password = ?";
-        if(!$stmt->prepare($sql)) {
+        if(!$stmt = $dbConn->prepare($sql)) {
             echo "checkPasskey: invalid sql<br>";
             exit;
         }
@@ -15,8 +15,7 @@
         }
         else {
             $stmt->store_result();
-            $stmt->bind_result($passId);
-            if (!$stmt->fetch()) {
+            if ($stmt->num_rows === 0) {
                 return false;
             }
             else {

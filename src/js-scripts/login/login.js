@@ -228,7 +228,7 @@ const login = {
                     username: dfm.username,
                     password: oldPassword
                 }
-                resultObj = await this.doLoginRequest(loginObj);
+                let resultObj = await this.doLoginRequest(loginObj);
                 if (!resultObj.result) {
                     errElem.innerText = resultObj.error;
                     errElem.style.display = "block";

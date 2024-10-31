@@ -8,8 +8,12 @@
 <body>
     <h2>Reset your Sci-Booster Password</h2>
     <?php
-        include_once __DIR__ . "/../php_scripts/db-connect.php";
+        include_once __DIR__ . "/../php-scripts/db-connect.php";
         include_once __DIR__ . "/../php-scripts/users/check-passkey.php";
+
+        // Debug
+        error_log("Got to redo-password", 0);
+        echo "Sent Message to error log<br>";
 
         if (!isset($_GET['param'])) {
             echo "No temporary pass key<br>";
@@ -24,29 +28,35 @@
             echo "Invalid pass key for password reset<br>";
             exit;
         }
+        echo "Past checkPasskey<br>";
 
+        $username = $_GET['username'];
         echo "<p>Enter a new password for user: $username</p>";
         
     ?>
-    <form onsubmit="sendNewPassword()">
+    <form onsubmit="sendNewPassword(event)">
         <label for="password">Password:</label>
         <input type="password" name="password" id="password">
         <button type="submit">Submit</button>
     </form>
     <p id="warning" style="color: red;"></p>
-    <a href="./flow_diagram.html">Return to Flow Diagram page</a>
+    <a href="/sci-booster/src/html-pages/flow-diagram.html">Return to Flow Diagram page</a>
 
 <script src="../js-scripts/global-initialise.js"></script>
 <script>
-    async function sendNewPassword() {
+    async function sendNewPassword(event) {
+        event.preventDefault();
         let password = document.getElementById("password").value;
+        console.log("password:", password);
         if (password === "") {
             document.getElementById("warning").innerText = "No password given";
+            return;
         }
         <?php
             echo "let username = '" . $_GET['username'] . "';";
             echo "let passkey = '" . $_GET['param'] . "';";
         ?>
+        console.log("username, pass:", username, passkey);
         let messageObj = {
             passkey: passkey,
             username: username,
@@ -54,16 +64,16 @@
         }
         let messageJSON = JSON.stringify(messageObj);
         try {
-            let response = await fetch(dfm.phpPath + "users/reset_password.php", {
+            let response = await fetch(dfm.phpPath + "users/reset-password.php", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: $messageJSON
+                body: messageJSON
             });
 
             let responseData = await response.json();
-
+            console.log("Response Data", responseData);
             document.getElementById("warning").innerText = responseData.status;
         }
         catch {(error) => {

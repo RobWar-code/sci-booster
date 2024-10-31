@@ -20,14 +20,16 @@
     if (!$dbConn->query($sql)) {
         echo "Problem dropping table page_user_link {$dbConn->error}<br>";
     }
-    */
+    
     // User Table
+    
     $sql = "DROP TABLE user";
 
     if (!$dbConn->query($sql)) {
         echo "Problem dropping user table";
         exit;
     }
+    
 
     $sql = "CREATE TABLE user (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -44,22 +46,6 @@
         echo "Problem adding user table: " . $dbConn->error . "<br>";
     }
 
-    // Add page user link
-    $sql = "CREATE TABLE page_user_link (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        page_id INT,
-        user_id INT,
-        FOREIGN KEY (page_id) REFERENCES page(id),
-        FOREIGN KEY (user_id) REFERENCES user(id)
-    )";
-    if ($dbConn->query($sql) === TRUE) {
-        echo "Added page_user_link table<br>";
-    }
-    else {
-        echo "Problem adding page_user_link table: " . $dbConn->error . "<br>";
-    }
-
-
     // Temp Password Table
     $sql = "CREATE TABLE temp_password (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -72,7 +58,7 @@
         echo "Problem adding temp_password table<br>";
     }
     
-    /*
+    // editor_key
     $sql = "DROP TABLE IF EXISTS editor_key";
 
     if ($dbConn->query($sql) === TRUE) {
@@ -82,6 +68,7 @@
         echo "Problem deleting editor_key table: " . $dbConn->error . "<br>";
         exit();
     }
+    
 
     $sql = "CREATE TABLE editor_key (
         editor_key VARCHAR(256) NOT NULL
@@ -157,8 +144,23 @@
     else {
         echo "Problem adding page table: " . $dbConn->error ."<br>";
     }
-        
+    */    
+    // Add page user link
+    $sql = "CREATE TABLE page_user_link (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        page_id INT,
+        user_id INT,
+        FOREIGN KEY (page_id) REFERENCES page(id),
+        FOREIGN KEY (user_id) REFERENCES user(id)
+    )";
+    if ($dbConn->query($sql) === TRUE) {
+        echo "Added page_user_link table<br>";
+    }
+    else {
+        echo "Problem adding page_user_link table: " . $dbConn->error . "<br>";
+    }
 
+    /*
     // references Table
     $sql = "CREATE TABLE reference (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -177,6 +179,8 @@
         echo "Problem adding reference table {$dbConn->error}<br>";
     }
 
+
+    // node Table
     $sql = "DROP TABLE node";
     $result = $dbConn->query($sql);
     if (!$result) {
@@ -184,7 +188,6 @@
         echo "Could not drop table node<br>";
     }
 
-    // node Table
     $sql = "CREATE TABLE node (
         id INT AUTO_INCREMENT PRIMARY KEY,
         page_id INT NOT NULL,
@@ -210,7 +213,6 @@
         echo "Problem adding node table: " . $dbConn->error . "<br>";
     }
 
-    /*
     // Flow Table
     $sql = "CREATE TABLE flow (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -304,7 +306,7 @@
     else {
         echo "Problem adding conversion_formula table: " . $dbConn->error . "<br>";
     }
-*/
+    */
     
     function dropTables() {
         global $dbConn;

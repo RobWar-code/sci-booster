@@ -1,0 +1,112 @@
+[Thu Oct 31 03:34:16.964914 2024] [ssl:warn] [pid 1276] AH01909: RSA certificate configured for narayana-art.co.uk:443 does NOT include an ID which matches the server name
+[Thu Oct 31 05:56:40.268334 2024] [cgi:error] [pid 26335] [client 40.69.37.134:16021] script not found or unable to stat: /var/www/cgi-bin/about.php
+[Thu Oct 31 05:56:40.485167 2024] [cgi:error] [pid 26291] [client 40.69.37.134:16063] script not found or unable to stat: /var/www/cgi-bin/cloud.php
+[Thu Oct 31 05:56:41.410399 2024] [cgi:error] [pid 26335] [client 40.69.37.134:49233] script not found or unable to stat: /var/www/cgi-bin/xmrlpc.php
+[Thu Oct 31 06:52:03.547120 2024] [autoindex:error] [pid 58940] [client 114.119.152.69:21617] AH01276: Cannot serve directory /home/storage/177/3782177/user/htdocs/bigart/Mandalas/: No matching DirectoryIndex (default.html,default.htm,index.html,index.htm,index.shtml,index.php,index.php4,index.php3,index.phtml,index.cgi,_index.htm) found, and server-generated directory index forbidden by Options directive, referer: http://www.narayana-art.co.uk/oneart.php?picfile=galleries/Mandalas/102.jpg
+[Thu Oct 31 13:03:53.269212 2024] [cgi:error] [pid 130078] [client 52.169.218.55:7525] script not found or unable to stat: /var/www/cgi-bin/plugins.php
+[Thu Oct 31 13:03:53.469032 2024] [cgi:error] [pid 115967] [client 52.169.218.55:7549] script not found or unable to stat: /var/www/cgi-bin/xmrlpc.php
+[Thu Oct 31 13:03:53.863193 2024] [fcgid:warn] [pid 115967] [client 52.169.218.55:7675] mod_fcgid: stderr: PHP Notice:  Undefined index: action in /home/storage/177/3782177/user/htdocs/contact.php on line 114
+[Thu Oct 31 13:03:54.736200 2024] [cgi:error] [pid 118360] [client 52.169.218.55:7943] script not found or unable to stat: /var/www/cgi-bin/file.php
+[Thu Oct 31 13:03:54.869011 2024] [cgi:error] [pid 130071] [client 52.169.218.55:7979] script not found or unable to stat: /var/www/cgi-bin/404.php
+[Thu Oct 31 13:03:55.309768 2024] [cgi:error] [pid 123780] [client 52.169.218.55:8069] script not found or unable to stat: /var/www/cgi-bin/index.php
+[Thu Oct 31 13:03:55.913139 2024] [cgi:error] [pid 130028] [client 52.169.218.55:8251] script not found or unable to stat: /var/www/cgi-bin/themes.php
+[Thu Oct 31 13:03:56.505952 2024] [cgi:error] [pid 118360] [client 52.169.218.55:8387] script not found or unable to stat: /var/www/cgi-bin/wp-login.php
+[Thu Oct 31 13:03:56.694890 2024] [cgi:error] [pid 128471] [client 52.169.218.55:8441] script not found or unable to stat: /var/www/cgi-bin/radio.php
+[Thu Oct 31 13:03:58.091756 2024] [cgi:error] [pid 123066] [client 52.169.218.55:8867] script not found or unable to stat: /var/www/cgi-bin/about.php
+[Thu Oct 31 13:03:58.388526 2024] [cgi:error] [pid 130088] [client 52.169.218.55:8971] script not found or unable to stat: /var/www/cgi-bin/cloud.php
+[Thu Oct 31 13:04:00.219481 2024] [cgi:error] [pid 130054] [client 52.169.218.55:59977] script not found or unable to stat: /var/www/cgi-bin/xmrlpc.php
+[Thu Oct 31 14:36:42.215066 2024] [cgi:error] [pid 15293] [client 52.169.138.30:21147] script not found or unable to stat: /var/www/cgi-bin/about.php
+[Thu Oct 31 14:36:42.437996 2024] [cgi:error] [pid 44626] [client 52.169.138.30:21221] script not found or unable to stat: /var/www/cgi-bin/cloud.php
+[Thu Oct 31 14:36:43.382265 2024] [cgi:error] [pid 44537] [client 52.169.138.30:21573] script not found or unable to stat: /var/www/cgi-bin/xmrlpc.php
+[Thu Oct 31 15:17:17.299082 2024] [cgi:error] [pid 15293] [client 52.169.122.11:50767] script not found or unable to stat: /var/www/cgi-bin/plugins.php
+[Thu Oct 31 15:17:17.587905 2024] [cgi:error] [pid 63929] [client 52.169.122.11:50811] script not found or unable to stat: /var/www/cgi-bin/xmrlpc.php
+[Thu Oct 31 15:17:17.999062 2024] [fcgid:warn] [pid 63963] [client 52.169.122.11:50959] mod_fcgid: stderr: PHP Notice:  Undefined index: action in /home/storage/177/3782177/user/htdocs/contact.php on line 114
+[Thu Oct 31 15:17:18.862960 2024] [cgi:error] [pid 56677] [client 52.169.122.11:51287] script not found or unable to stat: /var/www/cgi-bin/file.php
+[Thu Oct 31 15:17:18.982535 2024] [cgi:error] [pid 63960] [client 52.169.122.11:51335] script not found or unable to stat: /var/www/cgi-bin/404.php
+[Thu Oct 31 15:17:19.420601 2024] [cgi:error] [pid 56677] [client 52.169.122.11:51413] script not found or unable to stat: /var/www/cgi-bin/index.php
+[Thu Oct 31 15:17:20.056808 2024] [cgi:error] [pid 63997] [client 52.169.122.11:51615] script not found or unable to stat: /var/www/cgi-bin/themes.php
+[Thu Oct 31 15:17:20.720503 2024] [cgi:error] [pid 56677] [client 52.169.122.11:51737] script not found or unable to stat: /var/www/cgi-bin/wp-login.php
+[Thu Oct 31 15:17:20.914461 2024] [cgi:error] [pid 54065] [client 52.169.122.11:56317] script not found or unable to stat: /var/www/cgi-bin/radio.php
+[Thu Oct 31 15:17:22.637182 2024] [cgi:error] [pid 49376] [client 52.169.122.11:56777] script not found or unable to stat: /var/www/cgi-bin/about.php
+[Thu Oct 31 15:17:22.935280 2024] [cgi:error] [pid 43091] [client 52.169.122.11:56871] script not found or unable to stat: /var/www/cgi-bin/cloud.php
+[Thu Oct 31 15:24:03.377638 2024] [fcgid:warn] [pid 63996] [client 86.31.218.80:44801] mod_fcgid: stderr: username: warner3, email info@narayana-art.co.uk, referer: https://narayana-art.co.uk/sci-booster/src/html-pages/flow-diagram.html
+[Thu Oct 31 15:24:03.377684 2024] [fcgid:warn] [pid 63996] [client 86.31.218.80:44801] mod_fcgid: stderr: mail sent, referer: https://narayana-art.co.uk/sci-booster/src/html-pages/flow-diagram.html
+[Thu Oct 31 15:37:10.062765 2024] [fcgid:warn] [pid 65242] [client 86.31.218.80:16203] mod_fcgid: stderr: username: warner3, email info@narayana-art.co.uk, referer: https://narayana-art.co.uk/sci-booster/src/html-pages/flow-diagram.html
+[Thu Oct 31 15:37:10.062808 2024] [fcgid:warn] [pid 65242] [client 86.31.218.80:16203] mod_fcgid: stderr: mail sent, referer: https://narayana-art.co.uk/sci-booster/src/html-pages/flow-diagram.html
+[Thu Oct 31 15:52:30.485769 2024] [fcgid:warn] [pid 58189] [client 86.31.218.80:32861] mod_fcgid: stderr: username: warner3, email info@narayana-art.co.uk, referer: https://narayana-art.co.uk/sci-booster/src/html-pages/flow-diagram.html
+[Thu Oct 31 15:52:30.485801 2024] [fcgid:warn] [pid 58189] [client 86.31.218.80:32861] mod_fcgid: stderr: mail sent, referer: https://narayana-art.co.uk/sci-booster/src/html-pages/flow-diagram.html
+[Thu Oct 31 15:58:12.296527 2024] [fcgid:warn] [pid 70229] [client 86.31.218.80:53481] mod_fcgid: stderr: username: warner3, email info@narayana-art.co.uk, referer: https://narayana-art.co.uk/sci-booster/src/html-pages/flow-diagram.html
+[Thu Oct 31 15:58:12.296562 2024] [fcgid:warn] [pid 70229] [client 86.31.218.80:53481] mod_fcgid: stderr: mail sent, referer: https://narayana-art.co.uk/sci-booster/src/html-pages/flow-diagram.html
+[Thu Oct 31 15:58:30.031544 2024] [fcgid:warn] [pid 70262] [client 86.31.218.80:27163] mod_fcgid: stderr: PHP Warning:  include_once(/home/storage/177/3782177/user/htdocs/sci-booster/src/html-pages/../php_scripts/db-connect.php): failed to open stream: No such file or directory in /home/storage/177/3782177/user/htdocs/sci-booster/src/html-pages/redo-password.php on line 11
+[Thu Oct 31 15:58:30.031583 2024] [fcgid:warn] [pid 70262] [client 86.31.218.80:27163] mod_fcgid: stderr: PHP Warning:  include_once(): Failed opening '/home/storage/177/3782177/user/htdocs/sci-booster/src/html-pages/../php_scripts/db-connect.php' for inclusion (include_path='.:/usr/share/pear') in /home/storage/177/3782177/user/htdocs/sci-booster/src/html-pages/redo-password.php on line 11
+[Thu Oct 31 15:58:30.031590 2024] [fcgid:warn] [pid 70262] [client 86.31.218.80:27163] mod_fcgid: stderr: PHP Notice:  Undefined variable: stmt in /home/storage/177/3782177/user/htdocs/sci-booster/src/php-scripts/users/check-passkey.php on line 6
+[Thu Oct 31 15:58:30.031593 2024] [fcgid:warn] [pid 70262] [client 86.31.218.80:27163] mod_fcgid: stderr: PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/storage/177/3782177/user/htdocs/sci-booster/src/php-scripts/users/check-passkey.php:6
+[Thu Oct 31 15:58:30.031596 2024] [fcgid:warn] [pid 70262] [client 86.31.218.80:27163] mod_fcgid: stderr: Stack trace:
+[Thu Oct 31 15:58:30.031607 2024] [fcgid:warn] [pid 70262] [client 86.31.218.80:27163] mod_fcgid: stderr: #0 /home/storage/177/3782177/user/htdocs/sci-booster/src/html-pages/redo-password.php(23): checkPasskey('9O04hDMALqjK')
+[Thu Oct 31 15:58:30.031610 2024] [fcgid:warn] [pid 70262] [client 86.31.218.80:27163] mod_fcgid: stderr: #1 {main}
+[Thu Oct 31 15:58:30.031612 2024] [fcgid:warn] [pid 70262] [client 86.31.218.80:27163] mod_fcgid: stderr:   thrown in /home/storage/177/3782177/user/htdocs/sci-booster/src/php-scripts/users/check-passkey.php on line 6
+[Thu Oct 31 16:08:34.335730 2024] [fcgid:warn] [pid 78609] [client 86.31.218.80:4529] mod_fcgid: stderr: PHP Notice:  Undefined variable: stmt in /home/storage/177/3782177/user/htdocs/sci-booster/src/php-scripts/users/check-passkey.php on line 6
+[Thu Oct 31 16:08:34.335764 2024] [fcgid:warn] [pid 78609] [client 86.31.218.80:4529] mod_fcgid: stderr: PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/storage/177/3782177/user/htdocs/sci-booster/src/php-scripts/users/check-passkey.php:6
+[Thu Oct 31 16:08:34.335768 2024] [fcgid:warn] [pid 78609] [client 86.31.218.80:4529] mod_fcgid: stderr: Stack trace:
+[Thu Oct 31 16:08:34.335770 2024] [fcgid:warn] [pid 78609] [client 86.31.218.80:4529] mod_fcgid: stderr: #0 /home/storage/177/3782177/user/htdocs/sci-booster/src/html-pages/redo-password.php(24): checkPasskey('9O04hDMALqjK')
+[Thu Oct 31 16:08:34.335773 2024] [fcgid:warn] [pid 78609] [client 86.31.218.80:4529] mod_fcgid: stderr: #1 {main}
+[Thu Oct 31 16:08:34.335776 2024] [fcgid:warn] [pid 78609] [client 86.31.218.80:4529] mod_fcgid: stderr:   thrown in /home/storage/177/3782177/user/htdocs/sci-booster/src/php-scripts/users/check-passkey.php on line 6
+[Thu Oct 31 16:09:20.998355 2024] [cgi:error] [pid 78609] [client 13.79.152.229:51513] script not found or unable to stat: /var/www/cgi-bin/index.php
+[Thu Oct 31 16:09:25.902936 2024] [cgi:error] [pid 78610] [client 13.79.152.229:52527] script not found or unable to stat: /var/www/cgi-bin/plugins.php
+[Thu Oct 31 16:09:26.479013 2024] [cgi:error] [pid 90648] [client 13.79.152.229:52677] script not found or unable to stat: /var/www/cgi-bin/xmrlpc.php
+[Thu Oct 31 16:09:26.549961 2024] [cgi:error] [pid 78609] [client 13.79.152.229:52697] script not found or unable to stat: /var/www/cgi-bin/file.php
+[Thu Oct 31 16:09:26.725421 2024] [cgi:error] [pid 78551] [client 13.79.152.229:52755] script not found or unable to stat: /var/www/cgi-bin/themes.php
+[Thu Oct 31 16:09:27.755775 2024] [cgi:error] [pid 68522] [client 13.79.152.229:52979] script not found or unable to stat: /var/www/cgi-bin/wp-login.php
+[Thu Oct 31 16:09:32.122916 2024] [cgi:error] [pid 90647] [client 13.79.152.229:61199] script not found or unable to stat: /var/www/cgi-bin/wp-2019.php
+[Thu Oct 31 16:09:33.186744 2024] [cgi:error] [pid 78612] [client 13.79.152.229:61519] script not found or unable to stat: /var/www/cgi-bin/about.php
+[Thu Oct 31 16:09:33.379911 2024] [cgi:error] [pid 70246] [client 13.79.152.229:61559] script not found or unable to stat: /var/www/cgi-bin/cgi-bin
+[Thu Oct 31 16:22:49.242539 2024] [fcgid:warn] [pid 78551] [client 86.31.218.80:55139] mod_fcgid: stderr: Got to redo-password
+[Thu Oct 31 16:22:49.242593 2024] [fcgid:warn] [pid 78551] [client 86.31.218.80:55139] mod_fcgid: stderr: PHP Notice:  Undefined variable: stmt in /home/storage/177/3782177/user/htdocs/sci-booster/src/php-scripts/users/check-passkey.php on line 6
+[Thu Oct 31 16:22:49.242600 2024] [fcgid:warn] [pid 78551] [client 86.31.218.80:55139] mod_fcgid: stderr: PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/storage/177/3782177/user/htdocs/sci-booster/src/php-scripts/users/check-passkey.php:6
+[Thu Oct 31 16:22:49.242604 2024] [fcgid:warn] [pid 78551] [client 86.31.218.80:55139] mod_fcgid: stderr: Stack trace:
+[Thu Oct 31 16:22:49.242608 2024] [fcgid:warn] [pid 78551] [client 86.31.218.80:55139] mod_fcgid: stderr: #0 /home/storage/177/3782177/user/htdocs/sci-booster/src/html-pages/redo-password.php(27): checkPasskey('9O04hDMALqjK')
+[Thu Oct 31 16:22:49.242623 2024] [fcgid:warn] [pid 78551] [client 86.31.218.80:55139] mod_fcgid: stderr: #1 {main}
+[Thu Oct 31 16:22:49.242627 2024] [fcgid:warn] [pid 78551] [client 86.31.218.80:55139] mod_fcgid: stderr:   thrown in /home/storage/177/3782177/user/htdocs/sci-booster/src/php-scripts/users/check-passkey.php on line 6
+[Thu Oct 31 16:28:14.749799 2024] [cgi:error] [pid 70262] [client 40.69.37.74:31795] script not found or unable to stat: /var/www/cgi-bin/about.php
+[Thu Oct 31 16:28:14.965913 2024] [cgi:error] [pid 95301] [client 40.69.37.74:31857] script not found or unable to stat: /var/www/cgi-bin/cloud.php
+[Thu Oct 31 16:28:15.908348 2024] [cgi:error] [pid 49374] [client 40.69.37.74:32179] script not found or unable to stat: /var/www/cgi-bin/xmrlpc.php
+[Thu Oct 31 16:36:36.579510 2024] [ssl:warn] [pid 1276] AH01909: RSA certificate configured for narayana-art.co.uk:443 does NOT include an ID which matches the server name
+[Thu Oct 31 17:00:01.900940 2024] [fcgid:warn] [pid 103010] [client 86.31.218.80:43511] mod_fcgid: stderr: Got to redo-password
+[Thu Oct 31 17:00:01.900977 2024] [fcgid:warn] [pid 103010] [client 86.31.218.80:43511] mod_fcgid: stderr: PHP Warning:  Undefined variable $stmt in /home/storage/177/3782177/user/htdocs/sci-booster/src/php-scripts/users/check-passkey.php on line 6
+[Thu Oct 31 17:00:01.900980 2024] [fcgid:warn] [pid 103010] [client 86.31.218.80:43511] mod_fcgid: stderr: PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/storage/177/3782177/user/htdocs/sci-booster/src/php-scripts/users/check-passkey.php:6
+[Thu Oct 31 17:00:01.900983 2024] [fcgid:warn] [pid 103010] [client 86.31.218.80:43511] mod_fcgid: stderr: Stack trace:
+[Thu Oct 31 17:00:01.900986 2024] [fcgid:warn] [pid 103010] [client 86.31.218.80:43511] mod_fcgid: stderr: #0 /home/storage/177/3782177/user/htdocs/sci-booster/src/html-pages/redo-password.php(29): checkPasskey('9O04hDMALqjK')
+[Thu Oct 31 17:00:01.900989 2024] [fcgid:warn] [pid 103010] [client 86.31.218.80:43511] mod_fcgid: stderr: #1 {main}
+[Thu Oct 31 17:00:01.900991 2024] [fcgid:warn] [pid 103010] [client 86.31.218.80:43511] mod_fcgid: stderr:   thrown in /home/storage/177/3782177/user/htdocs/sci-booster/src/php-scripts/users/check-passkey.php on line 6
+[Thu Oct 31 17:20:45.246869 2024] [fcgid:warn] [pid 102902] [client 86.31.218.80:46919] mod_fcgid: stderr: Got to redo-password
+[Thu Oct 31 17:20:45.246897 2024] [fcgid:warn] [pid 102902] [client 86.31.218.80:46919] mod_fcgid: stderr: PHP Warning:  Undefined variable $stmt in /home/storage/177/3782177/user/htdocs/sci-booster/src/php-scripts/users/check-passkey.php on line 6
+[Thu Oct 31 17:20:45.246900 2024] [fcgid:warn] [pid 102902] [client 86.31.218.80:46919] mod_fcgid: stderr: PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/storage/177/3782177/user/htdocs/sci-booster/src/php-scripts/users/check-passkey.php:6
+[Thu Oct 31 17:20:45.246903 2024] [fcgid:warn] [pid 102902] [client 86.31.218.80:46919] mod_fcgid: stderr: Stack trace:
+[Thu Oct 31 17:20:45.246906 2024] [fcgid:warn] [pid 102902] [client 86.31.218.80:46919] mod_fcgid: stderr: #0 /home/storage/177/3782177/user/htdocs/sci-booster/src/html-pages/redo-password.php(27): checkPasskey('9O04hDMALqjK')
+[Thu Oct 31 17:20:45.246909 2024] [fcgid:warn] [pid 102902] [client 86.31.218.80:46919] mod_fcgid: stderr: #1 {main}
+[Thu Oct 31 17:20:45.246911 2024] [fcgid:warn] [pid 102902] [client 86.31.218.80:46919] mod_fcgid: stderr:   thrown in /home/storage/177/3782177/user/htdocs/sci-booster/src/php-scripts/users/check-passkey.php on line 6
+[Thu Oct 31 17:34:59.936910 2024] [fcgid:warn] [pid 102897] [client 86.31.218.80:44841] mod_fcgid: stderr: Got to redo-password
+[Thu Oct 31 17:34:59.936949 2024] [fcgid:warn] [pid 102897] [client 86.31.218.80:44841] mod_fcgid: stderr: PHP Warning:  Undefined variable $stmt in /home/storage/177/3782177/user/htdocs/sci-booster/src/php-scripts/users/check-passkey.php on line 6
+[Thu Oct 31 17:34:59.936963 2024] [fcgid:warn] [pid 102897] [client 86.31.218.80:44841] mod_fcgid: stderr: PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/storage/177/3782177/user/htdocs/sci-booster/src/php-scripts/users/check-passkey.php:6
+[Thu Oct 31 17:34:59.936965 2024] [fcgid:warn] [pid 102897] [client 86.31.218.80:44841] mod_fcgid: stderr: Stack trace:
+[Thu Oct 31 17:34:59.936968 2024] [fcgid:warn] [pid 102897] [client 86.31.218.80:44841] mod_fcgid: stderr: #0 /home/storage/177/3782177/user/htdocs/sci-booster/src/html-pages/redo-password.php(27): checkPasskey('9O04hDMALqjK')
+[Thu Oct 31 17:34:59.936970 2024] [fcgid:warn] [pid 102897] [client 86.31.218.80:44841] mod_fcgid: stderr: #1 {main}
+[Thu Oct 31 17:34:59.936972 2024] [fcgid:warn] [pid 102897] [client 86.31.218.80:44841] mod_fcgid: stderr:   thrown in /home/storage/177/3782177/user/htdocs/sci-booster/src/php-scripts/users/check-passkey.php on line 6
+[Thu Oct 31 17:39:21.791758 2024] [ssl:warn] [pid 1276] AH01909: RSA certificate configured for narayana-art.co.uk:443 does NOT include an ID which matches the server name
+[Thu Oct 31 17:42:38.214293 2024] [fcgid:warn] [pid 130034] [client 86.31.218.80:58353] mod_fcgid: stderr: Got to redo-password
+[Thu Oct 31 17:42:38.214337 2024] [fcgid:warn] [pid 130034] [client 86.31.218.80:58353] mod_fcgid: stderr: PHP Warning:  Undefined variable $username in /home/storage/177/3782177/user/htdocs/sci-booster/src/html-pages/redo-password.php on line 34
+[Thu Oct 31 17:43:06.789929 2024] [fcgid:warn] [pid 130149] [client 86.31.218.80:37367] mod_fcgid: stderr: Got to redo-password, referer: https://narayana-art.co.uk/sci-booster/src/html-pages/redo-password.php?param=9O04hDMALqjK&username=warner3
+[Thu Oct 31 17:49:42.679111 2024] [fcgid:warn] [pid 130235] [client 86.31.218.80:34887] mod_fcgid: stderr: Got to redo-password
+[Thu Oct 31 17:49:42.679145 2024] [fcgid:warn] [pid 130235] [client 86.31.218.80:34887] mod_fcgid: stderr: PHP Warning:  Undefined variable $username in /home/storage/177/3782177/user/htdocs/sci-booster/src/html-pages/redo-password.php on line 34
+[Thu Oct 31 17:57:58.605870 2024] [fcgid:warn] [pid 939] [client 86.31.218.80:55551] mod_fcgid: stderr: Got to redo-password
+[Thu Oct 31 18:09:49.716083 2024] [fcgid:warn] [pid 130034] [client 86.31.218.80:34957] mod_fcgid: stderr: Got to redo-password
+[Thu Oct 31 18:16:49.160967 2024] [fcgid:warn] [pid 11293] [client 86.31.218.80:21293] mod_fcgid: stderr: Got to redo-password
+[Thu Oct 31 18:19:32.095825 2024] [fcgid:warn] [pid 14979] [client 86.31.218.80:17495] mod_fcgid: stderr: Got to redo-password
+[Thu Oct 31 18:19:43.334929 2024] [fcgid:warn] [pid 11343] [client 86.31.218.80:41861] mod_fcgid: stderr: PHP Warning:  Undefined variable $password in /home/storage/177/3782177/user/htdocs/sci-booster/src/php-scripts/users/reset-password.php on line 34, referer: https://narayana-art.co.uk/sci-booster/src/html-pages/redo-password.php?param=9O04hDMALqjK&username=warner3
+[Thu Oct 31 18:19:43.334968 2024] [fcgid:warn] [pid 11343] [client 86.31.218.80:41861] mod_fcgid: stderr: PHP Warning:  Undefined variable $username in /home/storage/177/3782177/user/htdocs/sci-booster/src/php-scripts/users/reset-password.php on line 34, referer: https://narayana-art.co.uk/sci-booster/src/html-pages/redo-password.php?param=9O04hDMALqjK&username=warner3
+[Thu Oct 31 18:19:43.334974 2024] [fcgid:warn] [pid 11343] [client 86.31.218.80:41861] mod_fcgid: stderr: PHP Warning:  Undefined variable $passkey in /home/storage/177/3782177/user/htdocs/sci-booster/src/php-scripts/users/reset-password.php on line 42, referer: https://narayana-art.co.uk/sci-booster/src/html-pages/redo-password.php?param=9O04hDMALqjK&username=warner3
+[Thu Oct 31 18:39:59.559332 2024] [fcgid:warn] [pid 130224] [client 86.31.218.80:51529] mod_fcgid: stderr: Got to redo-password
+[Thu Oct 31 19:14:58.683384 2024] [fcgid:warn] [pid 130176] [client 86.31.218.80:7731] mod_fcgid: stderr: username: warner3, email info@narayana-art.co.uk, referer: https://narayana-art.co.uk/sci-booster/src/html-pages/flow-diagram.html
+[Thu Oct 31 19:14:58.683959 2024] [fcgid:warn] [pid 130176] [client 86.31.218.80:7731] mod_fcgid: stderr: mail sent, referer: https://narayana-art.co.uk/sci-booster/src/html-pages/flow-diagram.html
+[Thu Oct 31 19:15:17.102937 2024] [fcgid:warn] [pid 38687] [client 86.31.218.80:51055] mod_fcgid: stderr: Got to redo-password
+[Thu Oct 31 19:15:31.950886 2024] [fcgid:warn] [pid 38681] [client 86.31.218.80:3171] mod_fcgid: stderr: resetPassword warner3, welcome123, HTJdIolK5yEV, referer: https://narayana-art.co.uk/sci-booster/src/html-pages/redo-password.php?param=HTJdIolK5yEV&username=warner3

@@ -54,7 +54,7 @@
 
         // Send the email
         // Ensure the $from is a valid email address
-        $from = "warnrobin@yahoo.com";
+        $from = "info@narayana-art.co.uk";
         $subject = "Forgot Sci-Booster Password";
         $textMessage = "Hello $username, You have told us that you forgot your password.";
         $textMessage .= " Click the link below to provide another.";
@@ -64,8 +64,6 @@
         $headers .= 'From: ' . $from . "\r\n";
 
         // Prepare the message
-        $message = "Hello World";
-        /*
         $message = "
         <html>
         <head>
@@ -73,13 +71,12 @@
         </head>
         <body>
             <p>{$textMessage}</p>
-            <p><a href='https://narayana-art.co.uk/sci-booster/src/php_scripts/users/redo-password.php?param=$tempPassword";
+            <p><a href='https://narayana-art.co.uk/sci-booster/src/html-pages/redo-password.php?param=$tempPassword";
         $message .= "&username=$username'>";
         $message .= "Click here to create a new password</a></p>
         </body>
         </html>
         ";
-        */
 
         // Send the email
         if(mail($email, $subject, $message, $headers)) {

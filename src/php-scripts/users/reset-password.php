@@ -17,10 +17,12 @@
             $response = ['result'=>false, 'status'=>"resetPassword: Missing username from data"];
             return $response;
         }
+        $username = $inputData['username'];
         if (!isset($inputData['password'])) {
             $reponse = ['result'=>false, 'status'=>"resetPassword: Missing password from data"];
             return $response;
         }
+        $password = $inputData['password'];
         if (!isset($inputData['passkey'])) {
             $response = ['result'=>false, 'status'=>"resetPassword: Missing passkey from data"];
         }
@@ -29,9 +31,13 @@
             $response = ['result'=>false, 'status'=>"resetPassword: invalid pass key"];
             return $response;
         }
+        $passkey = $inputData['passkey'];
+
+        error_log("resetPassword $username, $password, $passkey");
 
         // Update the password
-        $sql = "UPDATE user SET password = '$password' WHERE username = '$username'";
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT, ['cost' => 10]);
+        $sql = "UPDATE user SET password = '$hashedPassword' WHERE username = '$username'";
         $result = $dbConn->query($sql);
         if (!$result) {
             $response = ['result'=>false, 'status'=>"resetPassword: database update failed {$dbConn->error}"];

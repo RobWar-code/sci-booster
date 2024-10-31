@@ -6,8 +6,52 @@ Contents
 
 <h1>Work Due
 
+    Set-up the narayana-art.co.uk/sci-booster web-page
+        * Create the sci-booster directory on narayana-art server
+         Note: It is necessary to check that all files are successfully copied - there can be omissions
+        * Copy across the src and assets directories to the server sci-booster directory
+        * Load the page https://narayana-art.co.uk/sci-booster/src/html-pages/intro.html
+        * Ensure that page switching works correctly
+        * Create the sci_booster database on the host (this is done via the fasthosts 
+            control panel)
+        * Set-up the admin user for the database
+        * Create the tables by running the browser script create-tables.php
+        * Go on to the site and the flow-diagram page to create the Owner warner1
+
     Flow label sometimes not altered when changed in flow details?
 
+    Test and build 3 example model imports with ChatGPT
+    
+    Clear debug from code
+
+    Block robot logins/register
+
+    Forgot Password get out - include email in login details
+        * Amend analysis
+        * Amend create-table.php
+        * Add the field to the login register modal
+        * Amend the register interface code
+        * Amend the register php code
+        * Add a forgot password procedure and link button
+        * Display the message for email sent on the main page
+        Note: Testing on localhost to a private mailbox is likely to get
+            the IP address blocked. Better to test to own mailbox
+            on the server site
+        * Set-up to do the testing on the narayana-art.co.uk website
+        * Check the email address info@narayana-art.co.uk - webmail.fasthosts.co.uk
+        Clear the debugging from the forgot-password code
+        Test with an email to rowaniar@netscape.net
+
+    Adjust the README for building JSON models with ChatGPT
+
+    Update the README with user features changes
+
+    In the README Plan the release procedures
+
+<h1>Work Done
+    30/10/2024
+    * Add a profile editing modal (only visible if logged in)
+    
     * Reload and check the exported models
 
     * Save login details and current model when changing page from flow-diagram
@@ -21,35 +65,6 @@ Contents
     * Do the introductory page
         Include details of the JSON import model format
 
-    Test and build 3 example model imports with ChatGPT
-
-    Add a profile editing modal (only visible if logged in)
-    
-    Clear debug from code
-
-    Set-up the narayana-art.co.uk/sci-booster web-page
-
-    Block robot logins/register
-
-    Forgot Password get out - include email in login details
-        Amend analysis
-        Amend create-table.php
-        Add the field to the login register modal
-        Amend the register interface code
-        Amend the register php code
-        Add a forgot password procedure and link button
-        Display the message for email sent on the main page
-        Set-up to do the testing on the narayana-art.co.uk website
-        
-
-
-    Adjust the README for building JSON models with ChatGPT
-
-    Update the README with user features changes
-
-    In the README Plan the release procedures
-
-<h1>Work Done
     24/10/2024
     
     * Do the model for gasoline -> Car -> Atmosphere
