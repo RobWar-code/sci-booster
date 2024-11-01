@@ -32,9 +32,6 @@
         $row = $result->fetch_assoc();
         $email = $row['email'];
 
-        // Debug
-        error_log("username: $username, email $email", 0);
-
         // Create a temporary password
         $tempPassword = createTempPassword();
         // Store it in the temp_password table
@@ -82,13 +79,9 @@
         if(mail($email, $subject, $message, $headers)) {
             $response=['result'=>true, 'status'=>"Email sent successfully to {$email}"];
             echo json_encode($response);
-            // Debug 
-            error_log("mail sent", 0);
         } else {
             $response=['result'=>false, 'status'=>"Failed to send email."];
             echo json_encode($response);
-            // Debug
-            error_log("mail not sent", 0);
         }
     }
 

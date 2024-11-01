@@ -261,7 +261,6 @@ flowDetails = {
         window.scrollTo(0, dfm.currentVisual.lastWindowY);
 
         dfm.flowDrawMode = true;
-        console.log("flowDetails editMode:", this.editMode);
         if (this.editMode === "new") {
             dfm.currentVisual.initialiseFlowDraw(this.currentFlow);
         }

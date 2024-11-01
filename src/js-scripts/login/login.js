@@ -45,6 +45,7 @@ const login = {
             document.getElementById("logoutOpt").style.display = "none";
             document.getElementById("signupOpt").style.display = "block";
             document.getElementById("editorSignupOpt").style.display = "block";
+            document.getElementById("profileOpt").style.display = "none";
             // Check whether the owner has been set already
             let ownerSet = false;
             try {
@@ -257,6 +258,7 @@ const login = {
             }
             if (userAdded || userUpdated) {
                 let messageElem = document.getElementById("loginDonePara");
+                messageElem.innerText = "User Added/Updated";
                 messageElem.style.display = "block";
                 setTimeout(() => {
                     messageElem.style.display = "none";
@@ -282,6 +284,7 @@ const login = {
             }
             else {
                 let messageElem = document.getElementById("loginDonePara");
+                messageElem.innerText = "LOGIN DONE";
                 messageElem.style.display = "block";
                 setTimeout(() => {
                     messageElem.style.display = "none";

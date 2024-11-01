@@ -1,7 +1,8 @@
 {
-    "flow_model_id": 75,
+    "flow_model_id": null,
     "flow_model_title": "Gasoline Consumption",
     "complete": true,
+    "update": false,
     "pages": [
         {
             "id": 140,
@@ -19,7 +20,7 @@
             "external_authors": [
                 {
                     "id": 186,
-                    "author": " "
+                    "author": ""
                 }
             ],
             "references": [],
@@ -267,7 +268,7 @@
                     "drawing_group_y": 334,
                     "label_x": -23,
                     "label_y": -66,
-                    "label_width": 28,
+                    "label_width": 60,
                     "keywords": "fuel oxidant",
                     "definition": "Air required for combustion of gasoline.",
                     "hyperlink": "",
@@ -777,7 +778,7 @@
                     "drawing_group_y": 388,
                     "label_x": -63,
                     "label_y": 23,
-                    "label_width": 28,
+                    "label_width": 60,
                     "keywords": "",
                     "definition": "Air for combustion",
                     "hyperlink": "",

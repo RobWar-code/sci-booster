@@ -33,8 +33,6 @@
         }
         $passkey = $inputData['passkey'];
 
-        error_log("resetPassword $username, $password, $passkey");
-
         // Update the password
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT, ['cost' => 10]);
         $sql = "UPDATE user SET password = '$hashedPassword' WHERE username = '$username'";

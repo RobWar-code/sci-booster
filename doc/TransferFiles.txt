@@ -1,4 +1,9 @@
 Files for Transfer
+
+html-pages/redo-password.php
+users/reset-password.php
+users/forgot-password.php
+---------
 redo-password.php
 ------
 forgot-password.php

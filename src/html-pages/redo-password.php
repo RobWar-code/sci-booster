@@ -47,7 +47,6 @@
     async function sendNewPassword(event) {
         event.preventDefault();
         let password = document.getElementById("password").value;
-        console.log("password:", password);
         if (password === "") {
             document.getElementById("warning").innerText = "No password given";
             return;
@@ -56,7 +55,6 @@
             echo "let username = '" . $_GET['username'] . "';";
             echo "let passkey = '" . $_GET['param'] . "';";
         ?>
-        console.log("username, pass:", username, passkey);
         let messageObj = {
             passkey: passkey,
             username: username,
@@ -73,7 +71,6 @@
             });
 
             let responseData = await response.json();
-            console.log("Response Data", responseData);
             document.getElementById("warning").innerText = responseData.status;
         }
         catch {(error) => {

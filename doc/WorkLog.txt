@@ -39,14 +39,28 @@ Contents
             on the server site
         * Set-up to do the testing on the narayana-art.co.uk website
         * Check the email address info@narayana-art.co.uk - webmail.fasthosts.co.uk
-        Clear the debugging from the forgot-password code
-        Test with an email to rowaniar@netscape.net
+        * Clear the debugging from the forgot-password code
+        * Test with an email to rowaniar@netscape.net
+
+    * Email address missing from profile display
+
+    * Profile button displayed on login when no user
+
+    * Provide the meta details for the search engines
+
+    When user details saved and the page is represented, the dfm.userStatus is not correctly set
+
+    Prepare the import models for import on the web
 
     Adjust the README for building JSON models with ChatGPT
 
     Update the README with user features changes
 
-    In the README Plan the release procedures
+    Add a screenshot for the README
+
+    Provide the link from narayana-art to sci-booster
+
+    Add the meta property details for social media links
 
 <h1>Work Done
     30/10/2024

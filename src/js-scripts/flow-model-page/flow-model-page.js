@@ -530,6 +530,8 @@ const flowModelPage = {
                     miscHTML.convertHTMLEntities(dfm.currentPage.page.title);
                 document.getElementById("pageHierarchicalId").innerText = dfm.currentPage.page.hierarchical_id;
                 document.getElementById("pageDetailsButton").style.display = "block";
+            }
+            if (dfm.userStatus != "unregistered") {
                 this.displayModelEditOptions();
             }
         }
