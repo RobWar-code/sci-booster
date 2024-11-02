@@ -12,14 +12,21 @@ and some partially worked examples, to give the reader a chance to
 understand the approach. Then a section that provides tools for making
 the scheme easy to apply.
 
+Because the system also provides import and export json features, a 
+page is dedicated to describing the json format.
+
 For detailed analysis see: doc/analysis.txt
+
+## Screenshot of Flow Page
+
+![Main Flow Page](doc/sci-booster-flow-page.png)
 
 ## Main Features
 
 Introductory Page with simple examples
 Flow Diagram Page
-Split Window Option
-JSON Import Dataflow Chart Data
+JSON Help Page
+JSON Import/Export Dataflow Chart Data
 
 ## Flow Diagram Section
 
@@ -223,7 +230,7 @@ sources, notably ChatGPT, in which the data may be easily edited for
 import.
 
 The following definition is known as the "Sci-Booster Flow Model JSON
-Definition Version 1.7"
+Definition Version 1.8"
 
 The purpose of this section is to describe the required format of the flow-model 
 JSON object for data imports to the app. This is provided for both AI's such as
@@ -235,7 +242,6 @@ in this case id fields will be set. Such exports can be edited.
 JSON Models supplied as updates without id fields must preserve title, label and
 hierarchical_id fields for the data items to be updated, although new items can be 
 added in an update.
-
 
 #### Descriptive Details
 A flow model consists of pages of component nodes and flow lines used to describe
@@ -276,13 +282,14 @@ The drawing area (stage) onto which a flow diagram page is drawn is 380 pixels w
 690 pixels high.
 
 ##### Component Node Boxes
+
 The stage area is sufficent for upto 8 component nodes, if arranged vertically in sets
 of 4. So eight is the maximum number of component nodes for a page.
 
 Component nodes are represented by rectangular boxes 140 pixels wide by 75 pixels high.
 
 On the drawing, vertically arranged component node should be spaced 90 pixels between
-the base of one node and the top of another.
+the base of one node and the top of another (ie: node y coordinates are 165 pixels apart.
 
 When there are more than 4 component nodes the node boxes should be offset from the left
 margin edge of the stage by 5 pixels for left hand column and margin of 5 pixels on the
@@ -297,13 +304,15 @@ All flow coordinates are relative to the "drawing_group_x" and "drawing_group_y"
 coordinates, which typically set to the position of the flow line described below.
 
 Flows are represented by sets of line segments whose coordinates are given in the flow
-"points" field.
+"points" field, each start/end points of the set of the line segments should be given.
 
 Generally the flow lines connect a source component node box to a destination node box,
 typically from the bottom of one box to the top of another.
 
-The flow details include an "arrow_points" for defining the coordinates of an equilateral 
-triangle that sits on the flow line and points toward the destination.
+The flow details include an "arrow_points" field for defining the coordinates of each of the 
+4 nodes of an equilateral triangle, of which the bottom side is indented 
+toward the apex by two pixels, that sits on the flow line and points toward the destination.
+the triangle is about 10 pixels high.
 
 The flow label appears in a box, who's top-left coordinates are given in the "label_x",
 "label_y" fields.
@@ -313,97 +322,99 @@ anyway.
 
 #### JSON Object Structure
 ```js
-flow_models: [
-	{
-		"flow_model_id": , // Auto Long Int, may be null
-		"flow_model_title": "", // Must the same as the first page with hierarchical_id of "01"
-		"update": , // true/false whether this is an update
-		"complete": , // true/false whether this is an update for a complete model, or only
-				// a partial update (subset of pages)
-		"pages" : [
-			{
-				"id": , // May be null
-		 		"hierarchical_id": "", // ie: 01020406 for a level four page. Note that the numbers (apart from the first)
-					// are NodeNums, the first/top level is always "01"
-				"title": "",
-				"keywords": "",
-				"user_authors": [
+{
+	"flow_model_id": , // Auto Long Int, may be null
+	"flow_model_title": "", // Must the same as the first page with hierarchical_id of "01"
+	"update": , // true/false whether this is an update
+	"complete": , // true/false whether this is an update for a complete model, or only
+			// a partial update (subset of pages)
+	"pages" : [
+		{
+			"id": , // May be null
+			"hierarchical_id": "", // ie: 01020406 for a level four page. Note that the numbers (apart from the first)
+				// are NodeNums, the first/top level is always "01"
+			"title": "",
+			"keywords": "",
+			"description": "",
+			"user_authors": [
+				{
 					"id": , // May be null (id of the user)
 					"username": ""
-				], // Authors who are users
-				"external_authors": [
+				}
+			], // Authors who are users
+			"external_authors": [
+				{
 					"id": , // May be null (id of the author)
 					"author": ""
-				],
-				"references": [
-					{
-						"id": , // may be null
-						"source": "", // ie: "Web Page" or Publisher
-						"title":,
-						"author": {
-							"id":, // May be null
-							"author": "" 
-						}
-					},
-					..
-				], // The sources of the information, ie: book, paper titles
+				}
+			],
+			"references": [
+				{
+					"id": , // may be null
+					"source": "", // ie: "Web Page" or Publisher
+					"title":,
+					"author": {
+						"id":, // May be null
+						"author": "" 
+					}
+				},
+				..
+			], // The sources of the information, ie: book, paper titles
 
-				"nodes": [
-					{
-						"id": , // May be null
-						"node_num" : "", // (ie: "01")
-						"x": , // Integer, the x coordinate of the component node box on the stage (0 to stage width)
-						"y": , // Integer, the y coordinate of the component node box on the stage (0 to stage height)
-						"label": "",
-						"graphic_file": "", // File name/ web link of the image associated with the node
-						"graphic_text": "",
-						"graphic_credits": "",
-						"type": "", // (Mechanism/Effect)
-						"definition": "", // optional
-						"keywords": "", // optional
-						"hyperlink": "", // optional a hypertext link to further information
-						"has_child_page": // true/false
-					},
-					..
-				],
+			"nodes": [
+				{
+					"id": , // May be null
+					"node_num" : "", // (ie: "01")
+					"x": , // Integer, the x coordinate of the component node box on the stage (0 to stage width)
+					"y": , // Integer, the y coordinate of the component node box on the stage (0 to stage height)
+					"label": "",
+					"graphic_file": "", // File name/ web link of the image associated with the node
+					"graphic_text": "",
+					"graphic_credits": "",
+					"type": "", // (Mechanism/Effect)
+					"definition": "", // optional
+					"keywords": "", // optional
+					"hyperlink": "", // optional a hypertext link to further information
+					"has_child_page": // true/false
+				},
+				..
+			],
 
-				"flows" : [
-					{
-						"id": , // May be null
-						"flow_num": ""// Unique to the page two digits, ie: "03"
-						"source_node_num": "", 
-						"destination_node_num": "", // (optional)
-						"label": "",
-						"label_x": , // integer (range -stage width to stage width, relative to drawing_group_x)
-						"label_y": , // integer (range -stage height to stage height. relative to drawing_group_y)
-						"label_width": , // integer, optional to suit characters of the label that are size 13px
-						"drawing_group_x": ,// integer (the base coordinate of the flow on the stage)
-						"drawing_group_y": ,// integer (the base coordinate of the flow on the stage)
-						"arrow_points": , // [{x: , y: }] optional, the coordinates of the nodes of the arrow that
-										// sits on the flow line and points toward the destination
-						"points": ,// [{x: , y: }] the flow line node points, relative to drawing_group x, y. 
-									// (x: -stage width to stage width, y: -stage height to stage height)
-						"keywords": "", // (optional)
-						"definition": "", // (optional)
-						"conversion_formulas": [
-							{
-								"id": , // May be null
-								"formula": "",
-								"description": ""
-							},
-							..
-						]
-						"hyperlink": "" // (optional) a link to further information
-					},
-					..
-				]
-				
-			},
-			..
-		]
-	},
-	..
-]
+			"flows" : [
+				{
+					"id": , // May be null
+					"flow_num": ""// Unique to the page two digits, ie: "03"
+					"source_node_num": "", 
+					"destination_node_num": "", // (optional)
+					"label": "",
+					"label_x": , // integer (range -stage width to stage width, relative to drawing_group_x)
+					"label_y": , // integer (range -stage height to stage height. relative to drawing_group_y)
+					"label_width": , // integer, optional to suit characters of the label that are size 13px
+					"drawing_group_x": ,// integer (the base coordinate of the flow on the stage)
+					"drawing_group_y": ,// integer (the base coordinate of the flow on the stage)
+					"arrow_points": , // [{x: , y: }] optional, the coordinates of the nodes of the arrow that
+									// sits on the flow line and points toward the destination
+					"points": ,// [{x: , y: }] the flow line node points, relative to drawing_group x, y. 
+								// (x: -stage width to stage width, y: -stage height to stage height)
+					"keywords": "", // (optional)
+					"definition": "", // (optional)
+					"conversion_formulas": [
+						{
+							"id": , // May be null
+							"formula": "",
+							"description": ""
+						},
+						..
+					]
+					"hyperlink": "" // (optional) a link to further information
+				},
+				..
+			]
+			
+		},
+		..
+	]
+}
 ```
 ### Flow Diagram Tools/Feasibility
 
@@ -455,16 +466,50 @@ Project Start: 01/04/2024
 | Learn Vanilla PixiJS         | 3        | 1           |
 | Learn Konva Graphics		   | 3        | 3           |
 | Graphics                     | 2        | 2           |
-| Code Intro Page HTML         | 3        |             |
-| Import Help page             | 2        |             |
+| Code Intro Page HTML         | 3        | 1           |
+| Import Help page             | 2        | 1           |
 | Code DataFlow Page HTML      | 5        | 7           |
 | Code DataFlow Page JS        | 20       | 55          |
 | Code MYSQL set-up            | 2        | 5           |
-| Code PHP/MYSQL               | 6        | 25          |
-| Flow Model Examples          | 5        |             |
+| Code PHP/MYSQL               | 6        | 30          |
+| Flow Model Examples          | 5        | 10          |
 | Systems Test Plan            | 3        | 5           |
-| Systems Test                 | 6        | 23          |
+| Systems Test                 | 6        | 25          |
+| Release                      |          | 1           |
+| Release Test                 |          | 1           |
 | ---------------------------- | -------- | ----------- |
 | Totals                       | 75       |             |
 | ---------------------------- | -------- | ----------- |
 | Phase II Investigation       | 5        |             |
+
+Notes:
+The original PHP/MYSQL estimates did not include the import/export
+code times.
+
+### Project Planning Notes
+
+It would have better to spend an extra 4 days of analysis
+after one month of work, to redo the estimates, which were
+rather a long way short.
+
+## Critique
+
+02/11/2024
+
+Consider changing the way in which the chart is redrawn in
+non-edit mode. It may be better to re-draw nodes, lines,
+flow-arrows, flow-labels in that order for the whole
+chart.
+
+Consider having more than one hyperlink where they apply.
+
+Allow for multiple authors in references
+
+Increase the height of the modal description/definition
+boxes by three lines.
+
+It would have been better to write the PHP code in classes
+one per file, with names matching the files and this ought
+to be adopted as a standard. Likely it would be better to
+do the CRUD actions on each table with a class of the same
+name.

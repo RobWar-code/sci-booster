@@ -178,7 +178,7 @@
     function generalSearch($searchText) {
         $scoreList = [];
         // Divide the search text into a word array
-        $w = makeWordArray(strtolower($searchText), "\\\'\\\-");
+        $w = makeWordArray(strtolower(htmlspecialchars($searchText, ENT_QUOTES, 'UTF-8', false)), "\\\'\\\-");
         // Set-up the list of places to search
         $fieldList = [
             ["table"=>"page", "pageIdField"=>"id", "field"=>"title", "points"=>5],
@@ -188,6 +188,7 @@
             ["table"=>"flow", "pageIdField"=>"page_id", "field"=>"label", "points"=>3],
             ["table"=>"flow", "pageIdField"=>"page_id", "field"=>"keywords", "points"=>2]
         ];
+
         matchFields($w, $fieldList, $scoreList);
         $result = [
             'result'=>true,
@@ -217,7 +218,7 @@
                     while ($row = $result->fetch_assoc()) {
                         $fw = makeWordArray(strtolower($row[$fieldItem['field']]), $includeChars);
                         $baseScore = $fieldItem['points'];
-                        $score = matchWordLists(htmlspecialchars($w, ENT_QUOTES, 'UTF-8', false), $fw, $baseScore);
+                        $score = matchWordLists($w, $fw, $baseScore);
                         if ($score > 0) {
                             insertMatchScore($score, $fieldItem, $row, $scoreList);
                         }
@@ -235,11 +236,11 @@
             // Prepare the entry to be inserted
             // Find the page title if appropriate
             $pageTitle = "";
-            if ($fieldItem['table'] === 'page') {
+            if ($fieldItem['table'] === 'page' && isset($matchRow['title'])) {
                 $pageTitle = $matchRow['title'];
             }
             else {
-                $sql = "SELECT title FROM page WHERE id = {$matchRow['page_id']}";
+                $sql = "SELECT title FROM page WHERE id = {$matchRow[$fieldItem['pageIdField']]}";
                 $result = $dbConn->query($sql);
                 if (!$result) {
                     error_log("insertMatchScore: Problem with search for page - {$dbConn->error}");
@@ -267,9 +268,9 @@
                     array_push($scoreList, $scoreItem);
                 }
                 else {
-                    for ($i = $count($scoreList) - 1; $i <= $position; $i--) {
+                    for ($i = count($scoreList) - 1; $i <= $position; $i--) {
                         if ($i < $maxScores - 1) {
-                            if ($i >= $count($scoreList) - 1) {
+                            if ($i >= count($scoreList) - 1) {
                                 array_push($scoreList, $scoreList[$i]);
                             }
                             else {

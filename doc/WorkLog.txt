@@ -6,7 +6,7 @@ Contents
 
 <h1>Work Due
 
-    Set-up the narayana-art.co.uk/sci-booster web-page
+    * Set-up the narayana-art.co.uk/sci-booster web-page
         * Create the sci-booster directory on narayana-art server
          Note: It is necessary to check that all files are successfully copied - there can be omissions
         * Copy across the src and assets directories to the server sci-booster directory
@@ -17,16 +17,31 @@ Contents
         * Set-up the admin user for the database
         * Create the tables by running the browser script create-tables.php
         * Go on to the site and the flow-diagram page to create the Owner warner1
+        * Users warner1, warner3 and warner5 set-up
+
+    * Test and build 3 example model imports with ChatGPT
+
+    * Provide the link from narayana-art to sci-booster
+
+    * Adjust the README for building JSON models with ChatGPT
+
+    * Update the README with user features changes
+
+    * Add a screenshot for the README
+
+    Do the XML sitemap for narayana-art
 
     Flow label sometimes not altered when changed in flow details?
 
-    Test and build 3 example model imports with ChatGPT
-    
     Clear debug from code
 
     Block robot logins/register
 
-    Forgot Password get out - include email in login details
+    Add the meta property details for social media links
+
+<h1>Work Done
+    01/11/2024
+    * Forgot Password get out - include email in login details
         * Amend analysis
         * Amend create-table.php
         * Add the field to the login register modal
@@ -42,27 +57,18 @@ Contents
         * Clear the debugging from the forgot-password code
         * Test with an email to rowaniar@netscape.net
 
+    * Complete site operational set-up
+
     * Email address missing from profile display
 
     * Profile button displayed on login when no user
 
     * Provide the meta details for the search engines
 
-    When user details saved and the page is represented, the dfm.userStatus is not correctly set
+    * When user details saved and the page is represented, the dfm.userStatus is not correctly set
 
-    Prepare the import models for import on the web
+    * Prepare the import models for import on the web
 
-    Adjust the README for building JSON models with ChatGPT
-
-    Update the README with user features changes
-
-    Add a screenshot for the README
-
-    Provide the link from narayana-art to sci-booster
-
-    Add the meta property details for social media links
-
-<h1>Work Done
     30/10/2024
     * Add a profile editing modal (only visible if logged in)
     
