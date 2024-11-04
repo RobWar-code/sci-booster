@@ -32,6 +32,9 @@ dfm.flowLineWidth = 5;
 dfm.flowMarkerWidth = 10;
 dfm.flowArrowRadius = 8;
 
+// Hover Text
+dfm.hoverFontSize = 10;
+
 // The drawing stage
 dfm.stageWidth = GLOBALS.minStageWidth;
 dfm.stageHeight = GLOBALS.stageHeight;

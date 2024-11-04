@@ -6,6 +6,23 @@ Contents
 
 <h1>Work Due
 
+
+    The hover function should not let the hover text overlap the edge of the stage.
+
+    Do the XML sitemap for narayana-art
+
+    Flow label sometimes not altered when changed in flow details?
+
+    Clear debug from code
+
+    Block robot logins/register
+
+    Add the meta property details for social media links
+
+<h1>Work Done
+
+    03/11/2024
+
     * Set-up the narayana-art.co.uk/sci-booster web-page
         * Create the sci-booster directory on narayana-art server
          Note: It is necessary to check that all files are successfully copied - there can be omissions
@@ -29,17 +46,6 @@ Contents
 
     * Add a screenshot for the README
 
-    Do the XML sitemap for narayana-art
-
-    Flow label sometimes not altered when changed in flow details?
-
-    Clear debug from code
-
-    Block robot logins/register
-
-    Add the meta property details for social media links
-
-<h1>Work Done
     01/11/2024
     * Forgot Password get out - include email in login details
         * Amend analysis

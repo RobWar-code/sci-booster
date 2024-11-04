@@ -12,7 +12,7 @@ dfm.hoverText = {
 			x: 0,
 			y: 0,
 			width: 100,
-			height: 30,
+			height: dfm.hoverFontSize + 6,
 			fill: 'rgba(200, 200, 100, 0.5)',
 			stroke: 'black'
 		});
@@ -24,7 +24,7 @@ dfm.hoverText = {
 			text: "Some Hover Text",
 			fontFamily: 'Calibri',
 			style: 'italic',
-			fontSize: 12,
+			fontSize: dfm.hoverFontSize,
 			fill: 'black'
 		});
 
@@ -34,7 +34,21 @@ dfm.hoverText = {
 	},
 
 	displayHoverText: function(message, x, y) {
-		dfm.hoverGroup.position({x, y});
+		let nx = x;
+		let ny = y;
+		// Check for overlap of stage edge
+		let fontSize = dfm.hoverFontSize;
+        let fontFamily = dfm.nodeTemplate.fontFamily; 
+        let textWidth = dfm.currentVisual.calculateTextWidth(message, fontSize, fontFamily);
+		let boxWidth = textWidth + 6;
+		if (x < 0) {
+			nx = 0;
+		}
+		else if (x + boxWidth >= GLOBALS.minStageWidth) {
+			nx = GLOBALS.minStageWidth - boxWidth;
+		}
+		dfm.hoverGroup.position({x: nx, y: ny});
+		dfm.hoverBox.setAttr('width', boxWidth);
 		dfm.hoverTextItem.setAttr('text', message);
 		dfm.hoverLayer.add(dfm.hoverGroup);
 		dfm.stageApp.draw();
