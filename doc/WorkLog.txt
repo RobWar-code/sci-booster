@@ -6,8 +6,11 @@ Contents
 
 <h1>Work Due
 
+    Do testing and fixes for mobile
 
-    The hover function should not let the hover text overlap the edge of the stage.
+    Adjust the fontsize for buttons on the narayana-art menu page
+
+    * The hover function should not let the hover text overlap the edge of the stage.
 
     Do the XML sitemap for narayana-art
 

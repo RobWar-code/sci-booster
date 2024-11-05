@@ -182,14 +182,19 @@ dfm.FlowVisuals = class {
 
         // Events
         node.detailsOpt.on("click", (event) => nodeDetails.viewNodeDetails(event));
+        node.detailsOpt.on("touchstart", (event) => nodeDetails.viewNodeDetails(event));
         node.detailsOpt.on("mouseover", (event) => nodeDetails.doHoverText(event));
         node.graphicOpt.on("click", (event) => dfm.nodeGraphic.viewNodeGraphic(event));
+        node.graphicOpt.on("touchstart", (event) => dfm.nodeGraphic.viewNodeGraphic(event));
         node.graphicOpt.on("mouseover", (event) => nodeDetails.doHoverText(event));
         node.zoomDetailsOpt.on("click", (event) => flowModelPage.zoomPage(event));
+        node.zoomDetailsOpt.on("touchstart", (event) => flowModelPage.zoomPage(event));
         node.zoomDetailsOpt.on("mouseover", (event) => nodeDetails.doHoverText(event));
         node.flowLinkOpt.on("click", (event) => flowDetails.addNewFlow(event));
+        node.flowLinkOpt.on("touchstart", (event) => flowDetails.addNewFlow(event));
         node.flowLinkOpt.on("mouseover", (event) => nodeDetails.doHoverText(event));
         node.hyperlinkOpt.on("click", (event) => nodeDetails.doHyperlink(event));
+        node.hyperlinkOpt.on("touchstart", (event) => nodeDetails.doHyperlink(event));
         node.hyperlinkOpt.on("mouseover", (event) => nodeDetails.doHoverText(event));
 
         // Assemble items
@@ -937,6 +942,7 @@ dfm.FlowVisuals = class {
             flowNum: this.currentFlow.flow_num
         });
         detailsOpt.on('click', (e) => flowDetails.viewFlowDetails(e));
+        detailsOpt.on('touchstart', (e) => flowDetails.viewFlowDetails(e));
         detailsOpt.on("mouseover", (event) => flowDetails.doHoverText(event));
         let flowLabelGroup = new Konva.Group({x: x, y: y, flowNum: flowNum});
         flowLabelGroup.setAttr("draggable", true);
