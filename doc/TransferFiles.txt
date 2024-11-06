@@ -1,5 +1,15 @@
 Files for Transfer
 
+src/flow-main.js
+src/global-initialise.js
+flow-model-page/flow-model-page.js
+html-pages/flow-diagram.html
+model-details/model-details.js
+stage-area/flow-visuals.js
+stage-area/flow-details.js
+styles/styles.css
+
+----------------
 html-pages/redo-password.php
 users/reset-password.php
 users/forgot-password.php

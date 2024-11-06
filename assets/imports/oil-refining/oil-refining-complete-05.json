@@ -1,0 +1,1664 @@
+{
+    "flow_model_id": 2,
+    "flow_model_title": "Oil Well to Storage/Distribution Flow Model",
+    "complete": true,
+    "pages": [
+        {
+            "id": 4,
+            "flow_model_id": 2,
+            "hierarchical_id": "0102",
+            "title": "Refinery",
+            "description": "",
+            "keywords": "refining, oil, fuel, crude oil",
+            "user_authors": [
+                {
+                    "id": 2,
+                    "username": "warner3"
+                }
+            ],
+            "external_authors": [
+                {
+                    "id": 6,
+                    "author": " "
+                }
+            ],
+            "references": [],
+            "nodes": [
+                {
+                    "id": 8,
+                    "page_id": 4,
+                    "node_num": "01",
+                    "label": "Crude Oil Input",
+                    "graphic_file": "",
+                    "graphic_text": "Input point for crude oil into the refinery.",
+                    "graphic_credits": "",
+                    "x": 5,
+                    "y": 10,
+                    "type": "mechanism",
+                    "definition": "The crude oil feed entering the refinery.",
+                    "keywords": "crude oil, input",
+                    "hyperlink": "",
+                    "has_child_page": false
+                },
+                {
+                    "id": 9,
+                    "page_id": 4,
+                    "node_num": "02",
+                    "label": "Distillation Column",
+                    "graphic_file": "warner3/oil-refinery-distillation.webp",
+                    "graphic_text": "Distillation plant for separating crude oil into chemical fractions.",
+                    "graphic_credits": "",
+                    "x": 5,
+                    "y": 175,
+                    "type": "mechanism",
+                    "definition": "Primary separation process for crude oil.",
+                    "keywords": "distillation, separation",
+                    "hyperlink": "https://en.wikipedia.org/wiki/Fractionating_column",
+                    "has_child_page": false
+                },
+                {
+                    "id": 10,
+                    "page_id": 4,
+                    "node_num": "03",
+                    "label": "Cracking Unit",
+                    "graphic_file": "",
+                    "graphic_text": "Breaks larger hydrocarbons into smaller molecules.",
+                    "graphic_credits": "",
+                    "x": 5,
+                    "y": 340,
+                    "type": "mechanism",
+                    "definition": "Processes heavy fractions into lighter fuels.",
+                    "keywords": "cracking, light fuels",
+                    "hyperlink": "",
+                    "has_child_page": false
+                },
+                {
+                    "id": 11,
+                    "page_id": 4,
+                    "node_num": "04",
+                    "label": "Reforming Unit",
+                    "graphic_file": "",
+                    "graphic_text": "Rearranges molecules to increase the octane number.",
+                    "graphic_credits": "",
+                    "x": 5,
+                    "y": 505,
+                    "type": "mechanism",
+                    "definition": "Converts naphtha into high-octane fuels.",
+                    "keywords": "reforming, octane",
+                    "hyperlink": "",
+                    "has_child_page": false
+                },
+                {
+                    "id": 12,
+                    "page_id": 4,
+                    "node_num": "05",
+                    "label": "Blending Unit",
+                    "graphic_file": "",
+                    "graphic_text": "",
+                    "graphic_credits": "",
+                    "x": 235,
+                    "y": 5,
+                    "type": "mechanism",
+                    "definition": "Produces final fuel blends.",
+                    "keywords": "blending, fuels",
+                    "hyperlink": "",
+                    "has_child_page": false
+                },
+                {
+                    "id": 13,
+                    "page_id": 4,
+                    "node_num": "06",
+                    "label": "Fuel Storage",
+                    "graphic_file": "",
+                    "graphic_text": "",
+                    "graphic_credits": "",
+                    "x": 235,
+                    "y": 175,
+                    "type": "mechanism",
+                    "definition": "Stores the finished fuel products",
+                    "keywords": "storage, fuels",
+                    "hyperlink": "",
+                    "has_child_page": false
+                }
+            ],
+            "flows": [
+                {
+                    "id": 9,
+                    "page_id": 4,
+                    "flow_num": "01",
+                    "label": "Crude Oil",
+                    "drawing_group_x": 75,
+                    "drawing_group_y": 85,
+                    "label_x": -25,
+                    "label_y": 30,
+                    "label_width": 60,
+                    "keywords": "crude oil",
+                    "definition": "Flow of crude oil to the distillation column.",
+                    "hyperlink": "",
+                    "source_node_num": "01",
+                    "destination_node_num": "02",
+                    "arrow_points": [
+                        {
+                            "id": 585,
+                            "flow_id": 9,
+                            "x": 0,
+                            "y": 16
+                        },
+                        {
+                            "id": 586,
+                            "flow_id": 9,
+                            "x": -7,
+                            "y": 6
+                        },
+                        {
+                            "id": 587,
+                            "flow_id": 9,
+                            "x": 0,
+                            "y": 10
+                        },
+                        {
+                            "id": 588,
+                            "flow_id": 9,
+                            "x": 6,
+                            "y": 6
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 374,
+                            "flow_id": 9,
+                            "x": 0,
+                            "y": 0
+                        },
+                        {
+                            "id": 375,
+                            "flow_id": 9,
+                            "x": 0,
+                            "y": 90
+                        }
+                    ],
+                    "conversion_formulas": []
+                },
+                {
+                    "id": 10,
+                    "page_id": 4,
+                    "flow_num": "02",
+                    "label": "Heavy Fractions",
+                    "drawing_group_x": 75,
+                    "drawing_group_y": 250,
+                    "label_x": -25,
+                    "label_y": 35,
+                    "label_width": 60,
+                    "keywords": "heavy fractions",
+                    "definition": "Heavy fractions flow to the cracking unit.",
+                    "hyperlink": "",
+                    "source_node_num": "02",
+                    "destination_node_num": "03",
+                    "arrow_points": [
+                        {
+                            "id": 589,
+                            "flow_id": 10,
+                            "x": 0,
+                            "y": 16
+                        },
+                        {
+                            "id": 590,
+                            "flow_id": 10,
+                            "x": -7,
+                            "y": 6
+                        },
+                        {
+                            "id": 591,
+                            "flow_id": 10,
+                            "x": 0,
+                            "y": 10
+                        },
+                        {
+                            "id": 592,
+                            "flow_id": 10,
+                            "x": 6,
+                            "y": 6
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 376,
+                            "flow_id": 10,
+                            "x": 0,
+                            "y": 0
+                        },
+                        {
+                            "id": 377,
+                            "flow_id": 10,
+                            "x": 0,
+                            "y": 90
+                        }
+                    ],
+                    "conversion_formulas": [
+                        {
+                            "id": 4,
+                            "flow_id": 10,
+                            "formula": "typically: C16H34, C10H8 -&amp;gt; C8H18, C7H8, C6H12",
+                            "description": "Cracking of heavy fractions to smaller molecules"
+                        }
+                    ]
+                },
+                {
+                    "id": 11,
+                    "page_id": 4,
+                    "flow_num": "03",
+                    "label": "Cracked Gasoline",
+                    "drawing_group_x": 75,
+                    "drawing_group_y": 415,
+                    "label_x": -29,
+                    "label_y": 30,
+                    "label_width": 56,
+                    "keywords": "cracked gasoline",
+                    "definition": "Cracked gasoline flows to the reforming unit. Other fuels produced from the distillation/cracking process include: LPG, Kerosene, Diesel and Fuel Oil. Naptha and Bitumen are also produced",
+                    "hyperlink": "",
+                    "source_node_num": "03",
+                    "destination_node_num": "04",
+                    "arrow_points": [
+                        {
+                            "id": 593,
+                            "flow_id": 11,
+                            "x": 0,
+                            "y": 16
+                        },
+                        {
+                            "id": 594,
+                            "flow_id": 11,
+                            "x": -7,
+                            "y": 6
+                        },
+                        {
+                            "id": 595,
+                            "flow_id": 11,
+                            "x": 0,
+                            "y": 10
+                        },
+                        {
+                            "id": 596,
+                            "flow_id": 11,
+                            "x": 6,
+                            "y": 6
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 378,
+                            "flow_id": 11,
+                            "x": 0,
+                            "y": 0
+                        },
+                        {
+                            "id": 379,
+                            "flow_id": 11,
+                            "x": 0,
+                            "y": 90
+                        }
+                    ],
+                    "conversion_formulas": []
+                },
+                {
+                    "id": 12,
+                    "page_id": 4,
+                    "flow_num": "04",
+                    "label": "Reformed Gasoline",
+                    "drawing_group_x": 145,
+                    "drawing_group_y": 540,
+                    "label_x": 18,
+                    "label_y": -180,
+                    "label_width": 52,
+                    "keywords": "reformed gasoline",
+                    "definition": "Reformed gasoline flows to the blending unit.",
+                    "hyperlink": "",
+                    "source_node_num": "04",
+                    "destination_node_num": "05",
+                    "arrow_points": [
+                        {
+                            "id": 597,
+                            "flow_id": 12,
+                            "x": 16,
+                            "y": 0
+                        },
+                        {
+                            "id": 598,
+                            "flow_id": 12,
+                            "x": 8,
+                            "y": 7
+                        },
+                        {
+                            "id": 599,
+                            "flow_id": 12,
+                            "x": 10,
+                            "y": 0
+                        },
+                        {
+                            "id": 600,
+                            "flow_id": 12,
+                            "x": 8,
+                            "y": -8
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 380,
+                            "flow_id": 12,
+                            "x": -19,
+                            "y": 1
+                        },
+                        {
+                            "id": 381,
+                            "flow_id": 12,
+                            "x": 20,
+                            "y": 0
+                        },
+                        {
+                            "id": 382,
+                            "flow_id": 12,
+                            "x": 72,
+                            "y": -500
+                        },
+                        {
+                            "id": 383,
+                            "flow_id": 12,
+                            "x": 89,
+                            "y": -501
+                        }
+                    ],
+                    "conversion_formulas": []
+                },
+                {
+                    "id": 13,
+                    "page_id": 4,
+                    "flow_num": "05",
+                    "label": "Finished Fuel",
+                    "drawing_group_x": 305,
+                    "drawing_group_y": 85,
+                    "label_x": -25,
+                    "label_y": 40,
+                    "label_width": 60,
+                    "keywords": "finished fuel",
+                    "definition": "Finished fuel flows to storage.",
+                    "hyperlink": "",
+                    "source_node_num": "05",
+                    "destination_node_num": "06",
+                    "arrow_points": [
+                        {
+                            "id": 601,
+                            "flow_id": 13,
+                            "x": 0,
+                            "y": 16
+                        },
+                        {
+                            "id": 602,
+                            "flow_id": 13,
+                            "x": -7,
+                            "y": 6
+                        },
+                        {
+                            "id": 603,
+                            "flow_id": 13,
+                            "x": 0,
+                            "y": 10
+                        },
+                        {
+                            "id": 604,
+                            "flow_id": 13,
+                            "x": 6,
+                            "y": 6
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 384,
+                            "flow_id": 13,
+                            "x": 0,
+                            "y": 0
+                        },
+                        {
+                            "id": 385,
+                            "flow_id": 13,
+                            "x": 0,
+                            "y": 90
+                        }
+                    ],
+                    "conversion_formulas": []
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "flow_model_id": 2,
+            "hierarchical_id": "0101",
+            "title": "Oil Well - Drilling and Extraction",
+            "description": "",
+            "keywords": "oil well, drilling, extraction, crude oil",
+            "user_authors": [
+                {
+                    "id": 2,
+                    "username": "warner3"
+                }
+            ],
+            "external_authors": [],
+            "references": [],
+            "nodes": [
+                {
+                    "id": 5,
+                    "page_id": 3,
+                    "node_num": "01",
+                    "label": "Boring Equipment",
+                    "graphic_file": "",
+                    "graphic_text": "",
+                    "graphic_credits": "",
+                    "x": 50,
+                    "y": 10,
+                    "type": "mechanism",
+                    "definition": "Equipment used to bore into the earth for accessing the oil reservoir.",
+                    "keywords": "boring, drilling, oil extraction",
+                    "hyperlink": "",
+                    "has_child_page": true
+                },
+                {
+                    "id": 6,
+                    "page_id": 3,
+                    "node_num": "02",
+                    "label": "Oil Reservoir",
+                    "graphic_file": "",
+                    "graphic_text": "",
+                    "graphic_credits": "",
+                    "x": 50,
+                    "y": 165,
+                    "type": "mechanism",
+                    "definition": "Underground pool of liquid petroleum contained in porous rock formations.",
+                    "keywords": "oil reservoir, petroleum",
+                    "hyperlink": "",
+                    "has_child_page": false
+                },
+                {
+                    "id": 7,
+                    "page_id": 3,
+                    "node_num": "03",
+                    "label": "Pumping Equipment",
+                    "graphic_file": "",
+                    "graphic_text": "",
+                    "graphic_credits": "",
+                    "x": 50,
+                    "y": 320,
+                    "type": "mechanism",
+                    "definition": "Pumps used to extract crude oil from the oil reservoir and transport it to the surface.",
+                    "keywords": "pumping, crude oil extraction",
+                    "hyperlink": "",
+                    "has_child_page": false
+                }
+            ],
+            "flows": [
+                {
+                    "id": 5,
+                    "page_id": 3,
+                    "flow_num": "01",
+                    "label": "Drilling Mud",
+                    "drawing_group_x": 120,
+                    "drawing_group_y": 85,
+                    "label_x": -75,
+                    "label_y": 35,
+                    "label_width": 51,
+                    "keywords": "drilling lubricant",
+                    "definition": "Flow of drilling mud used in the drilling process from boring equipment to the oil reservoir.",
+                    "hyperlink": "",
+                    "source_node_num": "01",
+                    "destination_node_num": "02",
+                    "arrow_points": [
+                        {
+                            "id": 493,
+                            "flow_id": 5,
+                            "x": -53,
+                            "y": 30
+                        },
+                        {
+                            "id": 494,
+                            "flow_id": 5,
+                            "x": -46,
+                            "y": 18
+                        },
+                        {
+                            "id": 495,
+                            "flow_id": 5,
+                            "x": -53,
+                            "y": 22
+                        },
+                        {
+                            "id": 496,
+                            "flow_id": 5,
+                            "x": -60,
+                            "y": 18
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 322,
+                            "flow_id": 5,
+                            "x": -53,
+                            "y": 5
+                        },
+                        {
+                            "id": 323,
+                            "flow_id": 5,
+                            "x": -54,
+                            "y": 77
+                        }
+                    ],
+                    "conversion_formulas": []
+                },
+                {
+                    "id": 6,
+                    "page_id": 3,
+                    "flow_num": "02",
+                    "label": "Rock Slurry",
+                    "drawing_group_x": 190,
+                    "drawing_group_y": 40,
+                    "label_x": 30,
+                    "label_y": -10,
+                    "label_width": 55,
+                    "keywords": "rock slurry, drilling debris",
+                    "definition": "Flow of rock slurry generated during the drilling process from boring equipment to the surface.",
+                    "hyperlink": "",
+                    "source_node_num": "01",
+                    "destination_node_num": "",
+                    "arrow_points": [
+                        {
+                            "id": 505,
+                            "flow_id": 6,
+                            "x": 20,
+                            "y": 0
+                        },
+                        {
+                            "id": 506,
+                            "flow_id": 6,
+                            "x": 12,
+                            "y": -8
+                        },
+                        {
+                            "id": 507,
+                            "flow_id": 6,
+                            "x": 16,
+                            "y": 0
+                        },
+                        {
+                            "id": 508,
+                            "flow_id": 6,
+                            "x": 12,
+                            "y": 8
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 328,
+                            "flow_id": 6,
+                            "x": -17,
+                            "y": 1
+                        },
+                        {
+                            "id": 329,
+                            "flow_id": 6,
+                            "x": 120,
+                            "y": 0
+                        }
+                    ],
+                    "conversion_formulas": []
+                },
+                {
+                    "id": 7,
+                    "page_id": 3,
+                    "flow_num": "03",
+                    "label": "Crude Oil",
+                    "drawing_group_x": 120,
+                    "drawing_group_y": 240,
+                    "label_x": -40,
+                    "label_y": 30,
+                    "label_width": 60,
+                    "keywords": "crude oil",
+                    "definition": "Flow of crude oil from the oil reservoir to the pumping equipment at the surface.",
+                    "hyperlink": "",
+                    "source_node_num": "02",
+                    "destination_node_num": "03",
+                    "arrow_points": [
+                        {
+                            "id": 497,
+                            "flow_id": 7,
+                            "x": 0,
+                            "y": 20
+                        },
+                        {
+                            "id": 498,
+                            "flow_id": 7,
+                            "x": -8,
+                            "y": 12
+                        },
+                        {
+                            "id": 499,
+                            "flow_id": 7,
+                            "x": 0,
+                            "y": 16
+                        },
+                        {
+                            "id": 500,
+                            "flow_id": 7,
+                            "x": 8,
+                            "y": 12
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 324,
+                            "flow_id": 7,
+                            "x": 0,
+                            "y": 0
+                        },
+                        {
+                            "id": 325,
+                            "flow_id": 7,
+                            "x": 0,
+                            "y": 80
+                        }
+                    ],
+                    "conversion_formulas": []
+                },
+                {
+                    "id": 8,
+                    "page_id": 3,
+                    "flow_num": "04",
+                    "label": "Drilling Mud + Debris",
+                    "drawing_group_x": 147,
+                    "drawing_group_y": 86,
+                    "label_x": -27,
+                    "label_y": 22,
+                    "label_width": 51,
+                    "keywords": "",
+                    "definition": "",
+                    "hyperlink": "",
+                    "source_node_num": "02",
+                    "destination_node_num": "01",
+                    "arrow_points": [
+                        {
+                            "id": 501,
+                            "flow_id": 8,
+                            "x": 0,
+                            "y": 2
+                        },
+                        {
+                            "id": 502,
+                            "flow_id": 8,
+                            "x": -7,
+                            "y": 14
+                        },
+                        {
+                            "id": 503,
+                            "flow_id": 8,
+                            "x": 0,
+                            "y": 10
+                        },
+                        {
+                            "id": 504,
+                            "flow_id": 8,
+                            "x": 6,
+                            "y": 15
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 326,
+                            "flow_id": 8,
+                            "x": 0,
+                            "y": 0
+                        },
+                        {
+                            "id": 327,
+                            "flow_id": 8,
+                            "x": 0,
+                            "y": 80
+                        }
+                    ],
+                    "conversion_formulas": []
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "flow_model_id": 2,
+            "hierarchical_id": "010101",
+            "title": "Boring Components and Process",
+            "description": "",
+            "keywords": "boring, drilling, drive, extraction, oil well",
+            "user_authors": [
+                {
+                    "id": 2,
+                    "username": "warner3"
+                }
+            ],
+            "external_authors": [],
+            "references": [],
+            "nodes": [
+                {
+                    "id": 14,
+                    "page_id": 5,
+                    "node_num": "01",
+                    "label": "Top Drive",
+                    "graphic_file": "",
+                    "graphic_text": "",
+                    "graphic_credits": "",
+                    "x": 10,
+                    "y": 10,
+                    "type": "mechanism",
+                    "definition": "A mechanical device used to rotate the drill string during the boring process.",
+                    "keywords": "top drive, drilling, rotary force",
+                    "hyperlink": "",
+                    "has_child_page": false
+                },
+                {
+                    "id": 15,
+                    "page_id": 5,
+                    "node_num": "02",
+                    "label": "Drill String",
+                    "graphic_file": "",
+                    "graphic_text": "",
+                    "graphic_credits": "",
+                    "x": 10,
+                    "y": 165,
+                    "type": "mechanism",
+                    "definition": "A series of connected pipes that transmit the rotational force to the drill bit.",
+                    "keywords": "drill string, boring, rotation",
+                    "hyperlink": "",
+                    "has_child_page": false
+                },
+                {
+                    "id": 16,
+                    "page_id": 5,
+                    "node_num": "03",
+                    "label": "Rotary Drill Bit",
+                    "graphic_file": "warner3/oil-well-drilling-bit.webp",
+                    "graphic_text": "Oil boring bit",
+                    "graphic_credits": "",
+                    "x": 10,
+                    "y": 320,
+                    "type": "mechanism",
+                    "definition": "A rotating drill bit used to bore through rock layers to access the oil reservoir.",
+                    "keywords": "drill bit, rotary, boring, oil extraction",
+                    "hyperlink": "",
+                    "has_child_page": false
+                },
+                {
+                    "id": 17,
+                    "page_id": 5,
+                    "node_num": "04",
+                    "label": "Drilling Mud Pump",
+                    "graphic_file": "",
+                    "graphic_text": "",
+                    "graphic_credits": "",
+                    "x": 230,
+                    "y": 165,
+                    "type": "mechanism",
+                    "definition": "A pump used to circulate drilling mud to lubricate the drill bit and carry rock cuttings to the surface.",
+                    "keywords": "drilling mud, mud pump, lubrication, debris removal",
+                    "hyperlink": "",
+                    "has_child_page": false
+                },
+                {
+                    "id": 18,
+                    "page_id": 5,
+                    "node_num": "05",
+                    "label": "Mud Return System",
+                    "graphic_file": "warner3/oil-well-mud-debris-separator.webp",
+                    "graphic_text": "Device for separating drilling mud from rock debris, also known as a shale shaker.",
+                    "graphic_credits": "",
+                    "x": 230,
+                    "y": 330,
+                    "type": "mechanism",
+                    "definition": "A system that recovers the drilling mud and separates it from rock cuttings.",
+                    "keywords": "mud return, rock cuttings, drilling",
+                    "hyperlink": "",
+                    "has_child_page": false
+                }
+            ],
+            "flows": [
+                {
+                    "id": 14,
+                    "page_id": 5,
+                    "flow_num": "01",
+                    "label": "Rotational Force",
+                    "drawing_group_x": 80,
+                    "drawing_group_y": 85,
+                    "label_x": -40,
+                    "label_y": 20,
+                    "label_width": 80,
+                    "keywords": "rotational force, drilling, drive action",
+                    "definition": "Flow of rotational force from the Top Drive to the Drill String.",
+                    "hyperlink": "",
+                    "source_node_num": "01",
+                    "destination_node_num": "02",
+                    "arrow_points": [
+                        {
+                            "id": 537,
+                            "flow_id": 14,
+                            "x": 0,
+                            "y": 18
+                        },
+                        {
+                            "id": 538,
+                            "flow_id": 14,
+                            "x": -8,
+                            "y": 10
+                        },
+                        {
+                            "id": 539,
+                            "flow_id": 14,
+                            "x": 0,
+                            "y": 14
+                        },
+                        {
+                            "id": 540,
+                            "flow_id": 14,
+                            "x": 8,
+                            "y": 10
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 346,
+                            "flow_id": 14,
+                            "x": 0,
+                            "y": 0
+                        },
+                        {
+                            "id": 347,
+                            "flow_id": 14,
+                            "x": 0,
+                            "y": 80
+                        }
+                    ],
+                    "conversion_formulas": []
+                },
+                {
+                    "id": 15,
+                    "page_id": 5,
+                    "flow_num": "02",
+                    "label": "Rotational Force",
+                    "drawing_group_x": 30,
+                    "drawing_group_y": 240,
+                    "label_x": -23,
+                    "label_y": 25,
+                    "label_width": 65,
+                    "keywords": "rotational force, drilling, drive action",
+                    "definition": "Flow of rotational force from the Top Drive to the Drill String.",
+                    "hyperlink": "",
+                    "source_node_num": "02",
+                    "destination_node_num": "03",
+                    "arrow_points": [
+                        {
+                            "id": 541,
+                            "flow_id": 15,
+                            "x": 0,
+                            "y": 18
+                        },
+                        {
+                            "id": 542,
+                            "flow_id": 15,
+                            "x": -8,
+                            "y": 10
+                        },
+                        {
+                            "id": 543,
+                            "flow_id": 15,
+                            "x": 0,
+                            "y": 14
+                        },
+                        {
+                            "id": 544,
+                            "flow_id": 15,
+                            "x": 8,
+                            "y": 10
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 348,
+                            "flow_id": 15,
+                            "x": 0,
+                            "y": 0
+                        },
+                        {
+                            "id": 349,
+                            "flow_id": 15,
+                            "x": 0,
+                            "y": 80
+                        }
+                    ],
+                    "conversion_formulas": []
+                },
+                {
+                    "id": 16,
+                    "page_id": 5,
+                    "flow_num": "03",
+                    "label": "Drilling Mud",
+                    "drawing_group_x": 150,
+                    "drawing_group_y": 190,
+                    "label_x": 9,
+                    "label_y": -42,
+                    "label_width": 60,
+                    "keywords": "drilling mud, lubrication, debris",
+                    "definition": "Flow of drilling mud from the Drilling Mud Pump to the Rotary Drill Bit.",
+                    "hyperlink": "",
+                    "source_node_num": "04",
+                    "destination_node_num": "02",
+                    "arrow_points": [
+                        {
+                            "id": 545,
+                            "flow_id": 16,
+                            "x": 61,
+                            "y": 0
+                        },
+                        {
+                            "id": 546,
+                            "flow_id": 16,
+                            "x": 73,
+                            "y": 6
+                        },
+                        {
+                            "id": 547,
+                            "flow_id": 16,
+                            "x": 69,
+                            "y": 0
+                        },
+                        {
+                            "id": 548,
+                            "flow_id": 16,
+                            "x": 73,
+                            "y": -6
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 350,
+                            "flow_id": 16,
+                            "x": -18,
+                            "y": -2
+                        },
+                        {
+                            "id": 351,
+                            "flow_id": 16,
+                            "x": 80,
+                            "y": 0
+                        }
+                    ],
+                    "conversion_formulas": []
+                },
+                {
+                    "id": 17,
+                    "page_id": 5,
+                    "flow_num": "04",
+                    "label": "Drilling Mud",
+                    "drawing_group_x": 120,
+                    "drawing_group_y": 330,
+                    "label_x": -27,
+                    "label_y": -57,
+                    "label_width": 51,
+                    "keywords": "drilling mud, lubrication, debris",
+                    "definition": "Flow of drilling mud from the Drilling Mud Pump to the Rotary Drill Bit.",
+                    "hyperlink": "",
+                    "source_node_num": "02",
+                    "destination_node_num": "03",
+                    "arrow_points": [
+                        {
+                            "id": 549,
+                            "flow_id": 17,
+                            "x": -1,
+                            "y": -62
+                        },
+                        {
+                            "id": 550,
+                            "flow_id": 17,
+                            "x": 5,
+                            "y": -74
+                        },
+                        {
+                            "id": 551,
+                            "flow_id": 17,
+                            "x": -1,
+                            "y": -70
+                        },
+                        {
+                            "id": 552,
+                            "flow_id": 17,
+                            "x": -8,
+                            "y": -74
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 352,
+                            "flow_id": 17,
+                            "x": -2,
+                            "y": -86
+                        },
+                        {
+                            "id": 353,
+                            "flow_id": 17,
+                            "x": -1,
+                            "y": -15
+                        }
+                    ],
+                    "conversion_formulas": []
+                },
+                {
+                    "id": 18,
+                    "page_id": 5,
+                    "flow_num": "07",
+                    "label": "Drilling Mud",
+                    "drawing_group_x": 320,
+                    "drawing_group_y": 85,
+                    "label_x": -42,
+                    "label_y": 171,
+                    "label_width": 51,
+                    "keywords": "drilling mud, lubrication, debris",
+                    "definition": "Flow of drilling mud from Mud Return system to Mud Pump.",
+                    "hyperlink": "",
+                    "source_node_num": "05",
+                    "destination_node_num": "04",
+                    "arrow_points": [
+                        {
+                            "id": 553,
+                            "flow_id": 18,
+                            "x": -21,
+                            "y": 212
+                        },
+                        {
+                            "id": 554,
+                            "flow_id": 18,
+                            "x": -29,
+                            "y": 224
+                        },
+                        {
+                            "id": 555,
+                            "flow_id": 18,
+                            "x": -22,
+                            "y": 220
+                        },
+                        {
+                            "id": 556,
+                            "flow_id": 18,
+                            "x": -15,
+                            "y": 224
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 354,
+                            "flow_id": 18,
+                            "x": -21,
+                            "y": 157
+                        },
+                        {
+                            "id": 355,
+                            "flow_id": 18,
+                            "x": -22,
+                            "y": 241
+                        }
+                    ],
+                    "conversion_formulas": []
+                },
+                {
+                    "id": 19,
+                    "page_id": 5,
+                    "flow_num": "08",
+                    "label": "Rock Debris",
+                    "drawing_group_x": 320,
+                    "drawing_group_y": 465,
+                    "label_x": -26,
+                    "label_y": -42,
+                    "label_width": 46,
+                    "keywords": "drilling mud, lubrication, debris",
+                    "definition": "Flow of rock debris and slurry from the boring process.",
+                    "hyperlink": "",
+                    "source_node_num": "05",
+                    "destination_node_num": "",
+                    "arrow_points": [
+                        {
+                            "id": 557,
+                            "flow_id": 19,
+                            "x": 0,
+                            "y": 12
+                        },
+                        {
+                            "id": 558,
+                            "flow_id": 19,
+                            "x": 5,
+                            "y": 0
+                        },
+                        {
+                            "id": 559,
+                            "flow_id": 19,
+                            "x": 0,
+                            "y": 4
+                        },
+                        {
+                            "id": 560,
+                            "flow_id": 19,
+                            "x": -7,
+                            "y": 0
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 356,
+                            "flow_id": 19,
+                            "x": -2,
+                            "y": -56
+                        },
+                        {
+                            "id": 357,
+                            "flow_id": 19,
+                            "x": 0,
+                            "y": 23
+                        }
+                    ],
+                    "conversion_formulas": []
+                },
+                {
+                    "id": 20,
+                    "page_id": 5,
+                    "flow_num": "05",
+                    "label": "Drilling Mud + Debris",
+                    "drawing_group_x": 151,
+                    "drawing_group_y": 214,
+                    "label_x": 18,
+                    "label_y": 55,
+                    "label_width": 69,
+                    "keywords": "",
+                    "definition": "",
+                    "hyperlink": "",
+                    "source_node_num": "02",
+                    "destination_node_num": "05",
+                    "arrow_points": [
+                        {
+                            "id": 561,
+                            "flow_id": 20,
+                            "x": 24,
+                            "y": 29
+                        },
+                        {
+                            "id": 562,
+                            "flow_id": 20,
+                            "x": 26,
+                            "y": 15
+                        },
+                        {
+                            "id": 563,
+                            "flow_id": 20,
+                            "x": 21,
+                            "y": 21
+                        },
+                        {
+                            "id": 564,
+                            "flow_id": 20,
+                            "x": 13,
+                            "y": 20
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 358,
+                            "flow_id": 20,
+                            "x": -18,
+                            "y": -4
+                        },
+                        {
+                            "id": 359,
+                            "flow_id": 20,
+                            "x": 13,
+                            "y": -2
+                        },
+                        {
+                            "id": 360,
+                            "flow_id": 20,
+                            "x": 62,
+                            "y": 135
+                        },
+                        {
+                            "id": 361,
+                            "flow_id": 20,
+                            "x": 76,
+                            "y": 132
+                        }
+                    ],
+                    "conversion_formulas": []
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "flow_model_id": 2,
+            "hierarchical_id": "0102",
+            "title": "Refinery",
+            "description": "",
+            "keywords": "refining, oil, fuel, crude oil",
+            "user_authors": [
+                {
+                    "id": 2,
+                    "username": "warner3"
+                }
+            ],
+            "external_authors": [
+                {
+                    "id": 6,
+                    "author": " "
+                }
+            ],
+            "references": [],
+            "nodes": [
+                {
+                    "id": 8,
+                    "page_id": 4,
+                    "node_num": "01",
+                    "label": "Crude Oil Input",
+                    "graphic_file": "",
+                    "graphic_text": "Input point for crude oil into the refinery.",
+                    "graphic_credits": "",
+                    "x": 5,
+                    "y": 10,
+                    "type": "mechanism",
+                    "definition": "The crude oil feed entering the refinery.",
+                    "keywords": "crude oil, input",
+                    "hyperlink": "",
+                    "has_child_page": false
+                },
+                {
+                    "id": 9,
+                    "page_id": 4,
+                    "node_num": "02",
+                    "label": "Distillation Column",
+                    "graphic_file": "warner3/oil-refinery-distillation.webp",
+                    "graphic_text": "Distillation plant for separating crude oil into chemical fractions.",
+                    "graphic_credits": "",
+                    "x": 5,
+                    "y": 175,
+                    "type": "mechanism",
+                    "definition": "Primary separation process for crude oil.",
+                    "keywords": "distillation, separation",
+                    "hyperlink": "https://en.wikipedia.org/wiki/Fractionating_column",
+                    "has_child_page": false
+                },
+                {
+                    "id": 10,
+                    "page_id": 4,
+                    "node_num": "03",
+                    "label": "Cracking Unit",
+                    "graphic_file": "",
+                    "graphic_text": "Breaks larger hydrocarbons into smaller molecules.",
+                    "graphic_credits": "",
+                    "x": 5,
+                    "y": 340,
+                    "type": "mechanism",
+                    "definition": "Processes heavy fractions into lighter fuels.",
+                    "keywords": "cracking, light fuels",
+                    "hyperlink": "",
+                    "has_child_page": false
+                },
+                {
+                    "id": 11,
+                    "page_id": 4,
+                    "node_num": "04",
+                    "label": "Reforming Unit",
+                    "graphic_file": "",
+                    "graphic_text": "Rearranges molecules to increase the octane number.",
+                    "graphic_credits": "",
+                    "x": 5,
+                    "y": 505,
+                    "type": "mechanism",
+                    "definition": "Converts naphtha into high-octane fuels.",
+                    "keywords": "reforming, octane",
+                    "hyperlink": "",
+                    "has_child_page": false
+                },
+                {
+                    "id": 12,
+                    "page_id": 4,
+                    "node_num": "05",
+                    "label": "Blending Unit",
+                    "graphic_file": "",
+                    "graphic_text": "",
+                    "graphic_credits": "",
+                    "x": 235,
+                    "y": 5,
+                    "type": "mechanism",
+                    "definition": "Produces final fuel blends.",
+                    "keywords": "blending, fuels",
+                    "hyperlink": "",
+                    "has_child_page": false
+                },
+                {
+                    "id": 13,
+                    "page_id": 4,
+                    "node_num": "06",
+                    "label": "Fuel Storage",
+                    "graphic_file": "",
+                    "graphic_text": "",
+                    "graphic_credits": "",
+                    "x": 235,
+                    "y": 175,
+                    "type": "mechanism",
+                    "definition": "Stores the finished fuel products",
+                    "keywords": "storage, fuels",
+                    "hyperlink": "",
+                    "has_child_page": false
+                }
+            ],
+            "flows": [
+                {
+                    "id": 9,
+                    "page_id": 4,
+                    "flow_num": "01",
+                    "label": "Crude Oil",
+                    "drawing_group_x": 75,
+                    "drawing_group_y": 85,
+                    "label_x": -25,
+                    "label_y": 30,
+                    "label_width": 60,
+                    "keywords": "crude oil",
+                    "definition": "Flow of crude oil to the distillation column.",
+                    "hyperlink": "",
+                    "source_node_num": "01",
+                    "destination_node_num": "02",
+                    "arrow_points": [
+                        {
+                            "id": 585,
+                            "flow_id": 9,
+                            "x": 0,
+                            "y": 16
+                        },
+                        {
+                            "id": 586,
+                            "flow_id": 9,
+                            "x": -7,
+                            "y": 6
+                        },
+                        {
+                            "id": 587,
+                            "flow_id": 9,
+                            "x": 0,
+                            "y": 10
+                        },
+                        {
+                            "id": 588,
+                            "flow_id": 9,
+                            "x": 6,
+                            "y": 6
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 374,
+                            "flow_id": 9,
+                            "x": 0,
+                            "y": 0
+                        },
+                        {
+                            "id": 375,
+                            "flow_id": 9,
+                            "x": 0,
+                            "y": 90
+                        }
+                    ],
+                    "conversion_formulas": []
+                },
+                {
+                    "id": 10,
+                    "page_id": 4,
+                    "flow_num": "02",
+                    "label": "Heavy Fractions",
+                    "drawing_group_x": 75,
+                    "drawing_group_y": 250,
+                    "label_x": -25,
+                    "label_y": 35,
+                    "label_width": 60,
+                    "keywords": "heavy fractions",
+                    "definition": "Heavy fractions flow to the cracking unit.",
+                    "hyperlink": "",
+                    "source_node_num": "02",
+                    "destination_node_num": "03",
+                    "arrow_points": [
+                        {
+                            "id": 589,
+                            "flow_id": 10,
+                            "x": 0,
+                            "y": 16
+                        },
+                        {
+                            "id": 590,
+                            "flow_id": 10,
+                            "x": -7,
+                            "y": 6
+                        },
+                        {
+                            "id": 591,
+                            "flow_id": 10,
+                            "x": 0,
+                            "y": 10
+                        },
+                        {
+                            "id": 592,
+                            "flow_id": 10,
+                            "x": 6,
+                            "y": 6
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 376,
+                            "flow_id": 10,
+                            "x": 0,
+                            "y": 0
+                        },
+                        {
+                            "id": 377,
+                            "flow_id": 10,
+                            "x": 0,
+                            "y": 90
+                        }
+                    ],
+                    "conversion_formulas": [
+                        {
+                            "id": 4,
+                            "flow_id": 10,
+                            "formula": "typically: C16H34, C10H8 -&amp;amp;gt; C8H18, C7H8, C6H12",
+                            "description": "Cracking of heavy fractions to smaller molecules"
+                        }
+                    ]
+                },
+                {
+                    "id": 11,
+                    "page_id": 4,
+                    "flow_num": "03",
+                    "label": "Cracked Gasoline",
+                    "drawing_group_x": 75,
+                    "drawing_group_y": 415,
+                    "label_x": -29,
+                    "label_y": 30,
+                    "label_width": 56,
+                    "keywords": "cracked gasoline",
+                    "definition": "Cracked gasoline flows to the reforming unit. Other fuels produced from the distillation/cracking process include: LPG, Kerosene, Diesel and Fuel Oil. Naptha and Bitumen are also produced",
+                    "hyperlink": "",
+                    "source_node_num": "03",
+                    "destination_node_num": "04",
+                    "arrow_points": [
+                        {
+                            "id": 593,
+                            "flow_id": 11,
+                            "x": 0,
+                            "y": 16
+                        },
+                        {
+                            "id": 594,
+                            "flow_id": 11,
+                            "x": -7,
+                            "y": 6
+                        },
+                        {
+                            "id": 595,
+                            "flow_id": 11,
+                            "x": 0,
+                            "y": 10
+                        },
+                        {
+                            "id": 596,
+                            "flow_id": 11,
+                            "x": 6,
+                            "y": 6
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 378,
+                            "flow_id": 11,
+                            "x": 0,
+                            "y": 0
+                        },
+                        {
+                            "id": 379,
+                            "flow_id": 11,
+                            "x": 0,
+                            "y": 90
+                        }
+                    ],
+                    "conversion_formulas": []
+                },
+                {
+                    "id": 12,
+                    "page_id": 4,
+                    "flow_num": "04",
+                    "label": "Reformed Gasoline",
+                    "drawing_group_x": 145,
+                    "drawing_group_y": 540,
+                    "label_x": 18,
+                    "label_y": -180,
+                    "label_width": 52,
+                    "keywords": "reformed gasoline",
+                    "definition": "Reformed gasoline flows to the blending unit.",
+                    "hyperlink": "",
+                    "source_node_num": "04",
+                    "destination_node_num": "05",
+                    "arrow_points": [
+                        {
+                            "id": 597,
+                            "flow_id": 12,
+                            "x": 16,
+                            "y": 0
+                        },
+                        {
+                            "id": 598,
+                            "flow_id": 12,
+                            "x": 8,
+                            "y": 7
+                        },
+                        {
+                            "id": 599,
+                            "flow_id": 12,
+                            "x": 10,
+                            "y": 0
+                        },
+                        {
+                            "id": 600,
+                            "flow_id": 12,
+                            "x": 8,
+                            "y": -8
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 380,
+                            "flow_id": 12,
+                            "x": -19,
+                            "y": 1
+                        },
+                        {
+                            "id": 381,
+                            "flow_id": 12,
+                            "x": 20,
+                            "y": 0
+                        },
+                        {
+                            "id": 382,
+                            "flow_id": 12,
+                            "x": 72,
+                            "y": -500
+                        },
+                        {
+                            "id": 383,
+                            "flow_id": 12,
+                            "x": 89,
+                            "y": -501
+                        }
+                    ],
+                    "conversion_formulas": []
+                },
+                {
+                    "id": 13,
+                    "page_id": 4,
+                    "flow_num": "05",
+                    "label": "Finished Fuel",
+                    "drawing_group_x": 305,
+                    "drawing_group_y": 85,
+                    "label_x": -25,
+                    "label_y": 40,
+                    "label_width": 60,
+                    "keywords": "finished fuel",
+                    "definition": "Finished fuel flows to storage.",
+                    "hyperlink": "",
+                    "source_node_num": "05",
+                    "destination_node_num": "06",
+                    "arrow_points": [
+                        {
+                            "id": 601,
+                            "flow_id": 13,
+                            "x": 0,
+                            "y": 16
+                        },
+                        {
+                            "id": 602,
+                            "flow_id": 13,
+                            "x": -7,
+                            "y": 6
+                        },
+                        {
+                            "id": 603,
+                            "flow_id": 13,
+                            "x": 0,
+                            "y": 10
+                        },
+                        {
+                            "id": 604,
+                            "flow_id": 13,
+                            "x": 6,
+                            "y": 6
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 384,
+                            "flow_id": 13,
+                            "x": 0,
+                            "y": 0
+                        },
+                        {
+                            "id": 385,
+                            "flow_id": 13,
+                            "x": 0,
+                            "y": 90
+                        }
+                    ],
+                    "conversion_formulas": []
+                }
+            ]
+        }
+    ]
+}

@@ -10,8 +10,16 @@ const flowModelPage = {
             document.getElementById("editModelButton").style.display = "none";
             document.getElementById("deleteModelButton").style.display = "none";
             document.getElementById("importModelButton").style.display = "none";
+            document.getElementById("addFlowButton").style.display = "none";
         }
         else {
+            if (dfm.modelEditMode === "edit") {
+                document.getElementById("addFlowButton").style.display = "inline";
+            }
+            else {
+                document.getElementById("addFlowButton").style.display = "none";
+            }
+            
             document.getElementById("flowDoneButton").style.display = "none";
             document.getElementById("cancelFlowDrawButton").style.display = "none";
             if (dfm.userStatus === "unregistered") {

@@ -32,11 +32,14 @@ dfm.nodeGraphic = {
     adjustGraphic: function (imgElem) {
         let baseWidth = imgElem.naturalWidth;
         let baseHeight = imgElem.naturalHeight;
-        let dWidth = window.innerWidth * 85/100;
-        let dHeight = window.innerHeight * 75/100;
+        let dWidth = document.documentElement.clientWidth * 85/100;
+        let dHeight = document.documentElement.clientHeight * 75/100;
         let scale = dWidth/baseWidth;
         if (scale * baseHeight > dHeight) {
             scale = dHeight/baseHeight;
+        }
+        if (scale * baseWidth > dWidth) {
+            scale = dWidth/baseWidth;
         }
         let width = baseWidth * scale;
         let height = baseHeight * scale;

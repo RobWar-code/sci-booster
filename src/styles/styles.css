@@ -68,6 +68,10 @@ body {
     margin-bottom: 3px;
 }
 
+#addFlowButton {
+    display: none;
+}
+
 /* Modal Dialogs */
 .genModal {
     display: none;
@@ -78,15 +82,16 @@ body {
     min-height: 100vh;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 5;
+    font-size: 13px;
 }
 
 .genModalForm {
     position: relative;
-    width: 370px;
+    width: 350px;
     background-color: #f0e0f0;
     z-index: 10;
     margin-top: 10px;
-    margin-left: 20px;
+    margin-left: 5px;
     padding-top: 3px;
     padding-left: 3px;
     padding-bottom: 5px;
@@ -112,7 +117,7 @@ body {
 }
 
 .modalFormTitle {
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .modalFormLabel {
@@ -132,7 +137,7 @@ body {
 }
 
 .modalFormItem {
-    width: 65%;
+    width: 70%;
     margin-bottom: 2px;
 }
 

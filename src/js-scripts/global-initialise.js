@@ -3,19 +3,19 @@
 // APP CONSTANTS
 const GLOBALS = {
     minAssumedDisplayWidth: 400,
-    minStageWidth: 380,
+    minStageWidth: 360,
     maxStageWidth: 760,
     stageHeight: 680,
     minNodeWidth: 100,
     maxNodeWidth: 200,
     maxNodesPerPage: 8,
     maxHierarchyLevel: 32,
-    nodeHeight: 70,
+    nodeHeight: 75,
     nodeButtonTop: 48,
     minFlowLength: 60,
-    numNodeOptions: 5,
-    nodeOptionWidth: 20,
-    nodeOptionHeight: 20,
+    numNodeOptions: 4,
+    nodeOptionWidth: 25,
+    nodeOptionHeight: 25,
     nodePadding: 4
 }
 

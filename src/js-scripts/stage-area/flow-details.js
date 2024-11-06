@@ -4,12 +4,10 @@ flowDetails = {
     editMode: "",
     currentFlow: null,
 
-    addNewFlow: function (event) {
+    addNewFlow: function () {
         if (dfm.flowDrawMode || dfm.modelEditMode != "edit") {
-            event.cancelBubble = true;
             return;
         }
-        event.cancelBubble = true;
         this.displayFlowModal("new");
         this.flowDetailsSet = false;
         this.flowFormulasOpen = false;

@@ -54,6 +54,7 @@ const modelDetails = {
     document.getElementById("modelEditOption").style.display = "none";
     document.getElementById("editModelButton").style.display = "none";
     document.getElementById("deleteModelButton").style.display = "inline";
+    document.getElementById("addFlowButton").style.display = "inline";
     flowModelPage.displayFlowModelEditMessage();
   },
 
@@ -137,6 +138,7 @@ const modelDetails = {
       document.getElementById("exportModelButton").style.display = "inline";
     }
     document.getElementById("cancelModelButton").style.display = "inline";
+    document.getElementById("addFlowButton").style.display = "none";
     flowModelPage.showSaveOnPageEdit(true);
     this.setReadOnlyDisplay();
     this.loadModelDetails();

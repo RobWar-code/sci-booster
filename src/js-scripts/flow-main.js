@@ -26,6 +26,7 @@ dfm.importTitle = "";
 dfm.maxNodeLabelLen = 42;
 dfm.maxFlowLabelLen = 42;
 dfm.maxFlowLabelWidth = 65;
+dfm.minFlowLabelWidth = 31;
 dfm.flowFontSize = 10;
 dfm.flowOptionHeight = 15;
 dfm.flowLineWidth = 5;
@@ -40,12 +41,12 @@ dfm.stageWidth = GLOBALS.minStageWidth;
 dfm.stageHeight = GLOBALS.stageHeight;
 dfm.scaleX = 1;
 dfm.nodeTemplate = {
-    width: 140,
+    width: 120,
     height: 75,
     textTop: 3,
     textLeft: 3,
     textLineHeight: 18,
-    fontSize: 12, 
+    fontSize: 11, 
     fontFamily: "Calibri",
     optionTop: 48,
     optionLeft: 3,

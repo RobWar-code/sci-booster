@@ -8,7 +8,18 @@ Contents
 
     Do testing and fixes for mobile
 
-    Adjust the fontsize for buttons on the narayana-art menu page
+    * Adjust modals to fit in 360px 
+
+    * Adjust the stage width to 360px 
+        * Adjust node width to 120px
+        * Put the flow link button on the main page options (Add Flow)
+        * Adjust the layout of the node option buttons
+
+    * Set the min flow label width
+
+    * Node Graphic scaling on mobiles adjusts the height but messes the width.
+
+    * Adjust the fontsize for buttons on the narayana-art menu page
 
     * The hover function should not let the hover text overlap the edge of the stage.
 

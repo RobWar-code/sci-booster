@@ -121,7 +121,8 @@ dfm.FlowVisuals = class {
             fontFamily: dfm.nodeTemplate.fontFamily,
             fill: 'black'
         });
-        let optionMargin = (dfm.nodeTemplate.width - (GLOBALS.numNodeOptions * dfm.nodeTemplate.optionWidth)) / (GLOBALS.numNodeOptions + 1);
+        let optionMargin = (dfm.nodeTemplate.width - (GLOBALS.numNodeOptions * dfm.nodeTemplate.optionWidth)) / 
+            (GLOBALS.numNodeOptions + 1);
         node.detailsOpt = new Konva.Image({
             x: optionMargin,
             y: dfm.nodeTemplate.optionTop,
@@ -157,21 +158,12 @@ dfm.FlowVisuals = class {
             nodeNum: nodeNum,
             hoverText: "Zoom Page"
         });
-        node.flowLinkOpt = new Konva.Image({
-            x: dfm.nodeTemplate.optionWidth * 3 + optionMargin * 4,
-            y: dfm.nodeTemplate.optionTop,
-            image: dfm.nodeGraphics.flowLink,
-            width: dfm.nodeTemplate.optionWidth,
-            height: dfm.nodeTemplate.optionHeight,
-            nodeNum: nodeNum,
-            hoverText: "Flow Link"
-        });
         let linkGraphic = dfm.nodeGraphics.hyperlinkPresent;
         if (nodeItem.hyperlink === "") {
             linkGraphic = dfm.nodeGraphics.hyperlinkAbsent;
         }
         node.hyperlinkOpt = new Konva.Image({
-            x: dfm.nodeTemplate.optionWidth * 4 + optionMargin * 5,
+            x: dfm.nodeTemplate.optionWidth * 3 + optionMargin * 4,
             y: dfm.nodeTemplate.optionTop,
             image: linkGraphic,
             width: dfm.nodeTemplate.optionWidth,
@@ -190,9 +182,6 @@ dfm.FlowVisuals = class {
         node.zoomDetailsOpt.on("click", (event) => flowModelPage.zoomPage(event));
         node.zoomDetailsOpt.on("touchstart", (event) => flowModelPage.zoomPage(event));
         node.zoomDetailsOpt.on("mouseover", (event) => nodeDetails.doHoverText(event));
-        node.flowLinkOpt.on("click", (event) => flowDetails.addNewFlow(event));
-        node.flowLinkOpt.on("touchstart", (event) => flowDetails.addNewFlow(event));
-        node.flowLinkOpt.on("mouseover", (event) => nodeDetails.doHoverText(event));
         node.hyperlinkOpt.on("click", (event) => nodeDetails.doHyperlink(event));
         node.hyperlinkOpt.on("touchstart", (event) => nodeDetails.doHyperlink(event));
         node.hyperlinkOpt.on("mouseover", (event) => nodeDetails.doHoverText(event));
@@ -203,7 +192,6 @@ dfm.FlowVisuals = class {
         node.nodeGroup.add(node.detailsOpt);
         node.nodeGroup.add(node.graphicOpt);
         node.nodeGroup.add(node.zoomDetailsOpt);
-        node.nodeGroup.add(node.flowLinkOpt);
         node.nodeGroup.add(node.hyperlinkOpt);
         this.nodeLayer.add(node.nodeGroup);
         this.nodeLayer.draw();
@@ -593,6 +581,7 @@ dfm.FlowVisuals = class {
             rectHeight = textHeight + dfm.flowOptionHeight + 6;
         }
         let labelWidth = textWidth + 7;
+        if (labelWidth < dfm.minFlowLabelWidth) labelWidth = dfm.minFlowLabelWidth;
 
         let x = flowDetailsItem.label_x;
         let y = flowDetailsItem.label_y;
@@ -888,6 +877,7 @@ dfm.FlowVisuals = class {
             rectHeight = textHeight + dfm.flowOptionHeight + 6;
         }
         let labelWidth = textWidth + 7;
+        if (labelWidth < dfm.minFlowLabelWidth) labelWidth = dfm.minFlowLabelWidth;
 
         let x, y;
         if (fromClick) {

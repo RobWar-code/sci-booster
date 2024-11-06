@@ -1,0 +1,577 @@
+{
+    "flow_model_id": 4,
+    "flow_model_title": "Solar Energy and Atmosphere-Ocean Interaction",
+    "complete": true,
+    "pages": [
+        {
+            "id": 10,
+            "flow_model_id": 4,
+            "hierarchical_id": "01",
+            "title": "Solar Energy Flow in Earth's Atmosphere and Oceans",
+            "description": "",
+            "keywords": "solar radiation, atmosphere, oceans, energy flow, greenhouse effect, infrared radiation",
+            "user_authors": [
+                {
+                    "id": 2,
+                    "username": "warner3"
+                }
+            ],
+            "external_authors": [],
+            "references": [
+                {
+                    "id": 6,
+                    "source": "Web Page",
+                    "title": "Earth's Energy Budget",
+                    "author": {
+                        "id": 7,
+                        "author": "NASA Earth Science"
+                    }
+                }
+            ],
+            "nodes": [
+                {
+                    "id": 40,
+                    "page_id": 10,
+                    "node_num": "01",
+                    "label": "Sun",
+                    "graphic_file": "",
+                    "graphic_text": "Sun emitting solar radiation",
+                    "graphic_credits": "",
+                    "x": 5,
+                    "y": 10,
+                    "type": "mechanism",
+                    "definition": "The Sun emits solar radiation that reaches the Earth at approximately 1361 W/m² (solar constant).",
+                    "keywords": "sun, solar radiation",
+                    "hyperlink": "https://en.wikipedia.org/wiki/Solar_constant",
+                    "has_child_page": false
+                },
+                {
+                    "id": 41,
+                    "page_id": 10,
+                    "node_num": "02",
+                    "label": "Atmosphere",
+                    "graphic_file": "warner3/cumulus.jpeg",
+                    "graphic_text": "Atmosphere absorbing, reflecting, and reradiating energy",
+                    "graphic_credits": "Jacek Halicki, CC BY-SA 4.0 , via Wikimedia Commons",
+                    "x": 5,
+                    "y": 175,
+                    "type": "mechanism",
+                    "definition": "About 30% of the incoming solar radiation is reflected by the atmosphere, while 70% is absorbed or reradiated. The greenhouse effect traps part of this radiation.",
+                    "keywords": "atmosphere, absorption, reflection, reradiation, greenhouse effect",
+                    "hyperlink": "https://en.wikipedia.org/wiki/Atmosphere_of_Earth",
+                    "has_child_page": false
+                },
+                {
+                    "id": 42,
+                    "page_id": 10,
+                    "node_num": "03",
+                    "label": "Oceans",
+                    "graphic_file": "",
+                    "graphic_text": "Oceans absorbing solar radiation",
+                    "graphic_credits": "",
+                    "x": 5,
+                    "y": 340,
+                    "type": "mechanism",
+                    "definition": "Oceans absorb approximately 90% of the solar energy that passes through the atmosphere.",
+                    "keywords": "oceans, solar energy absorption",
+                    "hyperlink": "https://www.researchgate.net/profile/Amy-Solomon-2/publication/226082345_The_global_heat_balance_Heat_transports_in_the_atmosphere_and_ocean/links/00b4952fa5705a2ea8000000/The-global-heat-balance-Heat-transports-in-the-atmosphere-and-ocean.pdf",
+                    "has_child_page": false
+                },
+                {
+                    "id": 43,
+                    "page_id": 10,
+                    "node_num": "04",
+                    "label": "Space",
+                    "graphic_file": "",
+                    "graphic_text": "Energy radiated to space",
+                    "graphic_credits": "",
+                    "x": 5,
+                    "y": 505,
+                    "type": "effect",
+                    "definition": "Energy that is reflected or reradiated by the Earth system into space, balancing Earth's energy budget.",
+                    "keywords": "space, energy reradiation",
+                    "hyperlink": "",
+                    "has_child_page": false
+                },
+                {
+                    "id": 44,
+                    "page_id": 10,
+                    "node_num": "05",
+                    "label": "Earth Night-side",
+                    "graphic_file": "warner3/Earth_night.jpg",
+                    "graphic_text": "Earth night side",
+                    "graphic_credits": "wikimedia-commons - NASA",
+                    "x": 235,
+                    "y": 10,
+                    "type": "effect",
+                    "definition": "During the night, the Earth radiates heat back to space in the form of infrared radiation. About 70-85% of the absorbed solar energy is reradiated as heat.",
+                    "keywords": "night-side radiation, infrared radiation, heat loss",
+                    "hyperlink": "",
+                    "has_child_page": false
+                }
+            ],
+            "flows": [
+                {
+                    "id": 41,
+                    "page_id": 10,
+                    "flow_num": "01",
+                    "label": "Solar Radiation",
+                    "drawing_group_x": 75,
+                    "drawing_group_y": 85,
+                    "label_x": -25,
+                    "label_y": 30,
+                    "label_width": 60,
+                    "keywords": "solar radiation",
+                    "definition": "Incoming solar radiation from the Sun, around 1361 W/m², striking the Earth's atmosphere.",
+                    "hyperlink": "",
+                    "source_node_num": "01",
+                    "destination_node_num": "02",
+                    "arrow_points": [
+                        {
+                            "id": 605,
+                            "flow_id": 41,
+                            "x": 0,
+                            "y": 16
+                        },
+                        {
+                            "id": 606,
+                            "flow_id": 41,
+                            "x": -6,
+                            "y": 8
+                        },
+                        {
+                            "id": 607,
+                            "flow_id": 41,
+                            "x": 0,
+                            "y": 12
+                        },
+                        {
+                            "id": 608,
+                            "flow_id": 41,
+                            "x": 6,
+                            "y": 8
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 386,
+                            "flow_id": 41,
+                            "x": 0,
+                            "y": 0
+                        },
+                        {
+                            "id": 387,
+                            "flow_id": 41,
+                            "x": 0,
+                            "y": 90
+                        }
+                    ],
+                    "conversion_formulas": [
+                        {
+                            "id": 8,
+                            "flow_id": 41,
+                            "formula": "Power = Area * SolarConstant",
+                            "description": "Formula for calculating the power of solar radiation based on the surface area."
+                        }
+                    ]
+                },
+                {
+                    "id": 42,
+                    "page_id": 10,
+                    "flow_num": "02",
+                    "label": "Absorbed Radiation",
+                    "drawing_group_x": 75,
+                    "drawing_group_y": 265,
+                    "label_x": -5,
+                    "label_y": 21,
+                    "label_width": 61,
+                    "keywords": "absorbed radiation, atmosphere, oceans",
+                    "definition": "70% of the solar radiation is absorbed by the atmosphere and oceans, which contributes to warming.",
+                    "hyperlink": "",
+                    "source_node_num": "02",
+                    "destination_node_num": "03",
+                    "arrow_points": [
+                        {
+                            "id": 609,
+                            "flow_id": 42,
+                            "x": 24,
+                            "y": 11
+                        },
+                        {
+                            "id": 610,
+                            "flow_id": 42,
+                            "x": 30,
+                            "y": 0
+                        },
+                        {
+                            "id": 611,
+                            "flow_id": 42,
+                            "x": 24,
+                            "y": 3
+                        },
+                        {
+                            "id": 612,
+                            "flow_id": 42,
+                            "x": 17,
+                            "y": 0
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 388,
+                            "flow_id": 42,
+                            "x": 24,
+                            "y": -13
+                        },
+                        {
+                            "id": 389,
+                            "flow_id": 42,
+                            "x": 24,
+                            "y": 76
+                        }
+                    ],
+                    "conversion_formulas": []
+                },
+                {
+                    "id": 43,
+                    "page_id": 10,
+                    "flow_num": "03",
+                    "label": "Reflected Radiation",
+                    "drawing_group_x": 145,
+                    "drawing_group_y": 205,
+                    "label_x": 4,
+                    "label_y": 50,
+                    "label_width": 51,
+                    "keywords": "reflected radiation",
+                    "definition": "Approximately 30% of the incoming solar radiation is reflected back to space by the Earth's atmosphere.",
+                    "hyperlink": "",
+                    "source_node_num": "02",
+                    "destination_node_num": "04",
+                    "arrow_points": [
+                        {
+                            "id": 621,
+                            "flow_id": 43,
+                            "x": 29,
+                            "y": 33
+                        },
+                        {
+                            "id": 622,
+                            "flow_id": 43,
+                            "x": 36,
+                            "y": 21
+                        },
+                        {
+                            "id": 623,
+                            "flow_id": 43,
+                            "x": 29,
+                            "y": 25
+                        },
+                        {
+                            "id": 624,
+                            "flow_id": 43,
+                            "x": 23,
+                            "y": 21
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 397,
+                            "flow_id": 43,
+                            "x": -18,
+                            "y": 1
+                        },
+                        {
+                            "id": 398,
+                            "flow_id": 43,
+                            "x": 30,
+                            "y": 0
+                        },
+                        {
+                            "id": 399,
+                            "flow_id": 43,
+                            "x": 28,
+                            "y": 315
+                        },
+                        {
+                            "id": 400,
+                            "flow_id": 43,
+                            "x": -17,
+                            "y": 318
+                        }
+                    ],
+                    "conversion_formulas": []
+                },
+                {
+                    "id": 44,
+                    "page_id": 10,
+                    "flow_num": "04",
+                    "label": "Night-side Radiation",
+                    "drawing_group_x": 235,
+                    "drawing_group_y": 50,
+                    "label_x": -53,
+                    "label_y": 93,
+                    "label_width": 55,
+                    "keywords": "night-side infrared radiation, heat loss",
+                    "definition": "During the night, the heat stored in the Earth's surface and atmosphere is radiated back to space as infrared radiation.",
+                    "hyperlink": "",
+                    "source_node_num": "05",
+                    "destination_node_num": "04",
+                    "arrow_points": [
+                        {
+                            "id": 625,
+                            "flow_id": 44,
+                            "x": -16,
+                            "y": 0
+                        },
+                        {
+                            "id": 626,
+                            "flow_id": 44,
+                            "x": -8,
+                            "y": -6
+                        },
+                        {
+                            "id": 627,
+                            "flow_id": 44,
+                            "x": -12,
+                            "y": 0
+                        },
+                        {
+                            "id": 628,
+                            "flow_id": 44,
+                            "x": -8,
+                            "y": 6
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 401,
+                            "flow_id": 44,
+                            "x": 0,
+                            "y": 0
+                        },
+                        {
+                            "id": 402,
+                            "flow_id": 44,
+                            "x": -30,
+                            "y": 0
+                        },
+                        {
+                            "id": 403,
+                            "flow_id": 44,
+                            "x": -30,
+                            "y": 491
+                        },
+                        {
+                            "id": 404,
+                            "flow_id": 44,
+                            "x": -110,
+                            "y": 490
+                        }
+                    ],
+                    "conversion_formulas": []
+                },
+                {
+                    "id": 45,
+                    "page_id": 10,
+                    "flow_num": "05",
+                    "label": "Adsorbed Heat",
+                    "drawing_group_x": 145,
+                    "drawing_group_y": 195,
+                    "label_x": -12,
+                    "label_y": -125,
+                    "label_width": 67,
+                    "keywords": "retained heat",
+                    "definition": "Heat retained as surplus during the day is emitted over the night",
+                    "hyperlink": "",
+                    "source_node_num": "02",
+                    "destination_node_num": "05",
+                    "arrow_points": [
+                        {
+                            "id": 629,
+                            "flow_id": 45,
+                            "x": 16,
+                            "y": 0
+                        },
+                        {
+                            "id": 630,
+                            "flow_id": 45,
+                            "x": 8,
+                            "y": -6
+                        },
+                        {
+                            "id": 631,
+                            "flow_id": 45,
+                            "x": 12,
+                            "y": 0
+                        },
+                        {
+                            "id": 632,
+                            "flow_id": 45,
+                            "x": 8,
+                            "y": 6
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 405,
+                            "flow_id": 45,
+                            "x": -17,
+                            "y": -1
+                        },
+                        {
+                            "id": 406,
+                            "flow_id": 45,
+                            "x": 20,
+                            "y": 0
+                        },
+                        {
+                            "id": 407,
+                            "flow_id": 45,
+                            "x": 20,
+                            "y": -165
+                        },
+                        {
+                            "id": 408,
+                            "flow_id": 45,
+                            "x": 90,
+                            "y": -165
+                        }
+                    ],
+                    "conversion_formulas": []
+                },
+                {
+                    "id": 46,
+                    "page_id": 10,
+                    "flow_num": "06",
+                    "label": "Oceanic Heat",
+                    "drawing_group_x": 24,
+                    "drawing_group_y": 333,
+                    "label_x": -23,
+                    "label_y": -75,
+                    "label_width": 53,
+                    "keywords": "oceanic heat",
+                    "definition": "The heat energy from the oceans that is transferred back to the atmosphere",
+                    "hyperlink": "",
+                    "source_node_num": "03",
+                    "destination_node_num": "02",
+                    "arrow_points": [
+                        {
+                            "id": 613,
+                            "flow_id": 46,
+                            "x": 0,
+                            "y": -28
+                        },
+                        {
+                            "id": 614,
+                            "flow_id": 46,
+                            "x": -7,
+                            "y": -15
+                        },
+                        {
+                            "id": 615,
+                            "flow_id": 46,
+                            "x": 0,
+                            "y": -20
+                        },
+                        {
+                            "id": 616,
+                            "flow_id": 46,
+                            "x": 6,
+                            "y": -16
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 390,
+                            "flow_id": 46,
+                            "x": 0,
+                            "y": 0
+                        },
+                        {
+                            "id": 391,
+                            "flow_id": 46,
+                            "x": 0,
+                            "y": -82
+                        }
+                    ],
+                    "conversion_formulas": []
+                },
+                {
+                    "id": 47,
+                    "page_id": 10,
+                    "flow_num": "07",
+                    "label": "Thermal Radiation",
+                    "drawing_group_x": 146,
+                    "drawing_group_y": 233,
+                    "label_x": -69,
+                    "label_y": 222,
+                    "label_width": 51,
+                    "keywords": "thermal energy",
+                    "definition": "The radiation (infrared) retransmitted from the atmosphere",
+                    "hyperlink": "",
+                    "source_node_num": "02",
+                    "destination_node_num": "04",
+                    "arrow_points": [
+                        {
+                            "id": 617,
+                            "flow_id": 47,
+                            "x": -2,
+                            "y": 119
+                        },
+                        {
+                            "id": 618,
+                            "flow_id": 47,
+                            "x": 4,
+                            "y": 107
+                        },
+                        {
+                            "id": 619,
+                            "flow_id": 47,
+                            "x": -2,
+                            "y": 111
+                        },
+                        {
+                            "id": 620,
+                            "flow_id": 47,
+                            "x": -9,
+                            "y": 107
+                        }
+                    ],
+                    "points": [
+                        {
+                            "id": 392,
+                            "flow_id": 47,
+                            "x": -20,
+                            "y": -1
+                        },
+                        {
+                            "id": 393,
+                            "flow_id": 47,
+                            "x": 0,
+                            "y": -2
+                        },
+                        {
+                            "id": 394,
+                            "flow_id": 47,
+                            "x": -4,
+                            "y": 197
+                        },
+                        {
+                            "id": 395,
+                            "flow_id": 47,
+                            "x": -43,
+                            "y": 202
+                        },
+                        {
+                            "id": 396,
+                            "flow_id": 47,
+                            "x": -43,
+                            "y": 271
+                        }
+                    ],
+                    "conversion_formulas": []
+                }
+            ]
+        }
+    ]
+}
