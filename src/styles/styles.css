@@ -50,6 +50,14 @@ body {
     color: #202060;
 }
 
+/* Intro Page */
+#introPic {
+    width: 85%;
+    max-width: 720px;
+    height: auto;
+    margin-bottom: 5px;
+}
+
 /* Flow Model Page */
 .pageHead {
     font-size: 20px;

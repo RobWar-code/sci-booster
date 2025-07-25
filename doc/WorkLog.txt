@@ -6,7 +6,21 @@ Contents
 
 <h1>Work Due
 
-    Do testing and fixes for mobile
+    Do the XML sitemap for narayana-art
+
+    Flow label sometimes not altered when changed in flow details?
+
+    Clear debug from code
+
+    Block robot logins/register
+
+    Add the meta property details for social media links
+
+<h1>Work Done
+
+    06/11/2024
+    
+    * Do testing and fixes for mobile
 
     * Adjust modals to fit in 360px 
 
@@ -22,18 +36,6 @@ Contents
     * Adjust the fontsize for buttons on the narayana-art menu page
 
     * The hover function should not let the hover text overlap the edge of the stage.
-
-    Do the XML sitemap for narayana-art
-
-    Flow label sometimes not altered when changed in flow details?
-
-    Clear debug from code
-
-    Block robot logins/register
-
-    Add the meta property details for social media links
-
-<h1>Work Done
 
     03/11/2024
 

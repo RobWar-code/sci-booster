@@ -17,6 +17,13 @@ page is dedicated to describing the json format.
 
 For detailed analysis see: doc/analysis.txt
 
+## Sci-Booster Reinstatement
+
+The main website was shut down for a few months (as at 24/07/2025).
+The current project aim is to reinstate sci-booster on the local
+Apache host, and to redeploy it on the Fasthosts server once that
+is up and running.
+
 ## Screenshot of Flow Page
 
 ![Main Flow Page](doc/sci-booster-flow-page.png)
