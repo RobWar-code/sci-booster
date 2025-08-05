@@ -6,6 +6,43 @@ Contents
 
 <h1>Work Due
 
+    Re-Installation
+
+        Do the host set-up on fasthosts
+            narayana-art.co.uk
+            php
+            mysql - sci-booster database
+
+        Set-up the fasthosts root directory for narayana-art.co.uk
+
+        Upload the /pics and /css directories
+
+        Upload the index.php file
+
+        Check index.php
+
+        Upload the sci-booster directories assets and src
+
+        Check the link
+
+        Create the sci-booster tables
+
+        Check the (empty) flow-diagramming page
+
+        Adjust the diagrams on the localhost
+
+        Export the diagram JSON
+
+        Copy to the narayana03 folder
+
+        Prepare to import the fuel-combustion json tables on
+        the fasthosts server.
+
+
+    --------------------------------------------------------------------
+    * Problem importing from exported model
+        * Problem with export model
+
     Do the XML sitemap for narayana-art
 
     Flow label sometimes not altered when changed in flow details?

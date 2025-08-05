@@ -353,7 +353,8 @@ function exportModel($inputData) {
     $modelData = ['flow_model_id'=>$flowModelId, 'flow_model_title'=>$flowModelTitle, 'complete'=>true];
     $pages = [];
     $hierarchicalId = '01';
-    extractModelPages($hierarchicalId, $flowModelId, $pages);
+    $count = 0;
+    extractModelPages($hierarchicalId, $flowModelId, $pages, $count);
     $modelData['pages'] = $pages;
     convertJsonEntities($modelData);
     $response = ['result'=>true, 'data'=>$modelData];
@@ -361,7 +362,7 @@ function exportModel($inputData) {
     exit;
 }
 
-function extractModelPages($hierarchicalId, $flowModelId, &$pages) {
+function extractModelPages($hierarchicalId, $flowModelId, &$pages, &$count) {
     // Get the page id
     $idObj = findModelPageByHierarchicalId($hierarchicalId, $flowModelId, "");
     if ($idObj['page_id'] === null) {
@@ -371,13 +372,14 @@ function extractModelPages($hierarchicalId, $flowModelId, &$pages) {
     }
     $pageId = $idObj['page_id'];
     $pageData = extractPage($flowModelId, $pageId);
-    $page = $pageData['page'];
-    array_push($pages, $page);
+    // This prevents duplication of references in the array
+    $page = json_decode(json_encode($pageData['page']), true);
+    $pages[$count++] = $page;
     foreach ($page['nodes'] as $node) {
         $nodeNum = $node['node_num'];
         if ($node['has_child_page']) {
             $childHierarchicalId = $hierarchicalId . $nodeNum;
-            extractModelPages($childHierarchicalId, $flowModelId, $pages);
+            extractModelPages($childHierarchicalId, $flowModelId, $pages, $count);
         }
     }
 }

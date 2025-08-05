@@ -46,14 +46,14 @@ if (validateImportData($newPageArray, $_POST['username'])) {
 function saveImportFile() {
     if (!isset($_POST['username'])) {
         error_log("import: missing username", 0);
-        $response = ['result'=>false, 'error'=>"Missing username"];
+        $response = ['result'=>false, 'status'=>"Missing username"];
         echo json_encode($response);
         exit;
     }
 
     if (!isset($_FILES['file'])) {
         error_log("import: file missing", 0);
-        $response = ['result'=>false, 'error'=>"Missing file"];
+        $response = ['result'=>false, 'status'=>"Missing file"];
         echo json_encode($response);
         exit;
     }
@@ -68,7 +68,7 @@ function saveImportFile() {
     if (!file_exists($destPath)) {
         if (!mkdir($destPath, 0777, true)) {
             error_log("Could not create directory for {$username}", 0);
-            $response = ['result'=>false, 'error'=>"Could not create directory for {$username}"];
+            $response = ['result'=>false, 'status'=>"Could not create directory for {$destPath}"];
             echo json_encode($response);
             exit;
         }
@@ -76,7 +76,7 @@ function saveImportFile() {
 
     // Copy the temp file
     if (!move_uploaded_file($fileTempPath, $destPath . "/" . $filename)) {
-        $response = ['result'=>false, 'error'=>"Could not copy uploaded file"];
+        $response = ['result'=>false, 'status'=>"Could not copy uploaded file"];
         echo json_encode($response);
         exit;
     }

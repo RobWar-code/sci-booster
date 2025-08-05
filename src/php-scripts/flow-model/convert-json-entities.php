@@ -26,6 +26,8 @@
 
             $pageData['pages'][$index] = $page;
 
+            ++$index;
+
         }
     }
 
